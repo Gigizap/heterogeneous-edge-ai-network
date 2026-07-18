@@ -1,6 +1,6 @@
 # LatencyTest3 - network-overlay test with full per-message JSON logging (1-min waves)
 
-> <- Back to [IMPLEMENTATION README](../README.md)
+> Back to [Latency and network README](../README.md)
 
 Same design as [LatencyTest2](../LatencyTest2/README.md) - a **mock STM32 leader**
 (live discovery + tool aggregation, **no LLM / no election / no dispatch**) plus a

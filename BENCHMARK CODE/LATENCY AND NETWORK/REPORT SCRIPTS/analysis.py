@@ -1,12 +1,3 @@
-"""Latency analysis for the tool-scaling benchmark.
-
-Reads the three "VARYING TOOLS 1 reply" leader logs plus the boot-time fields,
-computes every statistic used in latency.tex, writes them to
-scripts/computed_stats.json, and renders the TTFT-vs-tokens figure to
-figures/ttft_vs_tokens.png.
-
-Run from the WRITING_REPORT folder:  python scripts/analysis.py
-"""
 import json
 import os
 import statistics as st
@@ -16,20 +7,17 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
 HERE = os.path.dirname(__file__)
-BASE = os.path.join(HERE, "..", "new_results")
-FIGDIR = os.path.join(HERE, "..", "figures")
+WRITING_REPORT = os.path.join(HERE, "..", "..", "WRITING_REPORT")
+BASE = os.path.join(HERE, "..", "NEW RESULTS")
+FIGDIR = os.path.join(HERE, "..", "..", "..", "figures")
 os.makedirs(FIGDIR, exist_ok=True)
 
-# Tool-scaling logs (VARYING TOOLS 1 reply/).
 FILES = {
     "qwen3_noKV": "VARYING TOOLS 1 reply/leader_raspberry_20260707_170137_withtkincorrect.json",
     "fgemma_noKV": "VARYING TOOLS 1 reply/leader_stm32_prompt_noKV.json",
     "fgemma_KV": "VARYING TOOLS 1 reply/leader_stm32_shorter_prompt+KVcache-newpertoolbatch.json",
 }
 
-# Reply-scaling logs (VARYING REPLIES 1 tool/): one tool, growing number of
-# aggregated results. reset = no KV reuse, kvreuse = KV reuse (analogous to the
-# no-KV / KV tool-scaling pair).
 REPLY_FILES = {
     "qwen3": "VARYING REPLIES 1 tool/leader_raspberry_definitive.json",
     "fgemma_reset": "VARYING REPLIES 1 tool/leader_stm32-reset_20260707_150325.json",
@@ -42,18 +30,14 @@ MODEL_LABEL = {
     "fgemma_KV": "functiongemma:270m (STM32 CPU), short prompt, KV reuse",
 }
 
-
 def load(rel):
     with open(os.path.join(BASE, rel), "r", encoding="utf-8") as fh:
         return json.load(fh)
 
-
 def ms(mean_std, n=2):
     return None if mean_std is None else round(mean_std, n)
 
-
 def mstd(vals):
-    """Return (mean, sample-std, n). std is 0.0 for a single value."""
     vals = [v for v in vals if v is not None]
     if not vals:
         return None, None, 0
@@ -61,20 +45,14 @@ def mstd(vals):
     s = st.stdev(vals) if len(vals) > 1 else 0.0
     return m, s, len(vals)
 
-
 def by_tools(samples):
     g = {}
     for s in samples:
         g.setdefault(s["n_tools"], []).append(s)
     return {k: g[k] for k in sorted(g)}
 
-
 out = {"boot": {}, "tools": {}, "kv": {}}
 
-# ---------------------------------------------------------------- boot times
-# Recompute from the raw samples rather than trusting the stored mean/std/min/max,
-# which can go stale if a sample is edited by hand. The maximum is the cold start,
-# the minimum a warm load.
 for tag, rel in FILES.items():
     d = load(rel)
     ttb = d.get("time_to_boot") or {}
@@ -87,7 +65,6 @@ for tag, rel in FILES.items():
             "min": round(min(raw), 2), "max": round(max(raw), 2), "count": n,
         }
 
-# ------------------------------------------------ per-tool-count statistics
 TOOL_FILES = ["qwen3_noKV", "fgemma_noKV", "fgemma_KV"]
 for tag in TOOL_FILES:
     d = load(FILES[tag])
@@ -97,8 +74,6 @@ for tag in TOOL_FILES:
         got = [r for r in rs if r["got_result"]]
         d_ttft_m, d_ttft_s, _ = mstd([r["dispatch_ttft_ms"] for r in rs])
         d_tin_m, _, _ = mstd([r["dispatch_tokens_in"] for r in rs])
-        # stage columns are all averaged over the completed queries so that
-        # query->tool + tool->result + result->reply == E2E exactly.
         q2t_m, q2t_s, _ = mstd([r["query_to_tool_ms"] for r in got])
         a_ttft_m, a_ttft_s, _ = mstd([r["answer_ttft_ms"] for r in got])
         a_tin_m, _, _ = mstd([r["answer_tokens_in"] for r in got])
@@ -118,7 +93,6 @@ for tag in TOOL_FILES:
         }
     out["tools"][tag] = rows
 
-# ------------------------------------- KV cache: cold first vs warm cached
 d = load(FILES["fgemma_KV"])
 groups = by_tools(d["samples"])
 kv = {}
@@ -127,7 +101,6 @@ for nt, rs in groups.items():
     cold = rs_sorted[0]
     warm = rs_sorted[1:]
     w_ttft_m, w_ttft_s, w_n = mstd([r["dispatch_ttft_ms"] for r in warm])
-    # steady-state (warm) stage breakdown excludes the one cold prefill per pool
     got_warm = [r for r in warm if r["got_result"]]
     wtin_m, _, _ = mstd([r["dispatch_tokens_in"] for r in warm])
     wq2t_m, wq2t_s, _ = mstd([r["query_to_tool_ms"] for r in got_warm])
@@ -146,10 +119,6 @@ for nt, rs in groups.items():
     }
 out["kv"] = kv
 
-# --------------------------------------------- replies-scaling statistics
-# One tool is exposed and a growing number of sensing agents return a result
-# (1, 5, 10, 15, 20). The dispatch stage is invariant (single tool); the answer
-# stage grows because the aggregation prompt lengthens with the number of results.
 out["replies"] = {}
 for cfg, rel in REPLY_FILES.items():
     drep = load(rel)
@@ -184,7 +153,6 @@ for cfg, rel in REPLY_FILES.items():
 with open(os.path.join(HERE, "computed_stats.json"), "w", encoding="utf-8") as fh:
     json.dump(out, fh, indent=2)
 
-# --------------------------------------------------- pretty console report
 def sfmt(pair):
     if pair[0] is None:
         return "   -   "
@@ -224,19 +192,11 @@ for cfg, rep in out["replies"].items():
               % (nr, sfmt(r["dispatch_ttft_ms"]), sfmt(r["answer_ttft_ms"]),
                  r["answer_tokens_in"], r["answer_tokens_out"], sfmt(r["e2e_ms"])))
 
-# --------------------------------------------------------------- TTFT plot
-# Two panels (one per device/model) because the STM32 CPU and the Hailo operate
-# on very different time scales. Each panel shows per-sample TTFT against prompt
-# length (tokens in) for the tool-dispatch stage and for the final-reply stage,
-# so the prefill-dominated growth is visible. The STM32 panel also overlays the
-# short-prompt + KV-cache configuration (average over the cached queries) to show
-# how much of that growth the cache removes.
 import numpy as np
 
-COL_DISP = "#2f6db5"   # tool-dispatch stage (full prompt, no KV)
-COL_ANS = "#e08214"    # final-reply stage
-COL_KV = "#2ca25f"     # tool-dispatch stage (short prompt, KV cached)
-
+COL_DISP = "#2f6db5"
+COL_ANS = "#e08214"
+COL_KV = "#2ca25f"
 
 def stage_points(tag):
     d = load(FILES[tag])
@@ -250,10 +210,7 @@ def stage_points(tag):
             ax_y.append(s["answer_ttft_ms"] / 1000.0)
     return dx, dy, ax_x, ax_y
 
-
 def kv_points():
-    """Per pool return the cold first-load point (query_idx 0) and the warm
-    average point (mean/std over the cached queries, query_idx >= 1)."""
     d = load(FILES["fgemma_KV"])
     cold_x, cold_y = [], []
     warm_x, warm_y, warm_e = [], [], []
@@ -269,7 +226,6 @@ def kv_points():
         warm_e.append(st.stdev(ttft) if len(ttft) > 1 else 0.0)
     return (cold_x, cold_y), (warm_x, warm_y, warm_e)
 
-
 def fit_line(ax, dx, dy, color):
     if len(set(dx)) > 1:
         slope, intercept = np.polyfit(dx, dy, 1)
@@ -278,10 +234,8 @@ def fit_line(ax, dx, dy, color):
                 linewidth=1.2, alpha=0.7, zorder=2,
                 label="linear fit (%.1f ms/token)" % (slope * 1000.0))
 
-
 fig, axes = plt.subplots(1, 2, figsize=(11.5, 4.5))
 
-# ---- left panel: functiongemma, no-KV full prompt vs short-prompt KV cache ----
 axf = axes[0]
 dx, dy, ax_x, ax_y = stage_points("fgemma_noKV")
 axf.scatter(dx, dy, s=34, color=COL_DISP, edgecolor="white", linewidth=0.5,
@@ -290,11 +244,9 @@ fit_line(axf, dx, dy, COL_DISP)
 axf.scatter(ax_x, ax_y, s=34, color=COL_ANS, edgecolor="white", linewidth=0.5,
             marker="s", label="final-reply, full prompt, no KV", zorder=3)
 (cx, cy), (kx, ky, ke) = kv_points()
-# cold first-load of each pool: hollow triangles, sit on the no-KV dispatch curve
 axf.scatter(cx, cy, s=52, facecolor="none", edgecolor=COL_KV, linewidth=1.6,
             marker="^", zorder=4,
             label="tool-dispatch, short prompt, KV first load (cold)")
-# warm average: filled triangles with std error bars, only over the cached queries
 axf.errorbar(kx, ky, yerr=ke, fmt="^", ms=8, color=COL_KV, mec="white", mew=0.5,
              capsize=3, linestyle="none", zorder=5,
              label="tool-dispatch, short prompt, KV cached avg (warm only)")
@@ -304,7 +256,6 @@ axf.set_ylabel("time to first token (s)")
 axf.grid(True, alpha=0.3)
 axf.legend(fontsize=7.5, loc="upper left")
 
-# ---- right panel: qwen3 ----
 axq = axes[1]
 dx, dy, ax_x, ax_y = stage_points("qwen3_noKV")
 axq.scatter(dx, dy, s=34, color=COL_DISP, edgecolor="white", linewidth=0.5,
@@ -324,11 +275,6 @@ outpng = os.path.join(FIGDIR, "ttft_vs_tokens.png")
 fig.savefig(outpng, dpi=150)
 print("\nWrote figure:", os.path.relpath(outpng, HERE))
 
-# ------------------------------------------------------ replies-scaling plot
-# Two panels, mirroring the tool-scaling figure. The answer-stage TTFT (prefill of
-# the aggregation prompt) is plotted against the answer prompt length (tokens in).
-# STM32 panel compares KV reset vs KV reuse; the Hailo panel shows Qwen3. The
-# number of aggregated replies is annotated on each point.
 def rep_series(cfg):
     d = load(REPLY_FILES[cfg])
     g = {}
@@ -342,10 +288,8 @@ def rep_series(cfg):
     ys = [st.mean(g[n]["y"]) for n in nrs]
     return nrs, xs, ys
 
-
 figr, axes2 = plt.subplots(1, 2, figsize=(11.5, 4.5))
 
-# ---- left: functiongemma on STM32, reset vs kvreuse ----
 axl = axes2[0]
 for cfg, color, marker, lab in [
         ("fgemma_reset", COL_DISP, "o", "no KV reuse (reset)"),
@@ -366,7 +310,6 @@ axl.set_ylabel("answer-stage TTFT (s)")
 axl.grid(True, alpha=0.3)
 axl.legend(fontsize=7.5, loc="upper left")
 
-# ---- right: qwen3 on Hailo ----
 axrp = axes2[1]
 nrs, xs, ys = rep_series("qwen3")
 axrp.scatter(xs, ys, s=40, color=COL_ANS, edgecolor="white", linewidth=0.5,

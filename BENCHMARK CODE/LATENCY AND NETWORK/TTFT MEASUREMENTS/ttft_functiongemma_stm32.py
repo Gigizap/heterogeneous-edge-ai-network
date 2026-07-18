@@ -49,7 +49,6 @@ STOP = ["<end_of_turn>", "<end_function_call>", "<start_function_response>"]
 DISPATCH_MAX_TOKENS = 256
 ANSWER_MAX_TOKENS = 512
 
-
 def make_tools(n):
     if n <= 0:
         return []
@@ -65,11 +64,9 @@ def make_tools(n):
             "parameters": {"type": "object", "properties": {}, "required": []}}})
     return tools
 
-
 def _avg(vals):
     xs = [v for v in vals if v is not None]
     return round(sum(xs) / len(xs), 4) if xs else None
-
 
 def _generate(llm, prompt, max_tokens):
     tokens_in = len(llm.tokenize(prompt.encode("utf-8"), special=True))
@@ -94,7 +91,6 @@ def _generate(llm, prompt, max_tokens):
             "tokens_in": tokens_in, "tokens_out": tokens_out,
             "gen_s": round(gen_s, 4), "decode_tps": decode_tps,
             "text": out_text}
-
 
 def run_query(llm, tools, msg):
     disp_msgs = [{"role": "developer", "content": DISPATCH_SYSTEM_FG},
@@ -137,7 +133,6 @@ def run_query(llm, tools, msg):
         row["end_to_end_s"] = round(d["gen_s"] + a["gen_s"], 4)
 
     return row
-
 
 def main():
     llm = Llama(model_path=str(_MODEL), n_ctx=4096,
@@ -183,7 +178,6 @@ def main():
                                "configs": configs},
                               indent=2), encoding="utf-8")
     log.info("wrote %s", out)
-
 
 if __name__ == "__main__":
     main()

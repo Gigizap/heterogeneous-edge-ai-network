@@ -1,46 +1,6 @@
-"""
-LatencyTest1/bench_core.py
-
-Shared engine for the FIRST latency test (2 devices, no laptop).
-
-Two roles, driven by the four thin scripts next to this file:
-
-  * LEADER  (test_raspberry_leader.py / test_stm32_leader.py)
-        Uses the LIVE leader inference path - Workflow1 (qwen3 on the Hailo NPU)
-        on the Pi, functiongemma on CPU on the STM32 - and times, per query:
-            query_to_tool   = available_tools() + _dispatch()   (query received -> tool sent)
-            tool_to_result  = net.dispatch()                    (tool sent -> result received)
-            result_to_reply = _answer()                         (result received -> reply ready)
-        These are the exact hooks the live pipeline calls (BaseWorkflow._run_pipeline),
-        so the numbers match main.py; only the Telegram/backup envelope (which is
-        OUTSIDE those three intervals) is stripped.
-
-  * SENSING (test_raspberry_sensing.py / test_stm32_sensing.py)
-        Runs the LIVE detection skill and measures, per tools/call:
-            time_to_reply   = tool received -> result sent      (no network lag)
-
-The "number of tools" axis (1, 6, 12, 18, 24) is REAL, not simulated: the sensing
-agent actually exposes N tools (detect_people + wrong_tool_1..wrong_tool_(N-1)),
-and the leader picks from what it fetched over the network. The leader is the
-orchestrator: before each config it tells the sensing agent how many tools to
-expose (bench/set_tools), re-pulls tools/list so its registry matches, runs the
-10 queries, then signals the end (bench/done).
-
-bench/set_tools and bench/done are TEST-ONLY control messages spoken only between
-these scripts. They are deliberately NOT added to the production sensing_agent /
-protocol - running these scripts bypasses main.py and changes no live preset.
-
-Stdlib only (json, time, statistics, threading, itertools, logging, pathlib).
-The heavy runtimes (Hailo, llama.cpp, TFLite, camera) come in only through the
-LIVE preset modules the thin scripts import - never from this file.
-"""
-
 import sys
 import pathlib
 
-# OS-agnostic imports: put the IMPLEMENTATION dir (parent) and this dir on the
-# path so "from ConnectionLogic..." and "import bench_core" both resolve no
-# matter the current working directory or platform.
 _HERE = pathlib.Path(__file__).resolve().parent
 _IMPL = _HERE.parent
 for _p in (str(_IMPL), str(_HERE)):
@@ -62,16 +22,8 @@ from utils import start_async_loop, schedule
 
 log = logging.getLogger("latencytest")
 
-
-# ── test configuration ───────────────────────────────────────────────────────
-
-# 5 configurations: how many tools the sensing agent exposes (1 correct + rest wrong).
 TOOL_COUNTS = (1, 6, 12, 18, 24)
 
-# The single correct tool. Same name AND description exposed to both couples, so
-# the two leaders are measured on an identical dispatch prompt (same token count);
-# on the STM32 it maps to the live person_detection skill, on the Pi to
-# object_detection filtered to "person" (see the sensing scripts).
 CORRECT_TOOL = "detect_people"
 
 DETECT_PEOPLE_DEF = {
@@ -86,7 +38,6 @@ DETECT_PEOPLE_DEF = {
     },
 }
 
-# 10 queries that each require the person-detection tool.
 PERSON_QUERIES = [
     "can you use the detect person tool",
     "is there a person in front of the camera",
@@ -100,18 +51,10 @@ PERSON_QUERIES = [
     "look for a person with the camera",
 ]
 
-# Test TCP ports (distinct from main.py's 5555 and BenchmarkLeader's 5600/5602).
-# The two roles run on different devices, so these never collide; distinct values
-# just keep things sane if someone runs both on one box.
 SENSING_PORT = 5720
 LEADER_PORT = 5721
 
-# tools/list request ids for the leader's manual re-pulls (kept distinct from the
-# dispatcher's "rpc-N" and LeaderNetwork's "list-N" so nothing is mis-routed).
 _list_ids = itertools.count(1)
-
-
-# ── generic helpers ──────────────────────────────────────────────────────────
 
 def _wrong_tool(i: int) -> dict:
     return {
@@ -123,9 +66,7 @@ def _wrong_tool(i: int) -> dict:
         },
     }
 
-
 def build_tool_defs(n: int, correct_def: dict = DETECT_PEOPLE_DEF) -> list:
-    """[correct_def] padded with wrong_tool_i until the list has exactly n entries."""
     defs = [correct_def]
     i = 1
     while len(defs) < n:
@@ -133,9 +74,7 @@ def build_tool_defs(n: int, correct_def: dict = DETECT_PEOPLE_DEF) -> list:
         i += 1
     return defs
 
-
 def _stats(values, ndigits: int) -> dict:
-    """count / mean / std (population) / min / max for a list of numbers."""
     vals = [v for v in values if isinstance(v, (int, float))]
     if not vals:
         return {"count": 0, "mean": None, "std": None, "min": None, "max": None}
@@ -147,27 +86,15 @@ def _stats(values, ndigits: int) -> dict:
         "max": round(max(vals), ndigits),
     }
 
-
 def _save_json(path: Path, data: dict) -> None:
     path.write_text(json.dumps(data, indent=2, ensure_ascii=False), encoding="utf-8")
-
 
 def _results_dir(out_dir) -> Path:
     d = Path(out_dir) if out_dir else (_HERE / "results")
     d.mkdir(parents=True, exist_ok=True)
     return d
 
-
-# ── network bringup (shared by both roles) ───────────────────────────────────
-
 def start_network(agent_id: str, port: int):
-    """Start a transport + discovery on a background event loop.
-
-    Wires discovery -> transport peer table (so this agent can send to / reply to
-    whoever it discovers). Leaders then hand transport+discovery to make_network /
-    the leader boot(); sensing agents set transport.on_message to their handler.
-    Returns (loop, transport, discovery).
-    """
     loop = start_async_loop()
     transport = P2PTransport(agent_id, port, lambda msg: None)
     transport._event_loop = loop
@@ -180,9 +107,7 @@ def start_network(agent_id: str, port: int):
     schedule(loop, discovery.start())
     return loop, transport, discovery
 
-
 def wait_for_peer(transport, timeout: float = 60.0) -> bool:
-    """Block until at least one peer (the other role) is in the transport table."""
     deadline = time.time() + timeout
     while time.time() < deadline:
         if getattr(transport, "_peers", {}):
@@ -190,19 +115,7 @@ def wait_for_peer(transport, timeout: float = 60.0) -> bool:
         time.sleep(0.5)
     return bool(getattr(transport, "_peers", {}))
 
-
-# ── streaming + boot-timing helpers (leader side) ─────────────────────────────
-
 def timed_stream(pieces):
-    """Consume an iterator of text pieces (one per generated token), timing the
-    FIRST token (TTFT) and the whole generation, while accumulating the text.
-
-    Returns (text, ttft_s, gen_s, n_pieces). Empty pieces are ignored (they do
-    not count as the first token nor toward n_pieces), so a model that emits a
-    stop token as "" does not skew TTFT. n_pieces is a token count only when the
-    backend yields one token per piece; callers that can get an exact count
-    (e.g. llama.cpp's n_tokens) should override it.
-    """
     t0 = time.perf_counter()
     ttft = None
     text = ""
@@ -216,25 +129,13 @@ def timed_stream(pieces):
     gen_s = time.perf_counter() - t0
     return text, (ttft if ttft is not None else gen_s), gen_s, n
 
-
 def decode_tps(tokens_out: int, ttft_s: float, gen_s: float):
-    """Decode throughput = (tokens_out - 1) / (gen_s - ttft_s). None if undefined
-    (the first token is attributed to prefill, so it is excluded)."""
     decode_s = gen_s - ttft_s
     if tokens_out > 1 and decode_s > 0:
         return round((tokens_out - 1) / decode_s, 2)
     return None
 
-
 def measure_time_to_boot(load_fn, unload_fn, n: int = 10) -> dict:
-    """Measure the LLM cold-start cost: load the model n times, fully evicting it
-    between loads. load_fn() -> (elapsed_s, handle) times ONE cold load and
-    returns something unload_fn(handle) can release. Returns
-    {unit, samples(ms), count, mean, std, min, max}.
-
-    The model file must already be present (download OUTSIDE this loop) so the
-    samples measure load time, not a one-off download on the first iteration.
-    """
     samples = []
     for i in range(n):
         elapsed, handle = load_fn()
@@ -250,23 +151,13 @@ def measure_time_to_boot(load_fn, unload_fn, n: int = 10) -> dict:
              st["mean"], st["std"], st["min"], st["max"], st["count"])
     return {"unit": "ms", "samples": samples, **st}
 
-
-# ══════════════════════════════════════════════════════════════════════════════
-# LEADER side
-# ══════════════════════════════════════════════════════════════════════════════
-
 def _sensing_peers(transport, net) -> list:
-    """Which peer(s) to drive. Prefer the owners of the correct tool (the sensing
-    agent) if the registry knows them yet, else every current peer (there is one)."""
     owners = sorted(net.registry.owners(CORRECT_TOOL))
     if owners:
         return owners
     return list(getattr(transport, "_peers", {}).keys())
 
-
 def _repull_and_wait(transport, net, peers, n: int, timeout: float = 6.0) -> bool:
-    """Re-send tools/list to the sensing peer(s) and wait until the leader's
-    registry reflects exactly n tools (i.e. the sensing agent has switched)."""
     deadline = time.time() + timeout
     while time.time() < deadline:
         for pid in peers:
@@ -280,9 +171,7 @@ def _repull_and_wait(transport, net, peers, n: int, timeout: float = 6.0) -> boo
             return True
     return len(net.available_tools()) == n
 
-
 def _set_remote_tools(transport, net, n: int) -> None:
-    """Tell the sensing agent to expose n tools, then sync the leader's registry."""
     peers = _sensing_peers(transport, net)
     if not peers:
         log.warning("no sensing peer to configure for n=%d", n)
@@ -294,24 +183,17 @@ def _set_remote_tools(transport, net, n: int) -> None:
             "method": "bench/set_tools",
             "params": {"n": n, "correct_tool": CORRECT_TOOL},
         })
-    time.sleep(0.3)  # let the switch apply before we re-pull
+    time.sleep(0.3)
     if not _repull_and_wait(transport, net, peers, n):
         log.warning("registry shows %d tool(s), expected %d (continuing)",
                     len(net.available_tools()), n)
 
-
 def _signal_done(transport, net) -> None:
-    """Tell the sensing agent the whole run is over so it writes its results."""
     for pid in _sensing_peers(transport, net):
         transport.send_sync(pid, {"jsonrpc": "2.0", "id": "bench-done", "method": "bench/done"})
-    time.sleep(1.0)  # let the sensing agent finalize + flush its reply
-
+    time.sleep(1.0)
 
 def _leader_aggregate(samples: list) -> list:
-    """Per-config (and the caller adds overall) avg/std of the stage latencies plus
-    the TTFT / token-count / decode-tps metrics for both LLM stages. Stats are over
-    samples that produced a result, so a wrong dispatch that timed out does not skew
-    them; accuracy is over all samples."""
     metrics = [
         "query_to_tool_ms", "dispatch_ttft_ms",
         "dispatch_tokens_in", "dispatch_tokens_out", "dispatch_tps",
@@ -339,37 +221,10 @@ def _leader_aggregate(samples: list) -> list:
         out.append(agg)
     return out
 
-
 def run_leader_benchmark(*, device, preset_label, transport=None, net=None,
                          dispatch_stream, answer_stream, reset_fn=None,
                          time_to_boot=None, out_dir=None,
                          tool_fn=None, tools_for=None) -> dict:
-    """Drive every (config x query), STREAMING both LLM stages so TTFT + decode
-    tk/s are measured alongside the stage latencies, and save.
-
-    dispatch_stream(query, tool_defs) -> dict with:
-        fn           picked tool name, or None when the model answered in prose
-        args         parsed arguments (dict) or None
-        reply_text   the prose reply when fn is None (else "")
-        ttft_s, gen_s, tokens_out, decode_tps   dispatch generation metrics
-    answer_stream(query, fn, args, replies, tool_defs) -> dict with:
-        text                                    the final reply
-        ttft_s, gen_s, tokens_out, decode_tps   answer generation metrics
-    reset_fn()                (optional; per-query state reset)
-    time_to_boot              (optional dict from measure_time_to_boot; saved as-is)
-
-    NETWORK mode (default): the tool is dispatched over the network to the sensing
-    agent that owns it, so the skill runs on the real sensing device
-    (tool_to_result_ms is that round trip). Pass transport + net.
-
-    LOCAL mode: pass tool_fn(fn, args) -> replies and tools_for(n) -> tool_defs.
-    The tool then runs in-process (e.g. a fixed-latency mock) with NO discovery /
-    peer / network, and the bench/set_tools + bench/done handshake is skipped;
-    transport + net are ignored. Everything else (metrics, schema, saving) is
-    identical, so a local run's JSON is directly comparable to a network run's.
-
-    The JSON is rewritten after EVERY query so nothing is lost on a crash.
-    """
     local = tool_fn is not None
     out = _results_dir(out_dir)
     stamp = time.strftime("%Y%m%d_%H%M%S")
@@ -398,15 +253,11 @@ def run_leader_benchmark(*, device, preset_label, transport=None, net=None,
             tools_now = net.available_tools()
         log.info("leader sees %d tool(s) for this config", len(tools_now))
 
-        # Per-config record of exactly what the LLM was given: the tool defs
-        # attached (names + descriptions + params) and the precise prompt
-        # construction of each stage, captured live from the closures on the
-        # first query that exercises that stage.
         spec = {
             "n_tools": n,
             "tools": tools_now,
-            "dispatch_prompt": None,   # the tool-call stage prompt (system + N tools + query)
-            "answer_prompt": None,     # the tool-reply stage prompt (system + called tool + result)
+            "dispatch_prompt": None,
+            "answer_prompt": None,
         }
         result["prompt_specs"].append(spec)
 
@@ -495,7 +346,7 @@ def run_leader_benchmark(*, device, preset_label, transport=None, net=None,
                 log.exception("query failed (n=%d q=%d)", n, qi)
 
             result["samples"].append(sample)
-            _save_json(path, result)  # save after every query
+            _save_json(path, result)
 
     result["aggregate"] = _leader_aggregate(result["samples"])
     _save_json(path, result)
@@ -504,17 +355,7 @@ def run_leader_benchmark(*, device, preset_label, transport=None, net=None,
     log.info("leader benchmark complete -> %s", path)
     return result
 
-
-# ══════════════════════════════════════════════════════════════════════════════
-# SENSING side
-# ══════════════════════════════════════════════════════════════════════════════
-
 class SensingBench:
-    """Serves tools/list + tools/call for the live detection skill, switches how
-    many tools it exposes on bench/set_tools, and times every tools/call
-    (time_to_reply, seconds). On bench/done it writes per-config and overall
-    avg/std and stops.
-    """
 
     def __init__(self, *, device, preset_label, skill_fn, transport,
                  out_dir=None, warmup=True):
@@ -530,7 +371,7 @@ class SensingBench:
         self._lock = threading.Lock()
         self.current_n = 1
         self.current_defs = build_tool_defs(1)
-        self.calls = []              # {n_tools, tool, time_to_reply_s, correct, result}
+        self.calls = []
         self.done = threading.Event()
         self._finalized = False
 
@@ -538,8 +379,6 @@ class SensingBench:
             self._warmup()
 
     def _warmup(self):
-        """One detection at startup so the model + camera load OUTSIDE the measured
-        calls (the first real tools/call is then steady-state)."""
         try:
             log.info("sensing warmup: one detection to load model/camera ...")
             r = self.skill_fn()
@@ -547,10 +386,8 @@ class SensingBench:
         except Exception as e:
             log.warning("sensing warmup failed (continuing anyway): %r", e)
 
-    # ── message handling ─────────────────────────────────────────────────────
-
     def on_message(self, msg: dict):
-        if msg.get("type"):        # election / backup / capability - not our concern
+        if msg.get("type"):
             return
         method = msg.get("method")
         if not method:
@@ -583,8 +420,6 @@ class SensingBench:
                 except Exception as e:
                     text = f"detection error: {e}"
             else:
-                # A padding tool: the leader mis-dispatched. Answer so it does not
-                # hang; this call is excluded from the correct-tool aggregates.
                 text = f"{name}: wrong tool executed (placeholder)"
             dt = time.perf_counter() - t_recv
             with self._lock:
@@ -603,7 +438,7 @@ class SensingBench:
             params = msg.get("params") or {}
             n = int(params.get("n", 1))
             with self._lock:
-                self.current_n = n                       # set first so calls bucket right
+                self.current_n = n
                 self.current_defs = build_tool_defs(n)
             log.info("bench/set_tools -> now exposing %d tool(s)", n)
             respond({"result": {"n": n, "exposed": n}})
@@ -616,8 +451,6 @@ class SensingBench:
             return
 
         respond({"error": {"code": -32601, "message": f"method not found: {method}"}})
-
-    # ── finalize + serve ─────────────────────────────────────────────────────
 
     def _finalize(self):
         with self._lock:
@@ -640,15 +473,13 @@ class SensingBench:
             "tool_counts": list(TOOL_COUNTS),
             "time_to_reply_unit": "seconds",
             "calls": calls,
-            "per_config": per_config,   # avg +- std of time_to_reply per tool count
-            "overall": overall,         # avg +- std across all configs
+            "per_config": per_config,
+            "overall": overall,
         }
         _save_json(self.path, data)
         log.info("sensing results written -> %s", self.path)
 
     def serve(self):
-        """Attach the handler and block until the leader signals bench/done
-        (or Ctrl-C, which finalizes whatever was collected)."""
         self.transport.on_message = self.on_message
         log.info("sensing agent ready (%s) - waiting for the leader to drive configs",
                  self.preset_label)
@@ -658,5 +489,5 @@ class SensingBench:
         except KeyboardInterrupt:
             log.info("interrupted - finalizing partial results")
             self._finalize()
-        time.sleep(0.5)  # let the bench/done reply flush
+        time.sleep(0.5)
         log.info("sensing agent exiting")

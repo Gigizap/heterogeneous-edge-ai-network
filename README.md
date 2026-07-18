@@ -15,13 +15,62 @@ Sensing agents and leader agents can **co-live on the same physical device** —
 
 Leadership is decided by **on-device election**. The election score is computed **per device** from its hardware (accelerator, RAM, CPU, memory bandwidth); the highest-scoring device runs the leader agent. If that agent goes down, the next-best device is promoted automatically — conversation history included (continuously backed up on the second-strongest device).
 
-2 approaches shown in the following picture are proposed they differ with respect to how tool calling is performed.
+2 approaches shown in the following pictures are proposed they differ with respect to how tool calling is performed.
 Given a user query through telegram:
 1) approach 1 uses an LLM on the leader agent to perform distributed tool calling, then gathers the results and gives the user a natural language reply
+
+![Approach 1: full-LLM dispatch](figures/approach1.png)
+
 2) approach 2 uses a classifier or cross encoder to perform the tool call directly on the sensing agent, the LLM on the leader agent gathers the results and gives the user a natural language reply as in approach 1.
-![Architecture](IMPLEMENTATION/images/architecture.png)
+
+![Approach 2: classifier + LLM dispatch](figures/approach2.png)
 
 NOTE: Only approach 1 is fully implemented!
+---
+
+## How it works: runtime flow
+
+The seven flowcharts below trace a device from power-on, through peer discovery, leader election and failover, to answering a user query.
+
+Shape legend:
+
+| Symbol | Meaning |
+|---|---|
+| Ellipse / oval | Terminator (entry point or "Done") |
+| Rounded rectangle | Process / action step |
+| Diamond | Decision / branch |
+| Parallelogram | Input/Output: data sent to or received from another node |
+| Coloured box with "(see X diagram)" text | Call into another flowchart (a subroutine) |
+| Green box, red dashed border | The shared tool-list data store, and reads/writes on it |
+
+**1. Device startup** - load agent presets, then enter the discovery loop.
+
+![Device startup](figures/1_startup.png)
+
+**2. Peer discovery** - the continuous announce/listen loop that finds other agents.
+
+![Peer discovery](figures/2_discovery.png)
+
+**3. Peer joined** - what happens when a new peer is discovered.
+
+![Peer joined](figures/3_peer_joined.png)
+
+**4. Peer lost** - handling a peer that stopped announcing.
+
+![Peer lost](figures/4_peer_lost.png)
+
+**5. Leader election** - score-based selection of the single leader.
+
+![Leader election](figures/5_leader_electionpng.png)
+
+**6. Query polling** - the leader's loop that receives user queries.
+
+![Query polling](figures/6_polling_query.png)
+
+**7. Query reply** - dispatch to sensing agents, aggregate, and answer the user.
+
+![Query reply](figures/7_query_reply.png)
+
 ---
 
 ## What's in here

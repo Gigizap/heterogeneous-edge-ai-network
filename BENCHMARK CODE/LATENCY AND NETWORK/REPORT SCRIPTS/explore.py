@@ -1,12 +1,7 @@
-"""Exploration helper: dumps the schema-level facts of every data file so the
-latency analysis can be built on verified numbers, not assumptions.
-
-Run from the WRITING_REPORT folder:  python scripts/explore.py
-"""
 import json
 import os
 
-BASE = os.path.join(os.path.dirname(__file__), "..", "new_results")
+BASE = os.path.join(os.path.dirname(__file__), "..", "NEW RESULTS")
 
 FILES = {
     "qwen3_hailo_tools": "VARYING TOOLS 1 reply/leader_raspberry_20260707_170137_withtkincorrect.json",
@@ -17,11 +12,9 @@ FILES = {
     "fgemma_replies_kvreuse": "VARYING REPLIES 1 tool/leader_stm32-kvreuse_20260707_154629.json",
 }
 
-
 def load(rel):
     with open(os.path.join(BASE, rel), "r", encoding="utf-8") as fh:
         return json.load(fh)
-
 
 for tag, rel in FILES.items():
     d = load(rel)
@@ -42,10 +35,8 @@ for tag, rel in FILES.items():
     print("  n samples:", len(samples))
     if samples:
         print("  sample keys:", list(samples[0].keys()))
-    # per-bin availability of each numeric field
     binkey = "n_tools" if "n_tools" in samples[0] else "n_replies"
     if binkey not in samples[0]:
-        # figure out the binning key
         for cand in ("n_tools", "n_replies", "n_reply", "reply_count"):
             if cand in samples[0]:
                 binkey = cand

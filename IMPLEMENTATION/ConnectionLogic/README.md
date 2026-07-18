@@ -11,19 +11,19 @@ NOTE: THE PARAGRAPHS REGARDING MESH NETWORKING ARE ONLY THEORETICAL AND HAVE YET
 
 Any IP-capable device running the stack can participate. Devices discover each other via a shared broadcast domain and establish direct P2P connections. An optional DHCP/infrastructure layer handles IP assignment — if using a mesh network, this is replaced by static or MAC-derived addressing.
 
-![Generic network schema](../images/network_general.png)
+![Generic network schema](../../figures/network_general.png)
 
 ### Minimal setup
 
 The smallest meaningful deployment is a Raspberry Pi 5 (with Hailo accelerator) connected to an STM32MP257FDK board. Both run the same stack. A shared network — wired or wireless — provides IP connectivity.
 
-![Minimal two-device setup](../images/network_minimal.png)
+![Minimal two-device setup](../../figures/network_minimal.png)
 
 ### Tested setup
 
 The setup tested in development includes a Raspberry Pi 5 (with Hailo), an STM32MP257FDK, an Intel NUC, and one or more generic Linux devices. All nodes run the same code. Any device can broadcast to all others or send targeted messages.
 
-![Tested multi-device setup](../images/network_tested.png)
+![Tested multi-device setup](../../figures/network_tested.png)
 
 ---
 

@@ -1,7 +1,7 @@
 # test images folder
 
 Drop any images here (`.jpg`, `.jpeg`, `.png`, `.bmp`, `.webp`, `.tif`), then from
-the repo root run:
+the `BENCHMARK CODE/` folder run:
 
 ```bash
 python test_images.py

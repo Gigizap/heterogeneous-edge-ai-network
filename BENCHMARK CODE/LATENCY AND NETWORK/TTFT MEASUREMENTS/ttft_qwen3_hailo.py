@@ -37,7 +37,6 @@ TOOL_DEFS = [
     for i in range(1, 6)
 ]
 
-
 def main():
     hef_path = json.loads(
         (_HERE / "LeaderLogic" / "raspberry_config.json").read_text()
@@ -83,7 +82,6 @@ def main():
     out.write_text(json.dumps({"model": "qwen3-1.7b-hailo", "results": results},
                               indent=2), encoding="utf-8")
     log.info("wrote %s", out)
-
 
 if __name__ == "__main__":
     main()

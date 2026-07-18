@@ -1,6 +1,6 @@
 # LatencyTest1 - first latency test (2 devices, no laptop)
 
-> ← Back to [IMPLEMENTATION README](../README.md)
+> Back to [Latency and network README](../README.md)
 
 Self-contained scripts that measure **leader** and **sensing** latency on the two
 edge boards as the number of exposed tools grows. They bypass `main.py` (no

@@ -48,10 +48,11 @@ except ImportError:
 # Paths / constants
 # --------------------------------------------------------------------------- #
 ROOT = Path(__file__).resolve().parent
+_REPO = ROOT.parent
 
-ONNX_MODEL_PATH = ROOT / "IMPLEMENTATION" / "SensingLogic" / "raspberrypi5_yolo_CPU" / "yolov8n.onnx"
+ONNX_MODEL_PATH = _REPO / "IMPLEMENTATION" / "SensingLogic" / "raspberrypi5_yolo_CPU" / "yolov8n.onnx"
 TFLITE_MODEL_PATH = (
-    ROOT / "IMPLEMENTATION" / "SensingLogic" / "stm32mp257_yolo_CPU"
+    _REPO / "IMPLEMENTATION" / "SensingLogic" / "stm32mp257_yolo_CPU"
     / "yolov8n_320_quant_pt_uf_od_coco-person-st.tflite"
 )
 

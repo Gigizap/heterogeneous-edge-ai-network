@@ -1,13 +1,8 @@
-"""Lightweight structural sanity check for latency.tex (no LaTeX engine needed).
-
-Checks: forbidden long dashes, non-ASCII, begin/end balance, brace balance,
-first-person words, and per-row column counts inside every tabular.
-"""
 import os
 import re
 
 HERE = os.path.dirname(__file__)
-T = open(os.path.join(HERE, "..", "latency.tex"), encoding="utf-8").read()
+T = open(os.path.join(HERE, "..", "..", "WRITING_REPORT", "latency.tex"), encoding="utf-8").read()
 
 DASHES = "–—‒―"
 print("long dashes:", sum(1 for c in T if c in DASHES))

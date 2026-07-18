@@ -1,6 +1,6 @@
-# NEW AGENTIC
+# Implementation
 
-> ← Back to [root README](../README.md)
+> Back to [root README](../README.md)
 
 ---
 
@@ -29,7 +29,9 @@ Every user request goes through a two-step inference pipeline:
 
 We propose 2 architectures, currently only the first one (fully LLM based dispatch and answer generation) is implemented.
 
-![Architecture](images/architecture.png)
+![Approach 1: full-LLM dispatch](../figures/approach1.png)
+
+![Approach 2: classifier + LLM dispatch](../figures/approach2.png)
 
 > The leader can simultaneously act as a sensing device.
 

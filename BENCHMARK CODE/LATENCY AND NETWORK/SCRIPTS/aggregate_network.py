@@ -1,53 +1,16 @@
 #!/usr/bin/env python3
-"""
-SCRIPTS/aggregate_network.py
-
-Aggregate the leader-side, application-level traffic capture produced by the
-network-overlay scaling test (iso_leader.py's TrafficMeter) into per-fleet-size
-metrics, and emit a standalone LaTeX section (WRITING_REPORT/network.tex).
-
-Inputs (both live in SCRIPTS/network_data/ by default; override with flags):
-  --traffic   the per-message JSON-Lines capture. One record per message:
-              {ts, dir:"in"/"out", agent, peer, kind, bytes, msg}. `bytes` is the
-              APPLICATION JSON payload length only (newline-terminated JSON on the
-              wire) - it excludes TCP/IP/Ethernet headers, ACKs and the
-              per-message TCP handshake, exactly as TrafficMeter documents.
-  --timeline  the leader_iso_*.json whose "timeline" gives the (elapsed_s -> peers)
-              change points, i.e. how many sensing agents the leader saw over time.
-
-Method:
-  Each message is stamped with an elapsed time (ts - first_ts) and assigned to the
-  fleet size in effect at that moment. For every held size N in {1,10,20,50,100}
-  the metrics are averaged over the 60 s hold window that begins when the leader
-  first observes N peers (capped at the next size change, so the 100-agent window
-  excludes the ~15 s watchdog drain after the fleet stops). A leader-idle baseline
-  (0 agents) is measured over the post-run quiet period. Everything is normalised
-  to per-minute rates.
-
-Message kinds (see TrafficMeter.classify):
-  HELLO       UDP discovery beacon (dir out = our announce; dir in from a fake =
-              a peer's beacon we receive; dir in from ourselves = broadcast echo).
-  tools/list  the leader's pull-on-join request to a newly discovered peer (out).
-  result      a peer's tools/list reply the leader aggregates (in).
-
-Output: writes network.tex and prints the same tables to stdout. Stdlib only.
-Re-run after a new capture to refresh the report.
-"""
-
 import argparse
 import json
 import pathlib
 
-HOLD_S = 60.0            # each fleet size is held for one minute
-IDLE_GUARD_S = 10.0      # skip this many seconds after the fleet drops before
-                         # measuring the idle baseline (let the drop settle)
+HOLD_S = 60.0
+IDLE_GUARD_S = 10.0
 
 _HERE = pathlib.Path(__file__).resolve().parent
-_REPO = _HERE.parent
+_BENCHMARK = _HERE.parent.parent
 DEF_TRAFFIC  = _HERE / "network_data" / "traffic_stm32-mock-leader_5700_20260707_184355.jsonl"
 DEF_TIMELINE = _HERE / "network_data" / "leader_iso_20260707_184355.json"
-DEF_OUT      = _REPO / "WRITING_REPORT" / "network.tex"
-
+DEF_OUT      = _BENCHMARK / "WRITING_REPORT" / "network.tex"
 
 def load_records(path: pathlib.Path):
     recs = []
@@ -58,10 +21,7 @@ def load_records(path: pathlib.Path):
                 recs.append(json.loads(line))
     return recs
 
-
 def bin_windows(timeline, data_end_elapsed):
-    """From the (elapsed_s, peers) change points build one window per held size and
-    one idle-baseline window. Returns a list of dicts: {label, peers, start, end}."""
     tl = sorted(timeline, key=lambda e: e["elapsed_s"])
     windows = []
     for i, entry in enumerate(tl):
@@ -72,20 +32,16 @@ def bin_windows(timeline, data_end_elapsed):
             windows.append({"label": str(peers), "peers": peers,
                             "start": start, "end": min(start + HOLD_S, nxt)})
         elif i == len(tl) - 1 or (i > 0 and tl[i - 1]["peers"] > 0):
-            # a 0-peers point that follows a populated fleet = the teardown/idle tail
             end = data_end_elapsed if i + 1 >= len(tl) else nxt
             s = start + IDLE_GUARD_S
             if end - s > 5.0:
                 windows.append({"label": "0", "peers": 0, "start": s, "end": end})
     return windows
 
-
 def is_self(rec):
     return rec.get("peer") == rec.get("agent")
 
-
 def aggregate(recs, windows):
-    """For each window accumulate per-minute rates, overall and by message class."""
     t0 = min(r["ts"] for r in recs)
     rows = []
     for w in windows:
@@ -112,7 +68,7 @@ def aggregate(recs, windows):
                     acc["hello_out"] += b
                 elif r["kind"] == "tools/list":
                     acc["toolslist_out"] += b
-        pm = 60.0 / dur if dur > 0 else 0.0        # per-minute normaliser
+        pm = 60.0 / dur if dur > 0 else 0.0
         rows.append({
             "label": w["label"], "peers": w["peers"], "dur": dur,
             "msgs_in_pm":  acc["msgs_in"] * pm,
@@ -127,9 +83,7 @@ def aggregate(recs, windows):
         })
     return rows
 
-
 def lin_fit(xs, ys):
-    """Least-squares slope + intercept of ys ~ a*xs + b (stdlib)."""
     n = len(xs)
     sx, sy = sum(xs), sum(ys)
     sxx = sum(x * x for x in xs)
@@ -141,20 +95,18 @@ def lin_fit(xs, ys):
     b = (sy - a * sx) / n
     return a, b
 
-
 def kib(x):
     return x / 1024.0
-
 
 def build_tex(rows, slope_bytes_per_agent):
     size_rows = [r for r in rows if r["peers"] > 0]
     idle = next((r for r in rows if r["peers"] == 0), None)
     ordered = ([idle] if idle else []) + sorted(size_rows, key=lambda r: r["peers"])
 
-    def f1(x):  # KiB/min, 1 decimal
+    def f1(x):
         return f"{kib(x):.1f}"
 
-    def i0(x):  # integer per-minute
+    def i0(x):
         return f"{x:.0f}"
 
     load_lines = []
@@ -258,7 +210,6 @@ leader's own broadcast echo (fixed). KiB/min, application payload only.}}
 \\end{{document}}
 """
 
-
 def main():
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -279,7 +230,6 @@ def main():
     slope, _ = lin_fit([r["peers"] for r in size_rows],
                        [r["bytes_in_pm"] for r in size_rows])
 
-    # console summary
     print(f"records parsed: {len(recs)}   capture span: {data_end:.0f}s")
     print(f"{'agents':>7} {'win_s':>6} {'in/min':>8} {'out/min':>8} "
           f"{'KiB_in/min':>11} {'KiB_out/min':>12}")
@@ -292,7 +242,6 @@ def main():
 
     args.out.write_text(build_tex(rows, slope), encoding="utf-8")
     print(f"\nwrote {args.out}")
-
 
 if __name__ == "__main__":
     main()

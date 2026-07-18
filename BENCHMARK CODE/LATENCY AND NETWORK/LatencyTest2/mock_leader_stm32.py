@@ -1,44 +1,7 @@
 #!/usr/bin/env python3
-"""
-LatencyTest2/mock_leader_stm32.py - run on the STM32MP257F-DK.
-
-SECOND latency test, LEADER side: a MOCK leader that runs the LIVE network
-overlay (Discovery + LeaderNetwork: tool registry + pull-on-join) but NO LLM,
-NO election / polling, NO Telegram, and NO tool dispatch. Its only job is to
-discover the fake sensing fleet (fake_sensing_fleet.py, on a laptop) and
-aggregate their tools, so an EXTERNAL power meter on the board can capture how
-the network overlay's power draw scales as the fleet grows:
-
-    1 -> 10 -> 20 -> 50 -> 100 sensing agents
-
-Because the whole point is to isolate the network-overlay cost, the leader does
-as little else as possible:
-  - every fleet agent exposes ONE shared placeholder tool, so there is no
-    per-tool read/write work and no dispatch is ever issued;
-  - the timeline JSON is written only when the observed fleet size CHANGES (a
-    handful of writes), never on a hot loop, so disk I/O does not pollute the
-    power trace;
-  - a light heartbeat is logged every few seconds only to time-align the log
-    against the external power capture.
-
-This deliberately does NOT reuse LeaderLogic/run_mock_leader.py: that mock builds
-NO LeaderNetwork and echoes an LLM stub, which is the opposite of what we need
-here (we want the live aggregation path, and no LLM).
-
-Run from the IMPLEMENTATION folder (nothing to type during the run):
-    python LatencyTest2/mock_leader_stm32.py
-
-Output: LatencyTest2/results/leader_stm32_<ts>.json
-  - found_at_s / registered_at_s   per-agent discovery + tool-registration times
-  - reg_latency_stats              found -> tool-registered latency (count/mean/std/min/max)
-  - timeline                       (elapsed, peers, tool_owners) at each fleet-size change
-"""
-
 import sys
 import pathlib
 
-# OS-agnostic imports: put the IMPLEMENTATION dir (parent) and this dir on the
-# path so "from ConnectionLogic..." resolves no matter the working directory.
 _HERE = pathlib.Path(__file__).resolve().parent
 _IMPL = _HERE.parent
 for _p in (str(_IMPL), str(_HERE)):
@@ -60,9 +23,8 @@ from utils import start_async_loop, schedule
 log = logging.getLogger("latencytest2")
 
 LEADER_ID       = "stm32-mock-leader"
-LEADER_PORT     = 5700    # distinct from the fleet's 5001..5100; discovery is UDP 9999 for all
-SAMPLE_INTERVAL = 5.0     # heartbeat log cadence (s) - only to time-align the power trace
-
+LEADER_PORT     = 5700
+SAMPLE_INTERVAL = 5.0
 
 def _stats(values, ndigits: int) -> dict:
     vals = [v for v in values if isinstance(v, (int, float))]
@@ -76,12 +38,10 @@ def _stats(values, ndigits: int) -> dict:
         "max": round(max(vals), ndigits),
     }
 
-
 def _results_dir() -> Path:
     d = _HERE / "results"
     d.mkdir(parents=True, exist_ok=True)
     return d
-
 
 def main():
     logging.basicConfig(
@@ -90,7 +50,6 @@ def main():
         datefmt="%H:%M:%S",
     )
 
-    # -- live network overlay: transport + discovery on one background loop ------
     loop = start_async_loop()
     transport = P2PTransport(LEADER_ID, LEADER_PORT, lambda msg: None)
     transport._event_loop = loop
@@ -102,28 +61,22 @@ def main():
     schedule(loop, transport.start())
     schedule(loop, discovery.start())
 
-    # -- live leader tool-aggregation path (pull-on-join, never dispatches) ------
     net = make_network(transport, discovery)
 
-    # -- lightweight instrumentation: per-agent discovery -> tool-registered -----
     lock = threading.Lock()
     t0 = time.perf_counter()
-    found_at:      dict[str, float] = {}   # agent_id -> elapsed s at first HELLO seen
-    registered_at: dict[str, float] = {}   # agent_id -> elapsed s at first tool registered
+    found_at:      dict[str, float] = {}
+    registered_at: dict[str, float] = {}
 
-    # make_network already wrapped discovery.on_peer_found (to fire the tools/list
-    # pull); wrap that wrapper so we stamp the moment the peer is discovered.
     prev_found = discovery.on_peer_found
 
     def on_found(pid, ip, port):
-        prev_found(pid, ip, port)                 # keeps the LeaderNetwork pull-on-join
+        prev_found(pid, ip, port)
         with lock:
             found_at.setdefault(pid, round(time.perf_counter() - t0, 3))
 
     discovery.on_peer_found = on_found
 
-    # registry.register is called by LeaderNetwork on each tools/list reply; wrap
-    # the instance method so we stamp the moment a peer's tool is aggregated.
     _register = net.registry.register
 
     def register(agent_id, tool_defs):
@@ -133,7 +86,6 @@ def main():
 
     net.registry.register = register
 
-    # -- output (written only when the fleet size changes, plus at exit) ---------
     out = _results_dir()
     stamp = time.strftime("%Y%m%d_%H%M%S")
     path = out / f"leader_stm32_{stamp}.json"
@@ -181,14 +133,13 @@ def main():
             log.info("t=+%6.0fs  peers=%-3d  tool_owners=%-3d  distinct_tools=%d",
                      time.perf_counter() - t0, peers, owners_total,
                      len(net.registry.tool_names()))
-            if peers != last_size:                 # size change -> snapshot (rare write)
+            if peers != last_size:
                 snapshot(reason=f"fleet size -> {peers}")
                 last_size = peers
     except KeyboardInterrupt:
         log.info("interrupted - writing final snapshot")
         snapshot(reason="final")
         log.info("done -> %s", path)
-
 
 if __name__ == "__main__":
     main()

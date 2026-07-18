@@ -1,18 +1,9 @@
-"""Generate the self-contained latency.tex from computed_stats.json.
-
-Keeping the numbers in a generator guarantees that every value printed in the
-tables is exactly what analysis.py measured from the logs. Re-run after
-analysis.py to refresh the document. The headline numbers quoted in the prose
-(Discussion) are the same measured values and are listed in computed_stats.json.
-
-Run from the WRITING_REPORT folder:  python scripts/gen_tex.py
-"""
 import json
 import os
 
 HERE = os.path.dirname(__file__)
 STATS = os.path.join(HERE, "computed_stats.json")
-OUT = os.path.join(HERE, "..", "latency.tex")
+OUT = os.path.join(HERE, "..", "..", "WRITING_REPORT", "latency.tex")
 
 with open(STATS, "r", encoding="utf-8") as fh:
     S = json.load(fh)
@@ -20,18 +11,12 @@ with open(STATS, "r", encoding="utf-8") as fh:
 TOOLS = ["1", "6", "12", "18", "24"]
 REPLIES = ["1", "5", "10", "15", "20"]
 
-
 def s(ms):
-    """milliseconds -> seconds string, 2 decimals."""
     return "%.2f" % (ms / 1000.0)
 
-
 def pm(pair):
-    """(mean_ms, std_ms) -> 'mean $\\pm$ std' in seconds."""
     return "%.2f $\\pm$ %.2f" % (pair[0] / 1000.0, pair[1] / 1000.0)
 
-
-# ------------------------------------------------------------------- boot
 b_f = S["boot"]["fgemma_noKV"]
 b_q = S["boot"]["qwen3_noKV"]
 
@@ -43,10 +28,7 @@ boot_rows = (
     s(b_q["mean"]), s(b_q["std"]), s(b_q["min"]), s(b_q["max"]),
 )
 
-
-# ------------------------------------------------ per-model breakdown table
 def breakdown_rows(tag):
-    # additive stage breakdown: query->tool + tool->result + result->reply = E2E
     rows = []
     for nt in TOOLS:
         r = S["tools"][tag][nt]
@@ -61,13 +43,9 @@ def breakdown_rows(tag):
         )
     return "\n".join(rows)
 
-
 qwen_rows = breakdown_rows("qwen3_noKV")
 fgemma_rows = breakdown_rows("fgemma_noKV")
 
-# --------------- third breakdown: functiongemma short prompt + KV (warm) -----
-# steady-state (cached) stage breakdown; the cold first query per pool is
-# reported separately in the TTFT-comparison table.
 kv_break_rows = []
 for nt in TOOLS:
     r = S["kv"][nt]
@@ -82,7 +60,6 @@ for nt in TOOLS:
     )
 kv_break_rows = "\n".join(kv_break_rows)
 
-# ---------------- dispatch-TTFT comparison across the three versions ---------
 ttft_cmp_rows = []
 for nt in TOOLS:
     q = pm(S["tools"]["qwen3_noKV"][nt]["dispatch_ttft_ms"])
@@ -92,7 +69,6 @@ for nt in TOOLS:
     ttft_cmp_rows.append("%s & %s & %s & %s & %s \\\\" % (nt, q, fn, cold, warm))
 ttft_cmp_rows = "\n".join(ttft_cmp_rows)
 
-# -------------------------------------------------------- e2e comparison
 e2e_rows = []
 for nt in TOOLS:
     q = S["tools"]["qwen3_noKV"][nt]
@@ -106,9 +82,6 @@ for nt in TOOLS:
     )
 e2e_rows = "\n".join(e2e_rows)
 
-# --------------------------------------- replies-scaling breakdown tables
-# tool->result is omitted (negligible in-process build, no network); the two
-# remaining stage columns add up to E2E: query->tool + result->reply == E2E.
 def rep_break_rows(cfg):
     rows = []
     for nr in REPLIES:
@@ -122,12 +95,10 @@ def rep_break_rows(cfg):
         )
     return "\n".join(rows)
 
-
 rep_rows = rep_break_rows("qwen3")
 rep_rows_reset = rep_break_rows("fgemma_reset")
 rep_rows_kvreuse = rep_break_rows("fgemma_kvreuse")
 
-# ------------------------------- replies answer-TTFT comparison (3 configs)
 rep_cmp_rows = []
 for nr in REPLIES:
     q = pm(S["replies"]["qwen3"][nr]["answer_ttft_ms"])
@@ -135,7 +106,6 @@ for nr in REPLIES:
     kv = pm(S["replies"]["fgemma_kvreuse"][nr]["answer_ttft_ms"])
     rep_cmp_rows.append("%s & %s & %s & %s \\\\" % (nr, q, rs, kv))
 rep_cmp_rows = "\n".join(rep_cmp_rows)
-
 
 DOC = r"""%% ==========================================================================
 %% latency.tex  -  self-contained "Latency and scalability" section.
@@ -155,7 +125,7 @@ DOC = r"""%% ===================================================================
 \usepackage{array}
 \usepackage{float}
 \usepackage{caption}
-\graphicspath{{figures/}{../figures/}{./}{../}}
+\graphicspath{{../../figures/}{figures/}{../figures/}{./}{../}}
 \setlength{\tabcolsep}{4pt}
 
 \begin{document}

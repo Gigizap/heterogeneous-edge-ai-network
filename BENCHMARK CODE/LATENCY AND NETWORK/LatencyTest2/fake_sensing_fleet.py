@@ -1,39 +1,7 @@
 #!/usr/bin/env python3
-"""
-LatencyTest2/fake_sensing_fleet.py - run on this laptop.
-
-SECOND latency test, SENSING side: spawns a GROWING fleet of FAKE sensing agents
-that only announce their presence (live Discovery HELLO) and serve tools/list
-with ONE shared placeholder tool. They run NO real skill and do NO tool work, so
-the only thing the mock STM32 leader (mock_leader_stm32.py) does in response is
-the network overlay - discover + aggregate. That is exactly what the board-side
-power measurement isolates: no read/write ops from tool execution interfere.
-
-Each agent gets its own TCP port and a unique agent-id, but ALL of them expose
-the SAME single tool ("noop"). Agent i listens on port 5000+i, so the full fleet
-spans ports 5001..5100.
-
-Schedule (CUMULATIVE - agent #1 stays up the whole run; each step adds the delta):
-
-    1 agent  -> wait 5 min -> 10 -> wait 5 min -> 20 -> wait 5 min
-             -> 50 -> wait 5 min -> 100 -> wait 5 min -> STOP ALL
-
-On stop, every agent's TCP server is closed and announcing halts, so the leader's
-discovery watchdog (PEER_TIMEOUT = 15 s) drops them shortly after - a clean
-end-of-run signal on the board side.
-
-Run from the IMPLEMENTATION folder (start the STM32 leader FIRST):
-    python LatencyTest2/fake_sensing_fleet.py
-
-The laptop is not power-measured, so this side can be as busy as it needs to be
-(100 co-located Discovery instances all announcing + listening on UDP 9999).
-"""
-
 import sys
 import pathlib
 
-# OS-agnostic imports: put the IMPLEMENTATION dir (parent) on the path so
-# "from ConnectionLogic..." resolves no matter the working directory.
 _HERE = pathlib.Path(__file__).resolve().parent
 _IMPL = _HERE.parent
 for _p in (str(_IMPL), str(_HERE)):
@@ -50,12 +18,10 @@ from utils import start_async_loop, schedule
 
 log = logging.getLogger("latencytest2")
 
-PORT_BASE     = 5000               # agent i -> port PORT_BASE + i (5001..5100)
+PORT_BASE     = 5000
 FLEET_SIZES   = (1, 10, 20, 50, 100)
-WAVE_INTERVAL = 300.0              # seconds to hold each size (5 minutes)
+WAVE_INTERVAL = 300.0
 
-# The one tool every agent advertises. A no-op with empty params: it is never
-# dispatched, it only has to make each agent a tool OWNER in the leader's registry.
 SHARED_TOOL = {
     "type": "function",
     "function": {
@@ -65,11 +31,7 @@ SHARED_TOOL = {
     },
 }
 
-
 def _make_handler(transport: P2PTransport):
-    """A tools/list responder bound to one agent's transport. Fake agents only
-    advertise, so every other message (discovery/election/backup, tools/call) is
-    ignored - the leader in this test never calls a tool."""
     def on_message(msg: dict):
         if msg.get("type") or msg.get("method") != "tools/list":
             return
@@ -87,10 +49,7 @@ def _make_handler(transport: P2PTransport):
                         transport.agent_id, sender, e)
     return on_message
 
-
 def add_agent(loop, port: int, agents: dict) -> None:
-    """Bring up one fake sensing agent: a TCP transport that serves tools/list and
-    a Discovery that announces the agent + finds the leader (so replies can route)."""
     aid = f"fake-sensing-{port}"
     transport = P2PTransport(aid, port, lambda m: None)
     transport._event_loop = loop
@@ -104,12 +63,7 @@ def add_agent(loop, port: int, agents: dict) -> None:
     schedule(loop, discovery.start())
     agents[port] = (aid, transport, discovery)
 
-
 def stop_all(loop, agents: dict) -> None:
-    """Cancel every agent's tasks (TCP servers + announce/listen/watchdog loops)
-    and stop the event loop. Halting the announcements is what makes the leader
-    drop the peers on its watchdog timeout. Tasks are awaited after cancellation
-    so the loop stops cleanly (no 'task destroyed while pending' noise)."""
     log.info("stopping all %d agents (halting servers + announcements) ...", len(agents))
 
     async def _shutdown():
@@ -125,7 +79,6 @@ def stop_all(loop, agents: dict) -> None:
     loop.call_soon_threadsafe(loop.stop)
     time.sleep(0.3)
 
-
 def main():
     logging.basicConfig(
         level=logging.INFO,
@@ -134,7 +87,7 @@ def main():
     )
 
     loop = start_async_loop()
-    agents: dict = {}   # port -> (agent_id, transport, discovery)
+    agents: dict = {}
 
     try:
         current = 0
@@ -144,13 +97,12 @@ def main():
             current = target
             log.info("===== fleet now at %d agent(s) (ports %d..%d) - holding %.0f min =====",
                      current, PORT_BASE + 1, PORT_BASE + current, WAVE_INTERVAL / 60)
-            time.sleep(WAVE_INTERVAL)     # hold this size (incl. after the final 100)
+            time.sleep(WAVE_INTERVAL)
         stop_all(loop, agents)
         log.info("run complete - all agents stopped")
     except KeyboardInterrupt:
         log.info("interrupted - stopping all agents")
         stop_all(loop, agents)
-
 
 if __name__ == "__main__":
     main()

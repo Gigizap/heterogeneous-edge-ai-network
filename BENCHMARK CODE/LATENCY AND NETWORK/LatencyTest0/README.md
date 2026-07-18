@@ -1,6 +1,6 @@
 # LatencyTest0 - reply-count latency test (single device, no network)
 
-> <- Back to [IMPLEMENTATION README](../README.md)
+> Back to [Latency and network README](../README.md)
 
 Self-contained scripts that measure **leader** latency on each edge board as the
 number of **replies returned by a single tool** grows. This is the mirror image
@@ -25,7 +25,7 @@ no sensing script to start and no discovery/TCP: the tool result is built
 in-process by `bench_core.build_replies(n)` with the **exact** shape a real leader
 receives from its dispatcher - a list of `{"from": "sensing-agent-<i>", "text":
 "no people detected"}`, one entry per answering agent (see
-[`tool_dispatcher.py`](../LeaderLogic/tool_dispatcher.py)). Only the (irrelevant)
+[`tool_dispatcher.py`](../../../IMPLEMENTATION/LeaderLogic/tool_dispatcher.py)). Only the (irrelevant)
 network hop is skipped; the answer LLM sees the same result set it would
 aggregate live.
 

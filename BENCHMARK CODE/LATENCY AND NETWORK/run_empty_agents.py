@@ -1,18 +1,3 @@
-"""
-run_agents.py — fully self-contained. One file, no project imports.
-
-Spawns N agents in one process. Each agent:
-  * runs its own P2PTransport + Discovery on its own asyncio loop/thread
-  * prints every message it receives
-  * every 5s sends {"text": "HI"} to a peer named "leader"
-    - if no peer "leader" is known, prints "waiting for leader"
-
-    python run_agents.py 3     # 3 agents (Agent-test-1 .. Agent-test-3)
-    python run_agents.py       # defaults to 3
-
-Ctrl-C stops everything.
-"""
-
 import asyncio
 import json
 import socket
@@ -20,13 +5,10 @@ import sys
 import threading
 import time
 
-# ── Discovery (UDP presence broadcast) ───────────────────────────────────────
-
 DISCOVERY_PORT = 9999
 BROADCAST_ADDR = "192.168.1.255"
 ANNOUNCE_INTERVAL = 5
 PEER_TIMEOUT = 15
-
 
 class Discovery:
     def __init__(self, agent_id, tcp_port, on_peer_found, on_peer_lost):
@@ -100,9 +82,6 @@ class Discovery:
                 print(f"[discovery] lost peer: {p}")
                 self.on_peer_lost(p)
 
-
-# ── P2PTransport (TCP send/recv) ──────────────────────────────────────────────
-
 class P2PTransport:
     def __init__(self, agent_id, port, on_message):
         self.agent_id = agent_id
@@ -171,22 +150,16 @@ class P2PTransport:
             writer.close()
             await writer.wait_closed()
 
-
-# ── launcher ──────────────────────────────────────────────────────────────────
-
 N = int(sys.argv[1]) if len(sys.argv) > 1 else 3
 BASE_PORT = 5000
-
 
 def start_loop():
     loop = asyncio.new_event_loop()
     threading.Thread(target=loop.run_forever, daemon=True).start()
     return loop
 
-
 def schedule(loop, coro):
     return asyncio.run_coroutine_threadsafe(coro, loop)
-
 
 def make_agent(agent_id, port):
     loop = start_loop()
@@ -205,7 +178,6 @@ def make_agent(agent_id, port):
     schedule(loop, discovery.start())
     return {"id": agent_id, "transport": transport, "discovery": discovery}
 
-
 def main():
     agents = []
     for i in range(N):
@@ -220,10 +192,9 @@ def main():
         while True:
             time.sleep(5)
             for a in agents:
-                peers = a["discovery"]._peers   # source of truth
+                peers = a["discovery"]._peers
                 if "leader" in peers:
                     info = peers["leader"]
-                    # ensure transport has the leader before sending
                     schedule(a["transport"]._event_loop,
                              a["transport"].register_peer("leader", info["ip"], info["port"]))
                     a["transport"].send_sync("leader", {"text": "HI"})
@@ -231,7 +202,6 @@ def main():
                     print(f"[{a['id']}] waiting for leader")
     except KeyboardInterrupt:
         print("\n[launcher] stopping.")
-
 
 if __name__ == "__main__":
     main()

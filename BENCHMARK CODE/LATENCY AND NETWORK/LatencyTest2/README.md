@@ -1,6 +1,6 @@
 # LatencyTest2 - network-overlay power/scaling test (mock STM32 leader + fake fleet)
 
-> <- Back to [IMPLEMENTATION README](../README.md)
+> Back to [Latency and network README](../README.md)
 
 Measures how the **network overlay** on the STM32MP257F-DK behaves as the number
 of sensing agents grows: `1 -> 10 -> 20 -> 50 -> 100`. The STM32 runs a **mock
