@@ -1,0 +1,1 @@
+model name should be "functiongemma-270m-it-Q4_K_M.gguf"

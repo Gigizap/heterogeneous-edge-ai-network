@@ -1,0 +1,3 @@
+avg_fps_first_20min=3.386
+total_frames=4064
+window_seconds=1200.07

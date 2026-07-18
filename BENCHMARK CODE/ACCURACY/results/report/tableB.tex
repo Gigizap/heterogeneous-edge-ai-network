@@ -1,0 +1,16 @@
+\begin{table}[H]
+\centering
+\caption{Part~B: selection accuracy on the 16 zero-parameter tools ($n{=}320$ queries), for each LLM configuration and the Jina reranker, at every pool size.}
+\label{tab:partB}
+\begin{tabular}{lrrrr}
+\toprule
+Method & $n{=}4$ & $n{=}8$ & $n{=}12$ & $n{=}16$ \\
+\midrule
+FunctionGemma-270M & 0.806 & 0.666 & 0.575 & 0.506 \\
+Qwen3-1.7B-think & 0.966 & 0.956 & 0.941 & 0.950 \\
+Qwen3-1.7B-nothink & 0.922 & 0.919 & 0.941 & 0.925 \\
+\midrule
+Jina-Reranker & 0.956 & 0.906 & 0.881 & 0.847 \\
+\bottomrule
+\end{tabular}
+\end{table}

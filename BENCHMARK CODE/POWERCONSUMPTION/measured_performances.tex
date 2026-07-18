@@ -1,0 +1,22 @@
+\begin{table}[H]
+\caption{Measured performance (FPS and TPS) per configuration.}
+\label{tab:measured_performances}
+\begin{tabular}{lcc}
+\toprule
+ & Avg FPS & Avg TPS \\
+Configuration &  &  \\
+\midrule
+STM detect cpu only & 1.65 & NO \\
+STM detect npu only & 18.24 & NO \\
+STM functiongemma cpu only & NO & 4.28 \\
+STM detect cpu functiongemma cpu & 0.83 & 1.24 \\
+STM detect npu functiongemma cpu & 11.20 & 1.24 \\
+PI5 qwen3 cpu only & NO & 3.43 \\
+PI5 qwen3 hailo only & NO & 4.88 \\
+PI5 detect cpu only & 3.39 & NO \\
+PI5 detect hailo only & 19.95 & NO \\
+PI5 qwen3 cpu detect hailo & 19.01 & 2.61 \\
+PI5 detect cpu qwen3 hailo & 3.16 & 4.83 \\
+\bottomrule
+\end{tabular}
+\end{table}

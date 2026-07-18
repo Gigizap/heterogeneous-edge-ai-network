@@ -1,0 +1,7154 @@
+[
+  {
+    "id": 0,
+    "prompt": "Who is this person in front of me?",
+    "expected_name": "identify_face",
+    "expected_args": {},
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.6148,
+    "gen_tokens": 8
+  },
+  {
+    "id": 1,
+    "prompt": "Do you recognize who that is?",
+    "expected_name": "identify_face",
+    "expected_args": {},
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.4105,
+    "gen_tokens": 8
+  },
+  {
+    "id": 2,
+    "prompt": "Can you tell me this guy's name?",
+    "expected_name": "identify_face",
+    "expected_args": {},
+    "predicted_name": "list_faces",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.4167,
+    "gen_tokens": 8
+  },
+  {
+    "id": 3,
+    "prompt": "Who's at the door down there?",
+    "expected_name": "identify_face",
+    "expected_args": {},
+    "predicted_name": "remove_face",
+    "predicted_args": {
+      "name": "door"
+    },
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.6496,
+    "gen_tokens": 14
+  },
+  {
+    "id": 4,
+    "prompt": "Is this someone you know?",
+    "expected_name": "identify_face",
+    "expected_args": {},
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.4076,
+    "gen_tokens": 8
+  },
+  {
+    "id": 5,
+    "prompt": "What's the name of the person standing here?",
+    "expected_name": "identify_face",
+    "expected_args": {},
+    "predicted_name": "list_faces",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.4253,
+    "gen_tokens": 8
+  },
+  {
+    "id": 6,
+    "prompt": "Identify whoever is on camera right now.",
+    "expected_name": "identify_face",
+    "expected_args": {},
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.4181,
+    "gen_tokens": 8
+  },
+  {
+    "id": 7,
+    "prompt": "Who am I looking at?",
+    "expected_name": "identify_face",
+    "expected_args": {},
+    "predicted_name": "identify_face",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.4275,
+    "gen_tokens": 8
+  },
+  {
+    "id": 8,
+    "prompt": "Tell me who that is.",
+    "expected_name": "identify_face",
+    "expected_args": {},
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.4231,
+    "gen_tokens": 8
+  },
+  {
+    "id": 9,
+    "prompt": "Recognize this face for me.",
+    "expected_name": "identify_face",
+    "expected_args": {},
+    "predicted_name": "identify_face",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.4041,
+    "gen_tokens": 8
+  },
+  {
+    "id": 10,
+    "prompt": "Is that you-know-who, or a stranger?",
+    "expected_name": "identify_face",
+    "expected_args": {},
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.4172,
+    "gen_tokens": 8
+  },
+  {
+    "id": 11,
+    "prompt": "Can you match this person to someone saved?",
+    "expected_name": "identify_face",
+    "expected_args": {},
+    "predicted_name": "identify_face",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.4243,
+    "gen_tokens": 8
+  },
+  {
+    "id": 12,
+    "prompt": "Who just walked up?",
+    "expected_name": "identify_face",
+    "expected_args": {},
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.4115,
+    "gen_tokens": 8
+  },
+  {
+    "id": 13,
+    "prompt": "Name the person at the front.",
+    "expected_name": "identify_face",
+    "expected_args": {},
+    "predicted_name": "list_faces",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.4516,
+    "gen_tokens": 8
+  },
+  {
+    "id": 14,
+    "prompt": "Is the man here registered with you?",
+    "expected_name": "identify_face",
+    "expected_args": {},
+    "predicted_name": "check_weather_outside",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5688,
+    "gen_tokens": 10
+  },
+  {
+    "id": 15,
+    "prompt": "Whose face is this?",
+    "expected_name": "identify_face",
+    "expected_args": {},
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.4939,
+    "gen_tokens": 8
+  },
+  {
+    "id": 16,
+    "prompt": "Figure out who this visitor is.",
+    "expected_name": "identify_face",
+    "expected_args": {},
+    "predicted_name": "identify_face",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.499,
+    "gen_tokens": 8
+  },
+  {
+    "id": 17,
+    "prompt": "Do you know her?",
+    "expected_name": "identify_face",
+    "expected_args": {},
+    "predicted_name": "read_text",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.9343,
+    "gen_tokens": 17
+  },
+  {
+    "id": 18,
+    "prompt": "Pull up the name for this face.",
+    "expected_name": "identify_face",
+    "expected_args": {},
+    "predicted_name": "identify_face",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.4919,
+    "gen_tokens": 8
+  },
+  {
+    "id": 19,
+    "prompt": "Who's standing in the doorway?",
+    "expected_name": "identify_face",
+    "expected_args": {},
+    "predicted_name": "add_face",
+    "predicted_args": {
+      "name": "Standing in doorway"
+    },
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.9489,
+    "gen_tokens": 16
+  },
+  {
+    "id": 20,
+    "prompt": "Read that sign for me.",
+    "expected_name": "read_text",
+    "expected_args": {},
+    "predicted_name": "read_text",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.5772,
+    "gen_tokens": 8
+  },
+  {
+    "id": 21,
+    "prompt": "What does the label on this bottle say?",
+    "expected_name": "read_text",
+    "expected_args": {},
+    "predicted_name": "rename_face",
+    "predicted_args": {
+      "old_name": "bottle",
+      "new_name": "sign_bottle"
+    },
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 1.4775,
+    "gen_tokens": 26
+  },
+  {
+    "id": 22,
+    "prompt": "Can you read what's written on the board?",
+    "expected_name": "read_text",
+    "expected_args": {},
+    "predicted_name": "read_text",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.5522,
+    "gen_tokens": 8
+  },
+  {
+    "id": 23,
+    "prompt": "What does it say there?",
+    "expected_name": "read_text",
+    "expected_args": {},
+    "predicted_name": "read_text",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.6187,
+    "gen_tokens": 8
+  },
+  {
+    "id": 24,
+    "prompt": "Read the text on the screen.",
+    "expected_name": "read_text",
+    "expected_args": {},
+    "predicted_name": "read_text",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.5628,
+    "gen_tokens": 8
+  },
+  {
+    "id": 25,
+    "prompt": "What's printed on this package?",
+    "expected_name": "read_text",
+    "expected_args": {},
+    "predicted_name": "transcribe_speech",
+    "predicted_args": {
+      "duration_seconds": 5
+    },
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 1.1327,
+    "gen_tokens": 22
+  },
+  {
+    "id": 26,
+    "prompt": "Tell me what this document says.",
+    "expected_name": "read_text",
+    "expected_args": {},
+    "predicted_name": "read_text",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.6044,
+    "gen_tokens": 8
+  },
+  {
+    "id": 27,
+    "prompt": "Read the menu out loud.",
+    "expected_name": "read_text",
+    "expected_args": {},
+    "predicted_name": "read_text",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.6253,
+    "gen_tokens": 8
+  },
+  {
+    "id": 28,
+    "prompt": "What's the address written on the envelope?",
+    "expected_name": "read_text",
+    "expected_args": {},
+    "predicted_name": "read_text",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.6525,
+    "gen_tokens": 8
+  },
+  {
+    "id": 29,
+    "prompt": "Can you make out the words on that poster?",
+    "expected_name": "read_text",
+    "expected_args": {},
+    "predicted_name": "identify_face",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.6399,
+    "gen_tokens": 8
+  },
+  {
+    "id": 30,
+    "prompt": "What does the note say?",
+    "expected_name": "read_text",
+    "expected_args": {},
+    "predicted_name": "read_text",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.6318,
+    "gen_tokens": 8
+  },
+  {
+    "id": 31,
+    "prompt": "Read me the expiration date on this.",
+    "expected_name": "read_text",
+    "expected_args": {},
+    "predicted_name": "read_text",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.5768,
+    "gen_tokens": 8
+  },
+  {
+    "id": 32,
+    "prompt": "What's written on the whiteboard?",
+    "expected_name": "read_text",
+    "expected_args": {},
+    "predicted_name": "read_text",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.5562,
+    "gen_tokens": 8
+  },
+  {
+    "id": 33,
+    "prompt": "Read the instructions on the box.",
+    "expected_name": "read_text",
+    "expected_args": {},
+    "predicted_name": "read_text",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.5655,
+    "gen_tokens": 8
+  },
+  {
+    "id": 34,
+    "prompt": "What letters are on that street sign?",
+    "expected_name": "read_text",
+    "expected_args": {},
+    "predicted_name": "identify_face",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.6323,
+    "gen_tokens": 8
+  },
+  {
+    "id": 35,
+    "prompt": "Can you scan and read this page?",
+    "expected_name": "read_text",
+    "expected_args": {},
+    "predicted_name": "read_text",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.6677,
+    "gen_tokens": 8
+  },
+  {
+    "id": 36,
+    "prompt": "What numbers are shown on the display?",
+    "expected_name": "read_text",
+    "expected_args": {},
+    "predicted_name": "list_faces",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.6749,
+    "gen_tokens": 8
+  },
+  {
+    "id": 37,
+    "prompt": "Read the handwriting on this card.",
+    "expected_name": "read_text",
+    "expected_args": {},
+    "predicted_name": "read_text",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.6615,
+    "gen_tokens": 8
+  },
+  {
+    "id": 38,
+    "prompt": "Tell me what the receipt says.",
+    "expected_name": "read_text",
+    "expected_args": {},
+    "predicted_name": "read_text",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.5882,
+    "gen_tokens": 8
+  },
+  {
+    "id": 39,
+    "prompt": "What's the title printed on this book cover?",
+    "expected_name": "read_text",
+    "expected_args": {},
+    "predicted_name": "identify_face",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5773,
+    "gen_tokens": 8
+  },
+  {
+    "id": 40,
+    "prompt": "What gesture is that person making?",
+    "expected_name": "detect_gesture",
+    "expected_args": {},
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.5966,
+    "gen_tokens": 8
+  },
+  {
+    "id": 41,
+    "prompt": "Is he waving at me?",
+    "expected_name": "detect_gesture",
+    "expected_args": {},
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.6532,
+    "gen_tokens": 8
+  },
+  {
+    "id": 42,
+    "prompt": "Is she pointing at something?",
+    "expected_name": "detect_gesture",
+    "expected_args": {},
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.669,
+    "gen_tokens": 8
+  },
+  {
+    "id": 43,
+    "prompt": "What is he doing with his hands?",
+    "expected_name": "detect_gesture",
+    "expected_args": {},
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.591,
+    "gen_tokens": 8
+  },
+  {
+    "id": 44,
+    "prompt": "Did that person just give a thumbs up?",
+    "expected_name": "detect_gesture",
+    "expected_args": {},
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.5171,
+    "gen_tokens": 8
+  },
+  {
+    "id": 45,
+    "prompt": "Is somebody raising their hand?",
+    "expected_name": "detect_gesture",
+    "expected_args": {},
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.4973,
+    "gen_tokens": 8
+  },
+  {
+    "id": 46,
+    "prompt": "Are they nodding or shaking their head?",
+    "expected_name": "detect_gesture",
+    "expected_args": {},
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.5652,
+    "gen_tokens": 8
+  },
+  {
+    "id": 47,
+    "prompt": "What hand signal is he showing?",
+    "expected_name": "detect_gesture",
+    "expected_args": {},
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.6074,
+    "gen_tokens": 8
+  },
+  {
+    "id": 48,
+    "prompt": "Is she gesturing for me to come over?",
+    "expected_name": "detect_gesture",
+    "expected_args": {},
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.4955,
+    "gen_tokens": 8
+  },
+  {
+    "id": 49,
+    "prompt": "Tell me what movement that person is making.",
+    "expected_name": "detect_gesture",
+    "expected_args": {},
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.4873,
+    "gen_tokens": 8
+  },
+  {
+    "id": 50,
+    "prompt": "Is he beckoning at the camera?",
+    "expected_name": "detect_gesture",
+    "expected_args": {},
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.4912,
+    "gen_tokens": 8
+  },
+  {
+    "id": 51,
+    "prompt": "What's that body language saying?",
+    "expected_name": "detect_gesture",
+    "expected_args": {},
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.5371,
+    "gen_tokens": 8
+  },
+  {
+    "id": 52,
+    "prompt": "Is the kid waving goodbye?",
+    "expected_name": "detect_gesture",
+    "expected_args": {},
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.5806,
+    "gen_tokens": 8
+  },
+  {
+    "id": 53,
+    "prompt": "Are they pointing left or right?",
+    "expected_name": "detect_gesture",
+    "expected_args": {},
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.5177,
+    "gen_tokens": 8
+  },
+  {
+    "id": 54,
+    "prompt": "Is someone signaling stop with their hand?",
+    "expected_name": "detect_gesture",
+    "expected_args": {},
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.4996,
+    "gen_tokens": 8
+  },
+  {
+    "id": 55,
+    "prompt": "What does that hand motion mean?",
+    "expected_name": "detect_gesture",
+    "expected_args": {},
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.5188,
+    "gen_tokens": 8
+  },
+  {
+    "id": 56,
+    "prompt": "Is he giving a thumbs down?",
+    "expected_name": "detect_gesture",
+    "expected_args": {},
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.5396,
+    "gen_tokens": 8
+  },
+  {
+    "id": 57,
+    "prompt": "Is that person clapping?",
+    "expected_name": "detect_gesture",
+    "expected_args": {},
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.5911,
+    "gen_tokens": 8
+  },
+  {
+    "id": 58,
+    "prompt": "Check if she's raising her hand to ask something.",
+    "expected_name": "detect_gesture",
+    "expected_args": {},
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.5841,
+    "gen_tokens": 8
+  },
+  {
+    "id": 59,
+    "prompt": "What's he doing, pointing or waving?",
+    "expected_name": "detect_gesture",
+    "expected_args": {},
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.6011,
+    "gen_tokens": 8
+  },
+  {
+    "id": 60,
+    "prompt": "How old does this person look?",
+    "expected_name": "assess_face_attributes",
+    "expected_args": {},
+    "predicted_name": "get_camera_status",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.7156,
+    "gen_tokens": 10
+  },
+  {
+    "id": 61,
+    "prompt": "Does she look happy or sad?",
+    "expected_name": "assess_face_attributes",
+    "expected_args": {},
+    "predicted_name": "assess_face_attributes",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.5941,
+    "gen_tokens": 10
+  },
+  {
+    "id": 62,
+    "prompt": "What mood is he in?",
+    "expected_name": "assess_face_attributes",
+    "expected_args": {},
+    "predicted_name": "assess_face_attributes",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.5982,
+    "gen_tokens": 10
+  },
+  {
+    "id": 63,
+    "prompt": "Describe this person's face for me.",
+    "expected_name": "assess_face_attributes",
+    "expected_args": {},
+    "predicted_name": "describe_scene",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.52,
+    "gen_tokens": 8
+  },
+  {
+    "id": 64,
+    "prompt": "Does he seem angry?",
+    "expected_name": "assess_face_attributes",
+    "expected_args": {},
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.6063,
+    "gen_tokens": 8
+  },
+  {
+    "id": 65,
+    "prompt": "What's their facial expression like?",
+    "expected_name": "assess_face_attributes",
+    "expected_args": {},
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.6374,
+    "gen_tokens": 8
+  },
+  {
+    "id": 66,
+    "prompt": "Is that a man or a woman?",
+    "expected_name": "assess_face_attributes",
+    "expected_args": {},
+    "predicted_name": "identify_face",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5662,
+    "gen_tokens": 8
+  },
+  {
+    "id": 67,
+    "prompt": "Does she look tired?",
+    "expected_name": "assess_face_attributes",
+    "expected_args": {},
+    "predicted_name": "assess_face_attributes",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.6231,
+    "gen_tokens": 10
+  },
+  {
+    "id": 68,
+    "prompt": "Guess this person's age for me.",
+    "expected_name": "assess_face_attributes",
+    "expected_args": {},
+    "predicted_name": "assess_face_attributes",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.6297,
+    "gen_tokens": 10
+  },
+  {
+    "id": 69,
+    "prompt": "Is he smiling or frowning?",
+    "expected_name": "assess_face_attributes",
+    "expected_args": {},
+    "predicted_name": "assess_face_attributes",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.7248,
+    "gen_tokens": 10
+  },
+  {
+    "id": 70,
+    "prompt": "How are they feeling, judging by their face?",
+    "expected_name": "assess_face_attributes",
+    "expected_args": {},
+    "predicted_name": "assess_face_attributes",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.7343,
+    "gen_tokens": 10
+  },
+  {
+    "id": 71,
+    "prompt": "Does this kid look young or grown up?",
+    "expected_name": "assess_face_attributes",
+    "expected_args": {},
+    "predicted_name": "assess_face_attributes",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.6219,
+    "gen_tokens": 10
+  },
+  {
+    "id": 72,
+    "prompt": "What emotion is showing on her face?",
+    "expected_name": "assess_face_attributes",
+    "expected_args": {},
+    "predicted_name": "assess_face_attributes",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.6303,
+    "gen_tokens": 10
+  },
+  {
+    "id": 73,
+    "prompt": "Does the person look upset?",
+    "expected_name": "assess_face_attributes",
+    "expected_args": {},
+    "predicted_name": "assess_face_attributes",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.6533,
+    "gen_tokens": 10
+  },
+  {
+    "id": 74,
+    "prompt": "Tell me roughly how old he is.",
+    "expected_name": "assess_face_attributes",
+    "expected_args": {},
+    "predicted_name": "estimate_distance",
+    "predicted_args": {
+      "target": "person_age"
+    },
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 1.0529,
+    "gen_tokens": 16
+  },
+  {
+    "id": 75,
+    "prompt": "Is she in a good mood right now?",
+    "expected_name": "assess_face_attributes",
+    "expected_args": {},
+    "predicted_name": "check_weather_outside",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.6331,
+    "gen_tokens": 10
+  },
+  {
+    "id": 76,
+    "prompt": "What does their expression tell you?",
+    "expected_name": "assess_face_attributes",
+    "expected_args": {},
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.6111,
+    "gen_tokens": 8
+  },
+  {
+    "id": 77,
+    "prompt": "Does he look stressed out?",
+    "expected_name": "assess_face_attributes",
+    "expected_args": {},
+    "predicted_name": "assess_face_attributes",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.7481,
+    "gen_tokens": 10
+  },
+  {
+    "id": 78,
+    "prompt": "Estimate the gender and age of this person.",
+    "expected_name": "assess_face_attributes",
+    "expected_args": {},
+    "predicted_name": "estimate_distance",
+    "predicted_args": {
+      "target": "person"
+    },
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 1.0319,
+    "gen_tokens": 14
+  },
+  {
+    "id": 79,
+    "prompt": "Does this person seem cheerful or down?",
+    "expected_name": "assess_face_attributes",
+    "expected_args": {},
+    "predicted_name": "assess_face_attributes",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.715,
+    "gen_tokens": 10
+  },
+  {
+    "id": 80,
+    "prompt": "Let me know if anything moves.",
+    "expected_name": "await_motion",
+    "expected_args": {},
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5431,
+    "gen_tokens": 8
+  },
+  {
+    "id": 81,
+    "prompt": "Watch for any motion while I'm gone.",
+    "expected_name": "await_motion",
+    "expected_args": {},
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5531,
+    "gen_tokens": 8
+  },
+  {
+    "id": 82,
+    "prompt": "Alert me if something moves in here.",
+    "expected_name": "await_motion",
+    "expected_args": {},
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.4974,
+    "gen_tokens": 8
+  },
+  {
+    "id": 83,
+    "prompt": "Keep an eye out and tell me if anything stirs.",
+    "expected_name": "await_motion",
+    "expected_args": {},
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5599,
+    "gen_tokens": 8
+  },
+  {
+    "id": 84,
+    "prompt": "Start watching the room for movement.",
+    "expected_name": "await_motion",
+    "expected_args": {},
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5852,
+    "gen_tokens": 8
+  },
+  {
+    "id": 85,
+    "prompt": "Ping me if there's any activity.",
+    "expected_name": "await_motion",
+    "expected_args": {},
+    "predicted_name": "read_text",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5879,
+    "gen_tokens": 8
+  },
+  {
+    "id": 86,
+    "prompt": "Notify me the moment something moves.",
+    "expected_name": "await_motion",
+    "expected_args": {},
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.4963,
+    "gen_tokens": 8
+  },
+  {
+    "id": 87,
+    "prompt": "Monitor this area for any motion.",
+    "expected_name": "await_motion",
+    "expected_args": {},
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.505,
+    "gen_tokens": 8
+  },
+  {
+    "id": 88,
+    "prompt": "Tell me if anything changes out there.",
+    "expected_name": "await_motion",
+    "expected_args": {},
+    "predicted_name": "list_faces",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5096,
+    "gen_tokens": 8
+  },
+  {
+    "id": 89,
+    "prompt": "Keep watch and warn me if you detect movement.",
+    "expected_name": "await_motion",
+    "expected_args": {},
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5426,
+    "gen_tokens": 8
+  },
+  {
+    "id": 90,
+    "prompt": "I'm stepping out, let me know if there's any motion.",
+    "expected_name": "await_motion",
+    "expected_args": {},
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5931,
+    "gen_tokens": 8
+  },
+  {
+    "id": 91,
+    "prompt": "Set up a motion alert for me.",
+    "expected_name": "await_motion",
+    "expected_args": {},
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5911,
+    "gen_tokens": 8
+  },
+  {
+    "id": 92,
+    "prompt": "Guard the room and buzz me if something moves.",
+    "expected_name": "await_motion",
+    "expected_args": {},
+    "predicted_name": "list_faces",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5881,
+    "gen_tokens": 8
+  },
+  {
+    "id": 93,
+    "prompt": "Watch for intruders while I sleep.",
+    "expected_name": "await_motion",
+    "expected_args": {},
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5791,
+    "gen_tokens": 8
+  },
+  {
+    "id": 94,
+    "prompt": "Start a motion watcher.",
+    "expected_name": "await_motion",
+    "expected_args": {},
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.4956,
+    "gen_tokens": 8
+  },
+  {
+    "id": 95,
+    "prompt": "Let me know if anyone walks into frame.",
+    "expected_name": "await_motion",
+    "expected_args": {},
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.4945,
+    "gen_tokens": 8
+  },
+  {
+    "id": 96,
+    "prompt": "Keep monitoring for movement until I say stop.",
+    "expected_name": "await_motion",
+    "expected_args": {},
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5005,
+    "gen_tokens": 8
+  },
+  {
+    "id": 97,
+    "prompt": "Watch the hallway and alert me on any motion.",
+    "expected_name": "await_motion",
+    "expected_args": {},
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5432,
+    "gen_tokens": 8
+  },
+  {
+    "id": 98,
+    "prompt": "Be my lookout for any movement.",
+    "expected_name": "await_motion",
+    "expected_args": {},
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5914,
+    "gen_tokens": 8
+  },
+  {
+    "id": 99,
+    "prompt": "Sound the alert if something shifts in the room.",
+    "expected_name": "await_motion",
+    "expected_args": {},
+    "predicted_name": "await_general_entity",
+    "predicted_args": {
+      "entity": "something shifts in the room"
+    },
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 1.3656,
+    "gen_tokens": 20
+  },
+  {
+    "id": 100,
+    "prompt": "Stop watching now.",
+    "expected_name": "stop_monitoring",
+    "expected_args": {},
+    "predicted_name": "stop_monitoring",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.584,
+    "gen_tokens": 8
+  },
+  {
+    "id": 101,
+    "prompt": "Cancel all the alerts.",
+    "expected_name": "stop_monitoring",
+    "expected_args": {},
+    "predicted_name": "list_faces",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.4973,
+    "gen_tokens": 8
+  },
+  {
+    "id": 102,
+    "prompt": "Go to sleep.",
+    "expected_name": "stop_monitoring",
+    "expected_args": {},
+    "predicted_name": "get_camera_status",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5681,
+    "gen_tokens": 10
+  },
+  {
+    "id": 103,
+    "prompt": "Turn off the monitoring.",
+    "expected_name": "stop_monitoring",
+    "expected_args": {},
+    "predicted_name": "list_faces",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.4979,
+    "gen_tokens": 8
+  },
+  {
+    "id": 104,
+    "prompt": "Stop all the watchers you've got running.",
+    "expected_name": "stop_monitoring",
+    "expected_args": {},
+    "predicted_name": "stop_monitoring",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.5635,
+    "gen_tokens": 8
+  },
+  {
+    "id": 105,
+    "prompt": "Quit watching for motion.",
+    "expected_name": "stop_monitoring",
+    "expected_args": {},
+    "predicted_name": "stop_monitoring",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.5872,
+    "gen_tokens": 8
+  },
+  {
+    "id": 106,
+    "prompt": "End the alerts, I'm back.",
+    "expected_name": "stop_monitoring",
+    "expected_args": {},
+    "predicted_name": "list_faces",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5867,
+    "gen_tokens": 8
+  },
+  {
+    "id": 107,
+    "prompt": "Stand down, no more watching.",
+    "expected_name": "stop_monitoring",
+    "expected_args": {},
+    "predicted_name": "list_faces",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5241,
+    "gen_tokens": 8
+  },
+  {
+    "id": 108,
+    "prompt": "Shut off any active alerts.",
+    "expected_name": "stop_monitoring",
+    "expected_args": {},
+    "predicted_name": "stop_monitoring",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.4921,
+    "gen_tokens": 8
+  },
+  {
+    "id": 109,
+    "prompt": "Stop keeping watch.",
+    "expected_name": "stop_monitoring",
+    "expected_args": {},
+    "predicted_name": "stop_monitoring",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.4949,
+    "gen_tokens": 8
+  },
+  {
+    "id": 110,
+    "prompt": "Cancel whatever you're waiting for.",
+    "expected_name": "stop_monitoring",
+    "expected_args": {},
+    "predicted_name": "stop_monitoring",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.5334,
+    "gen_tokens": 8
+  },
+  {
+    "id": 111,
+    "prompt": "Disable the motion watcher.",
+    "expected_name": "stop_monitoring",
+    "expected_args": {},
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5066,
+    "gen_tokens": 8
+  },
+  {
+    "id": 112,
+    "prompt": "You can stop monitoring the room.",
+    "expected_name": "stop_monitoring",
+    "expected_args": {},
+    "predicted_name": "stop_monitoring",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.4982,
+    "gen_tokens": 8
+  },
+  {
+    "id": 113,
+    "prompt": "Kill all the background watchers.",
+    "expected_name": "stop_monitoring",
+    "expected_args": {},
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.4939,
+    "gen_tokens": 8
+  },
+  {
+    "id": 114,
+    "prompt": "Stop waiting and end the task.",
+    "expected_name": "stop_monitoring",
+    "expected_args": {},
+    "predicted_name": "stop_monitoring",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.5286,
+    "gen_tokens": 8
+  },
+  {
+    "id": 115,
+    "prompt": "Turn off surveillance mode.",
+    "expected_name": "stop_monitoring",
+    "expected_args": {},
+    "predicted_name": "list_faces",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5058,
+    "gen_tokens": 8
+  },
+  {
+    "id": 116,
+    "prompt": "Stop notifying me about everything.",
+    "expected_name": "stop_monitoring",
+    "expected_args": {},
+    "predicted_name": "stop_monitoring",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.4979,
+    "gen_tokens": 8
+  },
+  {
+    "id": 117,
+    "prompt": "Halt all monitoring.",
+    "expected_name": "stop_monitoring",
+    "expected_args": {},
+    "predicted_name": "list_faces",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5053,
+    "gen_tokens": 8
+  },
+  {
+    "id": 118,
+    "prompt": "I'm home, you can stop watching.",
+    "expected_name": "stop_monitoring",
+    "expected_args": {},
+    "predicted_name": "stop_monitoring",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.5456,
+    "gen_tokens": 8
+  },
+  {
+    "id": 119,
+    "prompt": "Deactivate the alerts please.",
+    "expected_name": "stop_monitoring",
+    "expected_args": {},
+    "predicted_name": "list_faces",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.6012,
+    "gen_tokens": 8
+  },
+  {
+    "id": 120,
+    "prompt": "Delete all the faces.",
+    "expected_name": "delete_all_faces",
+    "expected_args": {},
+    "predicted_name": "list_faces",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5868,
+    "gen_tokens": 8
+  },
+  {
+    "id": 121,
+    "prompt": "Forget everyone you know.",
+    "expected_name": "delete_all_faces",
+    "expected_args": {},
+    "predicted_name": "remove_face",
+    "predicted_args": {
+      "name": "someone"
+    },
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.7877,
+    "gen_tokens": 14
+  },
+  {
+    "id": 122,
+    "prompt": "Clear the entire database.",
+    "expected_name": "delete_all_faces",
+    "expected_args": {},
+    "predicted_name": "list_faces",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.517,
+    "gen_tokens": 8
+  },
+  {
+    "id": 123,
+    "prompt": "Wipe all saved people.",
+    "expected_name": "delete_all_faces",
+    "expected_args": {},
+    "predicted_name": "list_faces",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5241,
+    "gen_tokens": 8
+  },
+  {
+    "id": 124,
+    "prompt": "Reset the system and erase every face.",
+    "expected_name": "delete_all_faces",
+    "expected_args": {},
+    "predicted_name": "list_faces",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5892,
+    "gen_tokens": 8
+  },
+  {
+    "id": 125,
+    "prompt": "Remove all enrolled users at once.",
+    "expected_name": "delete_all_faces",
+    "expected_args": {},
+    "predicted_name": "remove_face",
+    "predicted_args": {
+      "name": "all_users"
+    },
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 1.115,
+    "gen_tokens": 16
+  },
+  {
+    "id": 126,
+    "prompt": "Erase your whole memory of people.",
+    "expected_name": "delete_all_faces",
+    "expected_args": {},
+    "predicted_name": "delete_all_faces",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.6816,
+    "gen_tokens": 10
+  },
+  {
+    "id": 127,
+    "prompt": "Start fresh, delete everyone.",
+    "expected_name": "delete_all_faces",
+    "expected_args": {},
+    "predicted_name": "remove_face",
+    "predicted_args": {
+      "name": "Everyone"
+    },
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.7906,
+    "gen_tokens": 14
+  },
+  {
+    "id": 128,
+    "prompt": "Purge the face database completely.",
+    "expected_name": "delete_all_faces",
+    "expected_args": {},
+    "predicted_name": "list_faces",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.4978,
+    "gen_tokens": 8
+  },
+  {
+    "id": 129,
+    "prompt": "Get rid of every person you've stored.",
+    "expected_name": "delete_all_faces",
+    "expected_args": {},
+    "predicted_name": "list_faces",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5026,
+    "gen_tokens": 8
+  },
+  {
+    "id": 130,
+    "prompt": "Forget all the faces you've learned.",
+    "expected_name": "delete_all_faces",
+    "expected_args": {},
+    "predicted_name": "remove_face",
+    "predicted_args": {
+      "name": "All faces you've learned"
+    },
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 1.3519,
+    "gen_tokens": 19
+  },
+  {
+    "id": 131,
+    "prompt": "Empty the list of saved faces.",
+    "expected_name": "delete_all_faces",
+    "expected_args": {},
+    "predicted_name": "list_faces",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.6051,
+    "gen_tokens": 8
+  },
+  {
+    "id": 132,
+    "prompt": "Drop all records of people.",
+    "expected_name": "delete_all_faces",
+    "expected_args": {},
+    "predicted_name": "list_faces",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5891,
+    "gen_tokens": 8
+  },
+  {
+    "id": 133,
+    "prompt": "Clear out everyone from memory.",
+    "expected_name": "delete_all_faces",
+    "expected_args": {},
+    "predicted_name": "list_faces",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5931,
+    "gen_tokens": 8
+  },
+  {
+    "id": 134,
+    "prompt": "Delete the whole face registry.",
+    "expected_name": "delete_all_faces",
+    "expected_args": {},
+    "predicted_name": "list_faces",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5908,
+    "gen_tokens": 8
+  },
+  {
+    "id": 135,
+    "prompt": "Wipe everyone and reset.",
+    "expected_name": "delete_all_faces",
+    "expected_args": {},
+    "predicted_name": "list_faces",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5218,
+    "gen_tokens": 8
+  },
+  {
+    "id": 136,
+    "prompt": "Remove every single saved face.",
+    "expected_name": "delete_all_faces",
+    "expected_args": {},
+    "predicted_name": "remove_face",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.503,
+    "gen_tokens": 8
+  },
+  {
+    "id": 137,
+    "prompt": "Factory reset all the enrolled people.",
+    "expected_name": "delete_all_faces",
+    "expected_args": {},
+    "predicted_name": "list_faces",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5028,
+    "gen_tokens": 8
+  },
+  {
+    "id": 138,
+    "prompt": "Throw away all stored faces.",
+    "expected_name": "delete_all_faces",
+    "expected_args": {},
+    "predicted_name": "list_faces",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5635,
+    "gen_tokens": 8
+  },
+  {
+    "id": 139,
+    "prompt": "Scrub the database of all users.",
+    "expected_name": "delete_all_faces",
+    "expected_args": {},
+    "predicted_name": "identify_face",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5889,
+    "gen_tokens": 8
+  },
+  {
+    "id": 140,
+    "prompt": "What is that noise?",
+    "expected_name": "classify_sound",
+    "expected_args": {},
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5946,
+    "gen_tokens": 8
+  },
+  {
+    "id": 141,
+    "prompt": "What sound was that?",
+    "expected_name": "classify_sound",
+    "expected_args": {},
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5934,
+    "gen_tokens": 8
+  },
+  {
+    "id": 142,
+    "prompt": "Can you identify that audio?",
+    "expected_name": "classify_sound",
+    "expected_args": {},
+    "predicted_name": "transcribe_speech",
+    "predicted_args": {
+      "duration_seconds": 5
+    },
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 1.2099,
+    "gen_tokens": 22
+  },
+  {
+    "id": 143,
+    "prompt": "Was that a dog barking?",
+    "expected_name": "classify_sound",
+    "expected_args": {},
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5005,
+    "gen_tokens": 8
+  },
+  {
+    "id": 144,
+    "prompt": "What made that sound just now?",
+    "expected_name": "classify_sound",
+    "expected_args": {},
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.4919,
+    "gen_tokens": 8
+  },
+  {
+    "id": 145,
+    "prompt": "Is that a siren I'm hearing?",
+    "expected_name": "classify_sound",
+    "expected_args": {},
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5382,
+    "gen_tokens": 8
+  },
+  {
+    "id": 146,
+    "prompt": "Did something just break?",
+    "expected_name": "classify_sound",
+    "expected_args": {},
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5933,
+    "gen_tokens": 8
+  },
+  {
+    "id": 147,
+    "prompt": "Was that the doorbell?",
+    "expected_name": "classify_sound",
+    "expected_args": {},
+    "predicted_name": "remove_face",
+    "predicted_args": {
+      "name": "doorbell"
+    },
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.9518,
+    "gen_tokens": 15
+  },
+  {
+    "id": 148,
+    "prompt": "What kind of sound is happening?",
+    "expected_name": "classify_sound",
+    "expected_args": {},
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.4906,
+    "gen_tokens": 8
+  },
+  {
+    "id": 149,
+    "prompt": "Is someone knocking?",
+    "expected_name": "classify_sound",
+    "expected_args": {},
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.4856,
+    "gen_tokens": 8
+  },
+  {
+    "id": 150,
+    "prompt": "Tell me what that noise is.",
+    "expected_name": "classify_sound",
+    "expected_args": {},
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.4944,
+    "gen_tokens": 8
+  },
+  {
+    "id": 151,
+    "prompt": "Is that an alarm going off?",
+    "expected_name": "classify_sound",
+    "expected_args": {},
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5921,
+    "gen_tokens": 8
+  },
+  {
+    "id": 152,
+    "prompt": "What's that banging sound?",
+    "expected_name": "classify_sound",
+    "expected_args": {},
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5824,
+    "gen_tokens": 8
+  },
+  {
+    "id": 153,
+    "prompt": "Identify the sound you just heard.",
+    "expected_name": "classify_sound",
+    "expected_args": {},
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5071,
+    "gen_tokens": 8
+  },
+  {
+    "id": 154,
+    "prompt": "Was that glass shattering?",
+    "expected_name": "classify_sound",
+    "expected_args": {},
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.4953,
+    "gen_tokens": 8
+  },
+  {
+    "id": 155,
+    "prompt": "What's that ringing noise?",
+    "expected_name": "classify_sound",
+    "expected_args": {},
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.4969,
+    "gen_tokens": 8
+  },
+  {
+    "id": 156,
+    "prompt": "Can you tell what's making that sound?",
+    "expected_name": "classify_sound",
+    "expected_args": {},
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5445,
+    "gen_tokens": 8
+  },
+  {
+    "id": 157,
+    "prompt": "Is that a car horn?",
+    "expected_name": "classify_sound",
+    "expected_args": {},
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5785,
+    "gen_tokens": 8
+  },
+  {
+    "id": 158,
+    "prompt": "What was that thud?",
+    "expected_name": "classify_sound",
+    "expected_args": {},
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.4989,
+    "gen_tokens": 8
+  },
+  {
+    "id": 159,
+    "prompt": "Figure out what that noise outside is.",
+    "expected_name": "classify_sound",
+    "expected_args": {},
+    "predicted_name": "check_weather_outside",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.6005,
+    "gen_tokens": 10
+  },
+  {
+    "id": 160,
+    "prompt": "How loud is it right now?",
+    "expected_name": "measure_noise_level",
+    "expected_args": {},
+    "predicted_name": "get_camera_status",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5779,
+    "gen_tokens": 10
+  },
+  {
+    "id": 161,
+    "prompt": "What's the decibel level in here?",
+    "expected_name": "measure_noise_level",
+    "expected_args": {},
+    "predicted_name": "measure_noise_level",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.6644,
+    "gen_tokens": 10
+  },
+  {
+    "id": 162,
+    "prompt": "Is it noisy in this room?",
+    "expected_name": "measure_noise_level",
+    "expected_args": {},
+    "predicted_name": "measure_noise_level",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.6801,
+    "gen_tokens": 10
+  },
+  {
+    "id": 163,
+    "prompt": "Check how quiet it is.",
+    "expected_name": "measure_noise_level",
+    "expected_args": {},
+    "predicted_name": "check_air_quality",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5843,
+    "gen_tokens": 10
+  },
+  {
+    "id": 164,
+    "prompt": "Is the room too loud?",
+    "expected_name": "measure_noise_level",
+    "expected_args": {},
+    "predicted_name": "count_general_entity",
+    "predicted_args": {
+      "entity": "room"
+    },
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.8634,
+    "gen_tokens": 16
+  },
+  {
+    "id": 165,
+    "prompt": "Measure the sound volume here.",
+    "expected_name": "measure_noise_level",
+    "expected_args": {},
+    "predicted_name": "measure_noise_level",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.645,
+    "gen_tokens": 10
+  },
+  {
+    "id": 166,
+    "prompt": "How many decibels is it?",
+    "expected_name": "measure_noise_level",
+    "expected_args": {},
+    "predicted_name": "check_air_quality",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.619,
+    "gen_tokens": 10
+  },
+  {
+    "id": 167,
+    "prompt": "Is it calm and silent in here?",
+    "expected_name": "measure_noise_level",
+    "expected_args": {},
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.506,
+    "gen_tokens": 8
+  },
+  {
+    "id": 168,
+    "prompt": "Tell me the noise level.",
+    "expected_name": "measure_noise_level",
+    "expected_args": {},
+    "predicted_name": "measure_noise_level",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.5672,
+    "gen_tokens": 10
+  },
+  {
+    "id": 169,
+    "prompt": "How loud is the environment?",
+    "expected_name": "measure_noise_level",
+    "expected_args": {},
+    "predicted_name": "measure_noise_level",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.6392,
+    "gen_tokens": 10
+  },
+  {
+    "id": 170,
+    "prompt": "Is it quiet enough to sleep?",
+    "expected_name": "measure_noise_level",
+    "expected_args": {},
+    "predicted_name": "check_air_quality",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5691,
+    "gen_tokens": 10
+  },
+  {
+    "id": 171,
+    "prompt": "Check the volume in the room.",
+    "expected_name": "measure_noise_level",
+    "expected_args": {},
+    "predicted_name": "measure_noise_level",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.5681,
+    "gen_tokens": 10
+  },
+  {
+    "id": 172,
+    "prompt": "How much background noise is there?",
+    "expected_name": "measure_noise_level",
+    "expected_args": {},
+    "predicted_name": "measure_noise_level",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.5746,
+    "gen_tokens": 10
+  },
+  {
+    "id": 173,
+    "prompt": "Is the sound level too high?",
+    "expected_name": "measure_noise_level",
+    "expected_args": {},
+    "predicted_name": "check_air_quality",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.6476,
+    "gen_tokens": 10
+  },
+  {
+    "id": 174,
+    "prompt": "Give me a reading on the loudness.",
+    "expected_name": "measure_noise_level",
+    "expected_args": {},
+    "predicted_name": "measure_noise_level",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.5706,
+    "gen_tokens": 10
+  },
+  {
+    "id": 175,
+    "prompt": "Is it peaceful and quiet right now?",
+    "expected_name": "measure_noise_level",
+    "expected_args": {},
+    "predicted_name": "check_weather_outside",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5741,
+    "gen_tokens": 10
+  },
+  {
+    "id": 176,
+    "prompt": "What's the ambient noise like?",
+    "expected_name": "measure_noise_level",
+    "expected_args": {},
+    "predicted_name": "measure_noise_level",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.5721,
+    "gen_tokens": 10
+  },
+  {
+    "id": 177,
+    "prompt": "Measure the dB level for me.",
+    "expected_name": "measure_noise_level",
+    "expected_args": {},
+    "predicted_name": "measure_noise_level",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.6742,
+    "gen_tokens": 10
+  },
+  {
+    "id": 178,
+    "prompt": "Is this a loud space?",
+    "expected_name": "measure_noise_level",
+    "expected_args": {},
+    "predicted_name": "measure_noise_level",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.5858,
+    "gen_tokens": 10
+  },
+  {
+    "id": 179,
+    "prompt": "How silent is it in the house?",
+    "expected_name": "measure_noise_level",
+    "expected_args": {},
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5102,
+    "gen_tokens": 8
+  },
+  {
+    "id": 180,
+    "prompt": "Who do you know?",
+    "expected_name": "list_faces",
+    "expected_args": {},
+    "predicted_name": "identify_face",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.4962,
+    "gen_tokens": 8
+  },
+  {
+    "id": 181,
+    "prompt": "List all the saved people.",
+    "expected_name": "list_faces",
+    "expected_args": {},
+    "predicted_name": "list_faces",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.5549,
+    "gen_tokens": 8
+  },
+  {
+    "id": 182,
+    "prompt": "Show me the face database.",
+    "expected_name": "list_faces",
+    "expected_args": {},
+    "predicted_name": "list_faces",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.5917,
+    "gen_tokens": 8
+  },
+  {
+    "id": 183,
+    "prompt": "Who's registered in the system?",
+    "expected_name": "list_faces",
+    "expected_args": {},
+    "predicted_name": "identify_face",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5865,
+    "gen_tokens": 8
+  },
+  {
+    "id": 184,
+    "prompt": "Give me the names of everyone you've stored.",
+    "expected_name": "list_faces",
+    "expected_args": {},
+    "predicted_name": "list_faces",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.5265,
+    "gen_tokens": 8
+  },
+  {
+    "id": 185,
+    "prompt": "Who have you remembered so far?",
+    "expected_name": "list_faces",
+    "expected_args": {},
+    "predicted_name": "rename_face",
+    "predicted_args": {
+      "old_name": "[Your Name]",
+      "new_name": "[Your Name]"
+    },
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 1.683,
+    "gen_tokens": 30
+  },
+  {
+    "id": 186,
+    "prompt": "Tell me all the people you recognize.",
+    "expected_name": "list_faces",
+    "expected_args": {},
+    "predicted_name": "list_faces",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.594,
+    "gen_tokens": 8
+  },
+  {
+    "id": 187,
+    "prompt": "What users are enrolled?",
+    "expected_name": "list_faces",
+    "expected_args": {},
+    "predicted_name": "list_faces",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.5825,
+    "gen_tokens": 8
+  },
+  {
+    "id": 188,
+    "prompt": "List the faces you have on file.",
+    "expected_name": "list_faces",
+    "expected_args": {},
+    "predicted_name": "list_faces",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.5226,
+    "gen_tokens": 8
+  },
+  {
+    "id": 189,
+    "prompt": "Who's in your memory?",
+    "expected_name": "list_faces",
+    "expected_args": {},
+    "predicted_name": "add_face",
+    "predicted_args": {
+      "name": "Who is in your memory?"
+    },
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 1.1282,
+    "gen_tokens": 19
+  },
+  {
+    "id": 190,
+    "prompt": "Read off everyone that's saved.",
+    "expected_name": "list_faces",
+    "expected_args": {},
+    "predicted_name": "list_faces",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.5554,
+    "gen_tokens": 8
+  },
+  {
+    "id": 191,
+    "prompt": "How many people do you know, and who?",
+    "expected_name": "list_faces",
+    "expected_args": {},
+    "predicted_name": "list_faces",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.5283,
+    "gen_tokens": 8
+  },
+  {
+    "id": 192,
+    "prompt": "Show all the names in the database.",
+    "expected_name": "list_faces",
+    "expected_args": {},
+    "predicted_name": "list_faces",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.5009,
+    "gen_tokens": 8
+  },
+  {
+    "id": 193,
+    "prompt": "Who are the known people?",
+    "expected_name": "list_faces",
+    "expected_args": {},
+    "predicted_name": "identify_face",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5003,
+    "gen_tokens": 8
+  },
+  {
+    "id": 194,
+    "prompt": "Give me the full list of enrolled faces.",
+    "expected_name": "list_faces",
+    "expected_args": {},
+    "predicted_name": "list_faces",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.539,
+    "gen_tokens": 8
+  },
+  {
+    "id": 195,
+    "prompt": "Which people have been added?",
+    "expected_name": "list_faces",
+    "expected_args": {},
+    "predicted_name": "list_faces",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.5947,
+    "gen_tokens": 8
+  },
+  {
+    "id": 196,
+    "prompt": "Tell me everyone in the registry.",
+    "expected_name": "list_faces",
+    "expected_args": {},
+    "predicted_name": "list_faces",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.5939,
+    "gen_tokens": 8
+  },
+  {
+    "id": 197,
+    "prompt": "What names are stored?",
+    "expected_name": "list_faces",
+    "expected_args": {},
+    "predicted_name": "count_general_entity",
+    "predicted_args": {
+      "entity": "names"
+    },
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.9654,
+    "gen_tokens": 16
+  },
+  {
+    "id": 198,
+    "prompt": "Print out all saved users.",
+    "expected_name": "list_faces",
+    "expected_args": {},
+    "predicted_name": "add_face",
+    "predicted_args": {
+      "name": ""
+    },
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 1.2521,
+    "gen_tokens": 27
+  },
+  {
+    "id": 199,
+    "prompt": "Who's on the list of recognized faces?",
+    "expected_name": "list_faces",
+    "expected_args": {},
+    "predicted_name": "list_faces",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.5532,
+    "gen_tokens": 8
+  },
+  {
+    "id": 200,
+    "prompt": "What do you see?",
+    "expected_name": "describe_scene",
+    "expected_args": {},
+    "predicted_name": "list_faces",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5085,
+    "gen_tokens": 8
+  },
+  {
+    "id": 201,
+    "prompt": "Describe the room for me.",
+    "expected_name": "describe_scene",
+    "expected_args": {},
+    "predicted_name": "describe_scene",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.4931,
+    "gen_tokens": 8
+  },
+  {
+    "id": 202,
+    "prompt": "What's in front of me?",
+    "expected_name": "describe_scene",
+    "expected_args": {},
+    "predicted_name": "list_faces",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5007,
+    "gen_tokens": 8
+  },
+  {
+    "id": 203,
+    "prompt": "Tell me what the camera is looking at.",
+    "expected_name": "describe_scene",
+    "expected_args": {},
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5303,
+    "gen_tokens": 8
+  },
+  {
+    "id": 204,
+    "prompt": "Give me an overview of my surroundings.",
+    "expected_name": "describe_scene",
+    "expected_args": {},
+    "predicted_name": "describe_scene",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.5905,
+    "gen_tokens": 8
+  },
+  {
+    "id": 205,
+    "prompt": "What's going on in the scene?",
+    "expected_name": "describe_scene",
+    "expected_args": {},
+    "predicted_name": "list_faces",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5072,
+    "gen_tokens": 8
+  },
+  {
+    "id": 206,
+    "prompt": "Paint me a picture of what's around.",
+    "expected_name": "describe_scene",
+    "expected_args": {},
+    "predicted_name": "describe_scene",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.4936,
+    "gen_tokens": 8
+  },
+  {
+    "id": 207,
+    "prompt": "What's the setting like here?",
+    "expected_name": "describe_scene",
+    "expected_args": {},
+    "predicted_name": "describe_scene",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.4916,
+    "gen_tokens": 8
+  },
+  {
+    "id": 208,
+    "prompt": "Walk me through everything you can see.",
+    "expected_name": "describe_scene",
+    "expected_args": {},
+    "predicted_name": "list_faces",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5408,
+    "gen_tokens": 8
+  },
+  {
+    "id": 209,
+    "prompt": "Describe the environment.",
+    "expected_name": "describe_scene",
+    "expected_args": {},
+    "predicted_name": "describe_scene",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.5776,
+    "gen_tokens": 8
+  },
+  {
+    "id": 210,
+    "prompt": "What objects are in view?",
+    "expected_name": "describe_scene",
+    "expected_args": {},
+    "predicted_name": "list_faces",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5048,
+    "gen_tokens": 8
+  },
+  {
+    "id": 211,
+    "prompt": "Summarize what's visible right now.",
+    "expected_name": "describe_scene",
+    "expected_args": {},
+    "predicted_name": "count_general_entity",
+    "predicted_args": {
+      "entity": "what is visible"
+    },
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.9919,
+    "gen_tokens": 18
+  },
+  {
+    "id": 212,
+    "prompt": "Tell me about the room I'm in.",
+    "expected_name": "describe_scene",
+    "expected_args": {},
+    "predicted_name": "list_faces",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5448,
+    "gen_tokens": 8
+  },
+  {
+    "id": 213,
+    "prompt": "What does the area look like?",
+    "expected_name": "describe_scene",
+    "expected_args": {},
+    "predicted_name": "describe_scene",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.5796,
+    "gen_tokens": 8
+  },
+  {
+    "id": 214,
+    "prompt": "Give me a rundown of the surroundings.",
+    "expected_name": "describe_scene",
+    "expected_args": {},
+    "predicted_name": "describe_scene",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.4917,
+    "gen_tokens": 8
+  },
+  {
+    "id": 215,
+    "prompt": "What's around me right now?",
+    "expected_name": "describe_scene",
+    "expected_args": {},
+    "predicted_name": "list_faces",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.505,
+    "gen_tokens": 8
+  },
+  {
+    "id": 216,
+    "prompt": "Describe the whole scene in detail.",
+    "expected_name": "describe_scene",
+    "expected_args": {},
+    "predicted_name": "describe_scene",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.4888,
+    "gen_tokens": 8
+  },
+  {
+    "id": 217,
+    "prompt": "What's happening in the view?",
+    "expected_name": "describe_scene",
+    "expected_args": {},
+    "predicted_name": "read_text",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5582,
+    "gen_tokens": 8
+  },
+  {
+    "id": 218,
+    "prompt": "Tell me what's out there.",
+    "expected_name": "describe_scene",
+    "expected_args": {},
+    "predicted_name": "list_faces",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5896,
+    "gen_tokens": 8
+  },
+  {
+    "id": 219,
+    "prompt": "Give me the lay of the land in here.",
+    "expected_name": "describe_scene",
+    "expected_args": {},
+    "predicted_name": "list_faces",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5872,
+    "gen_tokens": 8
+  },
+  {
+    "id": 220,
+    "prompt": "Take a picture.",
+    "expected_name": "take_photo",
+    "expected_args": {},
+    "predicted_name": "take_photo",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.4991,
+    "gen_tokens": 8
+  },
+  {
+    "id": 221,
+    "prompt": "Snap a photo.",
+    "expected_name": "take_photo",
+    "expected_args": {},
+    "predicted_name": "take_photo",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.5093,
+    "gen_tokens": 8
+  },
+  {
+    "id": 222,
+    "prompt": "Capture this moment.",
+    "expected_name": "take_photo",
+    "expected_args": {},
+    "predicted_name": "take_photo",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.4951,
+    "gen_tokens": 8
+  },
+  {
+    "id": 223,
+    "prompt": "Grab a shot of this.",
+    "expected_name": "take_photo",
+    "expected_args": {},
+    "predicted_name": "take_photo",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.5341,
+    "gen_tokens": 8
+  },
+  {
+    "id": 224,
+    "prompt": "Take a photo and save it.",
+    "expected_name": "take_photo",
+    "expected_args": {},
+    "predicted_name": "take_photo",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.5964,
+    "gen_tokens": 8
+  },
+  {
+    "id": 225,
+    "prompt": "Get a picture of what's in front of you.",
+    "expected_name": "take_photo",
+    "expected_args": {},
+    "predicted_name": "take_photo",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.5916,
+    "gen_tokens": 8
+  },
+  {
+    "id": 226,
+    "prompt": "Snap this real quick.",
+    "expected_name": "take_photo",
+    "expected_args": {},
+    "predicted_name": "take_photo",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.583,
+    "gen_tokens": 8
+  },
+  {
+    "id": 227,
+    "prompt": "Shoot a photo now.",
+    "expected_name": "take_photo",
+    "expected_args": {},
+    "predicted_name": "take_photo",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.4971,
+    "gen_tokens": 8
+  },
+  {
+    "id": 228,
+    "prompt": "Take a snapshot of the room.",
+    "expected_name": "take_photo",
+    "expected_args": {},
+    "predicted_name": "take_photo",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.495,
+    "gen_tokens": 8
+  },
+  {
+    "id": 229,
+    "prompt": "Photograph this scene.",
+    "expected_name": "take_photo",
+    "expected_args": {},
+    "predicted_name": "describe_scene",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.4926,
+    "gen_tokens": 8
+  },
+  {
+    "id": 230,
+    "prompt": "Capture an image right now.",
+    "expected_name": "take_photo",
+    "expected_args": {},
+    "predicted_name": "take_photo",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.5361,
+    "gen_tokens": 8
+  },
+  {
+    "id": 231,
+    "prompt": "Save a picture of this.",
+    "expected_name": "take_photo",
+    "expected_args": {},
+    "predicted_name": "add_face",
+    "predicted_args": {
+      "name": ""
+    },
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 1.3377,
+    "gen_tokens": 27
+  },
+  {
+    "id": 232,
+    "prompt": "Take a quick pic.",
+    "expected_name": "take_photo",
+    "expected_args": {},
+    "predicted_name": "take_photo",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.5026,
+    "gen_tokens": 8
+  },
+  {
+    "id": 233,
+    "prompt": "Snap a still of what you see.",
+    "expected_name": "take_photo",
+    "expected_args": {},
+    "predicted_name": "take_photo",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.4946,
+    "gen_tokens": 8
+  },
+  {
+    "id": 234,
+    "prompt": "Get a photo of me here.",
+    "expected_name": "take_photo",
+    "expected_args": {},
+    "predicted_name": "take_photo",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.5831,
+    "gen_tokens": 8
+  },
+  {
+    "id": 235,
+    "prompt": "Take a picture for the record.",
+    "expected_name": "take_photo",
+    "expected_args": {},
+    "predicted_name": "take_photo",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.5821,
+    "gen_tokens": 8
+  },
+  {
+    "id": 236,
+    "prompt": "Capture a frame and store it.",
+    "expected_name": "take_photo",
+    "expected_args": {},
+    "predicted_name": "take_photo",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.5075,
+    "gen_tokens": 8
+  },
+  {
+    "id": 237,
+    "prompt": "Take a photograph right here.",
+    "expected_name": "take_photo",
+    "expected_args": {},
+    "predicted_name": "take_photo",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.4921,
+    "gen_tokens": 8
+  },
+  {
+    "id": 238,
+    "prompt": "Click a photo of this view.",
+    "expected_name": "take_photo",
+    "expected_args": {},
+    "predicted_name": "take_photo",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.5002,
+    "gen_tokens": 8
+  },
+  {
+    "id": 239,
+    "prompt": "Snap and keep an image of this.",
+    "expected_name": "take_photo",
+    "expected_args": {},
+    "predicted_name": "take_photo",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.5285,
+    "gen_tokens": 8
+  },
+  {
+    "id": 240,
+    "prompt": "Is the camera on?",
+    "expected_name": "get_camera_status",
+    "expected_args": {},
+    "predicted_name": "check_weather_outside",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.6719,
+    "gen_tokens": 10
+  },
+  {
+    "id": 241,
+    "prompt": "Check the system status.",
+    "expected_name": "get_camera_status",
+    "expected_args": {},
+    "predicted_name": "check_weather_outside",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5746,
+    "gen_tokens": 10
+  },
+  {
+    "id": 242,
+    "prompt": "Run camera diagnostics.",
+    "expected_name": "get_camera_status",
+    "expected_args": {},
+    "predicted_name": "check_air_quality",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5657,
+    "gen_tokens": 10
+  },
+  {
+    "id": 243,
+    "prompt": "What's the camera resolution?",
+    "expected_name": "get_camera_status",
+    "expected_args": {},
+    "predicted_name": "get_camera_status",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.558,
+    "gen_tokens": 10
+  },
+  {
+    "id": 244,
+    "prompt": "Is the camera connected properly?",
+    "expected_name": "get_camera_status",
+    "expected_args": {},
+    "predicted_name": "check_weather_outside",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.6412,
+    "gen_tokens": 10
+  },
+  {
+    "id": 245,
+    "prompt": "What's the current frame rate?",
+    "expected_name": "get_camera_status",
+    "expected_args": {},
+    "predicted_name": "get_camera_status",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.572,
+    "gen_tokens": 10
+  },
+  {
+    "id": 246,
+    "prompt": "Is the camera working right now?",
+    "expected_name": "get_camera_status",
+    "expected_args": {},
+    "predicted_name": "check_weather_outside",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.578,
+    "gen_tokens": 10
+  },
+  {
+    "id": 247,
+    "prompt": "Give me the camera's health report.",
+    "expected_name": "get_camera_status",
+    "expected_args": {},
+    "predicted_name": "check_air_quality",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5733,
+    "gen_tokens": 10
+  },
+  {
+    "id": 248,
+    "prompt": "Check if the camera is functioning.",
+    "expected_name": "get_camera_status",
+    "expected_args": {},
+    "predicted_name": "check_weather_outside",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.6631,
+    "gen_tokens": 10
+  },
+  {
+    "id": 249,
+    "prompt": "Is everything okay with the camera?",
+    "expected_name": "get_camera_status",
+    "expected_args": {},
+    "predicted_name": "check_weather_outside",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.6846,
+    "gen_tokens": 10
+  },
+  {
+    "id": 250,
+    "prompt": "What's the status of the camera feed?",
+    "expected_name": "get_camera_status",
+    "expected_args": {},
+    "predicted_name": "check_weather_outside",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5721,
+    "gen_tokens": 10
+  },
+  {
+    "id": 251,
+    "prompt": "Tell me the technical info on the camera.",
+    "expected_name": "get_camera_status",
+    "expected_args": {},
+    "predicted_name": "get_camera_status",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.5696,
+    "gen_tokens": 10
+  },
+  {
+    "id": 252,
+    "prompt": "Is the camera off or on?",
+    "expected_name": "get_camera_status",
+    "expected_args": {},
+    "predicted_name": "check_weather_outside",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5791,
+    "gen_tokens": 10
+  },
+  {
+    "id": 253,
+    "prompt": "Diagnose the camera for me.",
+    "expected_name": "get_camera_status",
+    "expected_args": {},
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5821,
+    "gen_tokens": 8
+  },
+  {
+    "id": 254,
+    "prompt": "How's the camera connection doing?",
+    "expected_name": "get_camera_status",
+    "expected_args": {},
+    "predicted_name": "check_weather_outside",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.6786,
+    "gen_tokens": 10
+  },
+  {
+    "id": 255,
+    "prompt": "Check the device's camera health.",
+    "expected_name": "get_camera_status",
+    "expected_args": {},
+    "predicted_name": "check_air_quality",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5706,
+    "gen_tokens": 10
+  },
+  {
+    "id": 256,
+    "prompt": "Is the video feed live?",
+    "expected_name": "get_camera_status",
+    "expected_args": {},
+    "predicted_name": "check_weather_outside",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5761,
+    "gen_tokens": 10
+  },
+  {
+    "id": 257,
+    "prompt": "Report the camera's settings and status.",
+    "expected_name": "get_camera_status",
+    "expected_args": {},
+    "predicted_name": "check_weather_outside",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5713,
+    "gen_tokens": 10
+  },
+  {
+    "id": 258,
+    "prompt": "Verify the camera is up and running.",
+    "expected_name": "get_camera_status",
+    "expected_args": {},
+    "predicted_name": "check_weather_outside",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.6843,
+    "gen_tokens": 10
+  },
+  {
+    "id": 259,
+    "prompt": "What frame rate and resolution are we at?",
+    "expected_name": "get_camera_status",
+    "expected_args": {},
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5807,
+    "gen_tokens": 8
+  },
+  {
+    "id": 260,
+    "prompt": "What's the weather like outside?",
+    "expected_name": "check_weather_outside",
+    "expected_args": {},
+    "predicted_name": "get_camera_status",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5744,
+    "gen_tokens": 10
+  },
+  {
+    "id": 261,
+    "prompt": "Is it raining out there?",
+    "expected_name": "check_weather_outside",
+    "expected_args": {},
+    "predicted_name": "check_weather_outside",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.5763,
+    "gen_tokens": 10
+  },
+  {
+    "id": 262,
+    "prompt": "What's the temperature right now?",
+    "expected_name": "check_weather_outside",
+    "expected_args": {},
+    "predicted_name": "get_camera_status",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5766,
+    "gen_tokens": 10
+  },
+  {
+    "id": 263,
+    "prompt": "Do I need an umbrella today?",
+    "expected_name": "check_weather_outside",
+    "expected_args": {},
+    "predicted_name": "assess_face_attributes",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.6537,
+    "gen_tokens": 10
+  },
+  {
+    "id": 264,
+    "prompt": "Is it cold outside?",
+    "expected_name": "check_weather_outside",
+    "expected_args": {},
+    "predicted_name": "check_weather_outside",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.5673,
+    "gen_tokens": 10
+  },
+  {
+    "id": 265,
+    "prompt": "What should I wear, weather-wise?",
+    "expected_name": "check_weather_outside",
+    "expected_args": {},
+    "predicted_name": "assess_face_attributes",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5613,
+    "gen_tokens": 10
+  },
+  {
+    "id": 266,
+    "prompt": "Is it sunny or cloudy out?",
+    "expected_name": "check_weather_outside",
+    "expected_args": {},
+    "predicted_name": "check_weather_outside",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.6048,
+    "gen_tokens": 10
+  },
+  {
+    "id": 267,
+    "prompt": "How's the weather looking?",
+    "expected_name": "check_weather_outside",
+    "expected_args": {},
+    "predicted_name": "get_camera_status",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.6651,
+    "gen_tokens": 10
+  },
+  {
+    "id": 268,
+    "prompt": "Is it snowing outside?",
+    "expected_name": "check_weather_outside",
+    "expected_args": {},
+    "predicted_name": "get_camera_status",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5754,
+    "gen_tokens": 10
+  },
+  {
+    "id": 269,
+    "prompt": "What's the humidity like out there?",
+    "expected_name": "check_weather_outside",
+    "expected_args": {},
+    "predicted_name": "get_camera_status",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5725,
+    "gen_tokens": 10
+  },
+  {
+    "id": 270,
+    "prompt": "Is it windy today?",
+    "expected_name": "check_weather_outside",
+    "expected_args": {},
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.488,
+    "gen_tokens": 8
+  },
+  {
+    "id": 271,
+    "prompt": "Tell me the outdoor conditions.",
+    "expected_name": "check_weather_outside",
+    "expected_args": {},
+    "predicted_name": "get_camera_status",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.6541,
+    "gen_tokens": 10
+  },
+  {
+    "id": 272,
+    "prompt": "Is it hot out right now?",
+    "expected_name": "check_weather_outside",
+    "expected_args": {},
+    "predicted_name": "get_camera_status",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5874,
+    "gen_tokens": 10
+  },
+  {
+    "id": 273,
+    "prompt": "Should I bring a jacket outside?",
+    "expected_name": "check_weather_outside",
+    "expected_args": {},
+    "predicted_name": "list_capabilities",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5039,
+    "gen_tokens": 8
+  },
+  {
+    "id": 274,
+    "prompt": "What's it like out, weather-wise?",
+    "expected_name": "check_weather_outside",
+    "expected_args": {},
+    "predicted_name": "describe_scene",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.4918,
+    "gen_tokens": 8
+  },
+  {
+    "id": 275,
+    "prompt": "Give me the current weather report.",
+    "expected_name": "check_weather_outside",
+    "expected_args": {},
+    "predicted_name": "get_camera_status",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.6107,
+    "gen_tokens": 10
+  },
+  {
+    "id": 276,
+    "prompt": "Is there rain in the air outside?",
+    "expected_name": "check_weather_outside",
+    "expected_args": {},
+    "predicted_name": "check_weather_outside",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.5714,
+    "gen_tokens": 10
+  },
+  {
+    "id": 277,
+    "prompt": "How warm is it outdoors?",
+    "expected_name": "check_weather_outside",
+    "expected_args": {},
+    "predicted_name": "get_camera_status",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5706,
+    "gen_tokens": 10
+  },
+  {
+    "id": 278,
+    "prompt": "Check the temperature and conditions outside.",
+    "expected_name": "check_weather_outside",
+    "expected_args": {},
+    "predicted_name": "check_weather_outside",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.576,
+    "gen_tokens": 10
+  },
+  {
+    "id": 279,
+    "prompt": "Is the weather nice enough for a walk?",
+    "expected_name": "check_weather_outside",
+    "expected_args": {},
+    "predicted_name": "describe_scene",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5891,
+    "gen_tokens": 8
+  },
+  {
+    "id": 280,
+    "prompt": "How is the air quality?",
+    "expected_name": "check_air_quality",
+    "expected_args": {},
+    "predicted_name": "get_camera_status",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.6757,
+    "gen_tokens": 10
+  },
+  {
+    "id": 281,
+    "prompt": "Is the air safe to breathe?",
+    "expected_name": "check_air_quality",
+    "expected_args": {},
+    "predicted_name": "check_air_quality",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.5703,
+    "gen_tokens": 10
+  },
+  {
+    "id": 282,
+    "prompt": "Check the CO2 level in here.",
+    "expected_name": "check_air_quality",
+    "expected_args": {},
+    "predicted_name": "measure_noise_level",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5659,
+    "gen_tokens": 10
+  },
+  {
+    "id": 283,
+    "prompt": "Should I open a window?",
+    "expected_name": "check_air_quality",
+    "expected_args": {},
+    "predicted_name": "assess_face_attributes",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.562,
+    "gen_tokens": 10
+  },
+  {
+    "id": 284,
+    "prompt": "Is the air in this room stuffy?",
+    "expected_name": "check_air_quality",
+    "expected_args": {},
+    "predicted_name": "measure_noise_level",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.6677,
+    "gen_tokens": 10
+  },
+  {
+    "id": 285,
+    "prompt": "What's the indoor air like?",
+    "expected_name": "check_air_quality",
+    "expected_args": {},
+    "predicted_name": "check_air_quality",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.5763,
+    "gen_tokens": 10
+  },
+  {
+    "id": 286,
+    "prompt": "Is the air polluted in here?",
+    "expected_name": "check_air_quality",
+    "expected_args": {},
+    "predicted_name": "check_air_quality",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.5751,
+    "gen_tokens": 10
+  },
+  {
+    "id": 287,
+    "prompt": "Check the particulate levels indoors.",
+    "expected_name": "check_air_quality",
+    "expected_args": {},
+    "predicted_name": "check_air_quality",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.5799,
+    "gen_tokens": 10
+  },
+  {
+    "id": 288,
+    "prompt": "Is it healthy to breathe in this room?",
+    "expected_name": "check_air_quality",
+    "expected_args": {},
+    "predicted_name": "assess_face_attributes",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.6651,
+    "gen_tokens": 10
+  },
+  {
+    "id": 289,
+    "prompt": "How clean is the air right now?",
+    "expected_name": "check_air_quality",
+    "expected_args": {},
+    "predicted_name": "check_air_quality",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.5761,
+    "gen_tokens": 10
+  },
+  {
+    "id": 290,
+    "prompt": "What's the PM2.5 reading?",
+    "expected_name": "check_air_quality",
+    "expected_args": {},
+    "predicted_name": "measure_noise_level",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5721,
+    "gen_tokens": 10
+  },
+  {
+    "id": 291,
+    "prompt": "Is the CO2 too high in here?",
+    "expected_name": "check_air_quality",
+    "expected_args": {},
+    "predicted_name": "measure_noise_level",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5721,
+    "gen_tokens": 10
+  },
+  {
+    "id": 292,
+    "prompt": "Tell me the air quality indoors.",
+    "expected_name": "check_air_quality",
+    "expected_args": {},
+    "predicted_name": "get_camera_status",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.6681,
+    "gen_tokens": 10
+  },
+  {
+    "id": 293,
+    "prompt": "Is the air fresh or stale?",
+    "expected_name": "check_air_quality",
+    "expected_args": {},
+    "predicted_name": "assess_face_attributes",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5671,
+    "gen_tokens": 10
+  },
+  {
+    "id": 294,
+    "prompt": "Do I need to ventilate the room?",
+    "expected_name": "check_air_quality",
+    "expected_args": {},
+    "predicted_name": "get_camera_status",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5631,
+    "gen_tokens": 10
+  },
+  {
+    "id": 295,
+    "prompt": "Check if the breathing conditions are okay.",
+    "expected_name": "check_air_quality",
+    "expected_args": {},
+    "predicted_name": "check_air_quality",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.5766,
+    "gen_tokens": 10
+  },
+  {
+    "id": 296,
+    "prompt": "What's the air quality index inside?",
+    "expected_name": "check_air_quality",
+    "expected_args": {},
+    "predicted_name": "get_camera_status",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.6696,
+    "gen_tokens": 10
+  },
+  {
+    "id": 297,
+    "prompt": "Is the indoor air clean enough?",
+    "expected_name": "check_air_quality",
+    "expected_args": {},
+    "predicted_name": "check_air_quality",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.6717,
+    "gen_tokens": 10
+  },
+  {
+    "id": 298,
+    "prompt": "Measure the air in this room.",
+    "expected_name": "check_air_quality",
+    "expected_args": {},
+    "predicted_name": "measure_noise_level",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5738,
+    "gen_tokens": 10
+  },
+  {
+    "id": 299,
+    "prompt": "Is the air getting stuffy in here?",
+    "expected_name": "check_air_quality",
+    "expected_args": {},
+    "predicted_name": "measure_noise_level",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5702,
+    "gen_tokens": 10
+  },
+  {
+    "id": 300,
+    "prompt": "What can you do?",
+    "expected_name": "list_capabilities",
+    "expected_args": {},
+    "predicted_name": "read_text",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.492,
+    "gen_tokens": 8
+  },
+  {
+    "id": 301,
+    "prompt": "Show me all the commands.",
+    "expected_name": "list_capabilities",
+    "expected_args": {},
+    "predicted_name": "list_capabilities",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.5646,
+    "gen_tokens": 8
+  },
+  {
+    "id": 302,
+    "prompt": "Help.",
+    "expected_name": "list_capabilities",
+    "expected_args": {},
+    "predicted_name": "add_face",
+    "predicted_args": {
+      "name": "I'm [Your Name] here"
+    },
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 1.2792,
+    "gen_tokens": 21
+  },
+  {
+    "id": 303,
+    "prompt": "What features do you have?",
+    "expected_name": "list_capabilities",
+    "expected_args": {},
+    "predicted_name": "identify_face",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.4971,
+    "gen_tokens": 8
+  },
+  {
+    "id": 304,
+    "prompt": "List everything you're able to do.",
+    "expected_name": "list_capabilities",
+    "expected_args": {},
+    "predicted_name": "list_faces",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5773,
+    "gen_tokens": 8
+  },
+  {
+    "id": 305,
+    "prompt": "What are your skills?",
+    "expected_name": "list_capabilities",
+    "expected_args": {},
+    "predicted_name": "list_capabilities",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.5953,
+    "gen_tokens": 8
+  },
+  {
+    "id": 306,
+    "prompt": "Tell me what's possible with you.",
+    "expected_name": "list_capabilities",
+    "expected_args": {},
+    "predicted_name": "read_text",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5825,
+    "gen_tokens": 8
+  },
+  {
+    "id": 307,
+    "prompt": "What kind of things can you handle?",
+    "expected_name": "list_capabilities",
+    "expected_args": {},
+    "predicted_name": "list_capabilities",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.4919,
+    "gen_tokens": 8
+  },
+  {
+    "id": 308,
+    "prompt": "Give me a list of all your actions.",
+    "expected_name": "list_capabilities",
+    "expected_args": {},
+    "predicted_name": "list_faces",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.4947,
+    "gen_tokens": 8
+  },
+  {
+    "id": 309,
+    "prompt": "What options do I have?",
+    "expected_name": "list_capabilities",
+    "expected_args": {},
+    "predicted_name": "read_text",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.4881,
+    "gen_tokens": 8
+  },
+  {
+    "id": 310,
+    "prompt": "Show me your full feature list.",
+    "expected_name": "list_capabilities",
+    "expected_args": {},
+    "predicted_name": "list_faces",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5438,
+    "gen_tokens": 8
+  },
+  {
+    "id": 311,
+    "prompt": "What commands are available?",
+    "expected_name": "list_capabilities",
+    "expected_args": {},
+    "predicted_name": "list_capabilities",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.4958,
+    "gen_tokens": 8
+  },
+  {
+    "id": 312,
+    "prompt": "What functions can you perform?",
+    "expected_name": "list_capabilities",
+    "expected_args": {},
+    "predicted_name": "read_text",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.4979,
+    "gen_tokens": 8
+  },
+  {
+    "id": 313,
+    "prompt": "Tell me everything you're capable of.",
+    "expected_name": "list_capabilities",
+    "expected_args": {},
+    "predicted_name": "list_capabilities",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.4975,
+    "gen_tokens": 8
+  },
+  {
+    "id": 314,
+    "prompt": "What's in your toolkit?",
+    "expected_name": "list_capabilities",
+    "expected_args": {},
+    "predicted_name": "list_faces",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5412,
+    "gen_tokens": 8
+  },
+  {
+    "id": 315,
+    "prompt": "Run me through what you can do.",
+    "expected_name": "list_capabilities",
+    "expected_args": {},
+    "predicted_name": "transcribe_speech",
+    "predicted_args": {
+      "duration_seconds": 5
+    },
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 1.1964,
+    "gen_tokens": 22
+  },
+  {
+    "id": 316,
+    "prompt": "Give me the help menu.",
+    "expected_name": "list_capabilities",
+    "expected_args": {},
+    "predicted_name": "list_capabilities",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.4995,
+    "gen_tokens": 8
+  },
+  {
+    "id": 317,
+    "prompt": "What abilities do you offer?",
+    "expected_name": "list_capabilities",
+    "expected_args": {},
+    "predicted_name": "assess_face_attributes",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5619,
+    "gen_tokens": 10
+  },
+  {
+    "id": 318,
+    "prompt": "Show all the things you support.",
+    "expected_name": "list_capabilities",
+    "expected_args": {},
+    "predicted_name": "list_faces",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5459,
+    "gen_tokens": 8
+  },
+  {
+    "id": 319,
+    "prompt": "What's your list of capabilities?",
+    "expected_name": "list_capabilities",
+    "expected_args": {},
+    "predicted_name": "list_capabilities",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.5954,
+    "gen_tokens": 8
+  },
+  {
+    "id": 320,
+    "prompt": "Tell me when John gets here.",
+    "expected_name": "await_specific_name",
+    "expected_args": {
+      "name": "John"
+    },
+    "predicted_name": "get_camera_status",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.6759,
+    "gen_tokens": 10
+  },
+  {
+    "id": 321,
+    "prompt": "Wait for Sarah to arrive.",
+    "expected_name": "await_specific_name",
+    "expected_args": {
+      "name": "Sarah"
+    },
+    "predicted_name": "await_general_entity",
+    "predicted_args": {
+      "entity": "Sarah"
+    },
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.9068,
+    "gen_tokens": 16
+  },
+  {
+    "id": 322,
+    "prompt": "Alert me if David shows up.",
+    "expected_name": "await_specific_name",
+    "expected_args": {
+      "name": "David"
+    },
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.4938,
+    "gen_tokens": 8
+  },
+  {
+    "id": 323,
+    "prompt": "Let me know the moment Emma appears.",
+    "expected_name": "await_specific_name",
+    "expected_args": {
+      "name": "Emma"
+    },
+    "predicted_name": "get_camera_status",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5979,
+    "gen_tokens": 10
+  },
+  {
+    "id": 324,
+    "prompt": "Watch for Michael and ping me when he's here.",
+    "expected_name": "await_specific_name",
+    "expected_args": {
+      "name": "Michael"
+    },
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5084,
+    "gen_tokens": 8
+  },
+  {
+    "id": 325,
+    "prompt": "Notify me when Grandma walks in.",
+    "expected_name": "await_specific_name",
+    "expected_args": {
+      "name": "Grandma"
+    },
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5056,
+    "gen_tokens": 8
+  },
+  {
+    "id": 326,
+    "prompt": "Tell me as soon as Alex turns up.",
+    "expected_name": "await_specific_name",
+    "expected_args": {
+      "name": "Alex"
+    },
+    "predicted_name": "add_face",
+    "predicted_args": {
+      "name": "Alex"
+    },
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.8074,
+    "gen_tokens": 14
+  },
+  {
+    "id": 327,
+    "prompt": "Keep an eye out for Maria's arrival.",
+    "expected_name": "await_specific_name",
+    "expected_args": {
+      "name": "Maria"
+    },
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.6351,
+    "gen_tokens": 9
+  },
+  {
+    "id": 328,
+    "prompt": "Buzz me when Tom gets back.",
+    "expected_name": "await_specific_name",
+    "expected_args": {
+      "name": "Tom"
+    },
+    "predicted_name": "add_face",
+    "predicted_args": {
+      "name": "Tom"
+    },
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.8828,
+    "gen_tokens": 14
+  },
+  {
+    "id": 329,
+    "prompt": "Wait until Olivia comes home and let me know.",
+    "expected_name": "await_specific_name",
+    "expected_args": {
+      "name": "Olivia"
+    },
+    "predicted_name": "await_general_entity",
+    "predicted_args": {
+      "entity": "Olivia"
+    },
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.8736,
+    "gen_tokens": 16
+  },
+  {
+    "id": 330,
+    "prompt": "Alert me when Dad arrives.",
+    "expected_name": "await_specific_name",
+    "expected_args": {
+      "name": "Dad"
+    },
+    "predicted_name": "await_general_entity",
+    "predicted_args": {
+      "entity": "Dad"
+    },
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.9232,
+    "gen_tokens": 16
+  },
+  {
+    "id": 331,
+    "prompt": "Watch for Jessica showing up.",
+    "expected_name": "await_specific_name",
+    "expected_args": {
+      "name": "Jessica"
+    },
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.6116,
+    "gen_tokens": 8
+  },
+  {
+    "id": 332,
+    "prompt": "Let me know if Robert appears on camera.",
+    "expected_name": "await_specific_name",
+    "expected_args": {
+      "name": "Robert"
+    },
+    "predicted_name": "count_general_entity",
+    "predicted_args": {
+      "entity": "Robert"
+    },
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.8721,
+    "gen_tokens": 16
+  },
+  {
+    "id": 333,
+    "prompt": "Tell me when Lily comes through the door.",
+    "expected_name": "await_specific_name",
+    "expected_args": {
+      "name": "Lily"
+    },
+    "predicted_name": "add_face",
+    "predicted_args": {
+      "name": "Lily"
+    },
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.7839,
+    "gen_tokens": 14
+  },
+  {
+    "id": 334,
+    "prompt": "Notify me the second Chris is here.",
+    "expected_name": "await_specific_name",
+    "expected_args": {
+      "name": "Chris"
+    },
+    "predicted_name": "list_capabilities",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.535,
+    "gen_tokens": 8
+  },
+  {
+    "id": 335,
+    "prompt": "Wait for Sophia and alert me.",
+    "expected_name": "await_specific_name",
+    "expected_args": {
+      "name": "Sophia"
+    },
+    "predicted_name": "await_general_entity",
+    "predicted_args": {
+      "entity": "Sophia"
+    },
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.9911,
+    "gen_tokens": 16
+  },
+  {
+    "id": 336,
+    "prompt": "Ping me when Daniel arrives.",
+    "expected_name": "await_specific_name",
+    "expected_args": {
+      "name": "Daniel"
+    },
+    "predicted_name": "await_general_entity",
+    "predicted_args": {
+      "entity": "Daniel"
+    },
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.8638,
+    "gen_tokens": 16
+  },
+  {
+    "id": 337,
+    "prompt": "Keep watch for Hannah and tell me when she's spotted.",
+    "expected_name": "await_specific_name",
+    "expected_args": {
+      "name": "Hannah"
+    },
+    "predicted_name": "check_weather_outside",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5824,
+    "gen_tokens": 10
+  },
+  {
+    "id": 338,
+    "prompt": "Let me know when Uncle Joe gets here.",
+    "expected_name": "await_specific_name",
+    "expected_args": {
+      "name": "Uncle Joe"
+    },
+    "predicted_name": "await_general_entity",
+    "predicted_args": {
+      "entity": "uncle-joe"
+    },
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 1.0917,
+    "gen_tokens": 18
+  },
+  {
+    "id": 339,
+    "prompt": "Alert me when Mom comes back.",
+    "expected_name": "await_specific_name",
+    "expected_args": {
+      "name": "Mom"
+    },
+    "predicted_name": "await_general_entity",
+    "predicted_args": {
+      "entity": "Mom"
+    },
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.8662,
+    "gen_tokens": 16
+  },
+  {
+    "id": 340,
+    "prompt": "Tell me if you see a dog.",
+    "expected_name": "await_general_entity",
+    "expected_args": {
+      "entity": "dog"
+    },
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.4956,
+    "gen_tokens": 8
+  },
+  {
+    "id": 341,
+    "prompt": "Alert me when a package arrives.",
+    "expected_name": "await_general_entity",
+    "expected_args": {
+      "entity": "package"
+    },
+    "predicted_name": "await_general_entity",
+    "predicted_args": {
+      "entity": "package"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 1.0101,
+    "gen_tokens": 16
+  },
+  {
+    "id": 342,
+    "prompt": "Watch for a car pulling up.",
+    "expected_name": "await_general_entity",
+    "expected_args": {
+      "entity": "car"
+    },
+    "predicted_name": "list_faces",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.4953,
+    "gen_tokens": 8
+  },
+  {
+    "id": 343,
+    "prompt": "Let me know if a cat shows up.",
+    "expected_name": "await_general_entity",
+    "expected_args": {
+      "entity": "cat"
+    },
+    "predicted_name": "list_faces",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.4958,
+    "gen_tokens": 8
+  },
+  {
+    "id": 344,
+    "prompt": "Notify me when the delivery truck comes.",
+    "expected_name": "await_general_entity",
+    "expected_args": {
+      "entity": "delivery truck"
+    },
+    "predicted_name": "await_general_entity",
+    "predicted_args": {
+      "entity": "delivery truck"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 1.0009,
+    "gen_tokens": 17
+  },
+  {
+    "id": 345,
+    "prompt": "Tell me if a bird lands in the yard.",
+    "expected_name": "await_general_entity",
+    "expected_args": {
+      "entity": "bird"
+    },
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5798,
+    "gen_tokens": 8
+  },
+  {
+    "id": 346,
+    "prompt": "Watch for the mail carrier.",
+    "expected_name": "await_general_entity",
+    "expected_args": {
+      "entity": "mail carrier"
+    },
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5084,
+    "gen_tokens": 8
+  },
+  {
+    "id": 347,
+    "prompt": "Alert me if a bus stops outside.",
+    "expected_name": "await_general_entity",
+    "expected_args": {
+      "entity": "bus"
+    },
+    "predicted_name": "check_weather_outside",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5735,
+    "gen_tokens": 10
+  },
+  {
+    "id": 348,
+    "prompt": "Let me know when a bicycle goes by.",
+    "expected_name": "await_general_entity",
+    "expected_args": {
+      "entity": "bicycle"
+    },
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5009,
+    "gen_tokens": 8
+  },
+  {
+    "id": 349,
+    "prompt": "Ping me if a raccoon appears.",
+    "expected_name": "await_general_entity",
+    "expected_args": {
+      "entity": "raccoon"
+    },
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5484,
+    "gen_tokens": 8
+  },
+  {
+    "id": 350,
+    "prompt": "Watch out for any deliveries.",
+    "expected_name": "await_general_entity",
+    "expected_args": {
+      "entity": "delivery"
+    },
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5818,
+    "gen_tokens": 8
+  },
+  {
+    "id": 351,
+    "prompt": "Tell me if a truck shows up.",
+    "expected_name": "await_general_entity",
+    "expected_args": {
+      "entity": "truck"
+    },
+    "predicted_name": "list_faces",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5208,
+    "gen_tokens": 8
+  },
+  {
+    "id": 352,
+    "prompt": "Alert me when a person walks past.",
+    "expected_name": "await_general_entity",
+    "expected_args": {
+      "entity": "person"
+    },
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.4898,
+    "gen_tokens": 8
+  },
+  {
+    "id": 353,
+    "prompt": "Let me know if a squirrel comes around.",
+    "expected_name": "await_general_entity",
+    "expected_args": {
+      "entity": "squirrel"
+    },
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.4931,
+    "gen_tokens": 8
+  },
+  {
+    "id": 354,
+    "prompt": "Notify me if a taxi pulls in.",
+    "expected_name": "await_general_entity",
+    "expected_args": {
+      "entity": "taxi"
+    },
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5154,
+    "gen_tokens": 8
+  },
+  {
+    "id": 355,
+    "prompt": "Watch for any animals in the garden.",
+    "expected_name": "await_general_entity",
+    "expected_args": {
+      "entity": "animal"
+    },
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5841,
+    "gen_tokens": 8
+  },
+  {
+    "id": 356,
+    "prompt": "Tell me when a box gets dropped off.",
+    "expected_name": "await_general_entity",
+    "expected_args": {
+      "entity": "box"
+    },
+    "predicted_name": "get_camera_status",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5881,
+    "gen_tokens": 10
+  },
+  {
+    "id": 357,
+    "prompt": "Alert me if a motorcycle appears.",
+    "expected_name": "await_general_entity",
+    "expected_args": {
+      "entity": "motorcycle"
+    },
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.4946,
+    "gen_tokens": 8
+  },
+  {
+    "id": 358,
+    "prompt": "Let me know if a fox shows up outside.",
+    "expected_name": "await_general_entity",
+    "expected_args": {
+      "entity": "fox"
+    },
+    "predicted_name": "list_faces",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.504,
+    "gen_tokens": 8
+  },
+  {
+    "id": 359,
+    "prompt": "Watch for a van parking out front.",
+    "expected_name": "await_general_entity",
+    "expected_args": {
+      "entity": "van"
+    },
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5876,
+    "gen_tokens": 9
+  },
+  {
+    "id": 360,
+    "prompt": "How many people are there?",
+    "expected_name": "count_general_entity",
+    "expected_args": {
+      "entity": "people"
+    },
+    "predicted_name": "count_general_entity",
+    "predicted_args": {
+      "entity": "people"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.9561,
+    "gen_tokens": 16
+  },
+  {
+    "id": 361,
+    "prompt": "Count the chairs in the room.",
+    "expected_name": "count_general_entity",
+    "expected_args": {
+      "entity": "chairs"
+    },
+    "predicted_name": "count_general_entity",
+    "predicted_args": {
+      "entity": "chairs"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.8821,
+    "gen_tokens": 16
+  },
+  {
+    "id": 362,
+    "prompt": "How many cars do you see?",
+    "expected_name": "count_general_entity",
+    "expected_args": {
+      "entity": "cars"
+    },
+    "predicted_name": "count_general_entity",
+    "predicted_args": {
+      "entity": "cars"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.9217,
+    "gen_tokens": 16
+  },
+  {
+    "id": 363,
+    "prompt": "How many dogs are in the yard?",
+    "expected_name": "count_general_entity",
+    "expected_args": {
+      "entity": "dogs"
+    },
+    "predicted_name": "count_general_entity",
+    "predicted_args": {
+      "entity": "dogs"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.8918,
+    "gen_tokens": 16
+  },
+  {
+    "id": 364,
+    "prompt": "Count how many bottles are on the table.",
+    "expected_name": "count_general_entity",
+    "expected_args": {
+      "entity": "bottles"
+    },
+    "predicted_name": "count_general_entity",
+    "predicted_args": {
+      "entity": "tables"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": false,
+    "seconds": 0.8787,
+    "gen_tokens": 16
+  },
+  {
+    "id": 365,
+    "prompt": "How many kids are playing out there?",
+    "expected_name": "count_general_entity",
+    "expected_args": {
+      "entity": "kids"
+    },
+    "predicted_name": "count_general_entity",
+    "predicted_args": {
+      "entity": "kids"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.8648,
+    "gen_tokens": 16
+  },
+  {
+    "id": 366,
+    "prompt": "Tally the books on the shelf.",
+    "expected_name": "count_general_entity",
+    "expected_args": {
+      "entity": "books"
+    },
+    "predicted_name": "list_faces",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5614,
+    "gen_tokens": 8
+  },
+  {
+    "id": 367,
+    "prompt": "How many windows are in view?",
+    "expected_name": "count_general_entity",
+    "expected_args": {
+      "entity": "windows"
+    },
+    "predicted_name": "count_general_entity",
+    "predicted_args": {
+      "entity": "windows"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.8653,
+    "gen_tokens": 16
+  },
+  {
+    "id": 368,
+    "prompt": "Count the cups on the counter.",
+    "expected_name": "count_general_entity",
+    "expected_args": {
+      "entity": "cups"
+    },
+    "predicted_name": "count_general_entity",
+    "predicted_args": {
+      "entity": "cups"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.8677,
+    "gen_tokens": 16
+  },
+  {
+    "id": 369,
+    "prompt": "How many people are in line?",
+    "expected_name": "count_general_entity",
+    "expected_args": {
+      "entity": "people"
+    },
+    "predicted_name": "count_general_entity",
+    "predicted_args": {
+      "entity": "people"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.954,
+    "gen_tokens": 16
+  },
+  {
+    "id": 370,
+    "prompt": "How many plants do you see?",
+    "expected_name": "count_general_entity",
+    "expected_args": {
+      "entity": "plants"
+    },
+    "predicted_name": "count_general_entity",
+    "predicted_args": {
+      "entity": "plants"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.8622,
+    "gen_tokens": 16
+  },
+  {
+    "id": 371,
+    "prompt": "Count the number of boxes here.",
+    "expected_name": "count_general_entity",
+    "expected_args": {
+      "entity": "boxes"
+    },
+    "predicted_name": "count_general_entity",
+    "predicted_args": {
+      "entity": "cars"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": false,
+    "seconds": 0.8619,
+    "gen_tokens": 16
+  },
+  {
+    "id": 372,
+    "prompt": "How many bikes are parked outside?",
+    "expected_name": "count_general_entity",
+    "expected_args": {
+      "entity": "bikes"
+    },
+    "predicted_name": "count_general_entity",
+    "predicted_args": {
+      "entity": "bikes"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.9257,
+    "gen_tokens": 16
+  },
+  {
+    "id": 373,
+    "prompt": "Total up the apples in the bowl.",
+    "expected_name": "count_general_entity",
+    "expected_args": {
+      "entity": "apples"
+    },
+    "predicted_name": "count_general_entity",
+    "predicted_args": {
+      "entity": "apples"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.8939,
+    "gen_tokens": 16
+  },
+  {
+    "id": 374,
+    "prompt": "How many phones are on the desk?",
+    "expected_name": "count_general_entity",
+    "expected_args": {
+      "entity": "phones"
+    },
+    "predicted_name": "list_faces",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.537,
+    "gen_tokens": 8
+  },
+  {
+    "id": 375,
+    "prompt": "Count the cats in the room.",
+    "expected_name": "count_general_entity",
+    "expected_args": {
+      "entity": "cats"
+    },
+    "predicted_name": "count_general_entity",
+    "predicted_args": {
+      "entity": "cats"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.8848,
+    "gen_tokens": 16
+  },
+  {
+    "id": 376,
+    "prompt": "How many bags are there?",
+    "expected_name": "count_general_entity",
+    "expected_args": {
+      "entity": "bags"
+    },
+    "predicted_name": "list_faces",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.4874,
+    "gen_tokens": 8
+  },
+  {
+    "id": 377,
+    "prompt": "Enumerate the plates on the table.",
+    "expected_name": "count_general_entity",
+    "expected_args": {
+      "entity": "plates"
+    },
+    "predicted_name": "list_faces",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.4881,
+    "gen_tokens": 8
+  },
+  {
+    "id": 378,
+    "prompt": "How many trees can you see?",
+    "expected_name": "count_general_entity",
+    "expected_args": {
+      "entity": "trees"
+    },
+    "predicted_name": "count_general_entity",
+    "predicted_args": {
+      "entity": "trees"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.9004,
+    "gen_tokens": 16
+  },
+  {
+    "id": 379,
+    "prompt": "Count the shoes by the door.",
+    "expected_name": "count_general_entity",
+    "expected_args": {
+      "entity": "shoes"
+    },
+    "predicted_name": "count_general_entity",
+    "predicted_args": {
+      "entity": "shoes"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.8775,
+    "gen_tokens": 16
+  },
+  {
+    "id": 380,
+    "prompt": "How far away is the door?",
+    "expected_name": "estimate_distance",
+    "expected_args": {
+      "target": "door"
+    },
+    "predicted_name": "estimate_distance",
+    "predicted_args": {
+      "target": "door"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.7731,
+    "gen_tokens": 14
+  },
+  {
+    "id": 381,
+    "prompt": "What's the distance to that car?",
+    "expected_name": "estimate_distance",
+    "expected_args": {
+      "target": "car"
+    },
+    "predicted_name": "estimate_distance",
+    "predicted_args": {
+      "target": "car"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.7711,
+    "gen_tokens": 14
+  },
+  {
+    "id": 382,
+    "prompt": "Is that person close or far?",
+    "expected_name": "estimate_distance",
+    "expected_args": {
+      "target": "person"
+    },
+    "predicted_name": "estimate_distance",
+    "predicted_args": {
+      "target": "the object to measure distance to (e.g., door, person, tree)"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": false,
+    "seconds": 1.9009,
+    "gen_tokens": 30
+  },
+  {
+    "id": 383,
+    "prompt": "How far is the wall from here?",
+    "expected_name": "estimate_distance",
+    "expected_args": {
+      "target": "wall"
+    },
+    "predicted_name": "estimate_distance",
+    "predicted_args": {
+      "target": "the wall"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": false,
+    "seconds": 0.8427,
+    "gen_tokens": 15
+  },
+  {
+    "id": 384,
+    "prompt": "How many meters to the table?",
+    "expected_name": "estimate_distance",
+    "expected_args": {
+      "target": "table"
+    },
+    "predicted_name": "estimate_distance",
+    "predicted_args": {
+      "target": "table"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.8547,
+    "gen_tokens": 14
+  },
+  {
+    "id": 385,
+    "prompt": "How far away is the dog?",
+    "expected_name": "estimate_distance",
+    "expected_args": {
+      "target": "dog"
+    },
+    "predicted_name": "estimate_distance",
+    "predicted_args": {
+      "target": "dog"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.8193,
+    "gen_tokens": 14
+  },
+  {
+    "id": 386,
+    "prompt": "What's the distance to the window?",
+    "expected_name": "estimate_distance",
+    "expected_args": {
+      "target": "window"
+    },
+    "predicted_name": "estimate_distance",
+    "predicted_args": {
+      "target": "window"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.7745,
+    "gen_tokens": 14
+  },
+  {
+    "id": 387,
+    "prompt": "Is the couch nearby or far away?",
+    "expected_name": "estimate_distance",
+    "expected_args": {
+      "target": "couch"
+    },
+    "predicted_name": "estimate_distance",
+    "predicted_args": {
+      "target": "couch"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.7629,
+    "gen_tokens": 14
+  },
+  {
+    "id": 388,
+    "prompt": "How far is the staircase?",
+    "expected_name": "estimate_distance",
+    "expected_args": {
+      "target": "staircase"
+    },
+    "predicted_name": "estimate_distance",
+    "predicted_args": {
+      "target": "the staircase"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": false,
+    "seconds": 1.2843,
+    "gen_tokens": 21
+  },
+  {
+    "id": 389,
+    "prompt": "Measure the distance to the gate.",
+    "expected_name": "estimate_distance",
+    "expected_args": {
+      "target": "gate"
+    },
+    "predicted_name": "estimate_distance",
+    "predicted_args": {
+      "target": "gate"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.8415,
+    "gen_tokens": 14
+  },
+  {
+    "id": 390,
+    "prompt": "How close is that tree?",
+    "expected_name": "estimate_distance",
+    "expected_args": {
+      "target": "tree"
+    },
+    "predicted_name": "estimate_distance",
+    "predicted_args": {
+      "target": "tree"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.8261,
+    "gen_tokens": 14
+  },
+  {
+    "id": 391,
+    "prompt": "What's the gap between me and the fridge?",
+    "expected_name": "estimate_distance",
+    "expected_args": {
+      "target": "fridge"
+    },
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5111,
+    "gen_tokens": 8
+  },
+  {
+    "id": 392,
+    "prompt": "How far away is the TV?",
+    "expected_name": "estimate_distance",
+    "expected_args": {
+      "target": "TV"
+    },
+    "predicted_name": "estimate_distance",
+    "predicted_args": {
+      "target": "TV"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.7913,
+    "gen_tokens": 14
+  },
+  {
+    "id": 393,
+    "prompt": "Is the fence far from here?",
+    "expected_name": "estimate_distance",
+    "expected_args": {
+      "target": "fence"
+    },
+    "predicted_name": "check_weather_outside",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.6935,
+    "gen_tokens": 10
+  },
+  {
+    "id": 394,
+    "prompt": "How many meters to the parked truck?",
+    "expected_name": "estimate_distance",
+    "expected_args": {
+      "target": "truck"
+    },
+    "predicted_name": "estimate_distance",
+    "predicted_args": {
+      "target": "truck"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.7981,
+    "gen_tokens": 14
+  },
+  {
+    "id": 395,
+    "prompt": "What's the distance to the bookshelf?",
+    "expected_name": "estimate_distance",
+    "expected_args": {
+      "target": "bookshelf"
+    },
+    "predicted_name": "estimate_distance",
+    "predicted_args": {
+      "target": "bookshelf"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.8706,
+    "gen_tokens": 15
+  },
+  {
+    "id": 396,
+    "prompt": "How far is the person standing from me?",
+    "expected_name": "estimate_distance",
+    "expected_args": {
+      "target": "person"
+    },
+    "predicted_name": "estimate_distance",
+    "predicted_args": {
+      "target": "the person standing from me"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": false,
+    "seconds": 1.2939,
+    "gen_tokens": 18
+  },
+  {
+    "id": 397,
+    "prompt": "Tell me how far the sofa is.",
+    "expected_name": "estimate_distance",
+    "expected_args": {
+      "target": "sofa"
+    },
+    "predicted_name": "estimate_distance",
+    "predicted_args": {
+      "target": "sofa"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.9645,
+    "gen_tokens": 15
+  },
+  {
+    "id": 398,
+    "prompt": "How close am I to the desk?",
+    "expected_name": "estimate_distance",
+    "expected_args": {
+      "target": "desk"
+    },
+    "predicted_name": "count_general_entity",
+    "predicted_args": {
+      "entity": "people"
+    },
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.8825,
+    "gen_tokens": 16
+  },
+  {
+    "id": 399,
+    "prompt": "Estimate the distance to the mailbox.",
+    "expected_name": "estimate_distance",
+    "expected_args": {
+      "target": "mailbox"
+    },
+    "predicted_name": "estimate_distance",
+    "predicted_args": {
+      "target": "mailbox"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.849,
+    "gen_tokens": 14
+  },
+  {
+    "id": 400,
+    "prompt": "Remember me as Alex.",
+    "expected_name": "add_face",
+    "expected_args": {
+      "name": "Alex"
+    },
+    "predicted_name": "add_face",
+    "predicted_args": {
+      "name": "Alex"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.9632,
+    "gen_tokens": 14
+  },
+  {
+    "id": 401,
+    "prompt": "Save this face as Maria.",
+    "expected_name": "add_face",
+    "expected_args": {
+      "name": "Maria"
+    },
+    "predicted_name": "add_face",
+    "predicted_args": {
+      "name": "Maria"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.8336,
+    "gen_tokens": 14
+  },
+  {
+    "id": 402,
+    "prompt": "Add this person as Bob.",
+    "expected_name": "add_face",
+    "expected_args": {
+      "name": "Bob"
+    },
+    "predicted_name": "add_face",
+    "predicted_args": {
+      "name": "Bob"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.8164,
+    "gen_tokens": 14
+  },
+  {
+    "id": 403,
+    "prompt": "Enroll me, my name is Jenny.",
+    "expected_name": "add_face",
+    "expected_args": {
+      "name": "Jenny"
+    },
+    "predicted_name": "list_faces",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5415,
+    "gen_tokens": 8
+  },
+  {
+    "id": 404,
+    "prompt": "Store this face under the name Kevin.",
+    "expected_name": "add_face",
+    "expected_args": {
+      "name": "Kevin"
+    },
+    "predicted_name": "list_faces",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5821,
+    "gen_tokens": 8
+  },
+  {
+    "id": 405,
+    "prompt": "Register this guy as Frank.",
+    "expected_name": "add_face",
+    "expected_args": {
+      "name": "Frank"
+    },
+    "predicted_name": "identify_face",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.6075,
+    "gen_tokens": 8
+  },
+  {
+    "id": 406,
+    "prompt": "Remember this person as Aisha.",
+    "expected_name": "add_face",
+    "expected_args": {
+      "name": "Aisha"
+    },
+    "predicted_name": "add_face",
+    "predicted_args": {
+      "name": "Aisha"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 1.012,
+    "gen_tokens": 15
+  },
+  {
+    "id": 407,
+    "prompt": "Save me to the database as Carlos.",
+    "expected_name": "add_face",
+    "expected_args": {
+      "name": "Carlos"
+    },
+    "predicted_name": "add_face",
+    "predicted_args": {
+      "name": "Carlos"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.8111,
+    "gen_tokens": 14
+  },
+  {
+    "id": 408,
+    "prompt": "Add the woman here as Nina.",
+    "expected_name": "add_face",
+    "expected_args": {
+      "name": "Nina"
+    },
+    "predicted_name": "identify_face",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5166,
+    "gen_tokens": 8
+  },
+  {
+    "id": 409,
+    "prompt": "Learn my face and call me Priya.",
+    "expected_name": "add_face",
+    "expected_args": {
+      "name": "Priya"
+    },
+    "predicted_name": "identify_face",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5811,
+    "gen_tokens": 8
+  },
+  {
+    "id": 410,
+    "prompt": "Enroll this person under George.",
+    "expected_name": "add_face",
+    "expected_args": {
+      "name": "George"
+    },
+    "predicted_name": "list_faces",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.6191,
+    "gen_tokens": 8
+  },
+  {
+    "id": 411,
+    "prompt": "Memorize this face as Liam.",
+    "expected_name": "add_face",
+    "expected_args": {
+      "name": "Liam"
+    },
+    "predicted_name": "add_face",
+    "predicted_args": {
+      "name": "Liam"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.8646,
+    "gen_tokens": 14
+  },
+  {
+    "id": 412,
+    "prompt": "Keep this face on file as Wendy.",
+    "expected_name": "add_face",
+    "expected_args": {
+      "name": "Wendy"
+    },
+    "predicted_name": "list_faces",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.5356,
+    "gen_tokens": 8
+  },
+  {
+    "id": 413,
+    "prompt": "Add me as Steve.",
+    "expected_name": "add_face",
+    "expected_args": {
+      "name": "Steve"
+    },
+    "predicted_name": "add_face",
+    "predicted_args": {
+      "name": "Steve"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.9491,
+    "gen_tokens": 14
+  },
+  {
+    "id": 414,
+    "prompt": "Save the kid's face as Tommy.",
+    "expected_name": "add_face",
+    "expected_args": {
+      "name": "Tommy"
+    },
+    "predicted_name": "add_face",
+    "predicted_args": {
+      "name": "Tommy"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 1.0232,
+    "gen_tokens": 14
+  },
+  {
+    "id": 415,
+    "prompt": "Register this face with the name Fatima.",
+    "expected_name": "add_face",
+    "expected_args": {
+      "name": "Fatima"
+    },
+    "predicted_name": "identify_face",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.6371,
+    "gen_tokens": 8
+  },
+  {
+    "id": 416,
+    "prompt": "Remember this visitor as Derek.",
+    "expected_name": "add_face",
+    "expected_args": {
+      "name": "Derek"
+    },
+    "predicted_name": "add_face",
+    "predicted_args": {
+      "name": "Derek"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.8564,
+    "gen_tokens": 14
+  },
+  {
+    "id": 417,
+    "prompt": "Store me as Yuki.",
+    "expected_name": "add_face",
+    "expected_args": {
+      "name": "Yuki"
+    },
+    "predicted_name": "add_face",
+    "predicted_args": {
+      "name": " Yuki"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.8536,
+    "gen_tokens": 14
+  },
+  {
+    "id": 418,
+    "prompt": "Add this face and label it Marcus.",
+    "expected_name": "add_face",
+    "expected_args": {
+      "name": "Marcus"
+    },
+    "predicted_name": "add_face",
+    "predicted_args": {
+      "name": "Marcus"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 1.0256,
+    "gen_tokens": 14
+  },
+  {
+    "id": 419,
+    "prompt": "Save the person on camera as Helen.",
+    "expected_name": "add_face",
+    "expected_args": {
+      "name": "Helen"
+    },
+    "predicted_name": "add_face",
+    "predicted_args": {
+      "name": "Helen"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 1.0181,
+    "gen_tokens": 14
+  },
+  {
+    "id": 420,
+    "prompt": "Forget John.",
+    "expected_name": "remove_face",
+    "expected_args": {
+      "name": "John"
+    },
+    "predicted_name": "remove_face",
+    "predicted_args": {
+      "name": "John"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.8192,
+    "gen_tokens": 14
+  },
+  {
+    "id": 421,
+    "prompt": "Delete Sarah from the database.",
+    "expected_name": "remove_face",
+    "expected_args": {
+      "name": "Sarah"
+    },
+    "predicted_name": "remove_face",
+    "predicted_args": {
+      "name": "Sarah"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.9524,
+    "gen_tokens": 14
+  },
+  {
+    "id": 422,
+    "prompt": "Remove Bob.",
+    "expected_name": "remove_face",
+    "expected_args": {
+      "name": "Bob"
+    },
+    "predicted_name": "remove_face",
+    "predicted_args": {
+      "name": "Bob"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 1.0474,
+    "gen_tokens": 14
+  },
+  {
+    "id": 423,
+    "prompt": "Erase Maria from your memory.",
+    "expected_name": "remove_face",
+    "expected_args": {
+      "name": "Maria"
+    },
+    "predicted_name": "remove_face",
+    "predicted_args": {
+      "name": "Maria"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 1.1084,
+    "gen_tokens": 14
+  },
+  {
+    "id": 424,
+    "prompt": "Unregister David.",
+    "expected_name": "remove_face",
+    "expected_args": {
+      "name": "David"
+    },
+    "predicted_name": "remove_face",
+    "predicted_args": {
+      "name": "David"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 1.0565,
+    "gen_tokens": 14
+  },
+  {
+    "id": 425,
+    "prompt": "Get rid of Emma from the saved faces.",
+    "expected_name": "remove_face",
+    "expected_args": {
+      "name": "Emma"
+    },
+    "predicted_name": "remove_face",
+    "predicted_args": {
+      "name": "Emma"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 1.1188,
+    "gen_tokens": 14
+  },
+  {
+    "id": 426,
+    "prompt": "Drop Kevin from the system.",
+    "expected_name": "remove_face",
+    "expected_args": {
+      "name": "Kevin"
+    },
+    "predicted_name": "remove_face",
+    "predicted_args": {
+      "name": "Kevin"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 1.2248,
+    "gen_tokens": 14
+  },
+  {
+    "id": 427,
+    "prompt": "Forget about Alex.",
+    "expected_name": "remove_face",
+    "expected_args": {
+      "name": "Alex"
+    },
+    "predicted_name": "remove_face",
+    "predicted_args": {
+      "name": "Alex"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 1.2236,
+    "gen_tokens": 14
+  },
+  {
+    "id": 428,
+    "prompt": "Take Nina out of the database.",
+    "expected_name": "remove_face",
+    "expected_args": {
+      "name": "Nina"
+    },
+    "predicted_name": "remove_face",
+    "predicted_args": {
+      "name": "Nina"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.9457,
+    "gen_tokens": 14
+  },
+  {
+    "id": 429,
+    "prompt": "Delete the entry for Tom.",
+    "expected_name": "remove_face",
+    "expected_args": {
+      "name": "Tom"
+    },
+    "predicted_name": "remove_face",
+    "predicted_args": {
+      "name": "Tom"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.9381,
+    "gen_tokens": 14
+  },
+  {
+    "id": 430,
+    "prompt": "Remove Jessica from the registry.",
+    "expected_name": "remove_face",
+    "expected_args": {
+      "name": "Jessica"
+    },
+    "predicted_name": "remove_face",
+    "predicted_args": {
+      "name": "Jessica"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 1.0686,
+    "gen_tokens": 14
+  },
+  {
+    "id": 431,
+    "prompt": "Wipe Carlos from your saved people.",
+    "expected_name": "remove_face",
+    "expected_args": {
+      "name": "Carlos"
+    },
+    "predicted_name": "remove_face",
+    "predicted_args": {
+      "name": "Carlos"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 1.1004,
+    "gen_tokens": 14
+  },
+  {
+    "id": 432,
+    "prompt": "Forget the face named Liam.",
+    "expected_name": "remove_face",
+    "expected_args": {
+      "name": "Liam"
+    },
+    "predicted_name": "remove_face",
+    "predicted_args": {
+      "name": "Liam"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 1.0998,
+    "gen_tokens": 14
+  },
+  {
+    "id": 433,
+    "prompt": "Erase Priya's record.",
+    "expected_name": "remove_face",
+    "expected_args": {
+      "name": "Priya"
+    },
+    "predicted_name": "rename_face",
+    "predicted_args": {
+      "old_name": "Priya",
+      "new_name": "Priya_Erase"
+    },
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 2.2602,
+    "gen_tokens": 29
+  },
+  {
+    "id": 434,
+    "prompt": "Delete just Frank, not the others.",
+    "expected_name": "remove_face",
+    "expected_args": {
+      "name": "Frank"
+    },
+    "predicted_name": "remove_face",
+    "predicted_args": {
+      "name": "Frank"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 1.1829,
+    "gen_tokens": 14
+  },
+  {
+    "id": 435,
+    "prompt": "Remove the user called Helen.",
+    "expected_name": "remove_face",
+    "expected_args": {
+      "name": "Helen"
+    },
+    "predicted_name": "remove_face",
+    "predicted_args": {
+      "name": "Helen"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 1.2549,
+    "gen_tokens": 14
+  },
+  {
+    "id": 436,
+    "prompt": "Take Marcus off the list.",
+    "expected_name": "remove_face",
+    "expected_args": {
+      "name": "Marcus"
+    },
+    "predicted_name": "list_faces",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.9016,
+    "gen_tokens": 8
+  },
+  {
+    "id": 437,
+    "prompt": "Forget Wendy from now on.",
+    "expected_name": "remove_face",
+    "expected_args": {
+      "name": "Wendy"
+    },
+    "predicted_name": "remove_face",
+    "predicted_args": {
+      "name": "Wendy"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 0.9944,
+    "gen_tokens": 14
+  },
+  {
+    "id": 438,
+    "prompt": "Delete Steve's face.",
+    "expected_name": "remove_face",
+    "expected_args": {
+      "name": "Steve"
+    },
+    "predicted_name": "remove_face",
+    "predicted_args": {
+      "name": "Steve"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 1.0411,
+    "gen_tokens": 14
+  },
+  {
+    "id": 439,
+    "prompt": "Unenroll Derek.",
+    "expected_name": "remove_face",
+    "expected_args": {
+      "name": "Derek"
+    },
+    "predicted_name": "remove_face",
+    "predicted_args": {
+      "name": "Derek"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 1.1902,
+    "gen_tokens": 14
+  },
+  {
+    "id": 440,
+    "prompt": "Write down what I say for 10 seconds.",
+    "expected_name": "transcribe_speech",
+    "expected_args": {
+      "duration_seconds": 10
+    },
+    "predicted_name": "add_face",
+    "predicted_args": {
+      "name": "What I say"
+    },
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 1.4659,
+    "gen_tokens": 16
+  },
+  {
+    "id": 441,
+    "prompt": "Transcribe audio for 30 seconds.",
+    "expected_name": "transcribe_speech",
+    "expected_args": {
+      "duration_seconds": 30
+    },
+    "predicted_name": "transcribe_speech",
+    "predicted_args": {
+      "duration_seconds": 5
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": false,
+    "seconds": 1.5332,
+    "gen_tokens": 22
+  },
+  {
+    "id": 442,
+    "prompt": "Listen and type what you hear in the next 5 seconds.",
+    "expected_name": "transcribe_speech",
+    "expected_args": {
+      "duration_seconds": 5
+    },
+    "predicted_name": "add_face",
+    "predicted_args": {
+      "name": "What you hear"
+    },
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 1.3523,
+    "gen_tokens": 16
+  },
+  {
+    "id": 443,
+    "prompt": "Take dictation for the next 15 seconds.",
+    "expected_name": "transcribe_speech",
+    "expected_args": {
+      "duration_seconds": 15
+    },
+    "predicted_name": "take_photo",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.8563,
+    "gen_tokens": 8
+  },
+  {
+    "id": 444,
+    "prompt": "Record what I'm saying for 20 seconds and write it down.",
+    "expected_name": "transcribe_speech",
+    "expected_args": {
+      "duration_seconds": 20
+    },
+    "predicted_name": "add_face",
+    "predicted_args": {
+      "name": "What I'm saying"
+    },
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 1.8087,
+    "gen_tokens": 18
+  },
+  {
+    "id": 445,
+    "prompt": "Capture my speech for 60 seconds.",
+    "expected_name": "transcribe_speech",
+    "expected_args": {
+      "duration_seconds": 60
+    },
+    "predicted_name": "add_face",
+    "predicted_args": {
+      "name": "my name"
+    },
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 1.2963,
+    "gen_tokens": 15
+  },
+  {
+    "id": 446,
+    "prompt": "Type out what's said over the next 45 seconds.",
+    "expected_name": "transcribe_speech",
+    "expected_args": {
+      "duration_seconds": 45
+    },
+    "predicted_name": "transcribe_speech",
+    "predicted_args": {
+      "duration_seconds": 10
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": false,
+    "seconds": 1.6944,
+    "gen_tokens": 23
+  },
+  {
+    "id": 447,
+    "prompt": "Transcribe the next 3 seconds of talking.",
+    "expected_name": "transcribe_speech",
+    "expected_args": {
+      "duration_seconds": 3
+    },
+    "predicted_name": "transcribe_speech",
+    "predicted_args": {
+      "duration_seconds": 10
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": false,
+    "seconds": 1.616,
+    "gen_tokens": 22
+  },
+  {
+    "id": 448,
+    "prompt": "Listen for 12 seconds and write down the words.",
+    "expected_name": "transcribe_speech",
+    "expected_args": {
+      "duration_seconds": 12
+    },
+    "predicted_name": "add_face",
+    "predicted_args": {
+      "name": "listen for [Name]"
+    },
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 1.4069,
+    "gen_tokens": 18
+  },
+  {
+    "id": 449,
+    "prompt": "Record and transcribe for half a minute.",
+    "expected_name": "transcribe_speech",
+    "expected_args": {
+      "duration_seconds": 30
+    },
+    "predicted_name": "estimate_distance",
+    "predicted_args": {
+      "target": "person"
+    },
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 1.532,
+    "gen_tokens": 20
+  },
+  {
+    "id": 450,
+    "prompt": "Write down what's spoken in the next 25 seconds.",
+    "expected_name": "transcribe_speech",
+    "expected_args": {
+      "duration_seconds": 25
+    },
+    "predicted_name": "transcribe_speech",
+    "predicted_args": {
+      "duration_seconds": 25
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 1.2018,
+    "gen_tokens": 16
+  },
+  {
+    "id": 451,
+    "prompt": "Dictation mode for 8 seconds, go.",
+    "expected_name": "transcribe_speech",
+    "expected_args": {
+      "duration_seconds": 8
+    },
+    "predicted_name": "transcribe_speech",
+    "predicted_args": {
+      "duration_seconds": 8
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 1.044,
+    "gen_tokens": 15
+  },
+  {
+    "id": 452,
+    "prompt": "Take down what I say for the next minute.",
+    "expected_name": "transcribe_speech",
+    "expected_args": {
+      "duration_seconds": 60
+    },
+    "predicted_name": "remove_face",
+    "predicted_args": {
+      "name": "what I say"
+    },
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 1.2206,
+    "gen_tokens": 16
+  },
+  {
+    "id": 453,
+    "prompt": "Capture audio and turn it into text for 7 seconds.",
+    "expected_name": "transcribe_speech",
+    "expected_args": {
+      "duration_seconds": 7
+    },
+    "predicted_name": "add_face",
+    "predicted_args": {
+      "name": "[Name]"
+    },
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 1.2702,
+    "gen_tokens": 16
+  },
+  {
+    "id": 454,
+    "prompt": "Listen to me for 40 seconds and type it up.",
+    "expected_name": "transcribe_speech",
+    "expected_args": {
+      "duration_seconds": 40
+    },
+    "predicted_name": "add_face",
+    "predicted_args": {
+      "name": "listen_for_40_seconds_now"
+    },
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 1.9444,
+    "gen_tokens": 23
+  },
+  {
+    "id": 455,
+    "prompt": "Record my words for 6 seconds.",
+    "expected_name": "transcribe_speech",
+    "expected_args": {
+      "duration_seconds": 6
+    },
+    "predicted_name": "add_face",
+    "predicted_args": {
+      "name": "I am typing here"
+    },
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 1.4307,
+    "gen_tokens": 17
+  },
+  {
+    "id": 456,
+    "prompt": "Transcribe whatever is said in the next 50 seconds.",
+    "expected_name": "transcribe_speech",
+    "expected_args": {
+      "duration_seconds": 50
+    },
+    "predicted_name": "transcribe_speech",
+    "predicted_args": {
+      "duration_seconds": 50
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 1.095,
+    "gen_tokens": 16
+  },
+  {
+    "id": 457,
+    "prompt": "Write down my speech for the next 18 seconds.",
+    "expected_name": "transcribe_speech",
+    "expected_args": {
+      "duration_seconds": 18
+    },
+    "predicted_name": "add_face",
+    "predicted_args": {
+      "name": "I am going to [Your Name]"
+    },
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 1.951,
+    "gen_tokens": 21
+  },
+  {
+    "id": 458,
+    "prompt": "Listen and transcribe for 90 seconds.",
+    "expected_name": "transcribe_speech",
+    "expected_args": {
+      "duration_seconds": 90
+    },
+    "predicted_name": "transcribe_speech",
+    "predicted_args": {
+      "duration_seconds": 30
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": false,
+    "seconds": 1.5377,
+    "gen_tokens": 23
+  },
+  {
+    "id": 459,
+    "prompt": "Take note of what I say over the next 4 seconds.",
+    "expected_name": "transcribe_speech",
+    "expected_args": {
+      "duration_seconds": 4
+    },
+    "predicted_name": "add_face",
+    "predicted_args": {
+      "name": "What I say"
+    },
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 1.2893,
+    "gen_tokens": 16
+  },
+  {
+    "id": 460,
+    "prompt": "Change Alex to Alexander.",
+    "expected_name": "rename_face",
+    "expected_args": {
+      "old_name": "Alex",
+      "new_name": "Alexander"
+    },
+    "predicted_name": "rename_face",
+    "predicted_args": {
+      "old_name": "Alex",
+      "new_name": "Alexander"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 1.7645,
+    "gen_tokens": 24
+  },
+  {
+    "id": 461,
+    "prompt": "Rename Bob to Robert.",
+    "expected_name": "rename_face",
+    "expected_args": {
+      "old_name": "Bob",
+      "new_name": "Robert"
+    },
+    "predicted_name": "rename_face",
+    "predicted_args": {
+      "old_name": "Bob",
+      "new_name": "Robert"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 1.7651,
+    "gen_tokens": 24
+  },
+  {
+    "id": 462,
+    "prompt": "Update the name from Mike to Michael.",
+    "expected_name": "rename_face",
+    "expected_args": {
+      "old_name": "Mike",
+      "new_name": "Michael"
+    },
+    "predicted_name": "rename_face",
+    "predicted_args": {
+      "old_name": "Mike",
+      "new_name": "Michael"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 1.718,
+    "gen_tokens": 24
+  },
+  {
+    "id": 463,
+    "prompt": "Change Sarah to Sara.",
+    "expected_name": "rename_face",
+    "expected_args": {
+      "old_name": "Sarah",
+      "new_name": "Sara"
+    },
+    "predicted_name": "rename_face",
+    "predicted_args": {
+      "old_name": "Sarah",
+      "new_name": "Sara"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 1.8348,
+    "gen_tokens": 24
+  },
+  {
+    "id": 464,
+    "prompt": "Rename Liz to Elizabeth.",
+    "expected_name": "rename_face",
+    "expected_args": {
+      "old_name": "Liz",
+      "new_name": "Elizabeth"
+    },
+    "predicted_name": "rename_face",
+    "predicted_args": {
+      "old_name": "Liz",
+      "new_name": "Elizabeth"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 1.9121,
+    "gen_tokens": 24
+  },
+  {
+    "id": 465,
+    "prompt": "Fix the label from Jon to Jonathan.",
+    "expected_name": "rename_face",
+    "expected_args": {
+      "old_name": "Jon",
+      "new_name": "Jonathan"
+    },
+    "predicted_name": "rename_face",
+    "predicted_args": {
+      "old_name": "Jon",
+      "new_name": "Jonathan"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 1.8032,
+    "gen_tokens": 24
+  },
+  {
+    "id": 466,
+    "prompt": "Switch Kate to Katherine.",
+    "expected_name": "rename_face",
+    "expected_args": {
+      "old_name": "Kate",
+      "new_name": "Katherine"
+    },
+    "predicted_name": "rename_face",
+    "predicted_args": {
+      "old_name": "Kate",
+      "new_name": "Katherine"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 1.7863,
+    "gen_tokens": 24
+  },
+  {
+    "id": 467,
+    "prompt": "Change the name Dan to Daniel.",
+    "expected_name": "rename_face",
+    "expected_args": {
+      "old_name": "Dan",
+      "new_name": "Daniel"
+    },
+    "predicted_name": "rename_face",
+    "predicted_args": {
+      "old_name": "Dan",
+      "new_name": "Daniel"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 1.8693,
+    "gen_tokens": 24
+  },
+  {
+    "id": 468,
+    "prompt": "Rename Tom to Thomas.",
+    "expected_name": "rename_face",
+    "expected_args": {
+      "old_name": "Tom",
+      "new_name": "Thomas"
+    },
+    "predicted_name": "rename_face",
+    "predicted_args": {
+      "old_name": "Tom",
+      "new_name": "Thomas"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 1.8415,
+    "gen_tokens": 24
+  },
+  {
+    "id": 469,
+    "prompt": "Correct Chris to Christopher.",
+    "expected_name": "rename_face",
+    "expected_args": {
+      "old_name": "Chris",
+      "new_name": "Christopher"
+    },
+    "predicted_name": "rename_face",
+    "predicted_args": {
+      "old_name": "Chris",
+      "new_name": "Christopher"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 1.6837,
+    "gen_tokens": 24
+  },
+  {
+    "id": 470,
+    "prompt": "Update Sam to Samuel.",
+    "expected_name": "rename_face",
+    "expected_args": {
+      "old_name": "Sam",
+      "new_name": "Samuel"
+    },
+    "predicted_name": "rename_face",
+    "predicted_args": {
+      "old_name": "Sam",
+      "new_name": "Samuel"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 1.7774,
+    "gen_tokens": 24
+  },
+  {
+    "id": 471,
+    "prompt": "Change Jen to Jennifer.",
+    "expected_name": "rename_face",
+    "expected_args": {
+      "old_name": "Jen",
+      "new_name": "Jennifer"
+    },
+    "predicted_name": "rename_face",
+    "predicted_args": {
+      "old_name": "Jenifer",
+      "new_name": "Jennifer"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": false,
+    "seconds": 1.7972,
+    "gen_tokens": 25
+  },
+  {
+    "id": 472,
+    "prompt": "Rename Will to William.",
+    "expected_name": "rename_face",
+    "expected_args": {
+      "old_name": "Will",
+      "new_name": "William"
+    },
+    "predicted_name": "rename_face",
+    "predicted_args": {
+      "old_name": "Will",
+      "new_name": "William"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 1.8789,
+    "gen_tokens": 24
+  },
+  {
+    "id": 473,
+    "prompt": "Fix Andy to Andrew in the database.",
+    "expected_name": "rename_face",
+    "expected_args": {
+      "old_name": "Andy",
+      "new_name": "Andrew"
+    },
+    "predicted_name": "add_face",
+    "predicted_args": {
+      "name": "Andy"
+    },
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 1.0358,
+    "gen_tokens": 14
+  },
+  {
+    "id": 474,
+    "prompt": "Change Becky to Rebecca.",
+    "expected_name": "rename_face",
+    "expected_args": {
+      "old_name": "Becky",
+      "new_name": "Rebecca"
+    },
+    "predicted_name": "rename_face",
+    "predicted_args": {
+      "old_name": "Becky",
+      "new_name": "Rebecca"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 1.901,
+    "gen_tokens": 25
+  },
+  {
+    "id": 475,
+    "prompt": "Rename Nick to Nicholas.",
+    "expected_name": "rename_face",
+    "expected_args": {
+      "old_name": "Nick",
+      "new_name": "Nicholas"
+    },
+    "predicted_name": "rename_face",
+    "predicted_args": {
+      "old_name": "Nick",
+      "new_name": "Nicholas"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 1.7262,
+    "gen_tokens": 24
+  },
+  {
+    "id": 476,
+    "prompt": "Update the entry from Matt to Matthew.",
+    "expected_name": "rename_face",
+    "expected_args": {
+      "old_name": "Matt",
+      "new_name": "Matthew"
+    },
+    "predicted_name": "rename_face",
+    "predicted_args": {
+      "old_name": "Matt",
+      "new_name": "Matthew"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 1.653,
+    "gen_tokens": 24
+  },
+  {
+    "id": 477,
+    "prompt": "Switch the name Joe to Joseph.",
+    "expected_name": "rename_face",
+    "expected_args": {
+      "old_name": "Joe",
+      "new_name": "Joseph"
+    },
+    "predicted_name": "rename_face",
+    "predicted_args": {
+      "old_name": "Joe",
+      "new_name": "Joseph"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 1.7132,
+    "gen_tokens": 24
+  },
+  {
+    "id": 478,
+    "prompt": "Change Abby to Abigail.",
+    "expected_name": "rename_face",
+    "expected_args": {
+      "old_name": "Abby",
+      "new_name": "Abigail"
+    },
+    "predicted_name": "rename_face",
+    "predicted_args": {
+      "old_name": "Abby",
+      "new_name": "Abigail"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 1.8589,
+    "gen_tokens": 26
+  },
+  {
+    "id": 479,
+    "prompt": "Rename Ben to Benjamin.",
+    "expected_name": "rename_face",
+    "expected_args": {
+      "old_name": "Ben",
+      "new_name": "Benjamin"
+    },
+    "predicted_name": "rename_face",
+    "predicted_args": {
+      "old_name": "Ben",
+      "new_name": "Benjamin"
+    },
+    "raw_output": "",
+    "name_match": true,
+    "args_match": true,
+    "seconds": 1.7901,
+    "gen_tokens": 24
+  },
+  {
+    "id": 480,
+    "prompt": "Hey, how are you doing today?",
+    "expected_name": null,
+    "expected_args": null,
+    "predicted_name": "get_camera_status",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.7624,
+    "gen_tokens": 10
+  },
+  {
+    "id": 481,
+    "prompt": "Thanks, that was really helpful!",
+    "expected_name": null,
+    "expected_args": null,
+    "predicted_name": "assess_face_attributes",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.7769,
+    "gen_tokens": 10
+  },
+  {
+    "id": 482,
+    "prompt": "What's the capital of France?",
+    "expected_name": null,
+    "expected_args": null,
+    "predicted_name": "list_faces",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.672,
+    "gen_tokens": 8
+  },
+  {
+    "id": 483,
+    "prompt": "Tell me a joke.",
+    "expected_name": null,
+    "expected_args": null,
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.6721,
+    "gen_tokens": 8
+  },
+  {
+    "id": 484,
+    "prompt": "What's 15 times 12?",
+    "expected_name": null,
+    "expected_args": null,
+    "predicted_name": "count_general_entity",
+    "predicted_args": {
+      "entity": "15 [Name]"
+    },
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 1.7003,
+    "gen_tokens": 20
+  },
+  {
+    "id": 485,
+    "prompt": "Can you explain how face recognition works in general?",
+    "expected_name": null,
+    "expected_args": null,
+    "predicted_name": "detect_gesture",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.7595,
+    "gen_tokens": 8
+  },
+  {
+    "id": 486,
+    "prompt": "Good morning!",
+    "expected_name": null,
+    "expected_args": null,
+    "predicted_name": "read_text",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.7532,
+    "gen_tokens": 8
+  },
+  {
+    "id": 487,
+    "prompt": "What day of the week is it usually trash day?",
+    "expected_name": null,
+    "expected_args": null,
+    "predicted_name": "get_camera_status",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.8907,
+    "gen_tokens": 10
+  },
+  {
+    "id": 488,
+    "prompt": "Give me some tips for getting better sleep.",
+    "expected_name": null,
+    "expected_args": null,
+    "predicted_name": "assess_face_attributes",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.7666,
+    "gen_tokens": 10
+  },
+  {
+    "id": 489,
+    "prompt": "What's a good recipe for banana bread?",
+    "expected_name": null,
+    "expected_args": null,
+    "predicted_name": "read_text",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.6933,
+    "gen_tokens": 8
+  },
+  {
+    "id": 490,
+    "prompt": "Turn on the living room lights.",
+    "expected_name": null,
+    "expected_args": null,
+    "predicted_name": "check_weather_outside",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.7536,
+    "gen_tokens": 10
+  },
+  {
+    "id": 491,
+    "prompt": "Play some music for me.",
+    "expected_name": null,
+    "expected_args": null,
+    "predicted_name": "read_text",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.6535,
+    "gen_tokens": 8
+  },
+  {
+    "id": 492,
+    "prompt": "Lock the front door.",
+    "expected_name": null,
+    "expected_args": null,
+    "predicted_name": "remove_face",
+    "predicted_args": {
+      "name": "locked_door"
+    },
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 1.3872,
+    "gen_tokens": 16
+  },
+  {
+    "id": 493,
+    "prompt": "Set the thermostat to 72 degrees.",
+    "expected_name": null,
+    "expected_args": null,
+    "predicted_name": "estimate_distance",
+    "predicted_args": {
+      "target": "thermostat temperature"
+    },
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 1.4255,
+    "gen_tokens": 16
+  },
+  {
+    "id": 494,
+    "prompt": "Order more dog food online.",
+    "expected_name": null,
+    "expected_args": null,
+    "predicted_name": "list_faces",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.7239,
+    "gen_tokens": 8
+  },
+  {
+    "id": 495,
+    "prompt": "Set an alarm for 7 in the morning.",
+    "expected_name": null,
+    "expected_args": null,
+    "predicted_name": "check_weather_outside",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.9318,
+    "gen_tokens": 10
+  },
+  {
+    "id": 496,
+    "prompt": "Call my mom for me.",
+    "expected_name": null,
+    "expected_args": null,
+    "predicted_name": "add_face",
+    "predicted_args": {
+      "name": "Mom"
+    },
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 1.2912,
+    "gen_tokens": 14
+  },
+  {
+    "id": 497,
+    "prompt": "Vacuum the living room.",
+    "expected_name": null,
+    "expected_args": null,
+    "predicted_name": "list_faces",
+    "predicted_args": {},
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 0.8631,
+    "gen_tokens": 8
+  },
+  {
+    "id": 498,
+    "prompt": "Send a text to my brother saying I'll be late.",
+    "expected_name": null,
+    "expected_args": null,
+    "predicted_name": "await_general_entity",
+    "predicted_args": {
+      "entity": "late"
+    },
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 1.3988,
+    "gen_tokens": 16
+  },
+  {
+    "id": 499,
+    "prompt": "Add milk and eggs to my shopping list.",
+    "expected_name": null,
+    "expected_args": null,
+    "predicted_name": "add_face",
+    "predicted_args": {
+      "name": "buy milk and eggs"
+    },
+    "raw_output": "",
+    "name_match": false,
+    "args_match": false,
+    "seconds": 1.7357,
+    "gen_tokens": 17
+  }
+]

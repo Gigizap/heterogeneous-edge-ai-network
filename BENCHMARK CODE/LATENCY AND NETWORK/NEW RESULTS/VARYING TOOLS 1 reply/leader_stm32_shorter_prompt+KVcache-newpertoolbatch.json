@@ -1,0 +1,2584 @@
+{
+  "role": "leader",
+  "device": "stm32_shorter",
+  "leader_preset": "functiongemma_cpu_base_prompt_inplace",
+  "correct_tool": "detect_people",
+  "tool_counts": [
+    1,
+    6,
+    12,
+    18,
+    24
+  ],
+  "queries": [
+    "can you use the detect person tool",
+    "is there a person in front of the camera",
+    "how many people are there",
+    "do you see anyone",
+    "check if someone is in the room",
+    "are there any people visible",
+    "detect the people in the frame",
+    "is anybody there right now",
+    "tell me how many persons you can see",
+    "look for a person with the camera"
+  ],
+  "time_to_boot": {},
+  "prompt_specs": [
+    {
+      "n_tools": 1,
+      "tools": [
+        {
+          "type": "function",
+          "function": {
+            "name": "detect_people",
+            "description": "Detects the people that are currently visible. Use this when the user says 'do you see a person?', 'how many people?', or 'is there anyone?'.",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        }
+      ],
+      "dispatch_prompt": "<start_of_turn>developer\nYou are a model that can do function calling with the following functions<start_function_declaration>declaration:detect_people{description:<escape>Detects the people that are currently visible. Use this when the user says 'do you see a person?', 'how many people?', or 'is there anyone?'.<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><end_of_turn>\n<start_of_turn>user\ncan you use the detect person tool<end_of_turn>\n<start_of_turn>model\n",
+      "answer_prompt": "<start_of_turn>developer\nYou are a model that can do function calling with the following functions<start_function_declaration>declaration:detect_people{description:<escape>Detects the people that are currently visible. Use this when the user says 'do you see a person?', 'how many people?', or 'is there anyone?'.<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><end_of_turn>\n<start_of_turn>user\ncan you use the detect person tool<end_of_turn>\n<start_of_turn>model\n<start_function_call>call:detect_people{}<end_function_call><start_function_response>response:detect_people{value:[{from:<escape>in-place-mock<escape>,text:<escape>detection says: no people detected<escape>}]}<end_function_response>"
+    },
+    {
+      "n_tools": 6,
+      "tools": [
+        {
+          "type": "function",
+          "function": {
+            "name": "detect_people",
+            "description": "Detects the people that are currently visible. Use this when the user says 'do you see a person?', 'how many people?', or 'is there anyone?'.",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_1",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_2",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_3",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_4",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_5",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        }
+      ],
+      "dispatch_prompt": "<start_of_turn>developer\nYou are a model that can do function calling with the following functions<start_function_declaration>declaration:detect_people{description:<escape>Detects the people that are currently visible. Use this when the user says 'do you see a person?', 'how many people?', or 'is there anyone?'.<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_1{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_2{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_3{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_4{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_5{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><end_of_turn>\n<start_of_turn>user\ncan you use the detect person tool<end_of_turn>\n<start_of_turn>model\n",
+      "answer_prompt": "<start_of_turn>developer\nYou are a model that can do function calling with the following functions<start_function_declaration>declaration:detect_people{description:<escape>Detects the people that are currently visible. Use this when the user says 'do you see a person?', 'how many people?', or 'is there anyone?'.<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_1{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_2{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_3{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_4{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_5{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><end_of_turn>\n<start_of_turn>user\ncan you use the detect person tool<end_of_turn>\n<start_of_turn>model\n<start_function_call>call:detect_people{}<end_function_call><start_function_response>response:detect_people{value:[{from:<escape>in-place-mock<escape>,text:<escape>detection says: no people detected<escape>}]}<end_function_response>"
+    },
+    {
+      "n_tools": 12,
+      "tools": [
+        {
+          "type": "function",
+          "function": {
+            "name": "detect_people",
+            "description": "Detects the people that are currently visible. Use this when the user says 'do you see a person?', 'how many people?', or 'is there anyone?'.",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_1",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_2",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_3",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_4",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_5",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_6",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_7",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_8",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_9",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_10",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_11",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        }
+      ],
+      "dispatch_prompt": "<start_of_turn>developer\nYou are a model that can do function calling with the following functions<start_function_declaration>declaration:detect_people{description:<escape>Detects the people that are currently visible. Use this when the user says 'do you see a person?', 'how many people?', or 'is there anyone?'.<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_1{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_2{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_3{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_4{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_5{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_6{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_7{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_8{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_9{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_10{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_11{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><end_of_turn>\n<start_of_turn>user\ncan you use the detect person tool<end_of_turn>\n<start_of_turn>model\n",
+      "answer_prompt": "<start_of_turn>developer\nYou are a model that can do function calling with the following functions<start_function_declaration>declaration:detect_people{description:<escape>Detects the people that are currently visible. Use this when the user says 'do you see a person?', 'how many people?', or 'is there anyone?'.<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_1{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_2{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_3{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_4{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_5{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_6{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_7{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_8{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_9{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_10{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_11{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><end_of_turn>\n<start_of_turn>user\ncan you use the detect person tool<end_of_turn>\n<start_of_turn>model\n<start_function_call>call:detect_people{}<end_function_call><start_function_response>response:detect_people{value:[{from:<escape>in-place-mock<escape>,text:<escape>detection says: no people detected<escape>}]}<end_function_response>"
+    },
+    {
+      "n_tools": 18,
+      "tools": [
+        {
+          "type": "function",
+          "function": {
+            "name": "detect_people",
+            "description": "Detects the people that are currently visible. Use this when the user says 'do you see a person?', 'how many people?', or 'is there anyone?'.",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_1",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_2",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_3",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_4",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_5",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_6",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_7",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_8",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_9",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_10",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_11",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_12",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_13",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_14",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_15",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_16",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_17",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        }
+      ],
+      "dispatch_prompt": "<start_of_turn>developer\nYou are a model that can do function calling with the following functions<start_function_declaration>declaration:detect_people{description:<escape>Detects the people that are currently visible. Use this when the user says 'do you see a person?', 'how many people?', or 'is there anyone?'.<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_1{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_2{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_3{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_4{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_5{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_6{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_7{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_8{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_9{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_10{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_11{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_12{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_13{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_14{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_15{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_16{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_17{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><end_of_turn>\n<start_of_turn>user\ncan you use the detect person tool<end_of_turn>\n<start_of_turn>model\n",
+      "answer_prompt": "<start_of_turn>developer\nYou are a model that can do function calling with the following functions<start_function_declaration>declaration:detect_people{description:<escape>Detects the people that are currently visible. Use this when the user says 'do you see a person?', 'how many people?', or 'is there anyone?'.<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_1{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_2{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_3{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_4{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_5{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_6{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_7{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_8{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_9{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_10{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_11{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_12{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_13{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_14{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_15{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_16{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_17{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><end_of_turn>\n<start_of_turn>user\ncan you use the detect person tool<end_of_turn>\n<start_of_turn>model\n<start_function_call>call:detect_people{}<end_function_call><start_function_response>response:detect_people{value:[{from:<escape>in-place-mock<escape>,text:<escape>detection says: no people detected<escape>}]}<end_function_response>"
+    },
+    {
+      "n_tools": 24,
+      "tools": [
+        {
+          "type": "function",
+          "function": {
+            "name": "detect_people",
+            "description": "Detects the people that are currently visible. Use this when the user says 'do you see a person?', 'how many people?', or 'is there anyone?'.",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_1",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_2",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_3",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_4",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_5",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_6",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_7",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_8",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_9",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_10",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_11",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_12",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_13",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_14",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_15",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_16",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_17",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_18",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_19",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_20",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_21",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_22",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_23",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        }
+      ],
+      "dispatch_prompt": "<start_of_turn>developer\nYou are a model that can do function calling with the following functions<start_function_declaration>declaration:detect_people{description:<escape>Detects the people that are currently visible. Use this when the user says 'do you see a person?', 'how many people?', or 'is there anyone?'.<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_1{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_2{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_3{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_4{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_5{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_6{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_7{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_8{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_9{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_10{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_11{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_12{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_13{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_14{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_15{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_16{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_17{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_18{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_19{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_20{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_21{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_22{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_23{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><end_of_turn>\n<start_of_turn>user\ncan you use the detect person tool<end_of_turn>\n<start_of_turn>model\n",
+      "answer_prompt": "<start_of_turn>developer\nYou are a model that can do function calling with the following functions<start_function_declaration>declaration:detect_people{description:<escape>Detects the people that are currently visible. Use this when the user says 'do you see a person?', 'how many people?', or 'is there anyone?'.<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_1{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_2{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_3{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_4{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_5{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_6{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_7{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_8{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_9{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_10{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_11{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_12{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_13{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_14{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_15{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_16{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_17{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_18{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_19{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_20{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_21{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_22{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_23{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><end_of_turn>\n<start_of_turn>user\ncan you use the detect person tool<end_of_turn>\n<start_of_turn>model\n<start_function_call>call:detect_people{}<end_function_call><start_function_response>response:detect_people{value:[{from:<escape>in-place-mock<escape>,text:<escape>detection says: no people detected<escape>}]}<end_function_response>"
+    }
+  ],
+  "samples": [
+    {
+      "n_tools": 1,
+      "query_idx": 0,
+      "query": "can you use the detect person tool",
+      "tool_called": "detect_people",
+      "tool_result": "detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "in-place-mock",
+          "text": "detection says: no people detected"
+        }
+      ],
+      "final_reply": "I have successfully detected the people using the `detect_people` tool. The result is: no people were detected.",
+      "query_to_tool_ms": 8482.7,
+      "dispatch_ttft_ms": 7033.04,
+      "dispatch_tokens_in": 89,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.16,
+      "tool_to_result_ms": 590.91,
+      "result_to_reply_ms": 7687.47,
+      "answer_ttft_ms": 2709.41,
+      "answer_tokens_in": 129,
+      "answer_tokens_out": 24,
+      "answer_tps": 4.63,
+      "end_to_end_ms": 16761.08,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 1,
+      "query_idx": 1,
+      "query": "is there a person in front of the camera",
+      "tool_called": "detect_people",
+      "tool_result": "detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "in-place-mock",
+          "text": "detection says: no people detected"
+        }
+      ],
+      "final_reply": "Yes, there is a person in front of the camera.",
+      "query_to_tool_ms": 2664.85,
+      "dispatch_ttft_ms": 1221.35,
+      "dispatch_tokens_in": 91,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.18,
+      "tool_to_result_ms": 590.24,
+      "result_to_reply_ms": 5183.14,
+      "answer_ttft_ms": 2687.96,
+      "answer_tokens_in": 131,
+      "answer_tokens_out": 12,
+      "answer_tps": 4.43,
+      "end_to_end_ms": 8438.22,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 1,
+      "query_idx": 2,
+      "query": "how many people are there",
+      "tool_called": "detect_people",
+      "tool_result": "detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "in-place-mock",
+          "text": "detection says: no people detected"
+        }
+      ],
+      "final_reply": "There are no people detected.",
+      "query_to_tool_ms": 2360.96,
+      "dispatch_ttft_ms": 914.19,
+      "dispatch_tokens_in": 87,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.17,
+      "tool_to_result_ms": 591.07,
+      "result_to_reply_ms": 3942.87,
+      "answer_ttft_ms": 2690.53,
+      "answer_tokens_in": 127,
+      "answer_tokens_out": 6,
+      "answer_tps": 4.02,
+      "end_to_end_ms": 6894.89,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 1,
+      "query_idx": 3,
+      "query": "do you see anyone",
+      "tool_called": "detect_people",
+      "tool_result": "detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "in-place-mock",
+          "text": "detection says: no people detected"
+        }
+      ],
+      "final_reply": "I found that I am detecting people. The value associated with this is: \"detection says: no people detected\".",
+      "query_to_tool_ms": 2273.36,
+      "dispatch_ttft_ms": 834.38,
+      "dispatch_tokens_in": 86,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.19,
+      "tool_to_result_ms": 590.47,
+      "result_to_reply_ms": 7470.19,
+      "answer_ttft_ms": 2705.51,
+      "answer_tokens_in": 126,
+      "answer_tokens_out": 23,
+      "answer_tps": 4.63,
+      "end_to_end_ms": 10334.01,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 1,
+      "query_idx": 4,
+      "query": "check if someone is in the room",
+      "tool_called": "detect_people",
+      "tool_result": "detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "in-place-mock",
+          "text": "detection says: no people detected"
+        }
+      ],
+      "final_reply": "I found that person is in the room. The detection says: \"no people detected.\"",
+      "query_to_tool_ms": 2515.19,
+      "dispatch_ttft_ms": 1075.84,
+      "dispatch_tokens_in": 89,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.19,
+      "tool_to_result_ms": 590.43,
+      "result_to_reply_ms": 6437.25,
+      "answer_ttft_ms": 2703.96,
+      "answer_tokens_in": 129,
+      "answer_tokens_out": 18,
+      "answer_tps": 4.57,
+      "end_to_end_ms": 9542.87,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 1,
+      "query_idx": 5,
+      "query": "are there any people visible",
+      "tool_called": "detect_people",
+      "tool_result": "detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "in-place-mock",
+          "text": "detection says: no people detected"
+        }
+      ],
+      "final_reply": "Yes, there are currently no people visible.",
+      "query_to_tool_ms": 2347.19,
+      "dispatch_ttft_ms": 909.78,
+      "dispatch_tokens_in": 87,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.19,
+      "tool_to_result_ms": 590.47,
+      "result_to_reply_ms": 4628.79,
+      "answer_ttft_ms": 2713.17,
+      "answer_tokens_in": 127,
+      "answer_tokens_out": 9,
+      "answer_tps": 4.2,
+      "end_to_end_ms": 7566.45,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 1,
+      "query_idx": 6,
+      "query": "detect the people in the frame",
+      "tool_called": "detect_people",
+      "tool_result": "detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "in-place-mock",
+          "text": "detection says: no people detected"
+        }
+      ],
+      "final_reply": "The people in the frame have been detected. The value is: `[{\"from\": \"in-place-mock\", \"text\": \"detection says: no people detected\"}]`",
+      "query_to_tool_ms": 2431.35,
+      "dispatch_ttft_ms": 987.69,
+      "dispatch_tokens_in": 88,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.17,
+      "tool_to_result_ms": 591.03,
+      "result_to_reply_ms": 10606.84,
+      "answer_ttft_ms": 2705.96,
+      "answer_tokens_in": 128,
+      "answer_tokens_out": 38,
+      "answer_tps": 4.69,
+      "end_to_end_ms": 13629.22,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 1,
+      "query_idx": 7,
+      "query": "is anybody there right now",
+      "tool_called": "detect_people",
+      "tool_result": "detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "in-place-mock",
+          "text": "detection says: no people detected"
+        }
+      ],
+      "final_reply": "I found that no people were detected. The detection says: \"no people detected.\"",
+      "query_to_tool_ms": 2364.43,
+      "dispatch_ttft_ms": 915.03,
+      "dispatch_tokens_in": 87,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.16,
+      "tool_to_result_ms": 591.05,
+      "result_to_reply_ms": 6218.31,
+      "answer_ttft_ms": 2687.27,
+      "answer_tokens_in": 127,
+      "answer_tokens_out": 17,
+      "answer_tps": 4.54,
+      "end_to_end_ms": 9173.79,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 1,
+      "query_idx": 8,
+      "query": "tell me how many persons you can see",
+      "tool_called": "detect_people",
+      "tool_result": "detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "in-place-mock",
+          "text": "detection says: no people detected"
+        }
+      ],
+      "final_reply": "I can detect the people that are currently visible. The number of persons I can see is 1.",
+      "query_to_tool_ms": 2591.08,
+      "dispatch_ttft_ms": 1152.31,
+      "dispatch_tokens_in": 90,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.19,
+      "tool_to_result_ms": 590.84,
+      "result_to_reply_ms": 7059.1,
+      "answer_ttft_ms": 2703.82,
+      "answer_tokens_in": 130,
+      "answer_tokens_out": 21,
+      "answer_tps": 4.6,
+      "end_to_end_ms": 10241.01,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 1,
+      "query_idx": 9,
+      "query": "look for a person with the camera",
+      "tool_called": "detect_people",
+      "tool_result": "detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "in-place-mock",
+          "text": "detection says: no people detected"
+        }
+      ],
+      "final_reply": "I found a person with the camera:\n\n*   **From:** in-place-mock\n*   **Text:** detection says: no people detected",
+      "query_to_tool_ms": 2508.6,
+      "dispatch_ttft_ms": 1068.25,
+      "dispatch_tokens_in": 89,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.18,
+      "tool_to_result_ms": 590.44,
+      "result_to_reply_ms": 9129.81,
+      "answer_ttft_ms": 2689.01,
+      "answer_tokens_in": 129,
+      "answer_tokens_out": 31,
+      "answer_tps": 4.66,
+      "end_to_end_ms": 12228.85,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 6,
+      "query_idx": 0,
+      "query": "can you use the detect person tool",
+      "tool_called": "detect_people",
+      "tool_result": "detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "in-place-mock",
+          "text": "detection says: no people detected"
+        }
+      ],
+      "final_reply": "The people that are currently visible using the detect person tool are: no people detected.",
+      "query_to_tool_ms": 19405.43,
+      "dispatch_ttft_ms": 17942.16,
+      "dispatch_tokens_in": 229,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.15,
+      "tool_to_result_ms": 590.14,
+      "result_to_reply_ms": 6729.93,
+      "answer_ttft_ms": 3020.92,
+      "answer_tokens_in": 269,
+      "answer_tokens_out": 17,
+      "answer_tps": 4.34,
+      "end_to_end_ms": 26725.5,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 6,
+      "query_idx": 1,
+      "query": "is there a person in front of the camera",
+      "tool_called": "detect_people",
+      "tool_result": "detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "in-place-mock",
+          "text": "detection says: no people detected"
+        }
+      ],
+      "final_reply": "Yes, there is a person in front of the camera.",
+      "query_to_tool_ms": 2681.54,
+      "dispatch_ttft_ms": 1225.71,
+      "dispatch_tokens_in": 231,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.17,
+      "tool_to_result_ms": 590.99,
+      "result_to_reply_ms": 5643.15,
+      "answer_ttft_ms": 3024.89,
+      "answer_tokens_in": 271,
+      "answer_tokens_out": 12,
+      "answer_tps": 4.24,
+      "end_to_end_ms": 8915.67,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 6,
+      "query_idx": 2,
+      "query": "how many people are there",
+      "tool_called": "detect_people",
+      "tool_result": "detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "in-place-mock",
+          "text": "detection says: no people detected"
+        }
+      ],
+      "final_reply": "There are currently no people detected.",
+      "query_to_tool_ms": 2377.0,
+      "dispatch_ttft_ms": 928.44,
+      "dispatch_tokens_in": 227,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.19,
+      "tool_to_result_ms": 590.23,
+      "result_to_reply_ms": 4535.15,
+      "answer_ttft_ms": 2999.63,
+      "answer_tokens_in": 267,
+      "answer_tokens_out": 7,
+      "answer_tps": 3.96,
+      "end_to_end_ms": 7502.37,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 6,
+      "query_idx": 3,
+      "query": "do you see anyone",
+      "tool_called": "detect_people",
+      "tool_result": "detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "in-place-mock",
+          "text": "detection says: no people detected"
+        }
+      ],
+      "final_reply": "I found that I am detecting people. The value for detection says: \"no people detected\".",
+      "query_to_tool_ms": 2298.54,
+      "dispatch_ttft_ms": 845.05,
+      "dispatch_tokens_in": 226,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.18,
+      "tool_to_result_ms": 590.36,
+      "result_to_reply_ms": 7169.03,
+      "answer_ttft_ms": 3022.74,
+      "answer_tokens_in": 266,
+      "answer_tokens_out": 19,
+      "answer_tps": 4.36,
+      "end_to_end_ms": 10057.93,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 6,
+      "query_idx": 4,
+      "query": "check if someone is in the room",
+      "tool_called": "detect_people",
+      "tool_result": "detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "in-place-mock",
+          "text": "detection says: no people detected"
+        }
+      ],
+      "final_reply": "The person in the room has been detected. The value is: `[{\"from\": \"in-place-mock\", \"text\": \"detection says: no people detected\"}]`",
+      "query_to_tool_ms": 2530.89,
+      "dispatch_ttft_ms": 1076.74,
+      "dispatch_tokens_in": 229,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.18,
+      "tool_to_result_ms": 590.81,
+      "result_to_reply_ms": 11331.62,
+      "answer_ttft_ms": 3012.58,
+      "answer_tokens_in": 269,
+      "answer_tokens_out": 38,
+      "answer_tps": 4.46,
+      "end_to_end_ms": 14453.32,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 6,
+      "query_idx": 5,
+      "query": "are there any people visible",
+      "tool_called": "detect_people",
+      "tool_result": "detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "in-place-mock",
+          "text": "detection says: no people detected"
+        }
+      ],
+      "final_reply": "There are no people visible. The detection tool reported that no people were detected.",
+      "query_to_tool_ms": 2384.52,
+      "dispatch_ttft_ms": 926.17,
+      "dispatch_tokens_in": 227,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.16,
+      "tool_to_result_ms": 590.44,
+      "result_to_reply_ms": 6552.15,
+      "answer_ttft_ms": 3006.34,
+      "answer_tokens_in": 267,
+      "answer_tokens_out": 16,
+      "answer_tps": 4.26,
+      "end_to_end_ms": 9527.11,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 6,
+      "query_idx": 6,
+      "query": "detect the people in the frame",
+      "tool_called": "detect_people",
+      "tool_result": "detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "in-place-mock",
+          "text": "detection says: no people detected"
+        }
+      ],
+      "final_reply": "The people that are currently visible are: `in-place-mock`",
+      "query_to_tool_ms": 2457.61,
+      "dispatch_ttft_ms": 999.69,
+      "dispatch_tokens_in": 228,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.17,
+      "tool_to_result_ms": 590.36,
+      "result_to_reply_ms": 6279.95,
+      "answer_ttft_ms": 3013.07,
+      "answer_tokens_in": 268,
+      "answer_tokens_out": 15,
+      "answer_tps": 4.31,
+      "end_to_end_ms": 9327.92,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 6,
+      "query_idx": 7,
+      "query": "is anybody there right now",
+      "tool_called": "detect_people",
+      "tool_result": "detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "in-place-mock",
+          "text": "detection says: no people detected"
+        }
+      ],
+      "final_reply": "I found that the person I was looking for is currently visible. The text indicates that \"detection says: no people detected\".",
+      "query_to_tool_ms": 2377.52,
+      "dispatch_ttft_ms": 924.18,
+      "dispatch_tokens_in": 227,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.18,
+      "tool_to_result_ms": 591.05,
+      "result_to_reply_ms": 8458.67,
+      "answer_ttft_ms": 3019.36,
+      "answer_tokens_in": 267,
+      "answer_tokens_out": 25,
+      "answer_tps": 4.43,
+      "end_to_end_ms": 11427.24,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 6,
+      "query_idx": 8,
+      "query": "tell me how many persons you can see",
+      "tool_called": "detect_people",
+      "tool_result": "detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "in-place-mock",
+          "text": "detection says: no people detected"
+        }
+      ],
+      "final_reply": "I can detect people using the available tools. There are no people detected in my list.",
+      "query_to_tool_ms": 2617.25,
+      "dispatch_ttft_ms": 1169.97,
+      "dispatch_tokens_in": 230,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.2,
+      "tool_to_result_ms": 590.82,
+      "result_to_reply_ms": 6939.09,
+      "answer_ttft_ms": 3012.55,
+      "answer_tokens_in": 270,
+      "answer_tokens_out": 18,
+      "answer_tps": 4.35,
+      "end_to_end_ms": 10147.16,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 6,
+      "query_idx": 9,
+      "query": "look for a person with the camera",
+      "tool_called": "detect_people",
+      "tool_result": "detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "in-place-mock",
+          "text": "detection says: no people detected"
+        }
+      ],
+      "final_reply": "I found a person with the camera. The text indicates that it was not detected: \"detection says: no people detected.\"",
+      "query_to_tool_ms": 2559.79,
+      "dispatch_ttft_ms": 1100.71,
+      "dispatch_tokens_in": 229,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.16,
+      "tool_to_result_ms": 590.82,
+      "result_to_reply_ms": 8466.4,
+      "answer_ttft_ms": 3004.38,
+      "answer_tokens_in": 269,
+      "answer_tokens_out": 25,
+      "answer_tps": 4.41,
+      "end_to_end_ms": 11617.0,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 12,
+      "query_idx": 0,
+      "query": "can you use the detect person tool",
+      "tool_called": "detect_people",
+      "tool_result": "detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "in-place-mock",
+          "text": "detection says: no people detected"
+        }
+      ],
+      "final_reply": "The detection people tool returned the following result: no people were detected.",
+      "query_to_tool_ms": 36307.05,
+      "dispatch_ttft_ms": 34767.99,
+      "dispatch_tokens_in": 399,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 3.98,
+      "tool_to_result_ms": 590.31,
+      "result_to_reply_ms": 6115.58,
+      "answer_ttft_ms": 3034.33,
+      "answer_tokens_in": 439,
+      "answer_tokens_out": 14,
+      "answer_tps": 4.27,
+      "end_to_end_ms": 43012.94,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 12,
+      "query_idx": 1,
+      "query": "is there a person in front of the camera",
+      "tool_called": "detect_people",
+      "tool_result": "detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "in-place-mock",
+          "text": "detection says: no people detected"
+        }
+      ],
+      "final_reply": "I have detected a person in front of the camera. The text indicates that no people were detected.",
+      "query_to_tool_ms": 2901.29,
+      "dispatch_ttft_ms": 1364.84,
+      "dispatch_tokens_in": 401,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 3.98,
+      "tool_to_result_ms": 590.78,
+      "result_to_reply_ms": 7407.0,
+      "answer_ttft_ms": 3022.36,
+      "answer_tokens_in": 441,
+      "answer_tokens_out": 20,
+      "answer_tps": 4.37,
+      "end_to_end_ms": 10899.08,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 12,
+      "query_idx": 2,
+      "query": "how many people are there",
+      "tool_called": "detect_people",
+      "tool_result": "detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "in-place-mock",
+          "text": "detection says: no people detected"
+        }
+      ],
+      "final_reply": "There are currently no people being detected.",
+      "query_to_tool_ms": 2586.89,
+      "dispatch_ttft_ms": 1047.68,
+      "dispatch_tokens_in": 397,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 3.98,
+      "tool_to_result_ms": 590.82,
+      "result_to_reply_ms": 4793.44,
+      "answer_ttft_ms": 3030.28,
+      "answer_tokens_in": 437,
+      "answer_tokens_out": 8,
+      "answer_tps": 4.05,
+      "end_to_end_ms": 7971.15,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 12,
+      "query_idx": 3,
+      "query": "do you see anyone",
+      "tool_called": "detect_people",
+      "tool_result": "detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "in-place-mock",
+          "text": "detection says: no people detected"
+        }
+      ],
+      "final_reply": "I found that I have detected a person. The value of this person is: `{\"from\": \"in-place-mock\", \"text\": \"detection says: no people detected\"}`",
+      "query_to_tool_ms": 2493.48,
+      "dispatch_ttft_ms": 958.04,
+      "dispatch_tokens_in": 396,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 3.99,
+      "tool_to_result_ms": 590.15,
+      "result_to_reply_ms": 11644.58,
+      "answer_ttft_ms": 3030.69,
+      "answer_tokens_in": 436,
+      "answer_tokens_out": 39,
+      "answer_tps": 4.43,
+      "end_to_end_ms": 14728.21,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 12,
+      "query_idx": 4,
+      "query": "check if someone is in the room",
+      "tool_called": "detect_people",
+      "tool_result": "detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "in-place-mock",
+          "text": "detection says: no people detected"
+        }
+      ],
+      "final_reply": "I found that a person was detected in the room. The text indicates that no people were detected.",
+      "query_to_tool_ms": 2740.39,
+      "dispatch_ttft_ms": 1192.47,
+      "dispatch_tokens_in": 399,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 3.95,
+      "tool_to_result_ms": 590.34,
+      "result_to_reply_ms": 7410.86,
+      "answer_ttft_ms": 3035.33,
+      "answer_tokens_in": 439,
+      "answer_tokens_out": 20,
+      "answer_tps": 4.38,
+      "end_to_end_ms": 10741.58,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 12,
+      "query_idx": 5,
+      "query": "are there any people visible",
+      "tool_called": "detect_people",
+      "tool_result": "detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "in-place-mock",
+          "text": "detection says: no people detected"
+        }
+      ],
+      "final_reply": "There are no people visible. The tool reported that no people were detected.",
+      "query_to_tool_ms": 2558.01,
+      "dispatch_ttft_ms": 1025.66,
+      "dispatch_tokens_in": 397,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 3.99,
+      "tool_to_result_ms": 590.43,
+      "result_to_reply_ms": 6316.56,
+      "answer_ttft_ms": 3019.25,
+      "answer_tokens_in": 437,
+      "answer_tokens_out": 15,
+      "answer_tps": 4.29,
+      "end_to_end_ms": 9465.0,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 12,
+      "query_idx": 6,
+      "query": "detect the people in the frame",
+      "tool_called": "detect_people",
+      "tool_result": "detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "in-place-mock",
+          "text": "detection says: no people detected"
+        }
+      ],
+      "final_reply": "The people that are currently visible in the frame are:\n\n*   detection says: no people detected",
+      "query_to_tool_ms": 2656.64,
+      "dispatch_ttft_ms": 1111.19,
+      "dispatch_tokens_in": 398,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 3.96,
+      "tool_to_result_ms": 591.02,
+      "result_to_reply_ms": 7404.9,
+      "answer_ttft_ms": 3035.97,
+      "answer_tokens_in": 438,
+      "answer_tokens_out": 20,
+      "answer_tps": 4.38,
+      "end_to_end_ms": 10652.55,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 12,
+      "query_idx": 7,
+      "query": "is anybody there right now",
+      "tool_called": "detect_people",
+      "tool_result": "detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "in-place-mock",
+          "text": "detection says: no people detected"
+        }
+      ],
+      "final_reply": "I found a person who is currently visible. Could you please describe him or anyone else?",
+      "query_to_tool_ms": 2558.6,
+      "dispatch_ttft_ms": 1026.39,
+      "dispatch_tokens_in": 397,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 3.99,
+      "tool_to_result_ms": 590.14,
+      "result_to_reply_ms": 6965.3,
+      "answer_ttft_ms": 3016.93,
+      "answer_tokens_in": 437,
+      "answer_tokens_out": 18,
+      "answer_tps": 4.34,
+      "end_to_end_ms": 10114.04,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 12,
+      "query_idx": 8,
+      "query": "tell me how many persons you can see",
+      "tool_called": "detect_people",
+      "tool_result": "detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "in-place-mock",
+          "text": "detection says: no people detected"
+        }
+      ],
+      "final_reply": "I have detected a person. Could you please tell me how many people you can see?",
+      "query_to_tool_ms": 2832.85,
+      "dispatch_ttft_ms": 1294.4,
+      "dispatch_tokens_in": 400,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 3.98,
+      "tool_to_result_ms": 591.09,
+      "result_to_reply_ms": 6967.79,
+      "answer_ttft_ms": 3027.85,
+      "answer_tokens_in": 440,
+      "answer_tokens_out": 18,
+      "answer_tps": 4.35,
+      "end_to_end_ms": 10391.73,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 12,
+      "query_idx": 9,
+      "query": "look for a person with the camera",
+      "tool_called": "detect_people",
+      "tool_result": "detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "in-place-mock",
+          "text": "detection says: no people detected"
+        }
+      ],
+      "final_reply": "I found a person with the camera. The text indicates that it was not detected: \"detection says: no people detected.\"",
+      "query_to_tool_ms": 2754.07,
+      "dispatch_ttft_ms": 1201.57,
+      "dispatch_tokens_in": 399,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 3.94,
+      "tool_to_result_ms": 590.1,
+      "result_to_reply_ms": 8568.55,
+      "answer_ttft_ms": 3053.25,
+      "answer_tokens_in": 439,
+      "answer_tokens_out": 25,
+      "answer_tps": 4.38,
+      "end_to_end_ms": 11912.72,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 18,
+      "query_idx": 0,
+      "query": "can you use the detect person tool",
+      "tool_called": "detect_people",
+      "tool_result": "detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "in-place-mock",
+          "text": "detection says: no people detected"
+        }
+      ],
+      "final_reply": "The people that are currently visible are: no people were detected.",
+      "query_to_tool_ms": 52038.68,
+      "dispatch_ttft_ms": 50409.78,
+      "dispatch_tokens_in": 573,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 3.78,
+      "tool_to_result_ms": 590.41,
+      "result_to_reply_ms": 6375.06,
+      "answer_ttft_ms": 3370.22,
+      "answer_tokens_in": 613,
+      "answer_tokens_out": 13,
+      "answer_tps": 4.06,
+      "end_to_end_ms": 59004.15,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 18,
+      "query_idx": 1,
+      "query": "is there a person in front of the camera",
+      "tool_called": "detect_people",
+      "tool_result": "detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "in-place-mock",
+          "text": "detection says: no people detected"
+        }
+      ],
+      "final_reply": "There is a person in front of the camera.",
+      "query_to_tool_ms": 3134.77,
+      "dispatch_ttft_ms": 1505.76,
+      "dispatch_tokens_in": 575,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 3.78,
+      "tool_to_result_ms": 591.08,
+      "result_to_reply_ms": 5646.28,
+      "answer_ttft_ms": 3323.67,
+      "answer_tokens_in": 615,
+      "answer_tokens_out": 10,
+      "answer_tps": 3.95,
+      "end_to_end_ms": 9372.13,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 18,
+      "query_idx": 2,
+      "query": "how many people are there",
+      "tool_called": "detect_people",
+      "tool_result": "detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "in-place-mock",
+          "text": "detection says: no people detected"
+        }
+      ],
+      "final_reply": "There are {from: \"in-place-mock\", text: \"detection says: no people detected\"} people detected.",
+      "query_to_tool_ms": 2764.97,
+      "dispatch_ttft_ms": 1130.44,
+      "dispatch_tokens_in": 571,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 3.77,
+      "tool_to_result_ms": 591.05,
+      "result_to_reply_ms": 9108.56,
+      "answer_ttft_ms": 3351.81,
+      "answer_tokens_in": 611,
+      "answer_tokens_out": 25,
+      "answer_tps": 4.2,
+      "end_to_end_ms": 12464.58,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 18,
+      "query_idx": 3,
+      "query": "do you see anyone",
+      "tool_called": "detect_people",
+      "tool_result": "detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "in-place-mock",
+          "text": "detection says: no people detected"
+        }
+      ],
+      "final_reply": "I found that no people were detected.",
+      "query_to_tool_ms": 2675.1,
+      "dispatch_ttft_ms": 1037.09,
+      "dispatch_tokens_in": 570,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 3.76,
+      "tool_to_result_ms": 590.82,
+      "result_to_reply_ms": 5204.25,
+      "answer_ttft_ms": 3348.06,
+      "answer_tokens_in": 610,
+      "answer_tokens_out": 8,
+      "answer_tps": 3.87,
+      "end_to_end_ms": 8470.18,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 18,
+      "query_idx": 4,
+      "query": "check if someone is in the room",
+      "tool_called": "detect_people",
+      "tool_result": "detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "in-place-mock",
+          "text": "detection says: no people detected"
+        }
+      ],
+      "final_reply": "I found that no people were detected.",
+      "query_to_tool_ms": 2960.04,
+      "dispatch_ttft_ms": 1338.01,
+      "dispatch_tokens_in": 573,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 3.8,
+      "tool_to_result_ms": 590.42,
+      "result_to_reply_ms": 5200.08,
+      "answer_ttft_ms": 3342.09,
+      "answer_tokens_in": 613,
+      "answer_tokens_out": 8,
+      "answer_tps": 3.87,
+      "end_to_end_ms": 8750.54,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 18,
+      "query_idx": 5,
+      "query": "are there any people visible",
+      "tool_called": "detect_people",
+      "tool_result": "detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "in-place-mock",
+          "text": "detection says: no people detected"
+        }
+      ],
+      "final_reply": "There are no people visible in the list.",
+      "query_to_tool_ms": 2781.18,
+      "dispatch_ttft_ms": 1159.21,
+      "dispatch_tokens_in": 571,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 3.8,
+      "tool_to_result_ms": 590.43,
+      "result_to_reply_ms": 5445.44,
+      "answer_ttft_ms": 3347.09,
+      "answer_tokens_in": 611,
+      "answer_tokens_out": 9,
+      "answer_tps": 3.9,
+      "end_to_end_ms": 8817.06,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 18,
+      "query_idx": 6,
+      "query": "detect the people in the frame",
+      "tool_called": "detect_people",
+      "tool_result": "detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "in-place-mock",
+          "text": "detection says: no people detected"
+        }
+      ],
+      "final_reply": "The people that are currently visible are: no people were detected.",
+      "query_to_tool_ms": 2855.72,
+      "dispatch_ttft_ms": 1229.66,
+      "dispatch_tokens_in": 572,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 3.79,
+      "tool_to_result_ms": 590.75,
+      "result_to_reply_ms": 6440.03,
+      "answer_ttft_ms": 3330.95,
+      "answer_tokens_in": 612,
+      "answer_tokens_out": 13,
+      "answer_tps": 3.92,
+      "end_to_end_ms": 9886.5,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 18,
+      "query_idx": 7,
+      "query": "is anybody there right now",
+      "tool_called": "detect_people",
+      "tool_result": "detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "in-place-mock",
+          "text": "detection says: no people detected"
+        }
+      ],
+      "final_reply": "I have detected people. Could you please specify where you would like to see them?",
+      "query_to_tool_ms": 2771.23,
+      "dispatch_ttft_ms": 1132.57,
+      "dispatch_tokens_in": 571,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 3.76,
+      "tool_to_result_ms": 590.83,
+      "result_to_reply_ms": 7262.76,
+      "answer_ttft_ms": 3345.82,
+      "answer_tokens_in": 611,
+      "answer_tokens_out": 17,
+      "answer_tps": 4.13,
+      "end_to_end_ms": 10624.82,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 18,
+      "query_idx": 8,
+      "query": "tell me how many persons you can see",
+      "tool_called": "detect_people",
+      "tool_result": "detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "in-place-mock",
+          "text": "detection says: no people detected"
+        }
+      ],
+      "final_reply": "The people that are currently visible are: no people were detected.",
+      "query_to_tool_ms": 3043.12,
+      "dispatch_ttft_ms": 1418.24,
+      "dispatch_tokens_in": 574,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 3.79,
+      "tool_to_result_ms": 591.1,
+      "result_to_reply_ms": 6332.99,
+      "answer_ttft_ms": 3330.29,
+      "answer_tokens_in": 614,
+      "answer_tokens_out": 13,
+      "answer_tps": 4.06,
+      "end_to_end_ms": 9967.22,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 18,
+      "query_idx": 9,
+      "query": "look for a person with the camera",
+      "tool_called": "detect_people",
+      "tool_result": "detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "in-place-mock",
+          "text": "detection says: no people detected"
+        }
+      ],
+      "final_reply": "I have detected people. Could you please specify if you would like me to stop searching?",
+      "query_to_tool_ms": 2966.29,
+      "dispatch_ttft_ms": 1339.08,
+      "dispatch_tokens_in": 573,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 3.79,
+      "tool_to_result_ms": 590.81,
+      "result_to_reply_ms": 7480.7,
+      "answer_ttft_ms": 3337.76,
+      "answer_tokens_in": 613,
+      "answer_tokens_out": 18,
+      "answer_tps": 4.15,
+      "end_to_end_ms": 11037.8,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 24,
+      "query_idx": 0,
+      "query": "can you use the detect person tool",
+      "tool_called": "detect_people",
+      "tool_result": "detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "in-place-mock",
+          "text": "detection says: no people detected"
+        }
+      ],
+      "final_reply": "The people that are currently visible are: no people were detected.",
+      "query_to_tool_ms": 68673.76,
+      "dispatch_ttft_ms": 67034.24,
+      "dispatch_tokens_in": 747,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 3.79,
+      "tool_to_result_ms": 590.4,
+      "result_to_reply_ms": 6878.47,
+      "answer_ttft_ms": 3722.66,
+      "answer_tokens_in": 787,
+      "answer_tokens_out": 13,
+      "answer_tps": 3.88,
+      "end_to_end_ms": 76142.63,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 24,
+      "query_idx": 1,
+      "query": "is there a person in front of the camera",
+      "tool_called": "detect_people",
+      "tool_result": "detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "in-place-mock",
+          "text": "detection says: no people detected"
+        }
+      ],
+      "final_reply": "I have detected people. Is there anyone in front of the camera?",
+      "query_to_tool_ms": 3179.05,
+      "dispatch_ttft_ms": 1528.34,
+      "dispatch_tokens_in": 749,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 3.76,
+      "tool_to_result_ms": 590.42,
+      "result_to_reply_ms": 7167.33,
+      "answer_ttft_ms": 3725.49,
+      "answer_tokens_in": 789,
+      "answer_tokens_out": 14,
+      "answer_tps": 3.84,
+      "end_to_end_ms": 10936.8,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 24,
+      "query_idx": 2,
+      "query": "how many people are there",
+      "tool_called": "detect_people",
+      "tool_result": "detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "in-place-mock",
+          "text": "detection says: no people detected"
+        }
+      ],
+      "final_reply": "There are {from:<escape>in-place-mock<escape>,text:<escape>detection says: no people detected<escape>} people detected.",
+      "query_to_tool_ms": 2792.58,
+      "dispatch_ttft_ms": 1152.43,
+      "dispatch_tokens_in": 745,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 3.79,
+      "tool_to_result_ms": 590.41,
+      "result_to_reply_ms": 10211.71,
+      "answer_ttft_ms": 3714.8,
+      "answer_tokens_in": 785,
+      "answer_tokens_out": 27,
+      "answer_tps": 4.04,
+      "end_to_end_ms": 13594.7,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 24,
+      "query_idx": 3,
+      "query": "do you see anyone",
+      "tool_called": "wrong_tool_10",
+      "tool_result": "detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "in-place-mock",
+          "text": "detection says: no people detected"
+        }
+      ],
+      "final_reply": "I have detected no one. The tool reported that \"no people were detected.\"",
+      "query_to_tool_ms": 3389.4,
+      "dispatch_ttft_ms": 1056.82,
+      "dispatch_tokens_in": 744,
+      "dispatch_tokens_out": 10,
+      "dispatch_tps": 3.96,
+      "tool_to_result_ms": 590.43,
+      "result_to_reply_ms": 7951.53,
+      "answer_ttft_ms": 4067.16,
+      "answer_tokens_in": 790,
+      "answer_tokens_out": 16,
+      "answer_tps": 3.92,
+      "end_to_end_ms": 11931.36,
+      "correct": 0,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 24,
+      "query_idx": 4,
+      "query": "check if someone is in the room",
+      "tool_called": "detect_people",
+      "tool_result": "detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "in-place-mock",
+          "text": "detection says: no people detected"
+        }
+      ],
+      "final_reply": "I found that no people were detected. The system reported that \"no people detected.\"",
+      "query_to_tool_ms": 2985.46,
+      "dispatch_ttft_ms": 1345.82,
+      "dispatch_tokens_in": 747,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 3.79,
+      "tool_to_result_ms": 590.35,
+      "result_to_reply_ms": 7877.04,
+      "answer_ttft_ms": 3720.97,
+      "answer_tokens_in": 787,
+      "answer_tokens_out": 17,
+      "answer_tps": 3.91,
+      "end_to_end_ms": 11452.85,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 24,
+      "query_idx": 5,
+      "query": "are there any people visible",
+      "tool_called": "detect_people",
+      "tool_result": "detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "in-place-mock",
+          "text": "detection says: no people detected"
+        }
+      ],
+      "final_reply": "Here are the detections for people:\n\nNo people were detected.",
+      "query_to_tool_ms": 2798.2,
+      "dispatch_ttft_ms": 1147.17,
+      "dispatch_tokens_in": 745,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 3.76,
+      "tool_to_result_ms": 591.11,
+      "result_to_reply_ms": 6882.82,
+      "answer_ttft_ms": 3720.18,
+      "answer_tokens_in": 785,
+      "answer_tokens_out": 13,
+      "answer_tps": 3.87,
+      "end_to_end_ms": 10272.13,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 24,
+      "query_idx": 6,
+      "query": "detect the people in the frame",
+      "tool_called": "detect_people",
+      "tool_result": "detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "in-place-mock",
+          "text": "detection says: no people detected"
+        }
+      ],
+      "final_reply": "The people that are currently visible are: no people detected.",
+      "query_to_tool_ms": 2885.19,
+      "dispatch_ttft_ms": 1246.93,
+      "dispatch_tokens_in": 746,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 3.79,
+      "tool_to_result_ms": 590.36,
+      "result_to_reply_ms": 6639.95,
+      "answer_ttft_ms": 3705.87,
+      "answer_tokens_in": 786,
+      "answer_tokens_out": 12,
+      "answer_tps": 3.83,
+      "end_to_end_ms": 10115.5,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 24,
+      "query_idx": 7,
+      "query": "is anybody there right now",
+      "tool_called": "detect_people",
+      "tool_result": "detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "in-place-mock",
+          "text": "detection says: no people detected"
+        }
+      ],
+      "final_reply": "I found that no people were detected.",
+      "query_to_tool_ms": 2834.58,
+      "dispatch_ttft_ms": 1193.3,
+      "dispatch_tokens_in": 745,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 3.79,
+      "tool_to_result_ms": 590.81,
+      "result_to_reply_ms": 5671.02,
+      "answer_ttft_ms": 3712.6,
+      "answer_tokens_in": 785,
+      "answer_tokens_out": 8,
+      "answer_tps": 3.69,
+      "end_to_end_ms": 9096.41,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 24,
+      "query_idx": 8,
+      "query": "tell me how many persons you can see",
+      "tool_called": "detect_people",
+      "tool_result": "detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "in-place-mock",
+          "text": "detection says: no people detected"
+        }
+      ],
+      "final_reply": "The people that are currently visible are: no people detected.",
+      "query_to_tool_ms": 3075.02,
+      "dispatch_ttft_ms": 1429.35,
+      "dispatch_tokens_in": 748,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 3.78,
+      "tool_to_result_ms": 591.04,
+      "result_to_reply_ms": 6642.06,
+      "answer_ttft_ms": 3720.43,
+      "answer_tokens_in": 788,
+      "answer_tokens_out": 12,
+      "answer_tps": 3.84,
+      "end_to_end_ms": 10308.13,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 24,
+      "query_idx": 9,
+      "query": "look for a person with the camera",
+      "tool_called": "detect_people",
+      "tool_result": "detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "in-place-mock",
+          "text": "detection says: no people detected"
+        }
+      ],
+      "final_reply": "I have detected the people with the camera. The value for this search is: no people detected.",
+      "query_to_tool_ms": 2989.96,
+      "dispatch_ttft_ms": 1335.26,
+      "dispatch_tokens_in": 747,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 3.76,
+      "tool_to_result_ms": 591.11,
+      "result_to_reply_ms": 8556.09,
+      "answer_ttft_ms": 3718.29,
+      "answer_tokens_in": 787,
+      "answer_tokens_out": 20,
+      "answer_tps": 3.98,
+      "end_to_end_ms": 12137.15,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    }
+  ],
+  "aggregate": [
+    {
+      "n_tools": 1,
+      "n_samples": 10,
+      "n_correct": 10,
+      "accuracy": 1.0,
+      "n_got_result": 10,
+      "query_to_tool_ms_count": 10,
+      "query_to_tool_ms_mean": 3053.97,
+      "query_to_tool_ms_std": 1813.2,
+      "query_to_tool_ms_min": 2273.36,
+      "query_to_tool_ms_max": 8482.7,
+      "dispatch_ttft_ms_count": 10,
+      "dispatch_ttft_ms_mean": 1611.19,
+      "dispatch_ttft_ms_std": 1810.94,
+      "dispatch_ttft_ms_min": 834.38,
+      "dispatch_ttft_ms_max": 7033.04,
+      "dispatch_tokens_in_count": 10,
+      "dispatch_tokens_in_mean": 88.3,
+      "dispatch_tokens_in_std": 1.49,
+      "dispatch_tokens_in_min": 86,
+      "dispatch_tokens_in_max": 91,
+      "dispatch_tokens_out_count": 10,
+      "dispatch_tokens_out_mean": 7.0,
+      "dispatch_tokens_out_std": 0.0,
+      "dispatch_tokens_out_min": 7,
+      "dispatch_tokens_out_max": 7,
+      "dispatch_tps_count": 10,
+      "dispatch_tps_mean": 4.18,
+      "dispatch_tps_std": 0.01,
+      "dispatch_tps_min": 4.16,
+      "dispatch_tps_max": 4.19,
+      "tool_to_result_ms_count": 10,
+      "tool_to_result_ms_mean": 590.69,
+      "tool_to_result_ms_std": 0.3,
+      "tool_to_result_ms_min": 590.24,
+      "tool_to_result_ms_max": 591.07,
+      "result_to_reply_ms_count": 10,
+      "result_to_reply_ms_mean": 6836.38,
+      "result_to_reply_ms_std": 1928.01,
+      "result_to_reply_ms_min": 3942.87,
+      "result_to_reply_ms_max": 10606.84,
+      "answer_ttft_ms_count": 10,
+      "answer_ttft_ms_mean": 2699.66,
+      "answer_ttft_ms_std": 9.35,
+      "answer_ttft_ms_min": 2687.27,
+      "answer_ttft_ms_max": 2713.17,
+      "answer_tokens_in_count": 10,
+      "answer_tokens_in_mean": 128.3,
+      "answer_tokens_in_std": 1.49,
+      "answer_tokens_in_min": 126,
+      "answer_tokens_in_max": 131,
+      "answer_tokens_out_count": 10,
+      "answer_tokens_out_mean": 19.9,
+      "answer_tokens_out_std": 9.3,
+      "answer_tokens_out_min": 6,
+      "answer_tokens_out_max": 38,
+      "answer_tps_count": 10,
+      "answer_tps_mean": 4.5,
+      "answer_tps_std": 0.21,
+      "answer_tps_min": 4.02,
+      "answer_tps_max": 4.69,
+      "end_to_end_ms_count": 10,
+      "end_to_end_ms_mean": 10481.04,
+      "end_to_end_ms_std": 2839.04,
+      "end_to_end_ms_min": 6894.89,
+      "end_to_end_ms_max": 16761.08
+    },
+    {
+      "n_tools": 6,
+      "n_samples": 10,
+      "n_correct": 10,
+      "accuracy": 1.0,
+      "n_got_result": 10,
+      "query_to_tool_ms_count": 10,
+      "query_to_tool_ms_mean": 4169.01,
+      "query_to_tool_ms_std": 5080.11,
+      "query_to_tool_ms_min": 2298.54,
+      "query_to_tool_ms_max": 19405.43,
+      "dispatch_ttft_ms_count": 10,
+      "dispatch_ttft_ms_mean": 2713.88,
+      "dispatch_ttft_ms_std": 5077.39,
+      "dispatch_ttft_ms_min": 845.05,
+      "dispatch_ttft_ms_max": 17942.16,
+      "dispatch_tokens_in_count": 10,
+      "dispatch_tokens_in_mean": 228.3,
+      "dispatch_tokens_in_std": 1.49,
+      "dispatch_tokens_in_min": 226,
+      "dispatch_tokens_in_max": 231,
+      "dispatch_tokens_out_count": 10,
+      "dispatch_tokens_out_mean": 7.0,
+      "dispatch_tokens_out_std": 0.0,
+      "dispatch_tokens_out_min": 7,
+      "dispatch_tokens_out_max": 7,
+      "dispatch_tps_count": 10,
+      "dispatch_tps_mean": 4.17,
+      "dispatch_tps_std": 0.01,
+      "dispatch_tps_min": 4.15,
+      "dispatch_tps_max": 4.2,
+      "tool_to_result_ms_count": 10,
+      "tool_to_result_ms_mean": 590.6,
+      "tool_to_result_ms_std": 0.31,
+      "tool_to_result_ms_min": 590.14,
+      "tool_to_result_ms_max": 591.05,
+      "result_to_reply_ms_count": 10,
+      "result_to_reply_ms_mean": 7210.51,
+      "result_to_reply_ms_std": 1770.27,
+      "result_to_reply_ms_min": 4535.15,
+      "result_to_reply_ms_max": 11331.62,
+      "answer_ttft_ms_count": 10,
+      "answer_ttft_ms_mean": 3013.65,
+      "answer_ttft_ms_std": 7.96,
+      "answer_ttft_ms_min": 2999.63,
+      "answer_ttft_ms_max": 3024.89,
+      "answer_tokens_in_count": 10,
+      "answer_tokens_in_mean": 268.3,
+      "answer_tokens_in_std": 1.49,
+      "answer_tokens_in_min": 266,
+      "answer_tokens_in_max": 271,
+      "answer_tokens_out_count": 10,
+      "answer_tokens_out_mean": 19.2,
+      "answer_tokens_out_std": 8.1,
+      "answer_tokens_out_min": 7,
+      "answer_tokens_out_max": 38,
+      "answer_tps_count": 10,
+      "answer_tps_mean": 4.31,
+      "answer_tps_std": 0.13,
+      "answer_tps_min": 3.96,
+      "answer_tps_max": 4.46,
+      "end_to_end_ms_count": 10,
+      "end_to_end_ms_mean": 11970.12,
+      "end_to_end_ms_std": 5229.98,
+      "end_to_end_ms_min": 7502.37,
+      "end_to_end_ms_max": 26725.5
+    },
+    {
+      "n_tools": 12,
+      "n_samples": 10,
+      "n_correct": 10,
+      "accuracy": 1.0,
+      "n_got_result": 10,
+      "query_to_tool_ms_count": 10,
+      "query_to_tool_ms_mean": 6038.93,
+      "query_to_tool_ms_std": 10090.14,
+      "query_to_tool_ms_min": 2493.48,
+      "query_to_tool_ms_max": 36307.05,
+      "dispatch_ttft_ms_count": 10,
+      "dispatch_ttft_ms_mean": 4499.02,
+      "dispatch_ttft_ms_std": 10090.4,
+      "dispatch_ttft_ms_min": 958.04,
+      "dispatch_ttft_ms_max": 34767.99,
+      "dispatch_tokens_in_count": 10,
+      "dispatch_tokens_in_mean": 398.3,
+      "dispatch_tokens_in_std": 1.49,
+      "dispatch_tokens_in_min": 396,
+      "dispatch_tokens_in_max": 401,
+      "dispatch_tokens_out_count": 10,
+      "dispatch_tokens_out_mean": 7.0,
+      "dispatch_tokens_out_std": 0.0,
+      "dispatch_tokens_out_min": 7,
+      "dispatch_tokens_out_max": 7,
+      "dispatch_tps_count": 10,
+      "dispatch_tps_mean": 3.97,
+      "dispatch_tps_std": 0.02,
+      "dispatch_tps_min": 3.94,
+      "dispatch_tps_max": 3.99,
+      "tool_to_result_ms_count": 10,
+      "tool_to_result_ms_mean": 590.52,
+      "tool_to_result_ms_std": 0.36,
+      "tool_to_result_ms_min": 590.1,
+      "tool_to_result_ms_max": 591.09,
+      "result_to_reply_ms_count": 10,
+      "result_to_reply_ms_mean": 7359.46,
+      "result_to_reply_ms_std": 1713.45,
+      "result_to_reply_ms_min": 4793.44,
+      "result_to_reply_ms_max": 11644.58,
+      "answer_ttft_ms_count": 10,
+      "answer_ttft_ms_mean": 3030.62,
+      "answer_ttft_ms_std": 9.85,
+      "answer_ttft_ms_min": 3016.93,
+      "answer_ttft_ms_max": 3053.25,
+      "answer_tokens_in_count": 10,
+      "answer_tokens_in_mean": 438.3,
+      "answer_tokens_in_std": 1.49,
+      "answer_tokens_in_min": 436,
+      "answer_tokens_in_max": 441,
+      "answer_tokens_out_count": 10,
+      "answer_tokens_out_mean": 19.7,
+      "answer_tokens_out_std": 7.73,
+      "answer_tokens_out_min": 8,
+      "answer_tokens_out_max": 39,
+      "answer_tps_count": 10,
+      "answer_tps_mean": 4.32,
+      "answer_tps_std": 0.1,
+      "answer_tps_min": 4.05,
+      "answer_tps_max": 4.43,
+      "end_to_end_ms_count": 10,
+      "end_to_end_ms_mean": 13988.9,
+      "end_to_end_ms_std": 9813.81,
+      "end_to_end_ms_min": 7971.15,
+      "end_to_end_ms_max": 43012.94
+    },
+    {
+      "n_tools": 18,
+      "n_samples": 10,
+      "n_correct": 10,
+      "accuracy": 1.0,
+      "n_got_result": 10,
+      "query_to_tool_ms_count": 10,
+      "query_to_tool_ms_mean": 7799.11,
+      "query_to_tool_ms_std": 14747.14,
+      "query_to_tool_ms_min": 2675.1,
+      "query_to_tool_ms_max": 52038.68,
+      "dispatch_ttft_ms_count": 10,
+      "dispatch_ttft_ms_mean": 6169.98,
+      "dispatch_ttft_ms_std": 14747.25,
+      "dispatch_ttft_ms_min": 1037.09,
+      "dispatch_ttft_ms_max": 50409.78,
+      "dispatch_tokens_in_count": 10,
+      "dispatch_tokens_in_mean": 572.3,
+      "dispatch_tokens_in_std": 1.49,
+      "dispatch_tokens_in_min": 570,
+      "dispatch_tokens_in_max": 575,
+      "dispatch_tokens_out_count": 10,
+      "dispatch_tokens_out_mean": 7.0,
+      "dispatch_tokens_out_std": 0.0,
+      "dispatch_tokens_out_min": 7,
+      "dispatch_tokens_out_max": 7,
+      "dispatch_tps_count": 10,
+      "dispatch_tps_mean": 3.78,
+      "dispatch_tps_std": 0.01,
+      "dispatch_tps_min": 3.76,
+      "dispatch_tps_max": 3.8,
+      "tool_to_result_ms_count": 10,
+      "tool_to_result_ms_mean": 590.77,
+      "tool_to_result_ms_std": 0.26,
+      "tool_to_result_ms_min": 590.41,
+      "tool_to_result_ms_max": 591.1,
+      "result_to_reply_ms_count": 10,
+      "result_to_reply_ms_mean": 6449.61,
+      "result_to_reply_ms_std": 1165.31,
+      "result_to_reply_ms_min": 5200.08,
+      "result_to_reply_ms_max": 9108.56,
+      "answer_ttft_ms_count": 10,
+      "answer_ttft_ms_mean": 3342.78,
+      "answer_ttft_ms_std": 12.56,
+      "answer_ttft_ms_min": 3323.67,
+      "answer_ttft_ms_max": 3370.22,
+      "answer_tokens_in_count": 10,
+      "answer_tokens_in_mean": 612.3,
+      "answer_tokens_in_std": 1.49,
+      "answer_tokens_in_min": 610,
+      "answer_tokens_in_max": 615,
+      "answer_tokens_out_count": 10,
+      "answer_tokens_out_mean": 13.4,
+      "answer_tokens_out_std": 5.08,
+      "answer_tokens_out_min": 8,
+      "answer_tokens_out_max": 25,
+      "answer_tps_count": 10,
+      "answer_tps_mean": 4.01,
+      "answer_tps_std": 0.12,
+      "answer_tps_min": 3.87,
+      "answer_tps_max": 4.2,
+      "end_to_end_ms_count": 10,
+      "end_to_end_ms_mean": 14839.5,
+      "end_to_end_ms_std": 14766.35,
+      "end_to_end_ms_min": 8470.18,
+      "end_to_end_ms_max": 59004.15
+    },
+    {
+      "n_tools": 24,
+      "n_samples": 10,
+      "n_correct": 9,
+      "accuracy": 0.9,
+      "n_got_result": 10,
+      "query_to_tool_ms_count": 10,
+      "query_to_tool_ms_mean": 9560.32,
+      "query_to_tool_ms_std": 19705.28,
+      "query_to_tool_ms_min": 2792.58,
+      "query_to_tool_ms_max": 68673.76,
+      "dispatch_ttft_ms_count": 10,
+      "dispatch_ttft_ms_mean": 7846.97,
+      "dispatch_ttft_ms_std": 19729.55,
+      "dispatch_ttft_ms_min": 1056.82,
+      "dispatch_ttft_ms_max": 67034.24,
+      "dispatch_tokens_in_count": 10,
+      "dispatch_tokens_in_mean": 746.3,
+      "dispatch_tokens_in_std": 1.49,
+      "dispatch_tokens_in_min": 744,
+      "dispatch_tokens_in_max": 749,
+      "dispatch_tokens_out_count": 10,
+      "dispatch_tokens_out_mean": 7.3,
+      "dispatch_tokens_out_std": 0.9,
+      "dispatch_tokens_out_min": 7,
+      "dispatch_tokens_out_max": 10,
+      "dispatch_tps_count": 10,
+      "dispatch_tps_mean": 3.8,
+      "dispatch_tps_std": 0.06,
+      "dispatch_tps_min": 3.76,
+      "dispatch_tps_max": 3.96,
+      "tool_to_result_ms_count": 10,
+      "tool_to_result_ms_mean": 590.64,
+      "tool_to_result_ms_std": 0.32,
+      "tool_to_result_ms_min": 590.35,
+      "tool_to_result_ms_max": 591.11,
+      "result_to_reply_ms_count": 10,
+      "result_to_reply_ms_mean": 7447.8,
+      "result_to_reply_ms_std": 1203.59,
+      "result_to_reply_ms_min": 5671.02,
+      "result_to_reply_ms_max": 10211.71,
+      "answer_ttft_ms_count": 10,
+      "answer_ttft_ms_mean": 3752.84,
+      "answer_ttft_ms_std": 104.91,
+      "answer_ttft_ms_min": 3705.87,
+      "answer_ttft_ms_max": 4067.16,
+      "answer_tokens_in_count": 10,
+      "answer_tokens_in_mean": 786.9,
+      "answer_tokens_in_std": 1.64,
+      "answer_tokens_in_min": 785,
+      "answer_tokens_in_max": 790,
+      "answer_tokens_out_count": 10,
+      "answer_tokens_out_mean": 15.2,
+      "answer_tokens_out_std": 5.0,
+      "answer_tokens_out_min": 8,
+      "answer_tokens_out_max": 27,
+      "answer_tps_count": 10,
+      "answer_tps_mean": 3.88,
+      "answer_tps_std": 0.09,
+      "answer_tps_min": 3.69,
+      "answer_tps_max": 4.04,
+      "end_to_end_ms_count": 10,
+      "end_to_end_ms_mean": 17598.77,
+      "end_to_end_ms_std": 19551.58,
+      "end_to_end_ms_min": 9096.41,
+      "end_to_end_ms_max": 76142.63
+    }
+  ]
+}

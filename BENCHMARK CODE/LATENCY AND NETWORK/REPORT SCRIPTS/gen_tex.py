@@ -1,0 +1,600 @@
+"""Generate the self-contained latency.tex from computed_stats.json.
+
+Keeping the numbers in a generator guarantees that every value printed in the
+tables is exactly what analysis.py measured from the logs. Re-run after
+analysis.py to refresh the document. The headline numbers quoted in the prose
+(Discussion) are the same measured values and are listed in computed_stats.json.
+
+Run from the WRITING_REPORT folder:  python scripts/gen_tex.py
+"""
+import json
+import os
+
+HERE = os.path.dirname(__file__)
+STATS = os.path.join(HERE, "computed_stats.json")
+OUT = os.path.join(HERE, "..", "latency.tex")
+
+with open(STATS, "r", encoding="utf-8") as fh:
+    S = json.load(fh)
+
+TOOLS = ["1", "6", "12", "18", "24"]
+REPLIES = ["1", "5", "10", "15", "20"]
+
+
+def s(ms):
+    """milliseconds -> seconds string, 2 decimals."""
+    return "%.2f" % (ms / 1000.0)
+
+
+def pm(pair):
+    """(mean_ms, std_ms) -> 'mean $\\pm$ std' in seconds."""
+    return "%.2f $\\pm$ %.2f" % (pair[0] / 1000.0, pair[1] / 1000.0)
+
+
+# ------------------------------------------------------------------- boot
+b_f = S["boot"]["fgemma_noKV"]
+b_q = S["boot"]["qwen3_noKV"]
+
+boot_rows = (
+    "\\texttt{functiongemma:270m} & STM32MP257F-DK (CPU) & %s & %s & %s & %s \\\\\n"
+    "\\texttt{Qwen3:1.7b} & Raspberry Pi 5 (Hailo) & %s & %s & %s & %s \\\\"
+) % (
+    s(b_f["mean"]), s(b_f["std"]), s(b_f["min"]), s(b_f["max"]),
+    s(b_q["mean"]), s(b_q["std"]), s(b_q["min"]), s(b_q["max"]),
+)
+
+
+# ------------------------------------------------ per-model breakdown table
+def breakdown_rows(tag):
+    # additive stage breakdown: query->tool + tool->result + result->reply = E2E
+    rows = []
+    for nt in TOOLS:
+        r = S["tools"][tag][nt]
+        rows.append(
+            "%s & %d & %s & %s & %s & %s \\\\" % (
+                nt, int(r["dispatch_tokens_in"]),
+                pm(r["query_to_tool_ms"]),
+                pm(r["tool_to_result_ms"]),
+                pm(r["result_to_reply_ms"]),
+                pm(r["e2e_ms"]),
+            )
+        )
+    return "\n".join(rows)
+
+
+qwen_rows = breakdown_rows("qwen3_noKV")
+fgemma_rows = breakdown_rows("fgemma_noKV")
+
+# --------------- third breakdown: functiongemma short prompt + KV (warm) -----
+# steady-state (cached) stage breakdown; the cold first query per pool is
+# reported separately in the TTFT-comparison table.
+kv_break_rows = []
+for nt in TOOLS:
+    r = S["kv"][nt]
+    kv_break_rows.append(
+        "%s & %d & %s & %s & %s & %s \\\\" % (
+            nt, int(r["warm_tokens_in"]),
+            pm(r["warm_query_to_tool_ms"]),
+            pm(r["warm_tool_to_result_ms"]),
+            pm(r["warm_result_to_reply_ms"]),
+            pm(r["warm_e2e_ms"]),
+        )
+    )
+kv_break_rows = "\n".join(kv_break_rows)
+
+# ---------------- dispatch-TTFT comparison across the three versions ---------
+ttft_cmp_rows = []
+for nt in TOOLS:
+    q = pm(S["tools"]["qwen3_noKV"][nt]["dispatch_ttft_ms"])
+    fn = pm(S["tools"]["fgemma_noKV"][nt]["dispatch_ttft_ms"])
+    cold = s(S["kv"][nt]["cold_dispatch_ttft_ms"])
+    warm = pm(S["kv"][nt]["warm_dispatch_ttft_ms"])
+    ttft_cmp_rows.append("%s & %s & %s & %s & %s \\\\" % (nt, q, fn, cold, warm))
+ttft_cmp_rows = "\n".join(ttft_cmp_rows)
+
+# -------------------------------------------------------- e2e comparison
+e2e_rows = []
+for nt in TOOLS:
+    q = S["tools"]["qwen3_noKV"][nt]
+    fn = S["tools"]["fgemma_noKV"][nt]
+    kv = S["kv"][nt]
+    qcell = pm(q["e2e_ms"])
+    if q["e2e_n"] < 2:
+        qcell = "%.2f$^{*}$" % (q["e2e_ms"][0] / 1000.0)
+    e2e_rows.append(
+        "%s & %s & %s & %s \\\\" % (nt, qcell, pm(fn["e2e_ms"]), pm(kv["warm_e2e_ms"]))
+    )
+e2e_rows = "\n".join(e2e_rows)
+
+# --------------------------------------- replies-scaling breakdown tables
+# tool->result is omitted (negligible in-process build, no network); the two
+# remaining stage columns add up to E2E: query->tool + result->reply == E2E.
+def rep_break_rows(cfg):
+    rows = []
+    for nr in REPLIES:
+        r = S["replies"][cfg][nr]
+        rows.append(
+            "%s & %d & %.1f & %s & %s & %s \\\\" % (
+                nr, int(r["answer_tokens_in"]), r["answer_tokens_out"],
+                pm(r["query_to_tool_ms"]),
+                pm(r["result_to_reply_ms"]), pm(r["e2e_ms"]),
+            )
+        )
+    return "\n".join(rows)
+
+
+rep_rows = rep_break_rows("qwen3")
+rep_rows_reset = rep_break_rows("fgemma_reset")
+rep_rows_kvreuse = rep_break_rows("fgemma_kvreuse")
+
+# ------------------------------- replies answer-TTFT comparison (3 configs)
+rep_cmp_rows = []
+for nr in REPLIES:
+    q = pm(S["replies"]["qwen3"][nr]["answer_ttft_ms"])
+    rs = pm(S["replies"]["fgemma_reset"][nr]["answer_ttft_ms"])
+    kv = pm(S["replies"]["fgemma_kvreuse"][nr]["answer_ttft_ms"])
+    rep_cmp_rows.append("%s & %s & %s & %s \\\\" % (nr, q, rs, kv))
+rep_cmp_rows = "\n".join(rep_cmp_rows)
+
+
+DOC = r"""%% ==========================================================================
+%% latency.tex  -  self-contained "Latency and scalability" section.
+%%
+%% Generated by scripts/gen_tex.py from scripts/computed_stats.json, which is in
+%% turn produced by scripts/analysis.py from the logs in new_results/.
+%% Tables and figures are measured; re-run the two scripts to refresh them.
+%%
+%% The document compiles on its own (pdflatex latency.tex). To fold it into the
+%% MDPI paper, drop the body between \begin{document} and \end{document} into
+%% Section~\ref{sec:hardwareanalysis} and keep the figures in figures/.
+%% ==========================================================================
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=2cm]{geometry}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{float}
+\usepackage{caption}
+\graphicspath{{figures/}{../figures/}{./}{../}}
+\setlength{\tabcolsep}{4pt}
+
+\begin{document}
+
+\section{Latency and scalability}
+\label{subsub:latency}
+
+This section characterises the latency of the leader agent and how it scales. The
+end-to-end latency is the time from the reception of a user query to the delivery
+of the natural-language reply. Serving a query involves two language-model
+invocations on the leader: a \emph{tool-dispatch} stage, which reads the user
+query together with the JSON descriptions of the exposed tools and emits one tool
+call, and a \emph{final-reply} stage, which turns the returned tool result into a
+natural-language answer. For each stage the time to first token (TTFT), which
+corresponds to the prefill of the prompt, is reported separately, as it dominates.
+Two leader backends are measured: \texttt{Qwen3:1.7b} on the Hailo-10H of the
+Raspberry Pi 5 and \texttt{functiongemma:270m} on the CPU of the STM32MP257F-DK.
+After the model load time and the effect of the number of agents, latency is
+studied along two axes, the number of exposed tools and the number of aggregated
+replies. The interpretation of all these measurements is collected in the
+Discussion (Subsection~\ref{subsec:latency_discussion}).
+
+\subsection{Model load time}
+\label{subsub:latency:boot}
+
+Before serving any query, the leader loads its language model. This cost is paid
+once, at agent start-up or immediately after a leader election, and is not part of
+the per-query latency. Table~\ref{tab:boot} reports the load time over ten
+consecutive loads. Both backends show a one-time cold start on the first load that
+is markedly slower than the warm loads, which cluster near the minimum
+($%(f_min)s$~s for \texttt{functiongemma:270m}, $%(q_min)s$~s for
+\texttt{Qwen3:1.7b}), while the cold start reaches the maximum ($%(f_max)s$~s and
+$%(q_max)s$~s respectively). The mean and standard deviation are computed over all
+ten loads and therefore include this cold-start outlier.
+
+\begin{table}[H]
+\centering
+\caption{Average model load time (time to load the language model on the leader),
+over ten consecutive loads per model. The minimum is a warm load, the maximum a
+cold start.}
+\label{tab:boot}
+\begin{tabular}{llcccc}
+\toprule
+\textbf{Model} & \textbf{Device (backend)} & \textbf{Mean [s]} & \textbf{Std [s]} & \textbf{Min [s]} & \textbf{Max [s]} \\
+\midrule
+%(boot_rows)s
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Agent scaling and network overhead}
+\label{subsub:latency:agents}
+
+The cost of scaling the number of agents is considered first, in power and in
+network traffic. Table~\ref{tab:power_agents} and Figure~\ref{fig:power_agents}
+report the aggregate power consumption of the STM32MP257F-DK as the number of
+co-located agents grows from $1$ to $100$, measured on the STM32MP257F-DK board. The
+mean power stays close to $4.3$~W throughout, so the asynchronous communication
+layer adds no measurable power overhead.
+
+%% External tables are kept in graphs/ and pulled in with \input.
+%% Remove these \input lines when merging into the paper if the tables already exist.
+\input{graphs/power_agents_stats.tex}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.85\linewidth]{power_agents.png}
+\caption{Aggregate power consumption of the STM32MP257F-DK as the number of
+co-located agents grows from $1$ to $100$, measured on the STM32MP257F-DK board.
+The draw stays close to $4.3$~W, so the asynchronous communication layer adds no
+measurable power overhead.}
+\label{fig:power_agents}
+\end{figure}
+
+The base network traffic was tracked with the same scaling, all sensing agents
+simulated on a single machine: a mock leader ran only the discovery and
+tool-aggregation overlay (no model, election or dispatch) while the fleet grew from
+$1$ to $100$. Table~\ref{tab:net_load} reports the leader's base traffic as bytes in
+and out per minute (application-level JSON payload only, in KiB/min). The received
+load grows linearly with the fleet and is dominated by discovery: each agent
+re-announces every two seconds, so the HELLO beacons add about $1.8$~KiB/min per
+agent, reaching $184.8$~KiB/min in and only $10.5$~KiB/min out at $100$ agents. Even
+then the payload is a few hundred KiB per minute, so the network is not the
+bottleneck and the leader language-model processing dominates the latency. The two
+quantities that drive that processing, the number of exposed tools and the number of
+aggregated replies, are studied next.
+
+\input{graphs/network_load.tex}
+
+\subsection{Latency as the number of tools grows}
+\label{subsub:latency:tools}
+
+In this experiment the leader is presented with a growing pool of tools
+($1$, $6$, $12$, $18$ and $24$) while a single sensing agent returns one result per
+query; ten queries whose ground-truth tool is \texttt{detect\_people} are issued at
+each pool size. Dispatch-stage statistics are computed over all ten queries, and
+reply-stage and end-to-end statistics over the queries that produced a tool result
+(their count $n$ is reported), because a missed or abstained call terminates the
+pipeline after dispatch. Table~\ref{tab:lat_qwen} reports \texttt{Qwen3:1.7b} on
+the Hailo and Table~\ref{tab:lat_fgemma} \texttt{functiongemma:270m} on the STM32
+CPU, both with the full prompt and no key-value (KV) cache reuse. The end-to-end
+time is decomposed into three stages whose per-query sum it equals: the dispatch
+stage query$\rightarrow$tool, the sensing turnaround tool$\rightarrow$result, and
+the answer stage result$\rightarrow$reply. Each end-to-end value is measured per
+query and then averaged, so the three stage columns add up to the E2E column. The
+tool$\rightarrow$result stage is the sensing agent's turnaround: the time from the
+leader issuing the tool call to receiving the result over the real TCP network (a
+\texttt{net.dispatch} round trip), including the skill execution on the other board.
+It reflects where the sensing agent runs: in the Qwen3 configuration the tool
+executes on the STM32 (YOLOv8n person detection on the CPU), so
+tool$\rightarrow$result is about $0.6$~s, whereas in the functiongemma configuration
+it executes on the Raspberry Pi 5 (YOLOv8n on the Hailo NPU), about $0.05$~s. The
+dispatch prompt embeds the full JSON schema of every exposed tool, so it lengthens
+by about $47$ tokens per tool for Qwen3 ($223$ to $1318$ tokens) and about $29$ for
+functiongemma ($97$ to $755$ tokens), whereas the reply prompt never carries the
+tool list and stays constant ($208$ and $165$ tokens respectively); the standard
+pipeline also swaps the system prompt between the two stages, so each prefills
+independently. The prefill of this growing dispatch prompt (the dispatch TTFT) is
+the dominant, growing part of query$\rightarrow$tool and is plotted against the
+prompt length in Figure~\ref{fig:ttft}.
+
+\begin{table}[H]
+\centering
+\caption{Leader latency of \texttt{Qwen3:1.7b} on the Hailo-10H as the number of
+exposed tools grows (sensing agent on the STM32, YOLOv8n on the CPU). Values are
+mean $\pm$ standard deviation. The three stage columns sum to the end-to-end column,
+which is the mean over the completed queries of their per-query total. Reply-stage
+and E2E values at $6$ tools rest on the single query that dispatched correctly at
+that pool size.}
+\label{tab:lat_qwen}
+\small
+\begin{tabular}{cccccc}
+\toprule
+\textbf{Tools} & \textbf{Tokens in} & \textbf{Query$\rightarrow$tool [s]} & \textbf{Tool$\rightarrow$result [s]} & \textbf{Result$\rightarrow$reply [s]} & \textbf{E2E [s]} \\
+\midrule
+%(qwen_rows)s
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Leader latency of \texttt{functiongemma:270m} on the STM32 CPU (full
+prompt, no KV cache reuse) as the number of exposed tools grows (sensing agent on
+the Raspberry Pi 5, YOLOv8n on the Hailo NPU). Values are mean $\pm$ standard
+deviation. The three stage columns sum to the end-to-end column, the mean over the
+completed queries of their per-query total.}
+\label{tab:lat_fgemma}
+\small
+\begin{tabular}{cccccc}
+\toprule
+\textbf{Tools} & \textbf{Tokens in} & \textbf{Query$\rightarrow$tool [s]} & \textbf{Tool$\rightarrow$result [s]} & \textbf{Result$\rightarrow$reply [s]} & \textbf{E2E [s]} \\
+\midrule
+%(fgemma_rows)s
+\bottomrule
+\end{tabular}
+\end{table}
+
+A third configuration repeats the \texttt{functiongemma:270m} measurement with a
+shorter, fixed dispatch prompt (of the form "You are a model that can do function
+calling with the following functions") and KV-cache reuse across the ten queries of
+each pool. The KV cache is reset whenever the number of tools changes, so the tool
+descriptions are prefilled once per pool: the first query pays the full prefill and
+the following nine reuse the cache, re-prefilling only the short user message.
+Table~\ref{tab:lat_fgemma_kv} reports the same stage breakdown for this
+configuration, over the nine warm (cached) queries of each pool; the one-time cold
+first query of each pool is excluded here and reported in the TTFT comparison of
+Table~\ref{tab:ttft_cmp}.
+
+\begin{table}[H]
+\centering
+\caption{Leader latency of \texttt{functiongemma:270m} on the STM32 CPU with the
+short prompt and KV-cache reuse (cache reset when the tool count changes). This run
+dispatched to an in-place mock sensing agent, so tool$\rightarrow$result (about
+$0.59$~s) reflects the mock turnaround rather than a physical device. Values are
+mean $\pm$ standard deviation over the nine warm (cached) queries of each pool; the
+cold first query is excluded (see Table~\ref{tab:ttft_cmp}). The three stage columns
+sum to the end-to-end column.}
+\label{tab:lat_fgemma_kv}
+\small
+\begin{tabular}{cccccc}
+\toprule
+\textbf{Tools} & \textbf{Tokens in} & \textbf{Query$\rightarrow$tool [s]} & \textbf{Tool$\rightarrow$result [s]} & \textbf{Result$\rightarrow$reply [s]} & \textbf{E2E [s]} \\
+\midrule
+%(kv_break_rows)s
+\bottomrule
+\end{tabular}
+\end{table}
+
+Table~\ref{tab:ttft_cmp} collects the dispatch TTFT (the prompt prefill) of the
+three configurations: \texttt{Qwen3:1.7b} on the Hailo, \texttt{functiongemma:270m}
+with the full prompt and no reuse, and \texttt{functiongemma:270m} with the short
+prompt and KV reuse, the last split into the cold first-load of each pool and the
+warm cached queries. Table~\ref{tab:e2e} then compares the end-to-end latency of the
+three, using the steady-state (cached) value for the KV configuration.
+
+\begin{table}[H]
+\centering
+\caption{Dispatch TTFT [s] (prompt prefill, mean $\pm$ standard deviation) as the
+number of exposed tools grows, for the three configurations. For the short-prompt KV
+configuration the cold first-load of each pool and the warm cached queries are shown
+separately; the cold column has no deviation as it is a single query per pool.}
+\label{tab:ttft_cmp}
+\begin{tabular}{ccccc}
+\toprule
+\textbf{Tools} & \textbf{Qwen3, Hailo [s]} & \textbf{functiongemma, no KV [s]} & \textbf{functiongemma KV, cold [s]} & \textbf{functiongemma KV, warm [s]} \\
+\midrule
+%(ttft_cmp_rows)s
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{End-to-end reply latency [s] (mean $\pm$ standard deviation) binned by the
+number of exposed tools, for the three configurations. The KV-cache column reports
+the steady-state (cached) latency. $^{*}$ single completed query at this pool size,
+so no standard deviation is available.}
+\label{tab:e2e}
+\begin{tabular}{cccc}
+\toprule
+\textbf{Tools} & \textbf{Qwen3:1.7b, no KV [s]} & \textbf{functiongemma, no KV [s]} & \textbf{functiongemma, KV cache [s]} \\
+\midrule
+%(e2e_rows)s
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth]{ttft_vs_tokens.png}
+\caption{Time to first token (prefill time) against prompt length for the two
+leader backends. Filled circles are the tool-dispatch stage with the full prompt
+and no KV reuse; squares are the final-reply stage. On the STM32 panel, hollow
+triangles are the cold first-load dispatch prefill of the short-prompt KV
+configuration (one per pool, first query), and filled triangles are the same stage
+averaged only over the warm cached queries of each pool, with error bars for the
+standard deviation. The KV cache is reset at each change in the number of tools.
+Dashed lines are least-squares fits through the full-prompt dispatch points.}
+\label{fig:ttft}
+\end{figure}
+
+\subsection{Latency as the number of replies grows}
+\label{subsub:latency:replies}
+
+This experiment exposes a single tool and varies the number of sensing agents that
+return a result ($1$, $5$, $10$, $15$, $20$), so the leader aggregates a growing set
+of results into one reply; ten queries are issued at each setting. Three
+configurations are compared: \texttt{Qwen3:1.7b} on the Hailo, and
+\texttt{functiongemma:270m} on the STM32 CPU with and without KV-cache reuse of the
+fixed prompt prefix (labelled KV reuse and reset, the reply-axis analogues of the
+KV and no-KV tool-scaling configurations). As in the tool-scaling test, the
+end-to-end time is decomposed into stages measured per query and averaged. The
+sensing turnaround tool$\rightarrow$result is omitted here: the result set is
+assembled in-process (the harness builds the exact result the dispatcher would
+return, without the network hop, since the network latency is not the quantity under
+study), so tool$\rightarrow$result only times that in-process construction and is
+negligible (under $0.1$~ms), leaving query$\rightarrow$tool $+$
+result$\rightarrow$reply $=$ E2E. In all three configurations the dispatch stage
+(query$\rightarrow$tool) is essentially invariant (a single tool), whereas the
+answer-stage prompt lengthens with the number of aggregated results and drives the
+latency. Tables~\ref{tab:lat_replies}, \ref{tab:lat_replies_reset}
+and~\ref{tab:lat_replies_kvreuse} give the per-stage breakdown for
+\texttt{Qwen3:1.7b} on the Hailo, \texttt{functiongemma:270m} without KV reuse, and
+\texttt{functiongemma:270m} with KV reuse; for Qwen3 the answer prompt grows from
+$200$ to $553$ tokens and the end-to-end time from $8.64$~s to $11.09$~s.
+Table~\ref{tab:replies_cmp} compares the answer-stage TTFT of the three
+configurations, and Figure~\ref{fig:replies} plots it against the answer prompt
+length.
+
+\begin{table}[H]
+\centering
+\caption{Leader latency of \texttt{Qwen3:1.7b} on the Hailo as the number of
+aggregated replies grows (single tool). Values are mean $\pm$ standard deviation
+over ten queries. The two stage columns sum to E2E; tool$\rightarrow$result (the
+in-process build of the reply set, no network hop) is negligible ($<0.1$~ms) and
+omitted.}
+\label{tab:lat_replies}
+\small
+\begin{tabular}{cccccc}
+\toprule
+\textbf{Replies} & \textbf{Answer tokens in} & \textbf{Answer tokens out} & \textbf{Query$\rightarrow$tool [s]} & \textbf{Result$\rightarrow$reply [s]} & \textbf{E2E [s]} \\
+\midrule
+%(rep_rows)s
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Leader latency of \texttt{functiongemma:270m} on the STM32 CPU without KV
+reuse (\texttt{llm.reset()} before every generation, so each query is an independent
+cold prefill) as the number of aggregated replies grows (single tool). Values are
+mean $\pm$ standard deviation over ten queries; tool$\rightarrow$result is omitted as
+above, so query$\rightarrow$tool $+$ result$\rightarrow$reply $=$ E2E.}
+\label{tab:lat_replies_reset}
+\small
+\begin{tabular}{cccccc}
+\toprule
+\textbf{Replies} & \textbf{Answer tokens in} & \textbf{Answer tokens out} & \textbf{Query$\rightarrow$tool [s]} & \textbf{Result$\rightarrow$reply [s]} & \textbf{E2E [s]} \\
+\midrule
+%(rep_rows_reset)s
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Leader latency of \texttt{functiongemma:270m} on the STM32 CPU with
+KV-cache reuse (the cache is never reset across the run) as the number of aggregated
+replies grows (single tool). Values are mean $\pm$ standard deviation over ten
+queries; tool$\rightarrow$result is omitted as above. Only the run's first query, in
+the $1$-reply row, pays a cold prefill, which raises that row's
+query$\rightarrow$tool mean and spread; all later queries reuse the cache.}
+\label{tab:lat_replies_kvreuse}
+\small
+\begin{tabular}{cccccc}
+\toprule
+\textbf{Replies} & \textbf{Answer tokens in} & \textbf{Answer tokens out} & \textbf{Query$\rightarrow$tool [s]} & \textbf{Result$\rightarrow$reply [s]} & \textbf{E2E [s]} \\
+\midrule
+%(rep_rows_kvreuse)s
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Answer-stage TTFT [s] (mean $\pm$ standard deviation) as the number of
+aggregated replies grows, for the three configurations. functiongemma is measured
+without KV reuse (reset) and with KV reuse of the fixed prompt prefix.}
+\label{tab:replies_cmp}
+\begin{tabular}{cccc}
+\toprule
+\textbf{Replies} & \textbf{Qwen3:1.7b, Hailo [s]} & \textbf{functiongemma, reset [s]} & \textbf{functiongemma, KV reuse [s]} \\
+\midrule
+%(rep_cmp_rows)s
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth]{latency_vs_replies.png}
+\caption{Answer-stage TTFT (final-reply prefill) against the answer prompt length
+for a single tool and a growing number of aggregated replies. Left: functiongemma
+on the STM32 CPU, without KV reuse (reset, circles) and with KV reuse (triangles).
+Right: Qwen3:1.7b on the Hailo. The number of aggregated replies is annotated on
+each point; dashed lines are least-squares fits. On the STM32 the two lines are
+nearly parallel: KV reuse lowers the intercept by a fixed amount but leaves the
+per-token slope unchanged.}
+\label{fig:replies}
+\end{figure}
+
+\subsection{Discussion}
+\label{subsec:latency_discussion}
+
+The agent-scaling measurements confirm that the network overhead is not impactful in
+the test performed: up to $100$ simulated agents the leader's traffic stays at a few
+hundred KiB per minute (Table~\ref{tab:net_load}) and the power near $4.3$~W
+(Table~\ref{tab:power_agents}). The end-to-end latency is instead governed by
+prefill. In the
+tool-scaling experiment almost all of the end-to-end growth is concentrated in the
+dispatch stage: the query$\rightarrow$tool time inflates with the tool count while
+tool$\rightarrow$result and result$\rightarrow$reply stay flat
+(Tables~\ref{tab:lat_qwen} and~\ref{tab:lat_fgemma}), and Figure~\ref{fig:ttft} shows
+that its prefill (the dispatch TTFT) rises linearly with the prompt length on both
+devices, at about $92$~ms per token on the STM32 CPU against only $6.3$~ms per token
+on the Hailo, a factor of roughly $14$. The same law governs the answer stage on the reply axis, where the
+answer TTFT grows at about $90$~ms per token on the STM32 and $5.6$~ms per token on
+the Hailo (Figure~\ref{fig:replies}), matching the dispatch rates. The accelerator
+is therefore the single most important factor in meeting the latency target.
+
+The two scaling axes load different stages and are essentially independent. Adding
+tools lengthens only the dispatch prompt: the query$\rightarrow$tool stage grows
+while the result$\rightarrow$reply stage stays flat around $4.8$~s
+(Table~\ref{tab:lat_qwen}). Adding replies lengthens only the answer prompt: the
+query$\rightarrow$tool stage stays constant while result$\rightarrow$reply grows
+(Table~\ref{tab:lat_replies}). Because the dispatch cost depends on the
+number of tools and not on how many agents expose them, a network of $24$ agents
+each exposing one tool and a single agent exposing $24$ tools impose the same
+dispatch load, on top of which the reply-aggregation cost adds. The two costs are
+additive, which makes the leader latency predictable from the tool count and the
+expected number of responders.
+
+Under these conditions \texttt{Qwen3:1.7b} on the Hailo satisfies the $20$~s
+responsiveness requirement across the whole range tested: at most $17.19$~s with
+$24$ tools (Table~\ref{tab:lat_qwen}) and at most $11.09$~s with $20$ aggregated
+replies (Table~\ref{tab:lat_replies}). \texttt{functiongemma:270m} on the STM32 CPU
+does not, on either axis: with the full prompt it needs $26.79$~s already with a
+single tool and reaches $86.96$~s with $24$ (Table~\ref{tab:lat_fgemma}), and on the
+reply axis its answer TTFT alone reaches $44.78$~s at $20$ replies
+(Table~\ref{tab:replies_cmp}). On a microprocessor-class leader the number of
+exposed tools and the number of responders are therefore first-class design
+parameters.
+
+The KV cache helps less than it first appears, and the reply-scaling experiment
+shows why. With a shorter, fixed prompt, KV reuse removes almost the entire
+tool-description prefill for repeated queries, collapsing the dispatch TTFT from tens
+of seconds to about $1$~s (Table~\ref{tab:ttft_cmp}) and bringing functiongemma back under
+budget in steady state on the tool axis (Table~\ref{tab:e2e}). However, this saving
+is a fixed offset, not a per-token reduction. On the reply axis the two
+functiongemma answer-TTFT curves, with and without reuse, are nearly parallel (about
+$90$~ms per token in both cases, Figure~\ref{fig:replies}): reuse only caches the
+fixed prompt prefix, lowering the intercept by roughly $10$~s, while the aggregated
+results, which differ on every query, must still be prefilled. The absolute saving
+therefore stays roughly constant as the answer prompt grows, so its relative benefit
+shrinks from about $80\%%$ at one reply ($2.46$ against $12.65$~s) to about $26\%%$ at
+twenty ($33.28$ against $44.78$~s, Table~\ref{tab:replies_cmp}). Two further limits
+apply on the tool axis: the cold first query of every context still pays the full
+prefill, from $7.03$~s to $67.03$~s (Table~\ref{tab:ttft_cmp}), reset whenever the tool set
+changes, and the prompt swap between the dispatch and reply stages discards the
+dispatch cache before the answer is generated. KV reuse thus removes a fixed part of
+the prefill but not its growth with either tools or replies.
+
+Finally, on the reply axis the end-to-end variance is driven by the generated reply
+length rather than the input. The answer TTFT is highly reproducible (standard
+deviation below $2$~ms), but the result-to-reply and end-to-end times vary by
+$1$ to $2$~s (Table~\ref{tab:lat_replies}) because the number of generated tokens
+fluctuates: the five-reply case produced the longest replies ($21.6$ output tokens
+on average) and the largest spread. Once the prefill cost is bounded, controlling the
+output length is the main lever for tightening tail latency.
+
+\end{document}
+""" % {
+    "boot_rows": boot_rows,
+    "qwen_rows": qwen_rows,
+    "fgemma_rows": fgemma_rows,
+    "kv_break_rows": kv_break_rows,
+    "ttft_cmp_rows": ttft_cmp_rows,
+    "e2e_rows": e2e_rows,
+    "rep_rows": rep_rows,
+    "rep_rows_reset": rep_rows_reset,
+    "rep_rows_kvreuse": rep_rows_kvreuse,
+    "rep_cmp_rows": rep_cmp_rows,
+    "f_min": s(b_f["min"]), "f_max": s(b_f["max"]),
+    "q_min": s(b_q["min"]), "q_max": s(b_q["max"]),
+}
+
+with open(OUT, "w", encoding="utf-8") as fh:
+    fh.write(DOC)
+
+print("Wrote", os.path.relpath(OUT, HERE))

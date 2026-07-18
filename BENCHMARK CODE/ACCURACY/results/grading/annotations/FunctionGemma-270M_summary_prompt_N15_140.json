@@ -1,0 +1,90 @@
+{
+  "row_id": "FunctionGemma-270M|summary_prompt|N15|140",
+  "config": "FunctionGemma-270M",
+  "prompt": "summary_prompt",
+  "user_query": "What is that noise?",
+  "tool_call": {
+    "name": "classify_sound",
+    "arguments": {}
+  },
+  "function_reply": [
+    {
+      "from": "mic_kitchen",
+      "sound": "knock",
+      "confidence": 0.85
+    },
+    {
+      "from": "mic_office",
+      "sound": "speech",
+      "confidence": 0.87
+    },
+    {
+      "from": "mic_rooftop",
+      "sound": "baby crying",
+      "confidence": 0.53
+    },
+    {
+      "from": "mic_bedroom",
+      "sound": "unknown sound",
+      "confidence": 0.73
+    },
+    {
+      "from": "mic_playroom",
+      "sound": "clapping",
+      "confidence": 0.57
+    },
+    {
+      "from": "mic_porch",
+      "sound": "alarm",
+      "confidence": 0.65
+    },
+    {
+      "from": "mic_backyard",
+      "sound": null,
+      "message": "Mic offline"
+    },
+    {
+      "from": "mic_mudroom",
+      "sound": null,
+      "message": "Mic offline"
+    },
+    {
+      "from": "mic_hallway",
+      "sound": "wind",
+      "confidence": 0.6
+    },
+    {
+      "from": "mic_basement",
+      "sound": "dog barking",
+      "confidence": 0.96
+    },
+    {
+      "from": "mic_attic",
+      "sound": "ringing phone",
+      "confidence": 0.62
+    },
+    {
+      "from": "mic_lobby",
+      "sound": "footsteps",
+      "confidence": 0.92
+    },
+    {
+      "from": "mic_frontdoor",
+      "sound": "ringing phone",
+      "confidence": 0.59
+    },
+    {
+      "from": "mic_foyer",
+      "sound": "footsteps",
+      "confidence": 0.58
+    },
+    {
+      "from": "mic_bathroom",
+      "sound": "engine",
+      "confidence": 0.73
+    }
+  ],
+  "model_final_reply": "The noise is categorized as **Mic offline**.\n\nHere are the details:\n*   **Sound:** Knock\n*   **From:** mic_kitchen\n*   **Confidence:** 0.85\n*   **Other Sounds:** speech, baby crying, unknown sound, clapping, alarm, footsteps, engine, ringing phone, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, footsteps, engine, footsteps, shaking, engine, grounding,ringing phone, foot",
+  "judge_raw_answer": "{\"intention\": \"The user wants to know what the most likely sound or noise is based on the provided context of various sounds and their associated probabilities.\"}",
+  "grade": 1
+}

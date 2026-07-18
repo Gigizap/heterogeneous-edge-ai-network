@@ -1,0 +1,5 @@
+*.gguf
+
+# Python bytecode caches (build artifacts, regenerated from source)
+__pycache__/
+*.py[cod]

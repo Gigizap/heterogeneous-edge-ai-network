@@ -1,0 +1,33 @@
+{
+  "skills": [
+    {
+      "file": "benchmark_functions",
+      "function": "use_benchmark",
+      "command": "use_benchmark"
+    },
+    {
+      "file": "benchmark_functions",
+      "function": "camera_status",
+      "command": "camera_status"
+    }
+  ],
+
+  "tool_defs": [
+    {
+      "type": "function",
+      "function": {
+        "name": "use_benchmark",
+        "description": "This tool runs the benchmark and returns a reply when called.",
+        "parameters": { "type": "object", "properties": {}, "required": [] }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "camera_status",
+        "description": "This tool gets the camera status and returns the status when called.",
+        "parameters": { "type": "object", "properties": {}, "required": [] }
+      }
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+\begin{table}[H]
+\centering
+\caption{Part~C: answer-generation quality and cost vs number of function replies $N$. Grade is the LLM-judge score (1--10); tokens are mean generated tokens per question.}
+\label{tab:partC}
+\begin{tabular}{llrrr}
+\toprule
+Configuration & $N$ & Median & Mean$\pm$Std & Tok \\
+\midrule
+FunctionGemma-270M & 1 & 9.0 & 7.65$\pm$2.70 & 27.9 \\
+ & 5 & 6.0 & 5.55$\pm$2.41 & 119.6 \\
+ & 10 & 4.0 & 4.69$\pm$2.35 & 194.1 \\
+ & 15 & 4.0 & 4.04$\pm$2.28 & 334.1 \\
+ & 20 & 4.0 & 3.81$\pm$2.23 & 242.7 \\
+\midrule
+Qwen3-1.7B-nothink & 1 & 9.0 & 8.94$\pm$1.33 & 39.6 \\
+ & 5 & 9.0 & 8.45$\pm$1.22 & 112.1 \\
+ & 10 & 9.0 & 8.13$\pm$1.38 & 161.8 \\
+ & 15 & 9.0 & 7.91$\pm$1.59 & 203.1 \\
+ & 20 & 9.0 & 7.84$\pm$1.52 & 243.2 \\
+\midrule
+Qwen3-1.7B-think & 1 & 9.0 & 9.07$\pm$1.08 & 157.9 \\
+ & 5 & 9.0 & 8.62$\pm$0.99 & 296.9 \\
+ & 10 & 9.0 & 8.36$\pm$1.18 & 367.4 \\
+ & 15 & 9.0 & 8.27$\pm$1.18 & 406.1 \\
+ & 20 & 9.0 & 8.15$\pm$1.25 & 421.7 \\
+\bottomrule
+\end{tabular}
+\end{table}

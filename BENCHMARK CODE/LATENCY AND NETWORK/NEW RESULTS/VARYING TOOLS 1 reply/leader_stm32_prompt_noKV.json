@@ -1,0 +1,2593 @@
+{
+  "role": "leader",
+  "device": "stm32",
+  "leader_preset": "functiongemma_cpu",
+  "correct_tool": "detect_people",
+  "tool_counts": [
+    1,
+    6,
+    12,
+    18,
+    24
+  ],
+  "queries": [
+    "can you use the detect person tool",
+    "is there a person in front of the camera",
+    "how many people are there",
+    "do you see anyone",
+    "check if someone is in the room",
+    "are there any people visible",
+    "detect the people in the frame",
+    "is anybody there right now",
+    "tell me how many persons you can see",
+    "look for a person with the camera"
+  ],
+  "time_to_boot": {
+    "unit": "ms",
+    "samples": [
+      9570.64,
+      3920.95,
+      3896.13,
+      3910.05,
+      3911.19,
+      3909.2,
+      3905.29,
+      3902.05,
+      3898.98,
+      3888.22
+    ],
+    "count": 10,
+    "mean": 4471.27,
+    "std": 1699.81,
+    "min": 3888.22,
+    "max": 9570.64
+  },
+  "prompt_specs": [
+    {
+      "n_tools": 1,
+      "tools": [
+        {
+          "type": "function",
+          "function": {
+            "name": "detect_people",
+            "description": "Detects the people that are currently visible. Use this when the user says 'do you see a person?', 'how many people?', or 'is there anyone?'.",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        }
+      ],
+      "dispatch_prompt": "<start_of_turn>developer\nYou are a smart-home agent dispatcher. You are a model that can do function calling with the following functions<start_function_declaration>declaration:detect_people{description:<escape>Detects the people that are currently visible. Use this when the user says 'do you see a person?', 'how many people?', or 'is there anyone?'.<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><end_of_turn>\n<start_of_turn>user\ncan you use the detect person tool<end_of_turn>\n<start_of_turn>model\n",
+      "answer_prompt": "<start_of_turn>developer\nYou are a smart home assistant. Turn the data into a short, friendly reply to the user. Reply in English. Summarize the reply, MENTION ALL THE IMPORTANT DATA RECEIVED FROM THE TOOL AND THE AVAILABLE SENSORS WHEN REPLYING.<start_function_declaration>declaration:detect_people{description:<escape>Detects the people that are currently visible. Use this when the user says 'do you see a person?', 'how many people?', or 'is there anyone?'.<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><end_of_turn>\n<start_of_turn>user\ncan you use the detect person tool<end_of_turn>\n<start_of_turn>model\n<start_function_call>call:detect_people{}<end_function_call><start_function_response>response:detect_people{value:[{from:<escape>raspberry-sensing-bench<escape>,text:<escape>raspberry detection says: no people detected<escape>}]}<end_function_response>"
+    },
+    {
+      "n_tools": 6,
+      "tools": [
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_1",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_2",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_3",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_4",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_5",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "detect_people",
+            "description": "Detects the people that are currently visible. Use this when the user says 'do you see a person?', 'how many people?', or 'is there anyone?'.",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        }
+      ],
+      "dispatch_prompt": "<start_of_turn>developer\nYou are a smart-home agent dispatcher. You are a model that can do function calling with the following functions<start_function_declaration>declaration:wrong_tool_1{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_2{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_3{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_4{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_5{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:detect_people{description:<escape>Detects the people that are currently visible. Use this when the user says 'do you see a person?', 'how many people?', or 'is there anyone?'.<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><end_of_turn>\n<start_of_turn>user\ncan you use the detect person tool<end_of_turn>\n<start_of_turn>model\n",
+      "answer_prompt": "<start_of_turn>developer\nYou are a smart home assistant. Turn the data into a short, friendly reply to the user. Reply in English. Summarize the reply, MENTION ALL THE IMPORTANT DATA RECEIVED FROM THE TOOL AND THE AVAILABLE SENSORS WHEN REPLYING.<start_function_declaration>declaration:detect_people{description:<escape>Detects the people that are currently visible. Use this when the user says 'do you see a person?', 'how many people?', or 'is there anyone?'.<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><end_of_turn>\n<start_of_turn>user\ncan you use the detect person tool<end_of_turn>\n<start_of_turn>model\n<start_function_call>call:detect_people{}<end_function_call><start_function_response>response:detect_people{value:[{from:<escape>raspberry-sensing-bench<escape>,text:<escape>raspberry detection says: no people detected<escape>}]}<end_function_response>"
+    },
+    {
+      "n_tools": 12,
+      "tools": [
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_1",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_2",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_3",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_4",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_5",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_6",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_7",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_8",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_9",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_10",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_11",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "detect_people",
+            "description": "Detects the people that are currently visible. Use this when the user says 'do you see a person?', 'how many people?', or 'is there anyone?'.",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        }
+      ],
+      "dispatch_prompt": "<start_of_turn>developer\nYou are a smart-home agent dispatcher. You are a model that can do function calling with the following functions<start_function_declaration>declaration:wrong_tool_1{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_2{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_3{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_4{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_5{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_6{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_7{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_8{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_9{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_10{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_11{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:detect_people{description:<escape>Detects the people that are currently visible. Use this when the user says 'do you see a person?', 'how many people?', or 'is there anyone?'.<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><end_of_turn>\n<start_of_turn>user\ncan you use the detect person tool<end_of_turn>\n<start_of_turn>model\n",
+      "answer_prompt": "<start_of_turn>developer\nYou are a smart home assistant. Turn the data into a short, friendly reply to the user. Reply in English. Summarize the reply, MENTION ALL THE IMPORTANT DATA RECEIVED FROM THE TOOL AND THE AVAILABLE SENSORS WHEN REPLYING.<start_function_declaration>declaration:detect_people{description:<escape>Detects the people that are currently visible. Use this when the user says 'do you see a person?', 'how many people?', or 'is there anyone?'.<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><end_of_turn>\n<start_of_turn>user\ncan you use the detect person tool<end_of_turn>\n<start_of_turn>model\n<start_function_call>call:detect_people{}<end_function_call><start_function_response>response:detect_people{value:[{from:<escape>raspberry-sensing-bench<escape>,text:<escape>raspberry detection says: no people detected<escape>}]}<end_function_response>"
+    },
+    {
+      "n_tools": 18,
+      "tools": [
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_14",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_1",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_2",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_3",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_4",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_5",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_6",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_7",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_8",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_9",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_10",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_11",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_12",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_13",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_15",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_17",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "detect_people",
+            "description": "Detects the people that are currently visible. Use this when the user says 'do you see a person?', 'how many people?', or 'is there anyone?'.",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_16",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        }
+      ],
+      "dispatch_prompt": "<start_of_turn>developer\nYou are a smart-home agent dispatcher. You are a model that can do function calling with the following functions<start_function_declaration>declaration:wrong_tool_14{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_1{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_2{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_3{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_4{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_5{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_6{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_7{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_8{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_9{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_10{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_11{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_12{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_13{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_15{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_17{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:detect_people{description:<escape>Detects the people that are currently visible. Use this when the user says 'do you see a person?', 'how many people?', or 'is there anyone?'.<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_16{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><end_of_turn>\n<start_of_turn>user\ncan you use the detect person tool<end_of_turn>\n<start_of_turn>model\n",
+      "answer_prompt": "<start_of_turn>developer\nYou are a smart home assistant. Turn the data into a short, friendly reply to the user. Reply in English. Summarize the reply, MENTION ALL THE IMPORTANT DATA RECEIVED FROM THE TOOL AND THE AVAILABLE SENSORS WHEN REPLYING.<start_function_declaration>declaration:detect_people{description:<escape>Detects the people that are currently visible. Use this when the user says 'do you see a person?', 'how many people?', or 'is there anyone?'.<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><end_of_turn>\n<start_of_turn>user\ncan you use the detect person tool<end_of_turn>\n<start_of_turn>model\n<start_function_call>call:detect_people{}<end_function_call><start_function_response>response:detect_people{value:[{from:<escape>raspberry-sensing-bench<escape>,text:<escape>raspberry detection says: no people detected<escape>}]}<end_function_response>"
+    },
+    {
+      "n_tools": 24,
+      "tools": [
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_1",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_2",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_3",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_4",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_5",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_6",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_7",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_8",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_9",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_14",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_15",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_16",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_17",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_10",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_11",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_12",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_13",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_18",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_19",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_21",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_20",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_23",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_22",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "detect_people",
+            "description": "Detects the people that are currently visible. Use this when the user says 'do you see a person?', 'how many people?', or 'is there anyone?'.",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        }
+      ],
+      "dispatch_prompt": "<start_of_turn>developer\nYou are a smart-home agent dispatcher. You are a model that can do function calling with the following functions<start_function_declaration>declaration:wrong_tool_1{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_2{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_3{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_4{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_5{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_6{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_7{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_8{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_9{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_14{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_15{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_16{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_17{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_10{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_11{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_12{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_13{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_18{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_19{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_21{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_20{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_23{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:wrong_tool_22{description:<escape>do not call this tool<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><start_function_declaration>declaration:detect_people{description:<escape>Detects the people that are currently visible. Use this when the user says 'do you see a person?', 'how many people?', or 'is there anyone?'.<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><end_of_turn>\n<start_of_turn>user\ncan you use the detect person tool<end_of_turn>\n<start_of_turn>model\n",
+      "answer_prompt": "<start_of_turn>developer\nYou are a smart home assistant. Turn the data into a short, friendly reply to the user. Reply in English. Summarize the reply, MENTION ALL THE IMPORTANT DATA RECEIVED FROM THE TOOL AND THE AVAILABLE SENSORS WHEN REPLYING.<start_function_declaration>declaration:detect_people{description:<escape>Detects the people that are currently visible. Use this when the user says 'do you see a person?', 'how many people?', or 'is there anyone?'.<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><end_of_turn>\n<start_of_turn>user\ncan you use the detect person tool<end_of_turn>\n<start_of_turn>model\n<start_function_call>call:detect_people{}<end_function_call><start_function_response>response:detect_people{value:[{from:<escape>raspberry-sensing-bench<escape>,text:<escape>raspberry detection says: no people detected<escape>}]}<end_function_response>"
+    }
+  ],
+  "samples": [
+    {
+      "n_tools": 1,
+      "query_idx": 0,
+      "query": "can you use the detect person tool",
+      "tool_called": "detect_people",
+      "tool_result": "raspberry detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "raspberry-sensing-bench",
+          "text": "raspberry detection says: no people detected"
+        }
+      ],
+      "final_reply": "I have detected the people that are currently visible. The value returned is: raspberry detection says: no people detected.",
+      "query_to_tool_ms": 9198.82,
+      "dispatch_ttft_ms": 7751.07,
+      "dispatch_tokens_in": 98,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.17,
+      "tool_to_result_ms": 47.96,
+      "result_to_reply_ms": 17754.2,
+      "answer_ttft_ms": 12992.04,
+      "answer_tokens_in": 166,
+      "answer_tokens_out": 23,
+      "answer_tps": 4.63,
+      "end_to_end_ms": 27000.98,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 1,
+      "query_idx": 1,
+      "query": "is there a person in front of the camera",
+      "tool_called": "detect_people",
+      "tool_result": "raspberry detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "raspberry-sensing-bench",
+          "text": "raspberry detection says: no people detected"
+        }
+      ],
+      "final_reply": "Yes, there is a person in front of the camera. The text from Raspberry Sensing Bench indicates that \"raspberry detection says: no people detected.\"",
+      "query_to_tool_ms": 9312.13,
+      "dispatch_ttft_ms": 7873.54,
+      "dispatch_tokens_in": 100,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.19,
+      "tool_to_result_ms": 50.8,
+      "result_to_reply_ms": 19284.43,
+      "answer_ttft_ms": 13252.26,
+      "answer_tokens_in": 168,
+      "answer_tokens_out": 29,
+      "answer_tps": 4.65,
+      "end_to_end_ms": 28647.36,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 1,
+      "query_idx": 2,
+      "query": "how many people are there",
+      "tool_called": "detect_people",
+      "tool_result": "raspberry detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "raspberry-sensing-bench",
+          "text": "raspberry detection says: no people detected"
+        }
+      ],
+      "final_reply": "There are no people detected. The tool reported that no people were detected.",
+      "query_to_tool_ms": 9000.94,
+      "dispatch_ttft_ms": 7563.14,
+      "dispatch_tokens_in": 96,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.19,
+      "tool_to_result_ms": 49.03,
+      "result_to_reply_ms": 15983.79,
+      "answer_ttft_ms": 12874.6,
+      "answer_tokens_in": 164,
+      "answer_tokens_out": 15,
+      "answer_tps": 4.52,
+      "end_to_end_ms": 25033.76,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 1,
+      "query_idx": 3,
+      "query": "do you see anyone",
+      "tool_called": "detect_people",
+      "tool_result": "raspberry detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "raspberry-sensing-bench",
+          "text": "raspberry detection says: no people detected"
+        }
+      ],
+      "final_reply": "I see no people. The detection tool reported that no people were detected.",
+      "query_to_tool_ms": 8951.39,
+      "dispatch_ttft_ms": 7502.09,
+      "dispatch_tokens_in": 95,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.16,
+      "tool_to_result_ms": 47.03,
+      "result_to_reply_ms": 15914.9,
+      "answer_ttft_ms": 12776.82,
+      "answer_tokens_in": 163,
+      "answer_tokens_out": 15,
+      "answer_tps": 4.48,
+      "end_to_end_ms": 24913.32,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 1,
+      "query_idx": 4,
+      "query": "check if someone is in the room",
+      "tool_called": "detect_people",
+      "tool_result": "raspberry detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "raspberry-sensing-bench",
+          "text": "raspberry detection says: no people detected"
+        }
+      ],
+      "final_reply": "Yes, I have detected that person is currently visible. The text from the device is: \"raspberry detection says: no people detected.\"",
+      "query_to_tool_ms": 9199.23,
+      "dispatch_ttft_ms": 7752.79,
+      "dispatch_tokens_in": 98,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.17,
+      "tool_to_result_ms": 46.6,
+      "result_to_reply_ms": 18624.93,
+      "answer_ttft_ms": 13001.07,
+      "answer_tokens_in": 166,
+      "answer_tokens_out": 27,
+      "answer_tps": 4.63,
+      "end_to_end_ms": 27870.76,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 1,
+      "query_idx": 5,
+      "query": "are there any people visible",
+      "tool_called": "detect_people",
+      "tool_result": "raspberry detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "raspberry-sensing-bench",
+          "text": "raspberry detection says: no people detected"
+        }
+      ],
+      "final_reply": "Yes, there are currently visible people: raspberry\\_sensing\\_bench.",
+      "query_to_tool_ms": 9009.01,
+      "dispatch_ttft_ms": 7557.19,
+      "dispatch_tokens_in": 96,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.15,
+      "tool_to_result_ms": 49.86,
+      "result_to_reply_ms": 15764.68,
+      "answer_ttft_ms": 12844.57,
+      "answer_tokens_in": 164,
+      "answer_tokens_out": 14,
+      "answer_tps": 4.47,
+      "end_to_end_ms": 24823.55,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 1,
+      "query_idx": 6,
+      "query": "detect the people in the frame",
+      "tool_called": "detect_people",
+      "tool_result": "raspberry detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "raspberry-sensing-bench",
+          "text": "raspberry detection says: no people detected"
+        }
+      ],
+      "final_reply": "I detect the people in the frame. The text returned is: \"raspberry detection says: no people detected.\"",
+      "query_to_tool_ms": 9101.75,
+      "dispatch_ttft_ms": 7656.65,
+      "dispatch_tokens_in": 97,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.17,
+      "tool_to_result_ms": 43.41,
+      "result_to_reply_ms": 17527.24,
+      "answer_ttft_ms": 12949.58,
+      "answer_tokens_in": 165,
+      "answer_tokens_out": 22,
+      "answer_tps": 4.6,
+      "end_to_end_ms": 26672.4,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 1,
+      "query_idx": 7,
+      "query": "is anybody there right now",
+      "tool_called": "detect_people",
+      "tool_result": "raspberry detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "raspberry-sensing-bench",
+          "text": "raspberry detection says: no people detected"
+        }
+      ],
+      "final_reply": "Yes, I've detected that person is right now. The text from Raspberry Sensing is: \"raspberry detection says: no people detected.\"",
+      "query_to_tool_ms": 9020.64,
+      "dispatch_ttft_ms": 7564.93,
+      "dispatch_tokens_in": 96,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.14,
+      "tool_to_result_ms": 49.25,
+      "result_to_reply_ms": 18670.99,
+      "answer_ttft_ms": 12846.83,
+      "answer_tokens_in": 164,
+      "answer_tokens_out": 28,
+      "answer_tps": 4.64,
+      "end_to_end_ms": 27740.88,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 1,
+      "query_idx": 8,
+      "query": "tell me how many persons you can see",
+      "tool_called": "detect_people",
+      "tool_result": "raspberry detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "raspberry-sensing-bench",
+          "text": "raspberry detection says: no people detected"
+        }
+      ],
+      "final_reply": "I detect the people that are currently visible. The value I received is: raspberry detection says: no people detected.",
+      "query_to_tool_ms": 9260.92,
+      "dispatch_ttft_ms": 7804.96,
+      "dispatch_tokens_in": 99,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.14,
+      "tool_to_result_ms": 41.92,
+      "result_to_reply_ms": 17880.61,
+      "answer_ttft_ms": 13102.16,
+      "answer_tokens_in": 167,
+      "answer_tokens_out": 23,
+      "answer_tps": 4.62,
+      "end_to_end_ms": 27183.45,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 1,
+      "query_idx": 9,
+      "query": "look for a person with the camera",
+      "tool_called": "detect_people",
+      "tool_result": "raspberry detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "raspberry-sensing-bench",
+          "text": "raspberry detection says: no people detected"
+        }
+      ],
+      "final_reply": "I found a person with the camera. The text from the system indicates that no people were detected: raspberry detection says: no people detected.",
+      "query_to_tool_ms": 9152.56,
+      "dispatch_ttft_ms": 7717.0,
+      "dispatch_tokens_in": 98,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.2,
+      "tool_to_result_ms": 46.96,
+      "result_to_reply_ms": 18806.95,
+      "answer_ttft_ms": 12983.43,
+      "answer_tokens_in": 166,
+      "answer_tokens_out": 28,
+      "answer_tps": 4.65,
+      "end_to_end_ms": 28006.47,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 6,
+      "query_idx": 0,
+      "query": "can you use the detect person tool",
+      "tool_called": "detect_people",
+      "tool_result": "raspberry detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "raspberry-sensing-bench",
+          "text": "raspberry detection says: no people detected"
+        }
+      ],
+      "final_reply": "I have detected the people that are currently visible. The value returned is: raspberry detection says: no people detected.",
+      "query_to_tool_ms": 20075.23,
+      "dispatch_ttft_ms": 18614.34,
+      "dispatch_tokens_in": 238,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.16,
+      "tool_to_result_ms": 44.35,
+      "result_to_reply_ms": 17803.77,
+      "answer_ttft_ms": 13031.98,
+      "answer_tokens_in": 166,
+      "answer_tokens_out": 23,
+      "answer_tps": 4.62,
+      "end_to_end_ms": 37923.35,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 6,
+      "query_idx": 1,
+      "query": "is there a person in front of the camera",
+      "tool_called": "detect_people",
+      "tool_result": "raspberry detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "raspberry-sensing-bench",
+          "text": "raspberry detection says: no people detected"
+        }
+      ],
+      "final_reply": "Yes, there is a person in front of the camera. The text from Raspberry Sensing Bench indicates that \"raspberry detection says: no people detected.\"",
+      "query_to_tool_ms": 20210.38,
+      "dispatch_ttft_ms": 18755.01,
+      "dispatch_tokens_in": 240,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.17,
+      "tool_to_result_ms": 48.83,
+      "result_to_reply_ms": 19204.24,
+      "answer_ttft_ms": 13152.67,
+      "answer_tokens_in": 168,
+      "answer_tokens_out": 29,
+      "answer_tps": 4.64,
+      "end_to_end_ms": 39463.45,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 6,
+      "query_idx": 2,
+      "query": "how many people are there",
+      "tool_called": "detect_people",
+      "tool_result": "raspberry detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "raspberry-sensing-bench",
+          "text": "raspberry detection says: no people detected"
+        }
+      ],
+      "final_reply": "There are no people detected. The tool reported that no people were detected.",
+      "query_to_tool_ms": 19979.69,
+      "dispatch_ttft_ms": 18510.69,
+      "dispatch_tokens_in": 236,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.13,
+      "tool_to_result_ms": 48.6,
+      "result_to_reply_ms": 15960.38,
+      "answer_ttft_ms": 12841.53,
+      "answer_tokens_in": 164,
+      "answer_tokens_out": 15,
+      "answer_tps": 4.5,
+      "end_to_end_ms": 35988.67,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 6,
+      "query_idx": 3,
+      "query": "do you see anyone",
+      "tool_called": "detect_people",
+      "tool_result": "raspberry detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "raspberry-sensing-bench",
+          "text": "raspberry detection says: no people detected"
+        }
+      ],
+      "final_reply": "I see no people. The detection tool reported that no people were detected.",
+      "query_to_tool_ms": 19826.59,
+      "dispatch_ttft_ms": 18357.82,
+      "dispatch_tokens_in": 235,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.13,
+      "tool_to_result_ms": 46.51,
+      "result_to_reply_ms": 15922.16,
+      "answer_ttft_ms": 12800.14,
+      "answer_tokens_in": 163,
+      "answer_tokens_out": 15,
+      "answer_tps": 4.5,
+      "end_to_end_ms": 35795.26,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 6,
+      "query_idx": 4,
+      "query": "check if someone is in the room",
+      "tool_called": "detect_people",
+      "tool_result": "raspberry detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "raspberry-sensing-bench",
+          "text": "raspberry detection says: no people detected"
+        }
+      ],
+      "final_reply": "Yes, I have detected that person is currently visible. The text from the device is: \"raspberry detection says: no people detected.\"",
+      "query_to_tool_ms": 20055.73,
+      "dispatch_ttft_ms": 18588.36,
+      "dispatch_tokens_in": 238,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.14,
+      "tool_to_result_ms": 52.33,
+      "result_to_reply_ms": 18589.24,
+      "answer_ttft_ms": 12985.64,
+      "answer_tokens_in": 166,
+      "answer_tokens_out": 27,
+      "answer_tps": 4.65,
+      "end_to_end_ms": 38697.3,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 6,
+      "query_idx": 5,
+      "query": "are there any people visible",
+      "tool_called": "detect_people",
+      "tool_result": "raspberry detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "raspberry-sensing-bench",
+          "text": "raspberry detection says: no people detected"
+        }
+      ],
+      "final_reply": "Yes, there are currently visible people: raspberry\\_sensing\\_bench.",
+      "query_to_tool_ms": 19951.42,
+      "dispatch_ttft_ms": 18495.35,
+      "dispatch_tokens_in": 236,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.17,
+      "tool_to_result_ms": 65.03,
+      "result_to_reply_ms": 15766.87,
+      "answer_ttft_ms": 12857.24,
+      "answer_tokens_in": 164,
+      "answer_tokens_out": 14,
+      "answer_tps": 4.49,
+      "end_to_end_ms": 35783.32,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 6,
+      "query_idx": 6,
+      "query": "detect the people in the frame",
+      "tool_called": "detect_people",
+      "tool_result": "raspberry detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "raspberry-sensing-bench",
+          "text": "raspberry detection says: no people detected"
+        }
+      ],
+      "final_reply": "I detect the people in the frame. The text returned is: \"raspberry detection says: no people detected.\"",
+      "query_to_tool_ms": 19984.44,
+      "dispatch_ttft_ms": 18525.4,
+      "dispatch_tokens_in": 237,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.16,
+      "tool_to_result_ms": 48.31,
+      "result_to_reply_ms": 17572.75,
+      "answer_ttft_ms": 12930.58,
+      "answer_tokens_in": 165,
+      "answer_tokens_out": 22,
+      "answer_tps": 4.54,
+      "end_to_end_ms": 37605.5,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 6,
+      "query_idx": 7,
+      "query": "is anybody there right now",
+      "tool_called": "detect_people",
+      "tool_result": "raspberry detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "raspberry-sensing-bench",
+          "text": "raspberry detection says: no people detected"
+        }
+      ],
+      "final_reply": "Yes, I've detected that person is right now. The text from Raspberry Sensing is: \"raspberry detection says: no people detected.\"",
+      "query_to_tool_ms": 19902.82,
+      "dispatch_ttft_ms": 18436.37,
+      "dispatch_tokens_in": 236,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.14,
+      "tool_to_result_ms": 51.47,
+      "result_to_reply_ms": 18667.94,
+      "answer_ttft_ms": 12837.82,
+      "answer_tokens_in": 164,
+      "answer_tokens_out": 28,
+      "answer_tps": 4.64,
+      "end_to_end_ms": 38622.24,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 6,
+      "query_idx": 8,
+      "query": "tell me how many persons you can see",
+      "tool_called": "detect_people",
+      "tool_result": "raspberry detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "raspberry-sensing-bench",
+          "text": "raspberry detection says: no people detected"
+        }
+      ],
+      "final_reply": "I detect the people that are currently visible. The value I received is: raspberry detection says: no people detected.",
+      "query_to_tool_ms": 20155.92,
+      "dispatch_ttft_ms": 18697.93,
+      "dispatch_tokens_in": 239,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.17,
+      "tool_to_result_ms": 48.9,
+      "result_to_reply_ms": 17909.66,
+      "answer_ttft_ms": 13118.0,
+      "answer_tokens_in": 167,
+      "answer_tokens_out": 23,
+      "answer_tps": 4.6,
+      "end_to_end_ms": 38114.48,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 6,
+      "query_idx": 9,
+      "query": "look for a person with the camera",
+      "tool_called": "detect_people",
+      "tool_result": "raspberry detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "raspberry-sensing-bench",
+          "text": "raspberry detection says: no people detected"
+        }
+      ],
+      "final_reply": "I found a person with the camera. The text from the system indicates that no people were detected: raspberry detection says: no people detected.",
+      "query_to_tool_ms": 20057.29,
+      "dispatch_ttft_ms": 18603.22,
+      "dispatch_tokens_in": 238,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.18,
+      "tool_to_result_ms": 49.99,
+      "result_to_reply_ms": 18828.99,
+      "answer_ttft_ms": 12992.66,
+      "answer_tokens_in": 166,
+      "answer_tokens_out": 28,
+      "answer_tps": 4.64,
+      "end_to_end_ms": 38936.27,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 12,
+      "query_idx": 0,
+      "query": "can you use the detect person tool",
+      "tool_called": "detect_people",
+      "tool_result": "raspberry detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "raspberry-sensing-bench",
+          "text": "raspberry detection says: no people detected"
+        }
+      ],
+      "final_reply": "I have detected the people that are currently visible. The value returned is: raspberry detection says: no people detected.",
+      "query_to_tool_ms": 37058.26,
+      "dispatch_ttft_ms": 35522.78,
+      "dispatch_tokens_in": 408,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 3.99,
+      "tool_to_result_ms": 51.28,
+      "result_to_reply_ms": 17762.48,
+      "answer_ttft_ms": 12984.08,
+      "answer_tokens_in": 166,
+      "answer_tokens_out": 23,
+      "answer_tps": 4.61,
+      "end_to_end_ms": 54872.02,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 12,
+      "query_idx": 1,
+      "query": "is there a person in front of the camera",
+      "tool_called": "detect_people",
+      "tool_result": "raspberry detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "raspberry-sensing-bench",
+          "text": "raspberry detection says: no people detected"
+        }
+      ],
+      "final_reply": "Yes, there is a person in front of the camera. The text from Raspberry Sensing Bench indicates that \"raspberry detection says: no people detected.\"",
+      "query_to_tool_ms": 37175.36,
+      "dispatch_ttft_ms": 35622.63,
+      "dispatch_tokens_in": 410,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 3.94,
+      "tool_to_result_ms": 49.37,
+      "result_to_reply_ms": 19205.16,
+      "answer_ttft_ms": 13144.66,
+      "answer_tokens_in": 168,
+      "answer_tokens_out": 29,
+      "answer_tps": 4.63,
+      "end_to_end_ms": 56429.9,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 12,
+      "query_idx": 2,
+      "query": "how many people are there",
+      "tool_called": "detect_people",
+      "tool_result": "raspberry detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "raspberry-sensing-bench",
+          "text": "raspberry detection says: no people detected"
+        }
+      ],
+      "final_reply": "There are no people detected. The tool reported that no people were detected.",
+      "query_to_tool_ms": 36833.21,
+      "dispatch_ttft_ms": 35278.8,
+      "dispatch_tokens_in": 406,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 3.94,
+      "tool_to_result_ms": 49.78,
+      "result_to_reply_ms": 15959.23,
+      "answer_ttft_ms": 12842.38,
+      "answer_tokens_in": 164,
+      "answer_tokens_out": 15,
+      "answer_tps": 4.51,
+      "end_to_end_ms": 52842.22,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 12,
+      "query_idx": 3,
+      "query": "do you see anyone",
+      "tool_called": "detect_people",
+      "tool_result": "raspberry detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "raspberry-sensing-bench",
+          "text": "raspberry detection says: no people detected"
+        }
+      ],
+      "final_reply": "I see no people. The detection tool reported that no people were detected.",
+      "query_to_tool_ms": 36765.57,
+      "dispatch_ttft_ms": 35228.68,
+      "dispatch_tokens_in": 405,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 3.98,
+      "tool_to_result_ms": 49.59,
+      "result_to_reply_ms": 15891.21,
+      "answer_ttft_ms": 12765.37,
+      "answer_tokens_in": 163,
+      "answer_tokens_out": 15,
+      "answer_tps": 4.5,
+      "end_to_end_ms": 52706.37,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 12,
+      "query_idx": 4,
+      "query": "check if someone is in the room",
+      "tool_called": "",
+      "tool_result": "",
+      "tool_result_raw": [],
+      "final_reply": "I can certainly assist with checking the presence of people in your room. Could you please provide the name or identify the person you are looking for?",
+      "query_to_tool_ms": 41824.66,
+      "dispatch_ttft_ms": 35474.9,
+      "dispatch_tokens_in": 408,
+      "dispatch_tokens_out": 29,
+      "dispatch_tps": 4.43,
+      "tool_to_result_ms": 0.01,
+      "result_to_reply_ms": 0.01,
+      "answer_ttft_ms": null,
+      "answer_tokens_in": null,
+      "answer_tokens_out": null,
+      "answer_tps": null,
+      "end_to_end_ms": 41824.68,
+      "correct": 0,
+      "got_result": 0,
+      "error": ""
+    },
+    {
+      "n_tools": 12,
+      "query_idx": 5,
+      "query": "are there any people visible",
+      "tool_called": "detect_people",
+      "tool_result": "raspberry detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "raspberry-sensing-bench",
+          "text": "raspberry detection says: no people detected"
+        }
+      ],
+      "final_reply": "Yes, there are currently visible people: raspberry\\_sensing\\_bench.",
+      "query_to_tool_ms": 36805.28,
+      "dispatch_ttft_ms": 35244.11,
+      "dispatch_tokens_in": 406,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 3.92,
+      "tool_to_result_ms": 51.75,
+      "result_to_reply_ms": 15789.34,
+      "answer_ttft_ms": 12882.24,
+      "answer_tokens_in": 164,
+      "answer_tokens_out": 14,
+      "answer_tps": 4.49,
+      "end_to_end_ms": 52646.37,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 12,
+      "query_idx": 6,
+      "query": "detect the people in the frame",
+      "tool_called": "detect_people",
+      "tool_result": "raspberry detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "raspberry-sensing-bench",
+          "text": "raspberry detection says: no people detected"
+        }
+      ],
+      "final_reply": "I detect the people in the frame. The text returned is: \"raspberry detection says: no people detected.\"",
+      "query_to_tool_ms": 36917.79,
+      "dispatch_ttft_ms": 35371.98,
+      "dispatch_tokens_in": 407,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 3.96,
+      "tool_to_result_ms": 49.98,
+      "result_to_reply_ms": 17523.28,
+      "answer_ttft_ms": 12961.03,
+      "answer_tokens_in": 165,
+      "answer_tokens_out": 22,
+      "answer_tps": 4.61,
+      "end_to_end_ms": 54491.05,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 12,
+      "query_idx": 7,
+      "query": "is anybody there right now",
+      "tool_called": "detect_people",
+      "tool_result": "raspberry detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "raspberry-sensing-bench",
+          "text": "raspberry detection says: no people detected"
+        }
+      ],
+      "final_reply": "Yes, I've detected that person is right now. The text from Raspberry Sensing is: \"raspberry detection says: no people detected.\"",
+      "query_to_tool_ms": 36802.72,
+      "dispatch_ttft_ms": 35256.78,
+      "dispatch_tokens_in": 406,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 3.96,
+      "tool_to_result_ms": 48.11,
+      "result_to_reply_ms": 18672.85,
+      "answer_ttft_ms": 12838.27,
+      "answer_tokens_in": 164,
+      "answer_tokens_out": 28,
+      "answer_tps": 4.64,
+      "end_to_end_ms": 55523.68,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 12,
+      "query_idx": 8,
+      "query": "tell me how many persons you can see",
+      "tool_called": "detect_people",
+      "tool_result": "raspberry detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "raspberry-sensing-bench",
+          "text": "raspberry detection says: no people detected"
+        }
+      ],
+      "final_reply": "I detect the people that are currently visible. The value I received is: raspberry detection says: no people detected.",
+      "query_to_tool_ms": 37083.86,
+      "dispatch_ttft_ms": 35541.8,
+      "dispatch_tokens_in": 409,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 3.97,
+      "tool_to_result_ms": 47.91,
+      "result_to_reply_ms": 17842.26,
+      "answer_ttft_ms": 13078.33,
+      "answer_tokens_in": 167,
+      "answer_tokens_out": 23,
+      "answer_tps": 4.63,
+      "end_to_end_ms": 54974.03,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 12,
+      "query_idx": 9,
+      "query": "look for a person with the camera",
+      "tool_called": "detect_people",
+      "tool_result": "raspberry detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "raspberry-sensing-bench",
+          "text": "raspberry detection says: no people detected"
+        }
+      ],
+      "final_reply": "I found a person with the camera. The text from the system indicates that no people were detected: raspberry detection says: no people detected.",
+      "query_to_tool_ms": 37041.73,
+      "dispatch_ttft_ms": 35493.13,
+      "dispatch_tokens_in": 408,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 3.95,
+      "tool_to_result_ms": 54.59,
+      "result_to_reply_ms": 18803.14,
+      "answer_ttft_ms": 12984.24,
+      "answer_tokens_in": 166,
+      "answer_tokens_out": 28,
+      "answer_tps": 4.65,
+      "end_to_end_ms": 55899.45,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 18,
+      "query_idx": 0,
+      "query": "can you use the detect person tool",
+      "tool_called": "detect_people",
+      "tool_result": "raspberry detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "raspberry-sensing-bench",
+          "text": "raspberry detection says: no people detected"
+        }
+      ],
+      "final_reply": "I have detected the people that are currently visible. The value returned is: raspberry detection says: no people detected.",
+      "query_to_tool_ms": 52897.96,
+      "dispatch_ttft_ms": 51266.66,
+      "dispatch_tokens_in": 582,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 3.78,
+      "tool_to_result_ms": 51.98,
+      "result_to_reply_ms": 17809.08,
+      "answer_ttft_ms": 13000.28,
+      "answer_tokens_in": 166,
+      "answer_tokens_out": 23,
+      "answer_tps": 4.59,
+      "end_to_end_ms": 70759.02,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 18,
+      "query_idx": 1,
+      "query": "is there a person in front of the camera",
+      "tool_called": "detect_people",
+      "tool_result": "raspberry detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "raspberry-sensing-bench",
+          "text": "raspberry detection says: no people detected"
+        }
+      ],
+      "final_reply": "Yes, there is a person in front of the camera. The text from Raspberry Sensing Bench indicates that \"raspberry detection says: no people detected.\"",
+      "query_to_tool_ms": 53084.16,
+      "dispatch_ttft_ms": 51464.58,
+      "dispatch_tokens_in": 584,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 3.81,
+      "tool_to_result_ms": 47.17,
+      "result_to_reply_ms": 19218.72,
+      "answer_ttft_ms": 13182.0,
+      "answer_tokens_in": 168,
+      "answer_tokens_out": 29,
+      "answer_tps": 4.65,
+      "end_to_end_ms": 72350.05,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 18,
+      "query_idx": 2,
+      "query": "how many people are there",
+      "tool_called": "detect_people",
+      "tool_result": "raspberry detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "raspberry-sensing-bench",
+          "text": "raspberry detection says: no people detected"
+        }
+      ],
+      "final_reply": "There are no people detected. The tool reported that no people were detected.",
+      "query_to_tool_ms": 52689.48,
+      "dispatch_ttft_ms": 51064.48,
+      "dispatch_tokens_in": 580,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 3.79,
+      "tool_to_result_ms": 53.74,
+      "result_to_reply_ms": 15941.94,
+      "answer_ttft_ms": 12840.0,
+      "answer_tokens_in": 164,
+      "answer_tokens_out": 15,
+      "answer_tps": 4.53,
+      "end_to_end_ms": 68685.16,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 18,
+      "query_idx": 3,
+      "query": "do you see anyone",
+      "tool_called": "detect_people",
+      "tool_result": "raspberry detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "raspberry-sensing-bench",
+          "text": "raspberry detection says: no people detected"
+        }
+      ],
+      "final_reply": "I see no people. The detection tool reported that no people were detected.",
+      "query_to_tool_ms": 52603.45,
+      "dispatch_ttft_ms": 50975.24,
+      "dispatch_tokens_in": 579,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 3.79,
+      "tool_to_result_ms": 52.72,
+      "result_to_reply_ms": 15870.65,
+      "answer_ttft_ms": 12751.9,
+      "answer_tokens_in": 163,
+      "answer_tokens_out": 15,
+      "answer_tps": 4.51,
+      "end_to_end_ms": 68526.81,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 18,
+      "query_idx": 4,
+      "query": "check if someone is in the room",
+      "tool_called": "detect_people",
+      "tool_result": "raspberry detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "raspberry-sensing-bench",
+          "text": "raspberry detection says: no people detected"
+        }
+      ],
+      "final_reply": "Yes, I have detected that person is currently visible. The text from the device is: \"raspberry detection says: no people detected.\"",
+      "query_to_tool_ms": 52877.9,
+      "dispatch_ttft_ms": 51254.13,
+      "dispatch_tokens_in": 582,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 3.8,
+      "tool_to_result_ms": 46.97,
+      "result_to_reply_ms": 18604.16,
+      "answer_ttft_ms": 13011.87,
+      "answer_tokens_in": 166,
+      "answer_tokens_out": 27,
+      "answer_tps": 4.66,
+      "end_to_end_ms": 71529.03,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 18,
+      "query_idx": 5,
+      "query": "are there any people visible",
+      "tool_called": "detect_people",
+      "tool_result": "raspberry detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "raspberry-sensing-bench",
+          "text": "raspberry detection says: no people detected"
+        }
+      ],
+      "final_reply": "Yes, there are currently visible people: raspberry\\_sensing\\_bench.",
+      "query_to_tool_ms": 52691.13,
+      "dispatch_ttft_ms": 51062.58,
+      "dispatch_tokens_in": 580,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 3.78,
+      "tool_to_result_ms": 177.0,
+      "result_to_reply_ms": 15743.71,
+      "answer_ttft_ms": 12837.79,
+      "answer_tokens_in": 164,
+      "answer_tokens_out": 14,
+      "answer_tps": 4.49,
+      "end_to_end_ms": 68611.84,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 18,
+      "query_idx": 6,
+      "query": "detect the people in the frame",
+      "tool_called": "detect_people",
+      "tool_result": "raspberry detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "raspberry-sensing-bench",
+          "text": "raspberry detection says: no people detected"
+        }
+      ],
+      "final_reply": "I detect the people in the frame. The text returned is: \"raspberry detection says: no people detected.\"",
+      "query_to_tool_ms": 52833.95,
+      "dispatch_ttft_ms": 51208.25,
+      "dispatch_tokens_in": 581,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 3.79,
+      "tool_to_result_ms": 47.68,
+      "result_to_reply_ms": 17539.63,
+      "answer_ttft_ms": 12940.43,
+      "answer_tokens_in": 165,
+      "answer_tokens_out": 22,
+      "answer_tps": 4.58,
+      "end_to_end_ms": 70421.26,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 18,
+      "query_idx": 7,
+      "query": "is anybody there right now",
+      "tool_called": "detect_people",
+      "tool_result": "raspberry detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "raspberry-sensing-bench",
+          "text": "raspberry detection says: no people detected"
+        }
+      ],
+      "final_reply": "Yes, I've detected that person is right now. The text from Raspberry Sensing is: \"raspberry detection says: no people detected.\"",
+      "query_to_tool_ms": 52650.3,
+      "dispatch_ttft_ms": 51027.47,
+      "dispatch_tokens_in": 580,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 3.8,
+      "tool_to_result_ms": 47.19,
+      "result_to_reply_ms": 18701.3,
+      "answer_ttft_ms": 12883.78,
+      "answer_tokens_in": 164,
+      "answer_tokens_out": 28,
+      "answer_tps": 4.65,
+      "end_to_end_ms": 71398.79,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 18,
+      "query_idx": 8,
+      "query": "tell me how many persons you can see",
+      "tool_called": "detect_people",
+      "tool_result": "raspberry detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "raspberry-sensing-bench",
+          "text": "raspberry detection says: no people detected"
+        }
+      ],
+      "final_reply": "I detect the people that are currently visible. The value I received is: raspberry detection says: no people detected.",
+      "query_to_tool_ms": 52991.89,
+      "dispatch_ttft_ms": 51365.39,
+      "dispatch_tokens_in": 583,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 3.79,
+      "tool_to_result_ms": 157.67,
+      "result_to_reply_ms": 17823.74,
+      "answer_ttft_ms": 13066.6,
+      "answer_tokens_in": 167,
+      "answer_tokens_out": 23,
+      "answer_tps": 4.64,
+      "end_to_end_ms": 70973.3,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 18,
+      "query_idx": 9,
+      "query": "look for a person with the camera",
+      "tool_called": "detect_people",
+      "tool_result": "raspberry detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "raspberry-sensing-bench",
+          "text": "raspberry detection says: no people detected"
+        }
+      ],
+      "final_reply": "I found a person with the camera. The text from the system indicates that no people were detected: raspberry detection says: no people detected.",
+      "query_to_tool_ms": 52897.53,
+      "dispatch_ttft_ms": 51263.03,
+      "dispatch_tokens_in": 582,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 3.77,
+      "tool_to_result_ms": 47.54,
+      "result_to_reply_ms": 18787.47,
+      "answer_ttft_ms": 12976.78,
+      "answer_tokens_in": 166,
+      "answer_tokens_out": 28,
+      "answer_tps": 4.66,
+      "end_to_end_ms": 71732.54,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 24,
+      "query_idx": 0,
+      "query": "can you use the detect person tool",
+      "tool_called": "detect_people",
+      "tool_result": "raspberry detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "raspberry-sensing-bench",
+          "text": "raspberry detection says: no people detected"
+        }
+      ],
+      "final_reply": "I have detected the people that are currently visible. The value returned is: raspberry detection says: no people detected.",
+      "query_to_tool_ms": 69530.67,
+      "dispatch_ttft_ms": 67890.44,
+      "dispatch_tokens_in": 756,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 3.79,
+      "tool_to_result_ms": 48.23,
+      "result_to_reply_ms": 17792.93,
+      "answer_ttft_ms": 13000.71,
+      "answer_tokens_in": 166,
+      "answer_tokens_out": 23,
+      "answer_tps": 4.6,
+      "end_to_end_ms": 87371.83,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 24,
+      "query_idx": 1,
+      "query": "is there a person in front of the camera",
+      "tool_called": "detect_people",
+      "tool_result": "raspberry detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "raspberry-sensing-bench",
+          "text": "raspberry detection says: no people detected"
+        }
+      ],
+      "final_reply": "Yes, there is a person in front of the camera. The text from Raspberry Sensing Bench indicates that \"raspberry detection says: no people detected.\"",
+      "query_to_tool_ms": 69676.66,
+      "dispatch_ttft_ms": 68020.05,
+      "dispatch_tokens_in": 758,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 3.75,
+      "tool_to_result_ms": 51.5,
+      "result_to_reply_ms": 19186.39,
+      "answer_ttft_ms": 13145.42,
+      "answer_tokens_in": 168,
+      "answer_tokens_out": 29,
+      "answer_tps": 4.64,
+      "end_to_end_ms": 88914.55,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 24,
+      "query_idx": 2,
+      "query": "how many people are there",
+      "tool_called": "detect_people",
+      "tool_result": "raspberry detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "raspberry-sensing-bench",
+          "text": "raspberry detection says: no people detected"
+        }
+      ],
+      "final_reply": "There are no people detected. The tool reported that no people were detected.",
+      "query_to_tool_ms": 69279.68,
+      "dispatch_ttft_ms": 67644.45,
+      "dispatch_tokens_in": 754,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 3.8,
+      "tool_to_result_ms": 48.73,
+      "result_to_reply_ms": 15970.18,
+      "answer_ttft_ms": 12843.17,
+      "answer_tokens_in": 164,
+      "answer_tokens_out": 15,
+      "answer_tps": 4.49,
+      "end_to_end_ms": 85298.59,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 24,
+      "query_idx": 3,
+      "query": "do you see anyone",
+      "tool_called": "detect_people",
+      "tool_result": "raspberry detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "raspberry-sensing-bench",
+          "text": "raspberry detection says: no people detected"
+        }
+      ],
+      "final_reply": "I see no people. The detection tool reported that no people were detected.",
+      "query_to_tool_ms": 69224.0,
+      "dispatch_ttft_ms": 67583.74,
+      "dispatch_tokens_in": 753,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 3.79,
+      "tool_to_result_ms": 49.48,
+      "result_to_reply_ms": 15895.0,
+      "answer_ttft_ms": 12759.84,
+      "answer_tokens_in": 163,
+      "answer_tokens_out": 15,
+      "answer_tps": 4.48,
+      "end_to_end_ms": 85168.48,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 24,
+      "query_idx": 4,
+      "query": "check if someone is in the room",
+      "tool_called": "",
+      "tool_result": "",
+      "tool_result_raw": [],
+      "final_reply": "I cannot check if someone is in the room using the available tools. My capabilities are limited to calling specific functions like \"wrong_tool_1\" and \"wrong_tool_8.\"",
+      "query_to_tool_ms": 76935.59,
+      "dispatch_ttft_ms": 67903.62,
+      "dispatch_tokens_in": 756,
+      "dispatch_tokens_out": 38,
+      "dispatch_tps": 4.12,
+      "tool_to_result_ms": 0.01,
+      "result_to_reply_ms": 0.01,
+      "answer_ttft_ms": null,
+      "answer_tokens_in": null,
+      "answer_tokens_out": null,
+      "answer_tps": null,
+      "end_to_end_ms": 76935.61,
+      "correct": 0,
+      "got_result": 0,
+      "error": ""
+    },
+    {
+      "n_tools": 24,
+      "query_idx": 5,
+      "query": "are there any people visible",
+      "tool_called": "detect_people",
+      "tool_result": "raspberry detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "raspberry-sensing-bench",
+          "text": "raspberry detection says: no people detected"
+        }
+      ],
+      "final_reply": "Yes, there are currently visible people: raspberry\\_sensing\\_bench.",
+      "query_to_tool_ms": 69286.23,
+      "dispatch_ttft_ms": 67637.1,
+      "dispatch_tokens_in": 754,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 3.77,
+      "tool_to_result_ms": 51.05,
+      "result_to_reply_ms": 15787.41,
+      "answer_ttft_ms": 12882.67,
+      "answer_tokens_in": 164,
+      "answer_tokens_out": 14,
+      "answer_tps": 4.49,
+      "end_to_end_ms": 85124.69,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 24,
+      "query_idx": 6,
+      "query": "detect the people in the frame",
+      "tool_called": "detect_people",
+      "tool_result": "raspberry detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "raspberry-sensing-bench",
+          "text": "raspberry detection says: no people detected"
+        }
+      ],
+      "final_reply": "I detect the people in the frame. The text returned is: \"raspberry detection says: no people detected.\"",
+      "query_to_tool_ms": 69392.59,
+      "dispatch_ttft_ms": 67753.88,
+      "dispatch_tokens_in": 755,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 3.79,
+      "tool_to_result_ms": 55.67,
+      "result_to_reply_ms": 17470.29,
+      "answer_ttft_ms": 12913.35,
+      "answer_tokens_in": 165,
+      "answer_tokens_out": 22,
+      "answer_tps": 4.62,
+      "end_to_end_ms": 86918.56,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 24,
+      "query_idx": 7,
+      "query": "is anybody there right now",
+      "tool_called": "detect_people",
+      "tool_result": "raspberry detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "raspberry-sensing-bench",
+          "text": "raspberry detection says: no people detected"
+        }
+      ],
+      "final_reply": "Yes, I've detected that person is right now. The text from Raspberry Sensing is: \"raspberry detection says: no people detected.\"",
+      "query_to_tool_ms": 69279.76,
+      "dispatch_ttft_ms": 67629.26,
+      "dispatch_tokens_in": 754,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 3.76,
+      "tool_to_result_ms": 54.59,
+      "result_to_reply_ms": 18712.26,
+      "answer_ttft_ms": 12875.75,
+      "answer_tokens_in": 164,
+      "answer_tokens_out": 28,
+      "answer_tps": 4.64,
+      "end_to_end_ms": 88046.61,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 24,
+      "query_idx": 8,
+      "query": "tell me how many persons you can see",
+      "tool_called": "detect_people",
+      "tool_result": "raspberry detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "raspberry-sensing-bench",
+          "text": "raspberry detection says: no people detected"
+        }
+      ],
+      "final_reply": "I detect the people that are currently visible. The value I received is: raspberry detection says: no people detected.",
+      "query_to_tool_ms": 69599.22,
+      "dispatch_ttft_ms": 67960.25,
+      "dispatch_tokens_in": 757,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 3.79,
+      "tool_to_result_ms": 47.83,
+      "result_to_reply_ms": 17833.48,
+      "answer_ttft_ms": 13074.99,
+      "answer_tokens_in": 167,
+      "answer_tokens_out": 23,
+      "answer_tps": 4.63,
+      "end_to_end_ms": 87480.53,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 24,
+      "query_idx": 9,
+      "query": "look for a person with the camera",
+      "tool_called": "detect_people",
+      "tool_result": "raspberry detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "raspberry-sensing-bench",
+          "text": "raspberry detection says: no people detected"
+        }
+      ],
+      "final_reply": "I found a person with the camera. The text from the system indicates that no people were detected: raspberry detection says: no people detected.",
+      "query_to_tool_ms": 69500.68,
+      "dispatch_ttft_ms": 67842.7,
+      "dispatch_tokens_in": 756,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 3.75,
+      "tool_to_result_ms": 48.48,
+      "result_to_reply_ms": 18810.03,
+      "answer_ttft_ms": 12991.88,
+      "answer_tokens_in": 166,
+      "answer_tokens_out": 28,
+      "answer_tps": 4.65,
+      "end_to_end_ms": 88359.19,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    }
+  ],
+  "aggregate": [
+    {
+      "n_tools": 1,
+      "n_samples": 10,
+      "n_correct": 10,
+      "accuracy": 1.0,
+      "n_got_result": 10,
+      "query_to_tool_ms_count": 10,
+      "query_to_tool_ms_mean": 9120.74,
+      "query_to_tool_ms_std": 116.38,
+      "query_to_tool_ms_min": 8951.39,
+      "query_to_tool_ms_max": 9312.13,
+      "dispatch_ttft_ms_count": 10,
+      "dispatch_ttft_ms_mean": 7674.34,
+      "dispatch_ttft_ms_std": 117.75,
+      "dispatch_ttft_ms_min": 7502.09,
+      "dispatch_ttft_ms_max": 7873.54,
+      "dispatch_tokens_in_count": 10,
+      "dispatch_tokens_in_mean": 97.3,
+      "dispatch_tokens_in_std": 1.49,
+      "dispatch_tokens_in_min": 95,
+      "dispatch_tokens_in_max": 100,
+      "dispatch_tokens_out_count": 10,
+      "dispatch_tokens_out_mean": 7.0,
+      "dispatch_tokens_out_std": 0.0,
+      "dispatch_tokens_out_min": 7,
+      "dispatch_tokens_out_max": 7,
+      "dispatch_tps_count": 10,
+      "dispatch_tps_mean": 4.17,
+      "dispatch_tps_std": 0.02,
+      "dispatch_tps_min": 4.14,
+      "dispatch_tps_max": 4.2,
+      "tool_to_result_ms_count": 10,
+      "tool_to_result_ms_mean": 47.28,
+      "tool_to_result_ms_std": 2.66,
+      "tool_to_result_ms_min": 41.92,
+      "tool_to_result_ms_max": 50.8,
+      "result_to_reply_ms_count": 10,
+      "result_to_reply_ms_mean": 17621.27,
+      "result_to_reply_ms_std": 1241.57,
+      "result_to_reply_ms_min": 15764.68,
+      "result_to_reply_ms_max": 19284.43,
+      "answer_ttft_ms_count": 10,
+      "answer_ttft_ms_mean": 12962.34,
+      "answer_ttft_ms_std": 132.64,
+      "answer_ttft_ms_min": 12776.82,
+      "answer_ttft_ms_max": 13252.26,
+      "answer_tokens_in_count": 10,
+      "answer_tokens_in_mean": 165.3,
+      "answer_tokens_in_std": 1.49,
+      "answer_tokens_in_min": 163,
+      "answer_tokens_in_max": 168,
+      "answer_tokens_out_count": 10,
+      "answer_tokens_out_mean": 22.4,
+      "answer_tokens_out_std": 5.55,
+      "answer_tokens_out_min": 14,
+      "answer_tokens_out_max": 29,
+      "answer_tps_count": 10,
+      "answer_tps_mean": 4.59,
+      "answer_tps_std": 0.07,
+      "answer_tps_min": 4.47,
+      "answer_tps_max": 4.65,
+      "end_to_end_ms_count": 10,
+      "end_to_end_ms_mean": 26789.29,
+      "end_to_end_ms_std": 1329.97,
+      "end_to_end_ms_min": 24823.55,
+      "end_to_end_ms_max": 28647.36
+    },
+    {
+      "n_tools": 6,
+      "n_samples": 10,
+      "n_correct": 10,
+      "accuracy": 1.0,
+      "n_got_result": 10,
+      "query_to_tool_ms_count": 10,
+      "query_to_tool_ms_mean": 20019.95,
+      "query_to_tool_ms_std": 109.16,
+      "query_to_tool_ms_min": 19826.59,
+      "query_to_tool_ms_max": 20210.38,
+      "dispatch_ttft_ms_count": 10,
+      "dispatch_ttft_ms_mean": 18558.45,
+      "dispatch_ttft_ms_std": 112.53,
+      "dispatch_ttft_ms_min": 18357.82,
+      "dispatch_ttft_ms_max": 18755.01,
+      "dispatch_tokens_in_count": 10,
+      "dispatch_tokens_in_mean": 237.3,
+      "dispatch_tokens_in_std": 1.49,
+      "dispatch_tokens_in_min": 235,
+      "dispatch_tokens_in_max": 240,
+      "dispatch_tokens_out_count": 10,
+      "dispatch_tokens_out_mean": 7.0,
+      "dispatch_tokens_out_std": 0.0,
+      "dispatch_tokens_out_min": 7,
+      "dispatch_tokens_out_max": 7,
+      "dispatch_tps_count": 10,
+      "dispatch_tps_mean": 4.15,
+      "dispatch_tps_std": 0.02,
+      "dispatch_tps_min": 4.13,
+      "dispatch_tps_max": 4.18,
+      "tool_to_result_ms_count": 10,
+      "tool_to_result_ms_mean": 50.43,
+      "tool_to_result_ms_std": 5.32,
+      "tool_to_result_ms_min": 44.35,
+      "tool_to_result_ms_max": 65.03,
+      "result_to_reply_ms_count": 10,
+      "result_to_reply_ms_mean": 17622.6,
+      "result_to_reply_ms_std": 1232.88,
+      "result_to_reply_ms_min": 15766.87,
+      "result_to_reply_ms_max": 19204.24,
+      "answer_ttft_ms_count": 10,
+      "answer_ttft_ms_mean": 12954.83,
+      "answer_ttft_ms_std": 116.05,
+      "answer_ttft_ms_min": 12800.14,
+      "answer_ttft_ms_max": 13152.67,
+      "answer_tokens_in_count": 10,
+      "answer_tokens_in_mean": 165.3,
+      "answer_tokens_in_std": 1.49,
+      "answer_tokens_in_min": 163,
+      "answer_tokens_in_max": 168,
+      "answer_tokens_out_count": 10,
+      "answer_tokens_out_mean": 22.4,
+      "answer_tokens_out_std": 5.55,
+      "answer_tokens_out_min": 14,
+      "answer_tokens_out_max": 29,
+      "answer_tps_count": 10,
+      "answer_tps_mean": 4.58,
+      "answer_tps_std": 0.06,
+      "answer_tps_min": 4.49,
+      "answer_tps_max": 4.65,
+      "end_to_end_ms_count": 10,
+      "end_to_end_ms_mean": 37692.98,
+      "end_to_end_ms_std": 1301.68,
+      "end_to_end_ms_min": 35783.32,
+      "end_to_end_ms_max": 39463.45
+    },
+    {
+      "n_tools": 12,
+      "n_samples": 10,
+      "n_correct": 9,
+      "accuracy": 0.9,
+      "n_got_result": 9,
+      "query_to_tool_ms_count": 9,
+      "query_to_tool_ms_mean": 36942.64,
+      "query_to_tool_ms_std": 141.3,
+      "query_to_tool_ms_min": 36765.57,
+      "query_to_tool_ms_max": 37175.36,
+      "dispatch_ttft_ms_count": 9,
+      "dispatch_ttft_ms_mean": 35395.63,
+      "dispatch_ttft_ms_std": 142.55,
+      "dispatch_ttft_ms_min": 35228.68,
+      "dispatch_ttft_ms_max": 35622.63,
+      "dispatch_tokens_in_count": 9,
+      "dispatch_tokens_in_mean": 407.22,
+      "dispatch_tokens_in_std": 1.55,
+      "dispatch_tokens_in_min": 405,
+      "dispatch_tokens_in_max": 410,
+      "dispatch_tokens_out_count": 9,
+      "dispatch_tokens_out_mean": 7.0,
+      "dispatch_tokens_out_std": 0.0,
+      "dispatch_tokens_out_min": 7,
+      "dispatch_tokens_out_max": 7,
+      "dispatch_tps_count": 9,
+      "dispatch_tps_mean": 3.96,
+      "dispatch_tps_std": 0.02,
+      "dispatch_tps_min": 3.92,
+      "dispatch_tps_max": 3.99,
+      "tool_to_result_ms_count": 9,
+      "tool_to_result_ms_mean": 50.26,
+      "tool_to_result_ms_std": 1.94,
+      "tool_to_result_ms_min": 47.91,
+      "tool_to_result_ms_max": 54.59,
+      "result_to_reply_ms_count": 9,
+      "result_to_reply_ms_mean": 17494.33,
+      "result_to_reply_ms_std": 1249.72,
+      "result_to_reply_ms_min": 15789.34,
+      "result_to_reply_ms_max": 19205.16,
+      "answer_ttft_ms_count": 9,
+      "answer_ttft_ms_mean": 12942.29,
+      "answer_ttft_ms_std": 115.0,
+      "answer_ttft_ms_min": 12765.37,
+      "answer_ttft_ms_max": 13144.66,
+      "answer_tokens_in_count": 9,
+      "answer_tokens_in_mean": 165.22,
+      "answer_tokens_in_std": 1.55,
+      "answer_tokens_in_min": 163,
+      "answer_tokens_in_max": 168,
+      "answer_tokens_out_count": 9,
+      "answer_tokens_out_mean": 21.89,
+      "answer_tokens_out_std": 5.63,
+      "answer_tokens_out_min": 14,
+      "answer_tokens_out_max": 29,
+      "answer_tps_count": 9,
+      "answer_tps_mean": 4.59,
+      "answer_tps_std": 0.06,
+      "answer_tps_min": 4.49,
+      "answer_tps_max": 4.65,
+      "end_to_end_ms_count": 9,
+      "end_to_end_ms_mean": 54487.23,
+      "end_to_end_ms_std": 1353.76,
+      "end_to_end_ms_min": 52646.37,
+      "end_to_end_ms_max": 56429.9
+    },
+    {
+      "n_tools": 18,
+      "n_samples": 10,
+      "n_correct": 10,
+      "accuracy": 1.0,
+      "n_got_result": 10,
+      "query_to_tool_ms_count": 10,
+      "query_to_tool_ms_mean": 52821.78,
+      "query_to_tool_ms_std": 149.76,
+      "query_to_tool_ms_min": 52603.45,
+      "query_to_tool_ms_max": 53084.16,
+      "dispatch_ttft_ms_count": 10,
+      "dispatch_ttft_ms_mean": 51195.18,
+      "dispatch_ttft_ms_std": 150.36,
+      "dispatch_ttft_ms_min": 50975.24,
+      "dispatch_ttft_ms_max": 51464.58,
+      "dispatch_tokens_in_count": 10,
+      "dispatch_tokens_in_mean": 581.3,
+      "dispatch_tokens_in_std": 1.49,
+      "dispatch_tokens_in_min": 579,
+      "dispatch_tokens_in_max": 584,
+      "dispatch_tokens_out_count": 10,
+      "dispatch_tokens_out_mean": 7.0,
+      "dispatch_tokens_out_std": 0.0,
+      "dispatch_tokens_out_min": 7,
+      "dispatch_tokens_out_max": 7,
+      "dispatch_tps_count": 10,
+      "dispatch_tps_mean": 3.79,
+      "dispatch_tps_std": 0.01,
+      "dispatch_tps_min": 3.77,
+      "dispatch_tps_max": 3.81,
+      "tool_to_result_ms_count": 10,
+      "tool_to_result_ms_mean": 72.97,
+      "tool_to_result_ms_std": 47.44,
+      "tool_to_result_ms_min": 46.97,
+      "tool_to_result_ms_max": 177.0,
+      "result_to_reply_ms_count": 10,
+      "result_to_reply_ms_mean": 17604.04,
+      "result_to_reply_ms_std": 1246.37,
+      "result_to_reply_ms_min": 15743.71,
+      "result_to_reply_ms_max": 19218.72,
+      "answer_ttft_ms_count": 10,
+      "answer_ttft_ms_mean": 12949.14,
+      "answer_ttft_ms_std": 119.54,
+      "answer_ttft_ms_min": 12751.9,
+      "answer_ttft_ms_max": 13182.0,
+      "answer_tokens_in_count": 10,
+      "answer_tokens_in_mean": 165.3,
+      "answer_tokens_in_std": 1.49,
+      "answer_tokens_in_min": 163,
+      "answer_tokens_in_max": 168,
+      "answer_tokens_out_count": 10,
+      "answer_tokens_out_mean": 22.4,
+      "answer_tokens_out_std": 5.55,
+      "answer_tokens_out_min": 14,
+      "answer_tokens_out_max": 29,
+      "answer_tps_count": 10,
+      "answer_tps_mean": 4.6,
+      "answer_tps_std": 0.06,
+      "answer_tps_min": 4.49,
+      "answer_tps_max": 4.66,
+      "end_to_end_ms_count": 10,
+      "end_to_end_ms_mean": 70498.78,
+      "end_to_end_ms_std": 1336.34,
+      "end_to_end_ms_min": 68526.81,
+      "end_to_end_ms_max": 72350.05
+    },
+    {
+      "n_tools": 24,
+      "n_samples": 10,
+      "n_correct": 9,
+      "accuracy": 0.9,
+      "n_got_result": 9,
+      "query_to_tool_ms_count": 9,
+      "query_to_tool_ms_mean": 69418.83,
+      "query_to_tool_ms_std": 153.9,
+      "query_to_tool_ms_min": 69224.0,
+      "query_to_tool_ms_max": 69676.66,
+      "dispatch_ttft_ms_count": 9,
+      "dispatch_ttft_ms_mean": 67773.54,
+      "dispatch_ttft_ms_std": 151.51,
+      "dispatch_ttft_ms_min": 67583.74,
+      "dispatch_ttft_ms_max": 68020.05,
+      "dispatch_tokens_in_count": 9,
+      "dispatch_tokens_in_mean": 755.22,
+      "dispatch_tokens_in_std": 1.55,
+      "dispatch_tokens_in_min": 753,
+      "dispatch_tokens_in_max": 758,
+      "dispatch_tokens_out_count": 9,
+      "dispatch_tokens_out_mean": 7.0,
+      "dispatch_tokens_out_std": 0.0,
+      "dispatch_tokens_out_min": 7,
+      "dispatch_tokens_out_max": 7,
+      "dispatch_tps_count": 9,
+      "dispatch_tps_mean": 3.78,
+      "dispatch_tps_std": 0.02,
+      "dispatch_tps_min": 3.75,
+      "dispatch_tps_max": 3.8,
+      "tool_to_result_ms_count": 9,
+      "tool_to_result_ms_mean": 50.62,
+      "tool_to_result_ms_std": 2.69,
+      "tool_to_result_ms_min": 47.83,
+      "tool_to_result_ms_max": 55.67,
+      "result_to_reply_ms_count": 9,
+      "result_to_reply_ms_mean": 17495.33,
+      "result_to_reply_ms_std": 1250.63,
+      "result_to_reply_ms_min": 15787.41,
+      "result_to_reply_ms_max": 19186.39,
+      "answer_ttft_ms_count": 9,
+      "answer_ttft_ms_mean": 12943.09,
+      "answer_ttft_ms_std": 113.86,
+      "answer_ttft_ms_min": 12759.84,
+      "answer_ttft_ms_max": 13145.42,
+      "answer_tokens_in_count": 9,
+      "answer_tokens_in_mean": 165.22,
+      "answer_tokens_in_std": 1.55,
+      "answer_tokens_in_min": 163,
+      "answer_tokens_in_max": 168,
+      "answer_tokens_out_count": 9,
+      "answer_tokens_out_mean": 21.89,
+      "answer_tokens_out_std": 5.63,
+      "answer_tokens_out_min": 14,
+      "answer_tokens_out_max": 29,
+      "answer_tps_count": 9,
+      "answer_tps_mean": 4.58,
+      "answer_tps_std": 0.07,
+      "answer_tps_min": 4.48,
+      "answer_tps_max": 4.65,
+      "end_to_end_ms_count": 9,
+      "end_to_end_ms_mean": 86964.78,
+      "end_to_end_ms_std": 1363.78,
+      "end_to_end_ms_min": 85124.69,
+      "end_to_end_ms_max": 88914.55
+    }
+  ]
+}

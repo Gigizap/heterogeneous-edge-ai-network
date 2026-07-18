@@ -1,0 +1,11 @@
+{
+  "agent_id": "pallo",
+  "sensing_preset": "sensingforleaderbenchmark2",
+  "leader_preset": "mock",
+  "cpu_cores": 8,
+  "cpu_tflops": 23.0,
+  "ram_bandwidth_gbs": 12.0,
+  "accelerator": "none",
+  "score": 0,
+  "first_run_done": true
+}

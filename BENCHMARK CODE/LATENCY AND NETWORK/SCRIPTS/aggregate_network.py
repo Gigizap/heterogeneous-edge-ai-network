@@ -1,0 +1,298 @@
+#!/usr/bin/env python3
+"""
+SCRIPTS/aggregate_network.py
+
+Aggregate the leader-side, application-level traffic capture produced by the
+network-overlay scaling test (iso_leader.py's TrafficMeter) into per-fleet-size
+metrics, and emit a standalone LaTeX section (WRITING_REPORT/network.tex).
+
+Inputs (both live in SCRIPTS/network_data/ by default; override with flags):
+  --traffic   the per-message JSON-Lines capture. One record per message:
+              {ts, dir:"in"/"out", agent, peer, kind, bytes, msg}. `bytes` is the
+              APPLICATION JSON payload length only (newline-terminated JSON on the
+              wire) - it excludes TCP/IP/Ethernet headers, ACKs and the
+              per-message TCP handshake, exactly as TrafficMeter documents.
+  --timeline  the leader_iso_*.json whose "timeline" gives the (elapsed_s -> peers)
+              change points, i.e. how many sensing agents the leader saw over time.
+
+Method:
+  Each message is stamped with an elapsed time (ts - first_ts) and assigned to the
+  fleet size in effect at that moment. For every held size N in {1,10,20,50,100}
+  the metrics are averaged over the 60 s hold window that begins when the leader
+  first observes N peers (capped at the next size change, so the 100-agent window
+  excludes the ~15 s watchdog drain after the fleet stops). A leader-idle baseline
+  (0 agents) is measured over the post-run quiet period. Everything is normalised
+  to per-minute rates.
+
+Message kinds (see TrafficMeter.classify):
+  HELLO       UDP discovery beacon (dir out = our announce; dir in from a fake =
+              a peer's beacon we receive; dir in from ourselves = broadcast echo).
+  tools/list  the leader's pull-on-join request to a newly discovered peer (out).
+  result      a peer's tools/list reply the leader aggregates (in).
+
+Output: writes network.tex and prints the same tables to stdout. Stdlib only.
+Re-run after a new capture to refresh the report.
+"""
+
+import argparse
+import json
+import pathlib
+
+HOLD_S = 60.0            # each fleet size is held for one minute
+IDLE_GUARD_S = 10.0      # skip this many seconds after the fleet drops before
+                         # measuring the idle baseline (let the drop settle)
+
+_HERE = pathlib.Path(__file__).resolve().parent
+_REPO = _HERE.parent
+DEF_TRAFFIC  = _HERE / "network_data" / "traffic_stm32-mock-leader_5700_20260707_184355.jsonl"
+DEF_TIMELINE = _HERE / "network_data" / "leader_iso_20260707_184355.json"
+DEF_OUT      = _REPO / "WRITING_REPORT" / "network.tex"
+
+
+def load_records(path: pathlib.Path):
+    recs = []
+    with open(path, encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if line:
+                recs.append(json.loads(line))
+    return recs
+
+
+def bin_windows(timeline, data_end_elapsed):
+    """From the (elapsed_s, peers) change points build one window per held size and
+    one idle-baseline window. Returns a list of dicts: {label, peers, start, end}."""
+    tl = sorted(timeline, key=lambda e: e["elapsed_s"])
+    windows = []
+    for i, entry in enumerate(tl):
+        peers = entry["peers"]
+        start = entry["elapsed_s"]
+        nxt = tl[i + 1]["elapsed_s"] if i + 1 < len(tl) else data_end_elapsed
+        if peers > 0:
+            windows.append({"label": str(peers), "peers": peers,
+                            "start": start, "end": min(start + HOLD_S, nxt)})
+        elif i == len(tl) - 1 or (i > 0 and tl[i - 1]["peers"] > 0):
+            # a 0-peers point that follows a populated fleet = the teardown/idle tail
+            end = data_end_elapsed if i + 1 >= len(tl) else nxt
+            s = start + IDLE_GUARD_S
+            if end - s > 5.0:
+                windows.append({"label": "0", "peers": 0, "start": s, "end": end})
+    return windows
+
+
+def is_self(rec):
+    return rec.get("peer") == rec.get("agent")
+
+
+def aggregate(recs, windows):
+    """For each window accumulate per-minute rates, overall and by message class."""
+    t0 = min(r["ts"] for r in recs)
+    rows = []
+    for w in windows:
+        dur = w["end"] - w["start"]
+        acc = {"msgs_in": 0, "msgs_out": 0, "bytes_in": 0, "bytes_out": 0,
+               "hello_in_fleet": 0, "hello_in_self": 0, "result_in": 0,
+               "hello_out": 0, "toolslist_out": 0}
+        for r in recs:
+            el = r["ts"] - t0
+            if not (w["start"] <= el < w["end"]):
+                continue
+            b = r["bytes"]
+            if r["dir"] == "in":
+                acc["msgs_in"] += 1
+                acc["bytes_in"] += b
+                if r["kind"] == "HELLO":
+                    acc["hello_in_self" if is_self(r) else "hello_in_fleet"] += b
+                elif r["kind"] == "result":
+                    acc["result_in"] += b
+            else:
+                acc["msgs_out"] += 1
+                acc["bytes_out"] += b
+                if r["kind"] == "HELLO":
+                    acc["hello_out"] += b
+                elif r["kind"] == "tools/list":
+                    acc["toolslist_out"] += b
+        pm = 60.0 / dur if dur > 0 else 0.0        # per-minute normaliser
+        rows.append({
+            "label": w["label"], "peers": w["peers"], "dur": dur,
+            "msgs_in_pm":  acc["msgs_in"] * pm,
+            "msgs_out_pm": acc["msgs_out"] * pm,
+            "bytes_in_pm":  acc["bytes_in"] * pm,
+            "bytes_out_pm": acc["bytes_out"] * pm,
+            "hello_in_fleet_pm": acc["hello_in_fleet"] * pm,
+            "hello_in_self_pm":  acc["hello_in_self"] * pm,
+            "result_in_pm":      acc["result_in"] * pm,
+            "hello_out_pm":      acc["hello_out"] * pm,
+            "toolslist_out_pm":  acc["toolslist_out"] * pm,
+        })
+    return rows
+
+
+def lin_fit(xs, ys):
+    """Least-squares slope + intercept of ys ~ a*xs + b (stdlib)."""
+    n = len(xs)
+    sx, sy = sum(xs), sum(ys)
+    sxx = sum(x * x for x in xs)
+    sxy = sum(x * y for x, y in zip(xs, ys))
+    denom = n * sxx - sx * sx
+    if denom == 0:
+        return 0.0, (sy / n if n else 0.0)
+    a = (n * sxy - sx * sy) / denom
+    b = (sy - a * sx) / n
+    return a, b
+
+
+def kib(x):
+    return x / 1024.0
+
+
+def build_tex(rows, slope_bytes_per_agent):
+    size_rows = [r for r in rows if r["peers"] > 0]
+    idle = next((r for r in rows if r["peers"] == 0), None)
+    ordered = ([idle] if idle else []) + sorted(size_rows, key=lambda r: r["peers"])
+
+    def f1(x):  # KiB/min, 1 decimal
+        return f"{kib(x):.1f}"
+
+    def i0(x):  # integer per-minute
+        return f"{x:.0f}"
+
+    load_lines = []
+    for r in ordered:
+        label = "0 (idle)" if r["peers"] == 0 else str(r["peers"])
+        load_lines.append(
+            f"{label} & {r['dur']:.0f} & {i0(r['msgs_in_pm'])} & {i0(r['msgs_out_pm'])} "
+            f"& {f1(r['bytes_in_pm'])} & {f1(r['bytes_out_pm'])} \\\\"
+        )
+    kind_lines = []
+    for r in ordered:
+        label = "0 (idle)" if r["peers"] == 0 else str(r["peers"])
+        kind_lines.append(
+            f"{label} & {f1(r['hello_in_fleet_pm'])} & {f1(r['result_in_pm'])} "
+            f"& {f1(r['hello_in_self_pm'])} & {f1(r['bytes_in_pm'])} \\\\"
+        )
+
+    slope_kib = kib(slope_bytes_per_agent)
+    at100 = next((r for r in size_rows if r["peers"] == 100), None)
+    in100 = f1(at100["bytes_in_pm"]) if at100 else "n/a"
+
+    return f"""% ==========================================================================
+% network.tex  -  self-contained "Leader network load" subsection.
+%
+% Generated by SCRIPTS/aggregate_network.py from the leader-side traffic capture
+% in SCRIPTS/network_data/ (iso_leader.py's TrafficMeter output). Re-run the
+% script to refresh the tables.
+%
+% Compiles on its own (pdflatex network.tex). To fold it into the paper, drop the
+% body between \\begin{{document}} and \\end{{document}} into the agent-scaling
+% subsection next to the power measurement.
+% ==========================================================================
+\\documentclass[11pt]{{article}}
+\\usepackage[a4paper,margin=2cm]{{geometry}}
+\\usepackage{{booktabs}}
+\\usepackage{{array}}
+\\usepackage{{float}}
+\\usepackage{{caption}}
+\\setlength{{\\tabcolsep}}{{5pt}}
+
+\\begin{{document}}
+
+\\subsection{{Leader network load}}
+\\label{{subsub:network:load}}
+
+This subsection quantifies the traffic the leader agent sustains as the fleet of
+sensing agents grows from $1$ to $100$. A mock leader runs the live network
+overlay (zero-configuration UDP discovery plus pull-on-join tool aggregation) with
+no language model, election or dispatch, while a fleet of fake sensing agents is
+brought up in waves of $1$, $10$, $20$, $50$ and $100$, each size held for one
+minute. Every message the leader sends or receives is logged with its
+application-level payload size. The reported bytes are therefore the JSON payload
+on the wire only: they exclude the TCP/IP and Ethernet headers, the
+acknowledgements and the per-message TCP handshake, which a connection-per-message
+transport pays on top and which an on-wire capture would additionally count.
+
+Table~\\ref{{tab:net_load}} reports the per-minute message and byte rates the
+leader sends and receives at each fleet size, plus a leader-idle baseline measured
+after the run. Table~\\ref{{tab:net_kind}} breaks the received bytes down by message
+type. The received load is dominated by discovery: every agent re-announces its
+presence every two seconds, so the HELLO beacons the leader takes in grow linearly
+with the number of agents, at about {slope_kib:.1f}~KiB/min per agent (least-squares
+fit over the five sizes), reaching {in100}~KiB/min at $100$ agents. The one-time
+{{\\ttfamily tools/list}} aggregation (request out, result in) is a short burst at
+each wave and is amortised to a small rate here; the leader's own announce and its
+broadcast echo form the fixed idle floor.
+
+\\begin{{table}}[H]
+\\centering
+\\caption{{Leader network load as the number of sensing agents grows. Rates are
+averaged over the one-minute hold at each size (window length in the second
+column); the idle row is the leader alone after the fleet stopped.
+Application-level JSON payload only, excluding TCP/IP/Ethernet and handshake
+overhead.}}
+\\label{{tab:net_load}}
+\\begin{{tabular}}{{cccccc}}
+\\toprule
+\\textbf{{Agents}} & \\textbf{{Window [s]}} & \\textbf{{Msgs/min in}} & \\textbf{{Msgs/min out}} & \\textbf{{In [KiB/min]}} & \\textbf{{Out [KiB/min]}} \\\\
+\\midrule
+{chr(10).join(load_lines)}
+\\bottomrule
+\\end{{tabular}}
+\\end{{table}}
+
+\\begin{{table}}[H]
+\\centering
+\\caption{{Received bytes at the leader, per minute, split by message type: fleet
+HELLO beacons (scale linearly with the agent count), {{\\ttfamily tools/list}}
+results (one-time aggregation burst per wave, amortised over the minute), and the
+leader's own broadcast echo (fixed). KiB/min, application payload only.}}
+\\label{{tab:net_kind}}
+\\begin{{tabular}}{{ccccc}}
+\\toprule
+\\textbf{{Agents}} & \\textbf{{HELLO (fleet)}} & \\textbf{{tools/list result}} & \\textbf{{HELLO (self-echo)}} & \\textbf{{Total in}} \\\\
+\\midrule
+{chr(10).join(kind_lines)}
+\\bottomrule
+\\end{{tabular}}
+\\end{{table}}
+
+\\end{{document}}
+"""
+
+
+def main():
+    ap = argparse.ArgumentParser(description=__doc__,
+                                 formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("--traffic", type=pathlib.Path, default=DEF_TRAFFIC)
+    ap.add_argument("--timeline", type=pathlib.Path, default=DEF_TIMELINE)
+    ap.add_argument("--out", type=pathlib.Path, default=DEF_OUT)
+    args = ap.parse_args()
+
+    recs = load_records(args.traffic)
+    timeline = json.loads(args.timeline.read_text(encoding="utf-8"))["timeline"]
+    t0 = min(r["ts"] for r in recs)
+    data_end = max(r["ts"] for r in recs) - t0
+
+    windows = bin_windows(timeline, data_end)
+    rows = aggregate(recs, windows)
+
+    size_rows = sorted((r for r in rows if r["peers"] > 0), key=lambda r: r["peers"])
+    slope, _ = lin_fit([r["peers"] for r in size_rows],
+                       [r["bytes_in_pm"] for r in size_rows])
+
+    # console summary
+    print(f"records parsed: {len(recs)}   capture span: {data_end:.0f}s")
+    print(f"{'agents':>7} {'win_s':>6} {'in/min':>8} {'out/min':>8} "
+          f"{'KiB_in/min':>11} {'KiB_out/min':>12}")
+    for r in ([r for r in rows if r['peers'] == 0] +
+              [r for r in rows if r['peers'] > 0]):
+        print(f"{r['label']:>7} {r['dur']:>6.0f} {r['msgs_in_pm']:>8.0f} "
+              f"{r['msgs_out_pm']:>8.0f} {kib(r['bytes_in_pm']):>11.1f} "
+              f"{kib(r['bytes_out_pm']):>12.1f}")
+    print(f"linear fit: received load grows ~{kib(slope):.2f} KiB/min per agent")
+
+    args.out.write_text(build_tex(rows, slope), encoding="utf-8")
+    print(f"\nwrote {args.out}")
+
+
+if __name__ == "__main__":
+    main()

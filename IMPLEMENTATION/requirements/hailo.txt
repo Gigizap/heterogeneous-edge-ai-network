@@ -1,0 +1,4 @@
+# hailo_platform — install via Hailo SDK, not pip
+# hailo-ollama   — install via Hailo SDK, not pip
+# ollama         — separate system service, not pip
+numpy

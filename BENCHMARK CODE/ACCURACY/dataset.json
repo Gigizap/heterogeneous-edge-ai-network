@@ -1,0 +1,2842 @@
+[
+  {
+    "query": "Who is this person in front of me?",
+    "tool": "identify_face",
+    "parameters": {}
+  },
+  {
+    "query": "Do you recognize who that is?",
+    "tool": "identify_face",
+    "parameters": {}
+  },
+  {
+    "query": "Can you tell me this guy's name?",
+    "tool": "identify_face",
+    "parameters": {}
+  },
+  {
+    "query": "Who's at the door down there?",
+    "tool": "identify_face",
+    "parameters": {}
+  },
+  {
+    "query": "Is this someone you know?",
+    "tool": "identify_face",
+    "parameters": {}
+  },
+  {
+    "query": "What's the name of the person standing here?",
+    "tool": "identify_face",
+    "parameters": {}
+  },
+  {
+    "query": "Identify whoever is on camera right now.",
+    "tool": "identify_face",
+    "parameters": {}
+  },
+  {
+    "query": "Who am I looking at?",
+    "tool": "identify_face",
+    "parameters": {}
+  },
+  {
+    "query": "Tell me who that is.",
+    "tool": "identify_face",
+    "parameters": {}
+  },
+  {
+    "query": "Recognize this face for me.",
+    "tool": "identify_face",
+    "parameters": {}
+  },
+  {
+    "query": "Is that you-know-who, or a stranger?",
+    "tool": "identify_face",
+    "parameters": {}
+  },
+  {
+    "query": "Can you match this person to someone saved?",
+    "tool": "identify_face",
+    "parameters": {}
+  },
+  {
+    "query": "Who just walked up?",
+    "tool": "identify_face",
+    "parameters": {}
+  },
+  {
+    "query": "Name the person at the front.",
+    "tool": "identify_face",
+    "parameters": {}
+  },
+  {
+    "query": "Is the man here registered with you?",
+    "tool": "identify_face",
+    "parameters": {}
+  },
+  {
+    "query": "Whose face is this?",
+    "tool": "identify_face",
+    "parameters": {}
+  },
+  {
+    "query": "Figure out who this visitor is.",
+    "tool": "identify_face",
+    "parameters": {}
+  },
+  {
+    "query": "Do you know her?",
+    "tool": "identify_face",
+    "parameters": {}
+  },
+  {
+    "query": "Pull up the name for this face.",
+    "tool": "identify_face",
+    "parameters": {}
+  },
+  {
+    "query": "Who's standing in the doorway?",
+    "tool": "identify_face",
+    "parameters": {}
+  },
+  {
+    "query": "Read that sign for me.",
+    "tool": "read_text",
+    "parameters": {}
+  },
+  {
+    "query": "What does the label on this bottle say?",
+    "tool": "read_text",
+    "parameters": {}
+  },
+  {
+    "query": "Can you read what's written on the board?",
+    "tool": "read_text",
+    "parameters": {}
+  },
+  {
+    "query": "What does it say there?",
+    "tool": "read_text",
+    "parameters": {}
+  },
+  {
+    "query": "Read the text on the screen.",
+    "tool": "read_text",
+    "parameters": {}
+  },
+  {
+    "query": "What's printed on this package?",
+    "tool": "read_text",
+    "parameters": {}
+  },
+  {
+    "query": "Tell me what this document says.",
+    "tool": "read_text",
+    "parameters": {}
+  },
+  {
+    "query": "Read the menu out loud.",
+    "tool": "read_text",
+    "parameters": {}
+  },
+  {
+    "query": "What's the address written on the envelope?",
+    "tool": "read_text",
+    "parameters": {}
+  },
+  {
+    "query": "Can you make out the words on that poster?",
+    "tool": "read_text",
+    "parameters": {}
+  },
+  {
+    "query": "What does the note say?",
+    "tool": "read_text",
+    "parameters": {}
+  },
+  {
+    "query": "Read me the expiration date on this.",
+    "tool": "read_text",
+    "parameters": {}
+  },
+  {
+    "query": "What's written on the whiteboard?",
+    "tool": "read_text",
+    "parameters": {}
+  },
+  {
+    "query": "Read the instructions on the box.",
+    "tool": "read_text",
+    "parameters": {}
+  },
+  {
+    "query": "What letters are on that street sign?",
+    "tool": "read_text",
+    "parameters": {}
+  },
+  {
+    "query": "Can you scan and read this page?",
+    "tool": "read_text",
+    "parameters": {}
+  },
+  {
+    "query": "What numbers are shown on the display?",
+    "tool": "read_text",
+    "parameters": {}
+  },
+  {
+    "query": "Read the handwriting on this card.",
+    "tool": "read_text",
+    "parameters": {}
+  },
+  {
+    "query": "Tell me what the receipt says.",
+    "tool": "read_text",
+    "parameters": {}
+  },
+  {
+    "query": "What's the title printed on this book cover?",
+    "tool": "read_text",
+    "parameters": {}
+  },
+  {
+    "query": "What gesture is that person making?",
+    "tool": "detect_gesture",
+    "parameters": {}
+  },
+  {
+    "query": "Is he waving at me?",
+    "tool": "detect_gesture",
+    "parameters": {}
+  },
+  {
+    "query": "Is she pointing at something?",
+    "tool": "detect_gesture",
+    "parameters": {}
+  },
+  {
+    "query": "What is he doing with his hands?",
+    "tool": "detect_gesture",
+    "parameters": {}
+  },
+  {
+    "query": "Did that person just give a thumbs up?",
+    "tool": "detect_gesture",
+    "parameters": {}
+  },
+  {
+    "query": "Is somebody raising their hand?",
+    "tool": "detect_gesture",
+    "parameters": {}
+  },
+  {
+    "query": "Are they nodding or shaking their head?",
+    "tool": "detect_gesture",
+    "parameters": {}
+  },
+  {
+    "query": "What hand signal is he showing?",
+    "tool": "detect_gesture",
+    "parameters": {}
+  },
+  {
+    "query": "Is she gesturing for me to come over?",
+    "tool": "detect_gesture",
+    "parameters": {}
+  },
+  {
+    "query": "Tell me what movement that person is making.",
+    "tool": "detect_gesture",
+    "parameters": {}
+  },
+  {
+    "query": "Is he beckoning at the camera?",
+    "tool": "detect_gesture",
+    "parameters": {}
+  },
+  {
+    "query": "What's that body language saying?",
+    "tool": "detect_gesture",
+    "parameters": {}
+  },
+  {
+    "query": "Is the kid waving goodbye?",
+    "tool": "detect_gesture",
+    "parameters": {}
+  },
+  {
+    "query": "Are they pointing left or right?",
+    "tool": "detect_gesture",
+    "parameters": {}
+  },
+  {
+    "query": "Is someone signaling stop with their hand?",
+    "tool": "detect_gesture",
+    "parameters": {}
+  },
+  {
+    "query": "What does that hand motion mean?",
+    "tool": "detect_gesture",
+    "parameters": {}
+  },
+  {
+    "query": "Is he giving a thumbs down?",
+    "tool": "detect_gesture",
+    "parameters": {}
+  },
+  {
+    "query": "Is that person clapping?",
+    "tool": "detect_gesture",
+    "parameters": {}
+  },
+  {
+    "query": "Check if she's raising her hand to ask something.",
+    "tool": "detect_gesture",
+    "parameters": {}
+  },
+  {
+    "query": "What's he doing, pointing or waving?",
+    "tool": "detect_gesture",
+    "parameters": {}
+  },
+  {
+    "query": "How old does this person look?",
+    "tool": "assess_face_attributes",
+    "parameters": {}
+  },
+  {
+    "query": "Does she look happy or sad?",
+    "tool": "assess_face_attributes",
+    "parameters": {}
+  },
+  {
+    "query": "What mood is he in?",
+    "tool": "assess_face_attributes",
+    "parameters": {}
+  },
+  {
+    "query": "Describe this person's face for me.",
+    "tool": "assess_face_attributes",
+    "parameters": {}
+  },
+  {
+    "query": "Does he seem angry?",
+    "tool": "assess_face_attributes",
+    "parameters": {}
+  },
+  {
+    "query": "What's their facial expression like?",
+    "tool": "assess_face_attributes",
+    "parameters": {}
+  },
+  {
+    "query": "Is that a man or a woman?",
+    "tool": "assess_face_attributes",
+    "parameters": {}
+  },
+  {
+    "query": "Does she look tired?",
+    "tool": "assess_face_attributes",
+    "parameters": {}
+  },
+  {
+    "query": "Guess this person's age for me.",
+    "tool": "assess_face_attributes",
+    "parameters": {}
+  },
+  {
+    "query": "Is he smiling or frowning?",
+    "tool": "assess_face_attributes",
+    "parameters": {}
+  },
+  {
+    "query": "How are they feeling, judging by their face?",
+    "tool": "assess_face_attributes",
+    "parameters": {}
+  },
+  {
+    "query": "Does this kid look young or grown up?",
+    "tool": "assess_face_attributes",
+    "parameters": {}
+  },
+  {
+    "query": "What emotion is showing on her face?",
+    "tool": "assess_face_attributes",
+    "parameters": {}
+  },
+  {
+    "query": "Does the person look upset?",
+    "tool": "assess_face_attributes",
+    "parameters": {}
+  },
+  {
+    "query": "Tell me roughly how old he is.",
+    "tool": "assess_face_attributes",
+    "parameters": {}
+  },
+  {
+    "query": "Is she in a good mood right now?",
+    "tool": "assess_face_attributes",
+    "parameters": {}
+  },
+  {
+    "query": "What does their expression tell you?",
+    "tool": "assess_face_attributes",
+    "parameters": {}
+  },
+  {
+    "query": "Does he look stressed out?",
+    "tool": "assess_face_attributes",
+    "parameters": {}
+  },
+  {
+    "query": "Estimate the gender and age of this person.",
+    "tool": "assess_face_attributes",
+    "parameters": {}
+  },
+  {
+    "query": "Does this person seem cheerful or down?",
+    "tool": "assess_face_attributes",
+    "parameters": {}
+  },
+  {
+    "query": "Let me know if anything moves.",
+    "tool": "await_motion",
+    "parameters": {}
+  },
+  {
+    "query": "Watch for any motion while I'm gone.",
+    "tool": "await_motion",
+    "parameters": {}
+  },
+  {
+    "query": "Alert me if something moves in here.",
+    "tool": "await_motion",
+    "parameters": {}
+  },
+  {
+    "query": "Keep an eye out and tell me if anything stirs.",
+    "tool": "await_motion",
+    "parameters": {}
+  },
+  {
+    "query": "Start watching the room for movement.",
+    "tool": "await_motion",
+    "parameters": {}
+  },
+  {
+    "query": "Ping me if there's any activity.",
+    "tool": "await_motion",
+    "parameters": {}
+  },
+  {
+    "query": "Notify me the moment something moves.",
+    "tool": "await_motion",
+    "parameters": {}
+  },
+  {
+    "query": "Monitor this area for any motion.",
+    "tool": "await_motion",
+    "parameters": {}
+  },
+  {
+    "query": "Tell me if anything changes out there.",
+    "tool": "await_motion",
+    "parameters": {}
+  },
+  {
+    "query": "Keep watch and warn me if you detect movement.",
+    "tool": "await_motion",
+    "parameters": {}
+  },
+  {
+    "query": "I'm stepping out, let me know if there's any motion.",
+    "tool": "await_motion",
+    "parameters": {}
+  },
+  {
+    "query": "Set up a motion alert for me.",
+    "tool": "await_motion",
+    "parameters": {}
+  },
+  {
+    "query": "Guard the room and buzz me if something moves.",
+    "tool": "await_motion",
+    "parameters": {}
+  },
+  {
+    "query": "Watch for intruders while I sleep.",
+    "tool": "await_motion",
+    "parameters": {}
+  },
+  {
+    "query": "Start a motion watcher.",
+    "tool": "await_motion",
+    "parameters": {}
+  },
+  {
+    "query": "Let me know if anyone walks into frame.",
+    "tool": "await_motion",
+    "parameters": {}
+  },
+  {
+    "query": "Keep monitoring for movement until I say stop.",
+    "tool": "await_motion",
+    "parameters": {}
+  },
+  {
+    "query": "Watch the hallway and alert me on any motion.",
+    "tool": "await_motion",
+    "parameters": {}
+  },
+  {
+    "query": "Be my lookout for any movement.",
+    "tool": "await_motion",
+    "parameters": {}
+  },
+  {
+    "query": "Sound the alert if something shifts in the room.",
+    "tool": "await_motion",
+    "parameters": {}
+  },
+  {
+    "query": "Stop watching now.",
+    "tool": "stop_monitoring",
+    "parameters": {}
+  },
+  {
+    "query": "Cancel all the alerts.",
+    "tool": "stop_monitoring",
+    "parameters": {}
+  },
+  {
+    "query": "Go to sleep.",
+    "tool": "stop_monitoring",
+    "parameters": {}
+  },
+  {
+    "query": "Turn off the monitoring.",
+    "tool": "stop_monitoring",
+    "parameters": {}
+  },
+  {
+    "query": "Stop all the watchers you've got running.",
+    "tool": "stop_monitoring",
+    "parameters": {}
+  },
+  {
+    "query": "Quit watching for motion.",
+    "tool": "stop_monitoring",
+    "parameters": {}
+  },
+  {
+    "query": "End the alerts, I'm back.",
+    "tool": "stop_monitoring",
+    "parameters": {}
+  },
+  {
+    "query": "Stand down, no more watching.",
+    "tool": "stop_monitoring",
+    "parameters": {}
+  },
+  {
+    "query": "Shut off any active alerts.",
+    "tool": "stop_monitoring",
+    "parameters": {}
+  },
+  {
+    "query": "Stop keeping watch.",
+    "tool": "stop_monitoring",
+    "parameters": {}
+  },
+  {
+    "query": "Cancel whatever you're waiting for.",
+    "tool": "stop_monitoring",
+    "parameters": {}
+  },
+  {
+    "query": "Disable the motion watcher.",
+    "tool": "stop_monitoring",
+    "parameters": {}
+  },
+  {
+    "query": "You can stop monitoring the room.",
+    "tool": "stop_monitoring",
+    "parameters": {}
+  },
+  {
+    "query": "Kill all the background watchers.",
+    "tool": "stop_monitoring",
+    "parameters": {}
+  },
+  {
+    "query": "Stop waiting and end the task.",
+    "tool": "stop_monitoring",
+    "parameters": {}
+  },
+  {
+    "query": "Turn off surveillance mode.",
+    "tool": "stop_monitoring",
+    "parameters": {}
+  },
+  {
+    "query": "Stop notifying me about everything.",
+    "tool": "stop_monitoring",
+    "parameters": {}
+  },
+  {
+    "query": "Halt all monitoring.",
+    "tool": "stop_monitoring",
+    "parameters": {}
+  },
+  {
+    "query": "I'm home, you can stop watching.",
+    "tool": "stop_monitoring",
+    "parameters": {}
+  },
+  {
+    "query": "Deactivate the alerts please.",
+    "tool": "stop_monitoring",
+    "parameters": {}
+  },
+  {
+    "query": "Delete all the faces.",
+    "tool": "delete_all_faces",
+    "parameters": {}
+  },
+  {
+    "query": "Forget everyone you know.",
+    "tool": "delete_all_faces",
+    "parameters": {}
+  },
+  {
+    "query": "Clear the entire database.",
+    "tool": "delete_all_faces",
+    "parameters": {}
+  },
+  {
+    "query": "Wipe all saved people.",
+    "tool": "delete_all_faces",
+    "parameters": {}
+  },
+  {
+    "query": "Reset the system and erase every face.",
+    "tool": "delete_all_faces",
+    "parameters": {}
+  },
+  {
+    "query": "Remove all enrolled users at once.",
+    "tool": "delete_all_faces",
+    "parameters": {}
+  },
+  {
+    "query": "Erase your whole memory of people.",
+    "tool": "delete_all_faces",
+    "parameters": {}
+  },
+  {
+    "query": "Start fresh, delete everyone.",
+    "tool": "delete_all_faces",
+    "parameters": {}
+  },
+  {
+    "query": "Purge the face database completely.",
+    "tool": "delete_all_faces",
+    "parameters": {}
+  },
+  {
+    "query": "Get rid of every person you've stored.",
+    "tool": "delete_all_faces",
+    "parameters": {}
+  },
+  {
+    "query": "Forget all the faces you've learned.",
+    "tool": "delete_all_faces",
+    "parameters": {}
+  },
+  {
+    "query": "Empty the list of saved faces.",
+    "tool": "delete_all_faces",
+    "parameters": {}
+  },
+  {
+    "query": "Drop all records of people.",
+    "tool": "delete_all_faces",
+    "parameters": {}
+  },
+  {
+    "query": "Clear out everyone from memory.",
+    "tool": "delete_all_faces",
+    "parameters": {}
+  },
+  {
+    "query": "Delete the whole face registry.",
+    "tool": "delete_all_faces",
+    "parameters": {}
+  },
+  {
+    "query": "Wipe everyone and reset.",
+    "tool": "delete_all_faces",
+    "parameters": {}
+  },
+  {
+    "query": "Remove every single saved face.",
+    "tool": "delete_all_faces",
+    "parameters": {}
+  },
+  {
+    "query": "Factory reset all the enrolled people.",
+    "tool": "delete_all_faces",
+    "parameters": {}
+  },
+  {
+    "query": "Throw away all stored faces.",
+    "tool": "delete_all_faces",
+    "parameters": {}
+  },
+  {
+    "query": "Scrub the database of all users.",
+    "tool": "delete_all_faces",
+    "parameters": {}
+  },
+  {
+    "query": "What is that noise?",
+    "tool": "classify_sound",
+    "parameters": {}
+  },
+  {
+    "query": "What sound was that?",
+    "tool": "classify_sound",
+    "parameters": {}
+  },
+  {
+    "query": "Can you identify that audio?",
+    "tool": "classify_sound",
+    "parameters": {}
+  },
+  {
+    "query": "Was that a dog barking?",
+    "tool": "classify_sound",
+    "parameters": {}
+  },
+  {
+    "query": "What made that sound just now?",
+    "tool": "classify_sound",
+    "parameters": {}
+  },
+  {
+    "query": "Is that a siren I'm hearing?",
+    "tool": "classify_sound",
+    "parameters": {}
+  },
+  {
+    "query": "Did something just break?",
+    "tool": "classify_sound",
+    "parameters": {}
+  },
+  {
+    "query": "Was that the doorbell?",
+    "tool": "classify_sound",
+    "parameters": {}
+  },
+  {
+    "query": "What kind of sound is happening?",
+    "tool": "classify_sound",
+    "parameters": {}
+  },
+  {
+    "query": "Is someone knocking?",
+    "tool": "classify_sound",
+    "parameters": {}
+  },
+  {
+    "query": "Tell me what that noise is.",
+    "tool": "classify_sound",
+    "parameters": {}
+  },
+  {
+    "query": "Is that an alarm going off?",
+    "tool": "classify_sound",
+    "parameters": {}
+  },
+  {
+    "query": "What's that banging sound?",
+    "tool": "classify_sound",
+    "parameters": {}
+  },
+  {
+    "query": "Identify the sound you just heard.",
+    "tool": "classify_sound",
+    "parameters": {}
+  },
+  {
+    "query": "Was that glass shattering?",
+    "tool": "classify_sound",
+    "parameters": {}
+  },
+  {
+    "query": "What's that ringing noise?",
+    "tool": "classify_sound",
+    "parameters": {}
+  },
+  {
+    "query": "Can you tell what's making that sound?",
+    "tool": "classify_sound",
+    "parameters": {}
+  },
+  {
+    "query": "Is that a car horn?",
+    "tool": "classify_sound",
+    "parameters": {}
+  },
+  {
+    "query": "What was that thud?",
+    "tool": "classify_sound",
+    "parameters": {}
+  },
+  {
+    "query": "Figure out what that noise outside is.",
+    "tool": "classify_sound",
+    "parameters": {}
+  },
+  {
+    "query": "How loud is it right now?",
+    "tool": "measure_noise_level",
+    "parameters": {}
+  },
+  {
+    "query": "What's the decibel level in here?",
+    "tool": "measure_noise_level",
+    "parameters": {}
+  },
+  {
+    "query": "Is it noisy in this room?",
+    "tool": "measure_noise_level",
+    "parameters": {}
+  },
+  {
+    "query": "Check how quiet it is.",
+    "tool": "measure_noise_level",
+    "parameters": {}
+  },
+  {
+    "query": "Is the room too loud?",
+    "tool": "measure_noise_level",
+    "parameters": {}
+  },
+  {
+    "query": "Measure the sound volume here.",
+    "tool": "measure_noise_level",
+    "parameters": {}
+  },
+  {
+    "query": "How many decibels is it?",
+    "tool": "measure_noise_level",
+    "parameters": {}
+  },
+  {
+    "query": "Is it calm and silent in here?",
+    "tool": "measure_noise_level",
+    "parameters": {}
+  },
+  {
+    "query": "Tell me the noise level.",
+    "tool": "measure_noise_level",
+    "parameters": {}
+  },
+  {
+    "query": "How loud is the environment?",
+    "tool": "measure_noise_level",
+    "parameters": {}
+  },
+  {
+    "query": "Is it quiet enough to sleep?",
+    "tool": "measure_noise_level",
+    "parameters": {}
+  },
+  {
+    "query": "Check the volume in the room.",
+    "tool": "measure_noise_level",
+    "parameters": {}
+  },
+  {
+    "query": "How much background noise is there?",
+    "tool": "measure_noise_level",
+    "parameters": {}
+  },
+  {
+    "query": "Is the sound level too high?",
+    "tool": "measure_noise_level",
+    "parameters": {}
+  },
+  {
+    "query": "Give me a reading on the loudness.",
+    "tool": "measure_noise_level",
+    "parameters": {}
+  },
+  {
+    "query": "Is it peaceful and quiet right now?",
+    "tool": "measure_noise_level",
+    "parameters": {}
+  },
+  {
+    "query": "What's the ambient noise like?",
+    "tool": "measure_noise_level",
+    "parameters": {}
+  },
+  {
+    "query": "Measure the dB level for me.",
+    "tool": "measure_noise_level",
+    "parameters": {}
+  },
+  {
+    "query": "Is this a loud space?",
+    "tool": "measure_noise_level",
+    "parameters": {}
+  },
+  {
+    "query": "How silent is it in the house?",
+    "tool": "measure_noise_level",
+    "parameters": {}
+  },
+  {
+    "query": "Who do you know?",
+    "tool": "list_faces",
+    "parameters": {}
+  },
+  {
+    "query": "List all the saved people.",
+    "tool": "list_faces",
+    "parameters": {}
+  },
+  {
+    "query": "Show me the face database.",
+    "tool": "list_faces",
+    "parameters": {}
+  },
+  {
+    "query": "Who's registered in the system?",
+    "tool": "list_faces",
+    "parameters": {}
+  },
+  {
+    "query": "Give me the names of everyone you've stored.",
+    "tool": "list_faces",
+    "parameters": {}
+  },
+  {
+    "query": "Who have you remembered so far?",
+    "tool": "list_faces",
+    "parameters": {}
+  },
+  {
+    "query": "Tell me all the people you recognize.",
+    "tool": "list_faces",
+    "parameters": {}
+  },
+  {
+    "query": "What users are enrolled?",
+    "tool": "list_faces",
+    "parameters": {}
+  },
+  {
+    "query": "List the faces you have on file.",
+    "tool": "list_faces",
+    "parameters": {}
+  },
+  {
+    "query": "Who's in your memory?",
+    "tool": "list_faces",
+    "parameters": {}
+  },
+  {
+    "query": "Read off everyone that's saved.",
+    "tool": "list_faces",
+    "parameters": {}
+  },
+  {
+    "query": "How many people do you know, and who?",
+    "tool": "list_faces",
+    "parameters": {}
+  },
+  {
+    "query": "Show all the names in the database.",
+    "tool": "list_faces",
+    "parameters": {}
+  },
+  {
+    "query": "Who are the known people?",
+    "tool": "list_faces",
+    "parameters": {}
+  },
+  {
+    "query": "Give me the full list of enrolled faces.",
+    "tool": "list_faces",
+    "parameters": {}
+  },
+  {
+    "query": "Which people have been added?",
+    "tool": "list_faces",
+    "parameters": {}
+  },
+  {
+    "query": "Tell me everyone in the registry.",
+    "tool": "list_faces",
+    "parameters": {}
+  },
+  {
+    "query": "What names are stored?",
+    "tool": "list_faces",
+    "parameters": {}
+  },
+  {
+    "query": "Print out all saved users.",
+    "tool": "list_faces",
+    "parameters": {}
+  },
+  {
+    "query": "Who's on the list of recognized faces?",
+    "tool": "list_faces",
+    "parameters": {}
+  },
+  {
+    "query": "What do you see?",
+    "tool": "describe_scene",
+    "parameters": {}
+  },
+  {
+    "query": "Describe the room for me.",
+    "tool": "describe_scene",
+    "parameters": {}
+  },
+  {
+    "query": "What's in front of me?",
+    "tool": "describe_scene",
+    "parameters": {}
+  },
+  {
+    "query": "Tell me what the camera is looking at.",
+    "tool": "describe_scene",
+    "parameters": {}
+  },
+  {
+    "query": "Give me an overview of my surroundings.",
+    "tool": "describe_scene",
+    "parameters": {}
+  },
+  {
+    "query": "What's going on in the scene?",
+    "tool": "describe_scene",
+    "parameters": {}
+  },
+  {
+    "query": "Paint me a picture of what's around.",
+    "tool": "describe_scene",
+    "parameters": {}
+  },
+  {
+    "query": "What's the setting like here?",
+    "tool": "describe_scene",
+    "parameters": {}
+  },
+  {
+    "query": "Walk me through everything you can see.",
+    "tool": "describe_scene",
+    "parameters": {}
+  },
+  {
+    "query": "Describe the environment.",
+    "tool": "describe_scene",
+    "parameters": {}
+  },
+  {
+    "query": "What objects are in view?",
+    "tool": "describe_scene",
+    "parameters": {}
+  },
+  {
+    "query": "Summarize what's visible right now.",
+    "tool": "describe_scene",
+    "parameters": {}
+  },
+  {
+    "query": "Tell me about the room I'm in.",
+    "tool": "describe_scene",
+    "parameters": {}
+  },
+  {
+    "query": "What does the area look like?",
+    "tool": "describe_scene",
+    "parameters": {}
+  },
+  {
+    "query": "Give me a rundown of the surroundings.",
+    "tool": "describe_scene",
+    "parameters": {}
+  },
+  {
+    "query": "What's around me right now?",
+    "tool": "describe_scene",
+    "parameters": {}
+  },
+  {
+    "query": "Describe the whole scene in detail.",
+    "tool": "describe_scene",
+    "parameters": {}
+  },
+  {
+    "query": "What's happening in the view?",
+    "tool": "describe_scene",
+    "parameters": {}
+  },
+  {
+    "query": "Tell me what's out there.",
+    "tool": "describe_scene",
+    "parameters": {}
+  },
+  {
+    "query": "Give me the lay of the land in here.",
+    "tool": "describe_scene",
+    "parameters": {}
+  },
+  {
+    "query": "Take a picture.",
+    "tool": "take_photo",
+    "parameters": {}
+  },
+  {
+    "query": "Snap a photo.",
+    "tool": "take_photo",
+    "parameters": {}
+  },
+  {
+    "query": "Capture this moment.",
+    "tool": "take_photo",
+    "parameters": {}
+  },
+  {
+    "query": "Grab a shot of this.",
+    "tool": "take_photo",
+    "parameters": {}
+  },
+  {
+    "query": "Take a photo and save it.",
+    "tool": "take_photo",
+    "parameters": {}
+  },
+  {
+    "query": "Get a picture of what's in front of you.",
+    "tool": "take_photo",
+    "parameters": {}
+  },
+  {
+    "query": "Snap this real quick.",
+    "tool": "take_photo",
+    "parameters": {}
+  },
+  {
+    "query": "Shoot a photo now.",
+    "tool": "take_photo",
+    "parameters": {}
+  },
+  {
+    "query": "Take a snapshot of the room.",
+    "tool": "take_photo",
+    "parameters": {}
+  },
+  {
+    "query": "Photograph this scene.",
+    "tool": "take_photo",
+    "parameters": {}
+  },
+  {
+    "query": "Capture an image right now.",
+    "tool": "take_photo",
+    "parameters": {}
+  },
+  {
+    "query": "Save a picture of this.",
+    "tool": "take_photo",
+    "parameters": {}
+  },
+  {
+    "query": "Take a quick pic.",
+    "tool": "take_photo",
+    "parameters": {}
+  },
+  {
+    "query": "Snap a still of what you see.",
+    "tool": "take_photo",
+    "parameters": {}
+  },
+  {
+    "query": "Get a photo of me here.",
+    "tool": "take_photo",
+    "parameters": {}
+  },
+  {
+    "query": "Take a picture for the record.",
+    "tool": "take_photo",
+    "parameters": {}
+  },
+  {
+    "query": "Capture a frame and store it.",
+    "tool": "take_photo",
+    "parameters": {}
+  },
+  {
+    "query": "Take a photograph right here.",
+    "tool": "take_photo",
+    "parameters": {}
+  },
+  {
+    "query": "Click a photo of this view.",
+    "tool": "take_photo",
+    "parameters": {}
+  },
+  {
+    "query": "Snap and keep an image of this.",
+    "tool": "take_photo",
+    "parameters": {}
+  },
+  {
+    "query": "Is the camera on?",
+    "tool": "get_camera_status",
+    "parameters": {}
+  },
+  {
+    "query": "Check the system status.",
+    "tool": "get_camera_status",
+    "parameters": {}
+  },
+  {
+    "query": "Run camera diagnostics.",
+    "tool": "get_camera_status",
+    "parameters": {}
+  },
+  {
+    "query": "What's the camera resolution?",
+    "tool": "get_camera_status",
+    "parameters": {}
+  },
+  {
+    "query": "Is the camera connected properly?",
+    "tool": "get_camera_status",
+    "parameters": {}
+  },
+  {
+    "query": "What's the current frame rate?",
+    "tool": "get_camera_status",
+    "parameters": {}
+  },
+  {
+    "query": "Is the camera working right now?",
+    "tool": "get_camera_status",
+    "parameters": {}
+  },
+  {
+    "query": "Give me the camera's health report.",
+    "tool": "get_camera_status",
+    "parameters": {}
+  },
+  {
+    "query": "Check if the camera is functioning.",
+    "tool": "get_camera_status",
+    "parameters": {}
+  },
+  {
+    "query": "Is everything okay with the camera?",
+    "tool": "get_camera_status",
+    "parameters": {}
+  },
+  {
+    "query": "What's the status of the camera feed?",
+    "tool": "get_camera_status",
+    "parameters": {}
+  },
+  {
+    "query": "Tell me the technical info on the camera.",
+    "tool": "get_camera_status",
+    "parameters": {}
+  },
+  {
+    "query": "Is the camera off or on?",
+    "tool": "get_camera_status",
+    "parameters": {}
+  },
+  {
+    "query": "Diagnose the camera for me.",
+    "tool": "get_camera_status",
+    "parameters": {}
+  },
+  {
+    "query": "How's the camera connection doing?",
+    "tool": "get_camera_status",
+    "parameters": {}
+  },
+  {
+    "query": "Check the device's camera health.",
+    "tool": "get_camera_status",
+    "parameters": {}
+  },
+  {
+    "query": "Is the video feed live?",
+    "tool": "get_camera_status",
+    "parameters": {}
+  },
+  {
+    "query": "Report the camera's settings and status.",
+    "tool": "get_camera_status",
+    "parameters": {}
+  },
+  {
+    "query": "Verify the camera is up and running.",
+    "tool": "get_camera_status",
+    "parameters": {}
+  },
+  {
+    "query": "What frame rate and resolution are we at?",
+    "tool": "get_camera_status",
+    "parameters": {}
+  },
+  {
+    "query": "What's the weather like outside?",
+    "tool": "check_weather_outside",
+    "parameters": {}
+  },
+  {
+    "query": "Is it raining out there?",
+    "tool": "check_weather_outside",
+    "parameters": {}
+  },
+  {
+    "query": "What's the temperature right now?",
+    "tool": "check_weather_outside",
+    "parameters": {}
+  },
+  {
+    "query": "Do I need an umbrella today?",
+    "tool": "check_weather_outside",
+    "parameters": {}
+  },
+  {
+    "query": "Is it cold outside?",
+    "tool": "check_weather_outside",
+    "parameters": {}
+  },
+  {
+    "query": "What should I wear, weather-wise?",
+    "tool": "check_weather_outside",
+    "parameters": {}
+  },
+  {
+    "query": "Is it sunny or cloudy out?",
+    "tool": "check_weather_outside",
+    "parameters": {}
+  },
+  {
+    "query": "How's the weather looking?",
+    "tool": "check_weather_outside",
+    "parameters": {}
+  },
+  {
+    "query": "Is it snowing outside?",
+    "tool": "check_weather_outside",
+    "parameters": {}
+  },
+  {
+    "query": "What's the humidity like out there?",
+    "tool": "check_weather_outside",
+    "parameters": {}
+  },
+  {
+    "query": "Is it windy today?",
+    "tool": "check_weather_outside",
+    "parameters": {}
+  },
+  {
+    "query": "Tell me the outdoor conditions.",
+    "tool": "check_weather_outside",
+    "parameters": {}
+  },
+  {
+    "query": "Is it hot out right now?",
+    "tool": "check_weather_outside",
+    "parameters": {}
+  },
+  {
+    "query": "Should I bring a jacket outside?",
+    "tool": "check_weather_outside",
+    "parameters": {}
+  },
+  {
+    "query": "What's it like out, weather-wise?",
+    "tool": "check_weather_outside",
+    "parameters": {}
+  },
+  {
+    "query": "Give me the current weather report.",
+    "tool": "check_weather_outside",
+    "parameters": {}
+  },
+  {
+    "query": "Is there rain in the air outside?",
+    "tool": "check_weather_outside",
+    "parameters": {}
+  },
+  {
+    "query": "How warm is it outdoors?",
+    "tool": "check_weather_outside",
+    "parameters": {}
+  },
+  {
+    "query": "Check the temperature and conditions outside.",
+    "tool": "check_weather_outside",
+    "parameters": {}
+  },
+  {
+    "query": "Is the weather nice enough for a walk?",
+    "tool": "check_weather_outside",
+    "parameters": {}
+  },
+  {
+    "query": "How is the air quality?",
+    "tool": "check_air_quality",
+    "parameters": {}
+  },
+  {
+    "query": "Is the air safe to breathe?",
+    "tool": "check_air_quality",
+    "parameters": {}
+  },
+  {
+    "query": "Check the CO2 level in here.",
+    "tool": "check_air_quality",
+    "parameters": {}
+  },
+  {
+    "query": "Should I open a window?",
+    "tool": "check_air_quality",
+    "parameters": {}
+  },
+  {
+    "query": "Is the air in this room stuffy?",
+    "tool": "check_air_quality",
+    "parameters": {}
+  },
+  {
+    "query": "What's the indoor air like?",
+    "tool": "check_air_quality",
+    "parameters": {}
+  },
+  {
+    "query": "Is the air polluted in here?",
+    "tool": "check_air_quality",
+    "parameters": {}
+  },
+  {
+    "query": "Check the particulate levels indoors.",
+    "tool": "check_air_quality",
+    "parameters": {}
+  },
+  {
+    "query": "Is it healthy to breathe in this room?",
+    "tool": "check_air_quality",
+    "parameters": {}
+  },
+  {
+    "query": "How clean is the air right now?",
+    "tool": "check_air_quality",
+    "parameters": {}
+  },
+  {
+    "query": "What's the PM2.5 reading?",
+    "tool": "check_air_quality",
+    "parameters": {}
+  },
+  {
+    "query": "Is the CO2 too high in here?",
+    "tool": "check_air_quality",
+    "parameters": {}
+  },
+  {
+    "query": "Tell me the air quality indoors.",
+    "tool": "check_air_quality",
+    "parameters": {}
+  },
+  {
+    "query": "Is the air fresh or stale?",
+    "tool": "check_air_quality",
+    "parameters": {}
+  },
+  {
+    "query": "Do I need to ventilate the room?",
+    "tool": "check_air_quality",
+    "parameters": {}
+  },
+  {
+    "query": "Check if the breathing conditions are okay.",
+    "tool": "check_air_quality",
+    "parameters": {}
+  },
+  {
+    "query": "What's the air quality index inside?",
+    "tool": "check_air_quality",
+    "parameters": {}
+  },
+  {
+    "query": "Is the indoor air clean enough?",
+    "tool": "check_air_quality",
+    "parameters": {}
+  },
+  {
+    "query": "Measure the air in this room.",
+    "tool": "check_air_quality",
+    "parameters": {}
+  },
+  {
+    "query": "Is the air getting stuffy in here?",
+    "tool": "check_air_quality",
+    "parameters": {}
+  },
+  {
+    "query": "What can you do?",
+    "tool": "list_capabilities",
+    "parameters": {}
+  },
+  {
+    "query": "Show me all the commands.",
+    "tool": "list_capabilities",
+    "parameters": {}
+  },
+  {
+    "query": "Help.",
+    "tool": "list_capabilities",
+    "parameters": {}
+  },
+  {
+    "query": "What features do you have?",
+    "tool": "list_capabilities",
+    "parameters": {}
+  },
+  {
+    "query": "List everything you're able to do.",
+    "tool": "list_capabilities",
+    "parameters": {}
+  },
+  {
+    "query": "What are your skills?",
+    "tool": "list_capabilities",
+    "parameters": {}
+  },
+  {
+    "query": "Tell me what's possible with you.",
+    "tool": "list_capabilities",
+    "parameters": {}
+  },
+  {
+    "query": "What kind of things can you handle?",
+    "tool": "list_capabilities",
+    "parameters": {}
+  },
+  {
+    "query": "Give me a list of all your actions.",
+    "tool": "list_capabilities",
+    "parameters": {}
+  },
+  {
+    "query": "What options do I have?",
+    "tool": "list_capabilities",
+    "parameters": {}
+  },
+  {
+    "query": "Show me your full feature list.",
+    "tool": "list_capabilities",
+    "parameters": {}
+  },
+  {
+    "query": "What commands are available?",
+    "tool": "list_capabilities",
+    "parameters": {}
+  },
+  {
+    "query": "What functions can you perform?",
+    "tool": "list_capabilities",
+    "parameters": {}
+  },
+  {
+    "query": "Tell me everything you're capable of.",
+    "tool": "list_capabilities",
+    "parameters": {}
+  },
+  {
+    "query": "What's in your toolkit?",
+    "tool": "list_capabilities",
+    "parameters": {}
+  },
+  {
+    "query": "Run me through what you can do.",
+    "tool": "list_capabilities",
+    "parameters": {}
+  },
+  {
+    "query": "Give me the help menu.",
+    "tool": "list_capabilities",
+    "parameters": {}
+  },
+  {
+    "query": "What abilities do you offer?",
+    "tool": "list_capabilities",
+    "parameters": {}
+  },
+  {
+    "query": "Show all the things you support.",
+    "tool": "list_capabilities",
+    "parameters": {}
+  },
+  {
+    "query": "What's your list of capabilities?",
+    "tool": "list_capabilities",
+    "parameters": {}
+  },
+  {
+    "query": "Tell me when John gets here.",
+    "tool": "await_specific_name",
+    "parameters": {
+      "name": "John"
+    }
+  },
+  {
+    "query": "Wait for Sarah to arrive.",
+    "tool": "await_specific_name",
+    "parameters": {
+      "name": "Sarah"
+    }
+  },
+  {
+    "query": "Alert me if David shows up.",
+    "tool": "await_specific_name",
+    "parameters": {
+      "name": "David"
+    }
+  },
+  {
+    "query": "Let me know the moment Emma appears.",
+    "tool": "await_specific_name",
+    "parameters": {
+      "name": "Emma"
+    }
+  },
+  {
+    "query": "Watch for Michael and ping me when he's here.",
+    "tool": "await_specific_name",
+    "parameters": {
+      "name": "Michael"
+    }
+  },
+  {
+    "query": "Notify me when Grandma walks in.",
+    "tool": "await_specific_name",
+    "parameters": {
+      "name": "Grandma"
+    }
+  },
+  {
+    "query": "Tell me as soon as Alex turns up.",
+    "tool": "await_specific_name",
+    "parameters": {
+      "name": "Alex"
+    }
+  },
+  {
+    "query": "Keep an eye out for Maria's arrival.",
+    "tool": "await_specific_name",
+    "parameters": {
+      "name": "Maria"
+    }
+  },
+  {
+    "query": "Buzz me when Tom gets back.",
+    "tool": "await_specific_name",
+    "parameters": {
+      "name": "Tom"
+    }
+  },
+  {
+    "query": "Wait until Olivia comes home and let me know.",
+    "tool": "await_specific_name",
+    "parameters": {
+      "name": "Olivia"
+    }
+  },
+  {
+    "query": "Alert me when Dad arrives.",
+    "tool": "await_specific_name",
+    "parameters": {
+      "name": "Dad"
+    }
+  },
+  {
+    "query": "Watch for Jessica showing up.",
+    "tool": "await_specific_name",
+    "parameters": {
+      "name": "Jessica"
+    }
+  },
+  {
+    "query": "Let me know if Robert appears on camera.",
+    "tool": "await_specific_name",
+    "parameters": {
+      "name": "Robert"
+    }
+  },
+  {
+    "query": "Tell me when Lily comes through the door.",
+    "tool": "await_specific_name",
+    "parameters": {
+      "name": "Lily"
+    }
+  },
+  {
+    "query": "Notify me the second Chris is here.",
+    "tool": "await_specific_name",
+    "parameters": {
+      "name": "Chris"
+    }
+  },
+  {
+    "query": "Wait for Sophia and alert me.",
+    "tool": "await_specific_name",
+    "parameters": {
+      "name": "Sophia"
+    }
+  },
+  {
+    "query": "Ping me when Daniel arrives.",
+    "tool": "await_specific_name",
+    "parameters": {
+      "name": "Daniel"
+    }
+  },
+  {
+    "query": "Keep watch for Hannah and tell me when she's spotted.",
+    "tool": "await_specific_name",
+    "parameters": {
+      "name": "Hannah"
+    }
+  },
+  {
+    "query": "Let me know when Uncle Joe gets here.",
+    "tool": "await_specific_name",
+    "parameters": {
+      "name": "Uncle Joe"
+    }
+  },
+  {
+    "query": "Alert me when Mom comes back.",
+    "tool": "await_specific_name",
+    "parameters": {
+      "name": "Mom"
+    }
+  },
+  {
+    "query": "Tell me if you see a dog.",
+    "tool": "await_general_entity",
+    "parameters": {
+      "entity": "dog"
+    }
+  },
+  {
+    "query": "Alert me when a package arrives.",
+    "tool": "await_general_entity",
+    "parameters": {
+      "entity": "package"
+    }
+  },
+  {
+    "query": "Watch for a car pulling up.",
+    "tool": "await_general_entity",
+    "parameters": {
+      "entity": "car"
+    }
+  },
+  {
+    "query": "Let me know if a cat shows up.",
+    "tool": "await_general_entity",
+    "parameters": {
+      "entity": "cat"
+    }
+  },
+  {
+    "query": "Notify me when the delivery truck comes.",
+    "tool": "await_general_entity",
+    "parameters": {
+      "entity": "delivery truck"
+    }
+  },
+  {
+    "query": "Tell me if a bird lands in the yard.",
+    "tool": "await_general_entity",
+    "parameters": {
+      "entity": "bird"
+    }
+  },
+  {
+    "query": "Watch for the mail carrier.",
+    "tool": "await_general_entity",
+    "parameters": {
+      "entity": "mail carrier"
+    }
+  },
+  {
+    "query": "Alert me if a bus stops outside.",
+    "tool": "await_general_entity",
+    "parameters": {
+      "entity": "bus"
+    }
+  },
+  {
+    "query": "Let me know when a bicycle goes by.",
+    "tool": "await_general_entity",
+    "parameters": {
+      "entity": "bicycle"
+    }
+  },
+  {
+    "query": "Ping me if a raccoon appears.",
+    "tool": "await_general_entity",
+    "parameters": {
+      "entity": "raccoon"
+    }
+  },
+  {
+    "query": "Watch out for any deliveries.",
+    "tool": "await_general_entity",
+    "parameters": {
+      "entity": "delivery"
+    }
+  },
+  {
+    "query": "Tell me if a truck shows up.",
+    "tool": "await_general_entity",
+    "parameters": {
+      "entity": "truck"
+    }
+  },
+  {
+    "query": "Alert me when a person walks past.",
+    "tool": "await_general_entity",
+    "parameters": {
+      "entity": "person"
+    }
+  },
+  {
+    "query": "Let me know if a squirrel comes around.",
+    "tool": "await_general_entity",
+    "parameters": {
+      "entity": "squirrel"
+    }
+  },
+  {
+    "query": "Notify me if a taxi pulls in.",
+    "tool": "await_general_entity",
+    "parameters": {
+      "entity": "taxi"
+    }
+  },
+  {
+    "query": "Watch for any animals in the garden.",
+    "tool": "await_general_entity",
+    "parameters": {
+      "entity": "animal"
+    }
+  },
+  {
+    "query": "Tell me when a box gets dropped off.",
+    "tool": "await_general_entity",
+    "parameters": {
+      "entity": "box"
+    }
+  },
+  {
+    "query": "Alert me if a motorcycle appears.",
+    "tool": "await_general_entity",
+    "parameters": {
+      "entity": "motorcycle"
+    }
+  },
+  {
+    "query": "Let me know if a fox shows up outside.",
+    "tool": "await_general_entity",
+    "parameters": {
+      "entity": "fox"
+    }
+  },
+  {
+    "query": "Watch for a van parking out front.",
+    "tool": "await_general_entity",
+    "parameters": {
+      "entity": "van"
+    }
+  },
+  {
+    "query": "How many people are there?",
+    "tool": "count_general_entity",
+    "parameters": {
+      "entity": "people"
+    }
+  },
+  {
+    "query": "Count the chairs in the room.",
+    "tool": "count_general_entity",
+    "parameters": {
+      "entity": "chairs"
+    }
+  },
+  {
+    "query": "How many cars do you see?",
+    "tool": "count_general_entity",
+    "parameters": {
+      "entity": "cars"
+    }
+  },
+  {
+    "query": "How many dogs are in the yard?",
+    "tool": "count_general_entity",
+    "parameters": {
+      "entity": "dogs"
+    }
+  },
+  {
+    "query": "Count how many bottles are on the table.",
+    "tool": "count_general_entity",
+    "parameters": {
+      "entity": "bottles"
+    }
+  },
+  {
+    "query": "How many kids are playing out there?",
+    "tool": "count_general_entity",
+    "parameters": {
+      "entity": "kids"
+    }
+  },
+  {
+    "query": "Tally the books on the shelf.",
+    "tool": "count_general_entity",
+    "parameters": {
+      "entity": "books"
+    }
+  },
+  {
+    "query": "How many windows are in view?",
+    "tool": "count_general_entity",
+    "parameters": {
+      "entity": "windows"
+    }
+  },
+  {
+    "query": "Count the cups on the counter.",
+    "tool": "count_general_entity",
+    "parameters": {
+      "entity": "cups"
+    }
+  },
+  {
+    "query": "How many people are in line?",
+    "tool": "count_general_entity",
+    "parameters": {
+      "entity": "people"
+    }
+  },
+  {
+    "query": "How many plants do you see?",
+    "tool": "count_general_entity",
+    "parameters": {
+      "entity": "plants"
+    }
+  },
+  {
+    "query": "Count the number of boxes here.",
+    "tool": "count_general_entity",
+    "parameters": {
+      "entity": "boxes"
+    }
+  },
+  {
+    "query": "How many bikes are parked outside?",
+    "tool": "count_general_entity",
+    "parameters": {
+      "entity": "bikes"
+    }
+  },
+  {
+    "query": "Total up the apples in the bowl.",
+    "tool": "count_general_entity",
+    "parameters": {
+      "entity": "apples"
+    }
+  },
+  {
+    "query": "How many phones are on the desk?",
+    "tool": "count_general_entity",
+    "parameters": {
+      "entity": "phones"
+    }
+  },
+  {
+    "query": "Count the cats in the room.",
+    "tool": "count_general_entity",
+    "parameters": {
+      "entity": "cats"
+    }
+  },
+  {
+    "query": "How many bags are there?",
+    "tool": "count_general_entity",
+    "parameters": {
+      "entity": "bags"
+    }
+  },
+  {
+    "query": "Enumerate the plates on the table.",
+    "tool": "count_general_entity",
+    "parameters": {
+      "entity": "plates"
+    }
+  },
+  {
+    "query": "How many trees can you see?",
+    "tool": "count_general_entity",
+    "parameters": {
+      "entity": "trees"
+    }
+  },
+  {
+    "query": "Count the shoes by the door.",
+    "tool": "count_general_entity",
+    "parameters": {
+      "entity": "shoes"
+    }
+  },
+  {
+    "query": "How far away is the door?",
+    "tool": "estimate_distance",
+    "parameters": {
+      "target": "door"
+    }
+  },
+  {
+    "query": "What's the distance to that car?",
+    "tool": "estimate_distance",
+    "parameters": {
+      "target": "car"
+    }
+  },
+  {
+    "query": "Is that person close or far?",
+    "tool": "estimate_distance",
+    "parameters": {
+      "target": "person"
+    }
+  },
+  {
+    "query": "How far is the wall from here?",
+    "tool": "estimate_distance",
+    "parameters": {
+      "target": "wall"
+    }
+  },
+  {
+    "query": "How many meters to the table?",
+    "tool": "estimate_distance",
+    "parameters": {
+      "target": "table"
+    }
+  },
+  {
+    "query": "How far away is the dog?",
+    "tool": "estimate_distance",
+    "parameters": {
+      "target": "dog"
+    }
+  },
+  {
+    "query": "What's the distance to the window?",
+    "tool": "estimate_distance",
+    "parameters": {
+      "target": "window"
+    }
+  },
+  {
+    "query": "Is the couch nearby or far away?",
+    "tool": "estimate_distance",
+    "parameters": {
+      "target": "couch"
+    }
+  },
+  {
+    "query": "How far is the staircase?",
+    "tool": "estimate_distance",
+    "parameters": {
+      "target": "staircase"
+    }
+  },
+  {
+    "query": "Measure the distance to the gate.",
+    "tool": "estimate_distance",
+    "parameters": {
+      "target": "gate"
+    }
+  },
+  {
+    "query": "How close is that tree?",
+    "tool": "estimate_distance",
+    "parameters": {
+      "target": "tree"
+    }
+  },
+  {
+    "query": "What's the gap between me and the fridge?",
+    "tool": "estimate_distance",
+    "parameters": {
+      "target": "fridge"
+    }
+  },
+  {
+    "query": "How far away is the TV?",
+    "tool": "estimate_distance",
+    "parameters": {
+      "target": "TV"
+    }
+  },
+  {
+    "query": "Is the fence far from here?",
+    "tool": "estimate_distance",
+    "parameters": {
+      "target": "fence"
+    }
+  },
+  {
+    "query": "How many meters to the parked truck?",
+    "tool": "estimate_distance",
+    "parameters": {
+      "target": "truck"
+    }
+  },
+  {
+    "query": "What's the distance to the bookshelf?",
+    "tool": "estimate_distance",
+    "parameters": {
+      "target": "bookshelf"
+    }
+  },
+  {
+    "query": "How far is the person standing from me?",
+    "tool": "estimate_distance",
+    "parameters": {
+      "target": "person"
+    }
+  },
+  {
+    "query": "Tell me how far the sofa is.",
+    "tool": "estimate_distance",
+    "parameters": {
+      "target": "sofa"
+    }
+  },
+  {
+    "query": "How close am I to the desk?",
+    "tool": "estimate_distance",
+    "parameters": {
+      "target": "desk"
+    }
+  },
+  {
+    "query": "Estimate the distance to the mailbox.",
+    "tool": "estimate_distance",
+    "parameters": {
+      "target": "mailbox"
+    }
+  },
+  {
+    "query": "Remember me as Alex.",
+    "tool": "add_face",
+    "parameters": {
+      "name": "Alex"
+    }
+  },
+  {
+    "query": "Save this face as Maria.",
+    "tool": "add_face",
+    "parameters": {
+      "name": "Maria"
+    }
+  },
+  {
+    "query": "Add this person as Bob.",
+    "tool": "add_face",
+    "parameters": {
+      "name": "Bob"
+    }
+  },
+  {
+    "query": "Enroll me, my name is Jenny.",
+    "tool": "add_face",
+    "parameters": {
+      "name": "Jenny"
+    }
+  },
+  {
+    "query": "Store this face under the name Kevin.",
+    "tool": "add_face",
+    "parameters": {
+      "name": "Kevin"
+    }
+  },
+  {
+    "query": "Register this guy as Frank.",
+    "tool": "add_face",
+    "parameters": {
+      "name": "Frank"
+    }
+  },
+  {
+    "query": "Remember this person as Aisha.",
+    "tool": "add_face",
+    "parameters": {
+      "name": "Aisha"
+    }
+  },
+  {
+    "query": "Save me to the database as Carlos.",
+    "tool": "add_face",
+    "parameters": {
+      "name": "Carlos"
+    }
+  },
+  {
+    "query": "Add the woman here as Nina.",
+    "tool": "add_face",
+    "parameters": {
+      "name": "Nina"
+    }
+  },
+  {
+    "query": "Learn my face and call me Priya.",
+    "tool": "add_face",
+    "parameters": {
+      "name": "Priya"
+    }
+  },
+  {
+    "query": "Enroll this person under George.",
+    "tool": "add_face",
+    "parameters": {
+      "name": "George"
+    }
+  },
+  {
+    "query": "Memorize this face as Liam.",
+    "tool": "add_face",
+    "parameters": {
+      "name": "Liam"
+    }
+  },
+  {
+    "query": "Keep this face on file as Wendy.",
+    "tool": "add_face",
+    "parameters": {
+      "name": "Wendy"
+    }
+  },
+  {
+    "query": "Add me as Steve.",
+    "tool": "add_face",
+    "parameters": {
+      "name": "Steve"
+    }
+  },
+  {
+    "query": "Save the kid's face as Tommy.",
+    "tool": "add_face",
+    "parameters": {
+      "name": "Tommy"
+    }
+  },
+  {
+    "query": "Register this face with the name Fatima.",
+    "tool": "add_face",
+    "parameters": {
+      "name": "Fatima"
+    }
+  },
+  {
+    "query": "Remember this visitor as Derek.",
+    "tool": "add_face",
+    "parameters": {
+      "name": "Derek"
+    }
+  },
+  {
+    "query": "Store me as Yuki.",
+    "tool": "add_face",
+    "parameters": {
+      "name": "Yuki"
+    }
+  },
+  {
+    "query": "Add this face and label it Marcus.",
+    "tool": "add_face",
+    "parameters": {
+      "name": "Marcus"
+    }
+  },
+  {
+    "query": "Save the person on camera as Helen.",
+    "tool": "add_face",
+    "parameters": {
+      "name": "Helen"
+    }
+  },
+  {
+    "query": "Forget John.",
+    "tool": "remove_face",
+    "parameters": {
+      "name": "John"
+    }
+  },
+  {
+    "query": "Delete Sarah from the database.",
+    "tool": "remove_face",
+    "parameters": {
+      "name": "Sarah"
+    }
+  },
+  {
+    "query": "Remove Bob.",
+    "tool": "remove_face",
+    "parameters": {
+      "name": "Bob"
+    }
+  },
+  {
+    "query": "Erase Maria from your memory.",
+    "tool": "remove_face",
+    "parameters": {
+      "name": "Maria"
+    }
+  },
+  {
+    "query": "Unregister David.",
+    "tool": "remove_face",
+    "parameters": {
+      "name": "David"
+    }
+  },
+  {
+    "query": "Get rid of Emma from the saved faces.",
+    "tool": "remove_face",
+    "parameters": {
+      "name": "Emma"
+    }
+  },
+  {
+    "query": "Drop Kevin from the system.",
+    "tool": "remove_face",
+    "parameters": {
+      "name": "Kevin"
+    }
+  },
+  {
+    "query": "Forget about Alex.",
+    "tool": "remove_face",
+    "parameters": {
+      "name": "Alex"
+    }
+  },
+  {
+    "query": "Take Nina out of the database.",
+    "tool": "remove_face",
+    "parameters": {
+      "name": "Nina"
+    }
+  },
+  {
+    "query": "Delete the entry for Tom.",
+    "tool": "remove_face",
+    "parameters": {
+      "name": "Tom"
+    }
+  },
+  {
+    "query": "Remove Jessica from the registry.",
+    "tool": "remove_face",
+    "parameters": {
+      "name": "Jessica"
+    }
+  },
+  {
+    "query": "Wipe Carlos from your saved people.",
+    "tool": "remove_face",
+    "parameters": {
+      "name": "Carlos"
+    }
+  },
+  {
+    "query": "Forget the face named Liam.",
+    "tool": "remove_face",
+    "parameters": {
+      "name": "Liam"
+    }
+  },
+  {
+    "query": "Erase Priya's record.",
+    "tool": "remove_face",
+    "parameters": {
+      "name": "Priya"
+    }
+  },
+  {
+    "query": "Delete just Frank, not the others.",
+    "tool": "remove_face",
+    "parameters": {
+      "name": "Frank"
+    }
+  },
+  {
+    "query": "Remove the user called Helen.",
+    "tool": "remove_face",
+    "parameters": {
+      "name": "Helen"
+    }
+  },
+  {
+    "query": "Take Marcus off the list.",
+    "tool": "remove_face",
+    "parameters": {
+      "name": "Marcus"
+    }
+  },
+  {
+    "query": "Forget Wendy from now on.",
+    "tool": "remove_face",
+    "parameters": {
+      "name": "Wendy"
+    }
+  },
+  {
+    "query": "Delete Steve's face.",
+    "tool": "remove_face",
+    "parameters": {
+      "name": "Steve"
+    }
+  },
+  {
+    "query": "Unenroll Derek.",
+    "tool": "remove_face",
+    "parameters": {
+      "name": "Derek"
+    }
+  },
+  {
+    "query": "Write down what I say for 10 seconds.",
+    "tool": "transcribe_speech",
+    "parameters": {
+      "duration_seconds": 10
+    }
+  },
+  {
+    "query": "Transcribe audio for 30 seconds.",
+    "tool": "transcribe_speech",
+    "parameters": {
+      "duration_seconds": 30
+    }
+  },
+  {
+    "query": "Listen and type what you hear in the next 5 seconds.",
+    "tool": "transcribe_speech",
+    "parameters": {
+      "duration_seconds": 5
+    }
+  },
+  {
+    "query": "Take dictation for the next 15 seconds.",
+    "tool": "transcribe_speech",
+    "parameters": {
+      "duration_seconds": 15
+    }
+  },
+  {
+    "query": "Record what I'm saying for 20 seconds and write it down.",
+    "tool": "transcribe_speech",
+    "parameters": {
+      "duration_seconds": 20
+    }
+  },
+  {
+    "query": "Capture my speech for 60 seconds.",
+    "tool": "transcribe_speech",
+    "parameters": {
+      "duration_seconds": 60
+    }
+  },
+  {
+    "query": "Type out what's said over the next 45 seconds.",
+    "tool": "transcribe_speech",
+    "parameters": {
+      "duration_seconds": 45
+    }
+  },
+  {
+    "query": "Transcribe the next 3 seconds of talking.",
+    "tool": "transcribe_speech",
+    "parameters": {
+      "duration_seconds": 3
+    }
+  },
+  {
+    "query": "Listen for 12 seconds and write down the words.",
+    "tool": "transcribe_speech",
+    "parameters": {
+      "duration_seconds": 12
+    }
+  },
+  {
+    "query": "Record and transcribe for half a minute.",
+    "tool": "transcribe_speech",
+    "parameters": {
+      "duration_seconds": 30
+    }
+  },
+  {
+    "query": "Write down what's spoken in the next 25 seconds.",
+    "tool": "transcribe_speech",
+    "parameters": {
+      "duration_seconds": 25
+    }
+  },
+  {
+    "query": "Dictation mode for 8 seconds, go.",
+    "tool": "transcribe_speech",
+    "parameters": {
+      "duration_seconds": 8
+    }
+  },
+  {
+    "query": "Take down what I say for the next minute.",
+    "tool": "transcribe_speech",
+    "parameters": {
+      "duration_seconds": 60
+    }
+  },
+  {
+    "query": "Capture audio and turn it into text for 7 seconds.",
+    "tool": "transcribe_speech",
+    "parameters": {
+      "duration_seconds": 7
+    }
+  },
+  {
+    "query": "Listen to me for 40 seconds and type it up.",
+    "tool": "transcribe_speech",
+    "parameters": {
+      "duration_seconds": 40
+    }
+  },
+  {
+    "query": "Record my words for 6 seconds.",
+    "tool": "transcribe_speech",
+    "parameters": {
+      "duration_seconds": 6
+    }
+  },
+  {
+    "query": "Transcribe whatever is said in the next 50 seconds.",
+    "tool": "transcribe_speech",
+    "parameters": {
+      "duration_seconds": 50
+    }
+  },
+  {
+    "query": "Write down my speech for the next 18 seconds.",
+    "tool": "transcribe_speech",
+    "parameters": {
+      "duration_seconds": 18
+    }
+  },
+  {
+    "query": "Listen and transcribe for 90 seconds.",
+    "tool": "transcribe_speech",
+    "parameters": {
+      "duration_seconds": 90
+    }
+  },
+  {
+    "query": "Take note of what I say over the next 4 seconds.",
+    "tool": "transcribe_speech",
+    "parameters": {
+      "duration_seconds": 4
+    }
+  },
+  {
+    "query": "Change Alex to Alexander.",
+    "tool": "rename_face",
+    "parameters": {
+      "old_name": "Alex",
+      "new_name": "Alexander"
+    }
+  },
+  {
+    "query": "Rename Bob to Robert.",
+    "tool": "rename_face",
+    "parameters": {
+      "old_name": "Bob",
+      "new_name": "Robert"
+    }
+  },
+  {
+    "query": "Update the name from Mike to Michael.",
+    "tool": "rename_face",
+    "parameters": {
+      "old_name": "Mike",
+      "new_name": "Michael"
+    }
+  },
+  {
+    "query": "Change Sarah to Sara.",
+    "tool": "rename_face",
+    "parameters": {
+      "old_name": "Sarah",
+      "new_name": "Sara"
+    }
+  },
+  {
+    "query": "Rename Liz to Elizabeth.",
+    "tool": "rename_face",
+    "parameters": {
+      "old_name": "Liz",
+      "new_name": "Elizabeth"
+    }
+  },
+  {
+    "query": "Fix the label from Jon to Jonathan.",
+    "tool": "rename_face",
+    "parameters": {
+      "old_name": "Jon",
+      "new_name": "Jonathan"
+    }
+  },
+  {
+    "query": "Switch Kate to Katherine.",
+    "tool": "rename_face",
+    "parameters": {
+      "old_name": "Kate",
+      "new_name": "Katherine"
+    }
+  },
+  {
+    "query": "Change the name Dan to Daniel.",
+    "tool": "rename_face",
+    "parameters": {
+      "old_name": "Dan",
+      "new_name": "Daniel"
+    }
+  },
+  {
+    "query": "Rename Tom to Thomas.",
+    "tool": "rename_face",
+    "parameters": {
+      "old_name": "Tom",
+      "new_name": "Thomas"
+    }
+  },
+  {
+    "query": "Correct Chris to Christopher.",
+    "tool": "rename_face",
+    "parameters": {
+      "old_name": "Chris",
+      "new_name": "Christopher"
+    }
+  },
+  {
+    "query": "Update Sam to Samuel.",
+    "tool": "rename_face",
+    "parameters": {
+      "old_name": "Sam",
+      "new_name": "Samuel"
+    }
+  },
+  {
+    "query": "Change Jen to Jennifer.",
+    "tool": "rename_face",
+    "parameters": {
+      "old_name": "Jen",
+      "new_name": "Jennifer"
+    }
+  },
+  {
+    "query": "Rename Will to William.",
+    "tool": "rename_face",
+    "parameters": {
+      "old_name": "Will",
+      "new_name": "William"
+    }
+  },
+  {
+    "query": "Fix Andy to Andrew in the database.",
+    "tool": "rename_face",
+    "parameters": {
+      "old_name": "Andy",
+      "new_name": "Andrew"
+    }
+  },
+  {
+    "query": "Change Becky to Rebecca.",
+    "tool": "rename_face",
+    "parameters": {
+      "old_name": "Becky",
+      "new_name": "Rebecca"
+    }
+  },
+  {
+    "query": "Rename Nick to Nicholas.",
+    "tool": "rename_face",
+    "parameters": {
+      "old_name": "Nick",
+      "new_name": "Nicholas"
+    }
+  },
+  {
+    "query": "Update the entry from Matt to Matthew.",
+    "tool": "rename_face",
+    "parameters": {
+      "old_name": "Matt",
+      "new_name": "Matthew"
+    }
+  },
+  {
+    "query": "Switch the name Joe to Joseph.",
+    "tool": "rename_face",
+    "parameters": {
+      "old_name": "Joe",
+      "new_name": "Joseph"
+    }
+  },
+  {
+    "query": "Change Abby to Abigail.",
+    "tool": "rename_face",
+    "parameters": {
+      "old_name": "Abby",
+      "new_name": "Abigail"
+    }
+  },
+  {
+    "query": "Rename Ben to Benjamin.",
+    "tool": "rename_face",
+    "parameters": {
+      "old_name": "Ben",
+      "new_name": "Benjamin"
+    }
+  },
+  {
+    "query": "Hey, how are you doing today?",
+    "tool": null,
+    "parameters": {}
+  },
+  {
+    "query": "Thanks, that was really helpful!",
+    "tool": null,
+    "parameters": {}
+  },
+  {
+    "query": "What's the capital of France?",
+    "tool": null,
+    "parameters": {}
+  },
+  {
+    "query": "Tell me a joke.",
+    "tool": null,
+    "parameters": {}
+  },
+  {
+    "query": "What's 15 times 12?",
+    "tool": null,
+    "parameters": {}
+  },
+  {
+    "query": "Can you explain how face recognition works in general?",
+    "tool": null,
+    "parameters": {}
+  },
+  {
+    "query": "Good morning!",
+    "tool": null,
+    "parameters": {}
+  },
+  {
+    "query": "What day of the week is it usually trash day?",
+    "tool": null,
+    "parameters": {}
+  },
+  {
+    "query": "Give me some tips for getting better sleep.",
+    "tool": null,
+    "parameters": {}
+  },
+  {
+    "query": "What's a good recipe for banana bread?",
+    "tool": null,
+    "parameters": {}
+  },
+  {
+    "query": "Turn on the living room lights.",
+    "tool": null,
+    "parameters": {}
+  },
+  {
+    "query": "Play some music for me.",
+    "tool": null,
+    "parameters": {}
+  },
+  {
+    "query": "Lock the front door.",
+    "tool": null,
+    "parameters": {}
+  },
+  {
+    "query": "Set the thermostat to 72 degrees.",
+    "tool": null,
+    "parameters": {}
+  },
+  {
+    "query": "Order more dog food online.",
+    "tool": null,
+    "parameters": {}
+  },
+  {
+    "query": "Set an alarm for 7 in the morning.",
+    "tool": null,
+    "parameters": {}
+  },
+  {
+    "query": "Call my mom for me.",
+    "tool": null,
+    "parameters": {}
+  },
+  {
+    "query": "Vacuum the living room.",
+    "tool": null,
+    "parameters": {}
+  },
+  {
+    "query": "Send a text to my brother saying I'll be late.",
+    "tool": null,
+    "parameters": {}
+  },
+  {
+    "query": "Add milk and eggs to my shopping list.",
+    "tool": null,
+    "parameters": {}
+  }
+]

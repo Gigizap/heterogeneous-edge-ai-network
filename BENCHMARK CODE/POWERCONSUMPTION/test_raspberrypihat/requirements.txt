@@ -1,0 +1,5 @@
+llama-cpp-python
+opencv-python
+numpy
+onnxruntime
+picamera2

@@ -1,0 +1,14 @@
+\begin{table}[H]
+\centering
+\caption{FunctionGemma handler comparison on the full tool set. Selection (Sel) and tool-call (TC, selection+params) accuracy on the tool-bearing subset; cold-start latency on the first sentence (Cold), total wall-clock time (Total), and mean generated tokens per sentence (Tok).}
+\label{tab:fg_compare}
+\begin{tabular}{lrrrrr}
+\toprule
+Handler & Sel_accuracy & TC_accuracy & Cold_start(s) & Total(s) & Tokens \\
+\midrule
+functiongemma & 0.467 & 0.444 & 0.615 & 374.4 & 11.2 \\
+functiongemma\_simple & 0.394 & 0.371 & 0.126 & 50.5 & 17.3 \\
+functiongemma\_cache & 0.467 & 0.444 & 0.626 & 478.2 & 11.2 \\
+\bottomrule
+\end{tabular}
+\end{table}

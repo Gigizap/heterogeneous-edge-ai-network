@@ -1,0 +1,24 @@
+\begin{table}[H]
+\caption{Voltage statistics per configuration.}
+\label{tab:voltage_stats}
+\begin{tabular}{lcccc}
+\toprule
+ & Min [V] & Mean [V] & Max [V] & Std Dev [V] \\
+Configuration &  &  &  &  \\
+\midrule
+PI5 detect cpu only & 5.1212 & 5.1254 & 5.1300 & 0.0012 \\
+PI5 detect cpu qwen3 hailo & 5.1205 & 5.1260 & 5.1322 & 0.0017 \\
+PI5 detect hailo only & 5.1188 & 5.1213 & 5.1240 & 0.0007 \\
+PI5 detect hailo qwen3 cpu & 0.8080 & 5.1222 & 5.1269 & 0.0557 \\
+PI5 no work & 0.5893 & 5.1183 & 5.1232 & 0.0585 \\
+PI5 qwen3 cpu only & 5.1195 & 5.1235 & 5.1275 & 0.0011 \\
+PI5 qwen3 hailo only & 5.1205 & 5.1227 & 5.1256 & 0.0006 \\
+STM detect cpu functiongemma cpu & 4.7713 & 4.7815 & 4.7896 & 0.0036 \\
+STM detect cpu only & 4.7778 & 4.7856 & 4.7915 & 0.0033 \\
+STM detect npu functiongemma cpu & 4.7626 & 4.7752 & 4.7841 & 0.0040 \\
+STM detect npu only & 4.7700 & 4.7771 & 4.7819 & 0.0032 \\
+STM functiongemma only & 4.8061 & 4.8129 & 4.8182 & 0.0033 \\
+STM no work & 4.8282 & 4.8393 & 4.8444 & 0.0032 \\
+\bottomrule
+\end{tabular}
+\end{table}

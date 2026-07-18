@@ -1,0 +1,19 @@
+{
+  "skills": [
+    {
+      "file": "yolo_object_detection",
+      "function": "detect_object",
+      "command": "object_detection"
+    }
+  ],
+  "tool_defs": [
+    {
+      "type": "function",
+      "function": {
+        "name": "object_detection",
+        "description": "detect objects in the camera view and return the result. Use this when the user asks: 'what objects do you see?', 'tell me the objects you see now', or 'what's in front of the camera right now?'.",
+        "parameters": { "type": "object", "properties": {}, "required": [] }
+      }
+    }
+  ]
+}

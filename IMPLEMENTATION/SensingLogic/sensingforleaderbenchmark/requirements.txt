@@ -1,0 +1,2 @@
+# Sensing preset — fake sensing agent used to benchmark the leader (see IMPLEMENTATION/BenchmarkLeader).
+# It only returns canned strings, so it needs no dependencies beyond requirements/base.txt.

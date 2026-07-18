@@ -1,0 +1,20 @@
+
+{
+  "skills": [
+    {
+      "file": "yolo_object_detection",
+      "function": "detect_object",
+      "command": "object_detection"
+    }
+  ],
+  "tool_defs": [
+    {
+      "type": "function",
+      "function": {
+        "name": "object_detection",
+        "description": "detect objects in the camera view and return the result",
+        "parameters": { "type": "object", "properties": {}, "required": [] }
+      }
+    }
+  ]
+}

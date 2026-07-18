@@ -1,0 +1,24 @@
+\begin{table}[H]
+\caption{Power statistics per configuration.}
+\label{tab:power_stats}
+\begin{tabular}{lcccc}
+\toprule
+ & Min [W] & Mean [W] & Max [W] & Std Dev [W] \\
+Configuration &  &  &  &  \\
+\midrule
+PI5 detect cpu only & 7.5494 & 9.1671 & 9.9636 & 0.2419 \\
+PI5 detect cpu qwen3 hailo & 8.7970 & 10.4297 & 11.5842 & 0.4512 \\
+PI5 detect hailo only & 0.8924 & 6.9187 & 7.4379 & 0.1778 \\
+PI5 detect hailo qwen3 cpu & 1.3059 & 8.5322 & 9.2987 & 0.2198 \\
+PI5 no work & 0.6945 & 5.7616 & 6.7687 & 0.2864 \\
+PI5 qwen3 cpu only & 6.7754 & 7.4900 & 8.5604 & 0.2386 \\
+PI5 qwen3 hailo only & 6.3780 & 6.9876 & 7.7930 & 0.0999 \\
+STM detect cpu functiongemma cpu & 5.2209 & 5.3496 & 5.5258 & 0.0618 \\
+STM detect cpu only & 5.1906 & 5.2879 & 5.4172 & 0.0586 \\
+STM detect npu functiongemma cpu & 5.3149 & 5.4360 & 5.6082 & 0.0654 \\
+STM detect npu only & 5.0056 & 5.4341 & 5.5502 & 0.0566 \\
+STM functiongemma only & 4.7156 & 4.8080 & 4.9241 & 0.0567 \\
+STM no work & 4.2413 & 4.3039 & 4.4724 & 0.0529 \\
+\bottomrule
+\end{tabular}
+\end{table}

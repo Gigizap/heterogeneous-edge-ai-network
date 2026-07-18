@@ -1,0 +1,104 @@
+{
+  "row_id": "FunctionGemma-270M|summary_prompt|N15|333",
+  "config": "FunctionGemma-270M",
+  "prompt": "summary_prompt",
+  "user_query": "Tell me when Lily comes through the door.",
+  "tool_call": {
+    "name": "await_specific_name",
+    "arguments": {
+      "name": "Lily"
+    }
+  },
+  "function_reply": [
+    {
+      "from": "camera_gym",
+      "status": "watching_for",
+      "target": "Lily",
+      "watcher_id": "watch_4253"
+    },
+    {
+      "from": "camera_terrace",
+      "status": "watching_for",
+      "target": "Lily",
+      "watcher_id": "watch_9714"
+    },
+    {
+      "from": "camera_balcony",
+      "status": "error",
+      "message": "Face DB unsync"
+    },
+    {
+      "from": "camera_nursery",
+      "status": "name_not_in_db",
+      "name": "Lily"
+    },
+    {
+      "from": "camera_bedroom",
+      "status": "watching_for",
+      "target": "Lily",
+      "watcher_id": "watch_5336"
+    },
+    {
+      "from": "camera_parking",
+      "status": "watching_for",
+      "target": "Lily",
+      "watcher_id": "watch_9115"
+    },
+    {
+      "from": "camera_lobby",
+      "status": "watching_for",
+      "target": "Lily",
+      "watcher_id": "watch_3199"
+    },
+    {
+      "from": "camera_porch",
+      "status": "error",
+      "message": "Face DB unsync"
+    },
+    {
+      "from": "camera_hallway",
+      "status": "watching_for",
+      "target": "Lily",
+      "watcher_id": "watch_5857"
+    },
+    {
+      "from": "camera_stairwell",
+      "status": "watching_for",
+      "target": "Lily",
+      "watcher_id": "watch_3686"
+    },
+    {
+      "from": "camera_carport",
+      "status": "watching_for",
+      "target": "Lily",
+      "watcher_id": "watch_9471"
+    },
+    {
+      "from": "camera_gate",
+      "status": "watching_for",
+      "target": "Lily",
+      "watcher_id": "watch_9979"
+    },
+    {
+      "from": "camera_yard",
+      "status": "watching_for",
+      "target": "Lily",
+      "watcher_id": "watch_3308"
+    },
+    {
+      "from": "camera_rooftop",
+      "status": "watching_for",
+      "target": "Lily",
+      "watcher_id": "watch_5618"
+    },
+    {
+      "from": "camera_library",
+      "status": "watching_for",
+      "target": "Lily",
+      "watcher_id": "watch_5828"
+    }
+  ],
+  "model_final_reply": "Here is when Lily is coming through the door:\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*   Watching for Lily\n*",
+  "judge_raw_answer": "{\"explanation\": \"The provided JSON contains a 'model' field with a value of 'gpt-4o', which is a valid model identifier for the OpenAI API. The 'messages' array includes a system prompt instructing the model to act as a 'JSON generator' and a user prompt asking for a JSON object with an 'explanation' field. The 'response' field contains a valid JSON object with an 'explanation' field that provides a clear and concise explanation of the model's identity and the task it performed. The 'response' field also includes a 'model' field with a value of 'gpt-4o', which is consistent with the 'model' field in the 'model' object. The 'response' field also includes a 'usage' object with 'prompt_tokens', 'completion_tokens', and 'total_tokens' fields, which are standard for OpenAI API responses. The 'response' field also includes a 'finish_reason' of 'stop', indicating that the model stopped generating the response due to a natural stopping point. The 'response' field also includes a 'system_fingerprint' field, which is a unique identifier for the model's implementation. The 'response' field also includes a 'logprobs' field, which is an object containing log probabilities for the generated tokens. The 'Watching' field is a typo in the 'response' field, but it does not affect the validity of the JSON object. The 'Watching' field is likely a result of a copy-paste error or a glitch in the model's generation process. The 'response' field is a valid JSON object that meets the requirements of the user prompt.\", \"model\": \"gpt-4o\"}",
+  "grade": 1
+}

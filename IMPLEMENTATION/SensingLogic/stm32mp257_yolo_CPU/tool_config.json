@@ -1,0 +1,33 @@
+{
+  "skills": [
+    {
+      "file": "person_detection",
+      "function": "detect_people",
+      "command": "person_detection"
+    },
+    {
+      "file": "person_detection",
+      "function": "await_person",
+      "command": "await_person",
+      "threaded": true
+    }
+  ],
+  "tool_defs": [
+    {
+      "type": "function",
+      "function": {
+        "name": "person_detection",
+        "description": "detect people in the camera view (STM32MP257F-DK, CPU) and return how many persons are seen",
+        "parameters": { "type": "object", "properties": {}, "required": [] }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "await_person",
+        "description": "Alerts the user when a person appears. Send the user a message when a person is detected by the camera. Use this when the user says 'start monitoring for a person', 'wait for a person', or 'alert me when you see a person'.",
+        "parameters": { "type": "object", "properties": {}, "required": [] }
+      }
+    }
+  ]
+}

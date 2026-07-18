@@ -1,0 +1,1204 @@
+{
+  "role": "leader",
+  "device": "raspberry",
+  "leader_preset": "workflow1_qwen3_hailo",
+  "correct_tool": "detect_person",
+  "tool_counts": [
+    1,
+    6,
+    12,
+    18,
+    24
+  ],
+  "queries": [
+    "can you use the detect person tool",
+    "is there a person in front of the camera",
+    "how many people are there",
+    "do you see anyone",
+    "check if someone is in the room",
+    "are there any people visible",
+    "detect the people in the frame",
+    "is anybody there right now",
+    "tell me how many persons you can see",
+    "look for a person with the camera"
+  ],
+  "samples": [
+    {
+      "n_tools": 1,
+      "query_idx": 0,
+      "query": "can you use the detect person tool",
+      "tool_called": "detect_person",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "No people detected from stm32-sensing-bench.",
+      "query_to_tool_ms": 4974.59,
+      "tool_to_result_ms": 721.72,
+      "result_to_reply_ms": 4335.84,
+      "end_to_end_ms": 10032.15,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 1,
+      "query_idx": 1,
+      "query": "is there a person in front of the camera",
+      "tool_called": "detect_person",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "The STM32 sensing bench says: no people detected.",
+      "query_to_tool_ms": 4959.8,
+      "tool_to_result_ms": 947.08,
+      "result_to_reply_ms": 4335.47,
+      "end_to_end_ms": 10242.34,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 1,
+      "query_idx": 2,
+      "query": "how many people are there",
+      "tool_called": "detect_person",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "There are no people detected from the stm32 sensing bench.",
+      "query_to_tool_ms": 4956.91,
+      "tool_to_result_ms": 653.04,
+      "result_to_reply_ms": 4544.66,
+      "end_to_end_ms": 10154.61,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 1,
+      "query_idx": 3,
+      "query": "do you see anyone",
+      "tool_called": "detect_person",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "No people detected from stm32-sensing-bench.",
+      "query_to_tool_ms": 4952.57,
+      "tool_to_result_ms": 685.47,
+      "result_to_reply_ms": 4337.95,
+      "end_to_end_ms": 9976.0,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 1,
+      "query_idx": 4,
+      "query": "check if someone is in the room",
+      "tool_called": "detect_person",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "The stm32 sensing bench says: no people detected.",
+      "query_to_tool_ms": 4956.53,
+      "tool_to_result_ms": 673.22,
+      "result_to_reply_ms": 4337.32,
+      "end_to_end_ms": 9967.08,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 1,
+      "query_idx": 5,
+      "query": "are there any people visible",
+      "tool_called": "detect_person",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "No people detected from stm32-sensing-bench.",
+      "query_to_tool_ms": 4959.7,
+      "tool_to_result_ms": 653.25,
+      "result_to_reply_ms": 4336.9,
+      "end_to_end_ms": 9949.85,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 1,
+      "query_idx": 6,
+      "query": "detect the people in the frame",
+      "tool_called": "detect_person",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "No people detected from stm32-sensing-bench.",
+      "query_to_tool_ms": 4954.0,
+      "tool_to_result_ms": 633.94,
+      "result_to_reply_ms": 4341.74,
+      "end_to_end_ms": 9929.68,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 1,
+      "query_idx": 7,
+      "query": "is anybody there right now",
+      "tool_called": "detect_person",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "stm32-sensing-bench says: no people detected.",
+      "query_to_tool_ms": 4958.47,
+      "tool_to_result_ms": 702.27,
+      "result_to_reply_ms": 4543.33,
+      "end_to_end_ms": 10204.07,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 1,
+      "query_idx": 8,
+      "query": "tell me how many persons you can see",
+      "tool_called": "detect_person",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "I'm sorry, but I can't see any people. It's coming from the stm32 sensing bench.",
+      "query_to_tool_ms": 4954.17,
+      "tool_to_result_ms": 662.62,
+      "result_to_reply_ms": 6609.13,
+      "end_to_end_ms": 12225.91,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 1,
+      "query_idx": 9,
+      "query": "look for a person with the camera",
+      "tool_called": "detect_person",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "The camera didn’t detect any people. Let me know if you’d like to check another device.",
+      "query_to_tool_ms": 4956.39,
+      "tool_to_result_ms": 624.8,
+      "result_to_reply_ms": 5984.83,
+      "end_to_end_ms": 11566.02,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 6,
+      "query_idx": 0,
+      "query": "can you use the detect person tool",
+      "tool_called": "detect_person",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "No people detected from stm32-sensing-bench.",
+      "query_to_tool_ms": 6190.19,
+      "tool_to_result_ms": 649.16,
+      "result_to_reply_ms": 4343.37,
+      "end_to_end_ms": 11182.71,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 6,
+      "query_idx": 1,
+      "query": "is there a person in front of the camera",
+      "tool_called": "detect_person",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "The STM32 sensing bench says: no people detected.",
+      "query_to_tool_ms": 6189.6,
+      "tool_to_result_ms": 612.25,
+      "result_to_reply_ms": 4338.06,
+      "end_to_end_ms": 11139.92,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 6,
+      "query_idx": 2,
+      "query": "how many people are there",
+      "tool_called": "detect_person",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "There are no people detected from the stm32 sensing bench.",
+      "query_to_tool_ms": 6187.21,
+      "tool_to_result_ms": 638.39,
+      "result_to_reply_ms": 4539.93,
+      "end_to_end_ms": 11365.53,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 6,
+      "query_idx": 3,
+      "query": "do you see anyone",
+      "tool_called": "detect_person",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "No people detected from stm32-sensing-bench.",
+      "query_to_tool_ms": 6192.53,
+      "tool_to_result_ms": 630.17,
+      "result_to_reply_ms": 4332.12,
+      "end_to_end_ms": 11154.83,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 6,
+      "query_idx": 4,
+      "query": "check if someone is in the room",
+      "tool_called": "detect_person",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "The stm32 sensing bench says: no people detected.",
+      "query_to_tool_ms": 6181.03,
+      "tool_to_result_ms": 636.65,
+      "result_to_reply_ms": 4333.71,
+      "end_to_end_ms": 11151.39,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 6,
+      "query_idx": 5,
+      "query": "are there any people visible",
+      "tool_called": "detect_person",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "No people detected from stm32-sensing-bench.",
+      "query_to_tool_ms": 6184.67,
+      "tool_to_result_ms": 625.24,
+      "result_to_reply_ms": 4334.64,
+      "end_to_end_ms": 11144.55,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 6,
+      "query_idx": 6,
+      "query": "detect the people in the frame",
+      "tool_called": "detect_person",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "No people detected from stm32-sensing-bench.",
+      "query_to_tool_ms": 6194.84,
+      "tool_to_result_ms": 622.44,
+      "result_to_reply_ms": 4335.22,
+      "end_to_end_ms": 11152.51,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 6,
+      "query_idx": 7,
+      "query": "is anybody there right now",
+      "tool_called": "detect_person",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "stm32-sensing-bench says: no people detected.",
+      "query_to_tool_ms": 6192.4,
+      "tool_to_result_ms": 641.63,
+      "result_to_reply_ms": 4545.04,
+      "end_to_end_ms": 11379.08,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 6,
+      "query_idx": 8,
+      "query": "tell me how many persons you can see",
+      "tool_called": "detect_person",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "I'm sorry, but I can't see any people. It's coming from the stm32 sensing bench.",
+      "query_to_tool_ms": 6191.49,
+      "tool_to_result_ms": 642.17,
+      "result_to_reply_ms": 6603.82,
+      "end_to_end_ms": 13437.48,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 6,
+      "query_idx": 9,
+      "query": "look for a person with the camera",
+      "tool_called": "detect_person",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "The camera didn’t detect any people. Let me know if you’d like to check another device.",
+      "query_to_tool_ms": 6186.31,
+      "tool_to_result_ms": 656.48,
+      "result_to_reply_ms": 5980.41,
+      "end_to_end_ms": 12823.2,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 12,
+      "query_idx": 0,
+      "query": "can you use the detect person tool",
+      "tool_called": "detect_person",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "No people detected from stm32-sensing-bench.",
+      "query_to_tool_ms": 8036.49,
+      "tool_to_result_ms": 634.63,
+      "result_to_reply_ms": 4339.88,
+      "end_to_end_ms": 13010.99,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 12,
+      "query_idx": 1,
+      "query": "is there a person in front of the camera",
+      "tool_called": "detect_person",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "The STM32 sensing bench says: no people detected.",
+      "query_to_tool_ms": 8038.73,
+      "tool_to_result_ms": 681.36,
+      "result_to_reply_ms": 4335.6,
+      "end_to_end_ms": 13055.68,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 12,
+      "query_idx": 2,
+      "query": "how many people are there",
+      "tool_called": "detect_person",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "There are no people detected from the stm32 sensing bench.",
+      "query_to_tool_ms": 8043.01,
+      "tool_to_result_ms": 673.84,
+      "result_to_reply_ms": 4553.1,
+      "end_to_end_ms": 13269.95,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 12,
+      "query_idx": 3,
+      "query": "do you see anyone",
+      "tool_called": "detect_person",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "No people detected from stm32-sensing-bench.",
+      "query_to_tool_ms": 8033.2,
+      "tool_to_result_ms": 632.24,
+      "result_to_reply_ms": 4339.12,
+      "end_to_end_ms": 13004.57,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 12,
+      "query_idx": 4,
+      "query": "check if someone is in the room",
+      "tool_called": "detect_person",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "The stm32 sensing bench says: no people detected.",
+      "query_to_tool_ms": 8037.64,
+      "tool_to_result_ms": 629.57,
+      "result_to_reply_ms": 4341.29,
+      "end_to_end_ms": 13008.49,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 12,
+      "query_idx": 5,
+      "query": "are there any people visible",
+      "tool_called": "detect_person",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "No people detected from stm32-sensing-bench.",
+      "query_to_tool_ms": 8035.81,
+      "tool_to_result_ms": 636.29,
+      "result_to_reply_ms": 4335.53,
+      "end_to_end_ms": 13007.63,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 12,
+      "query_idx": 6,
+      "query": "detect the people in the frame",
+      "tool_called": "detect_person",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "No people detected from stm32-sensing-bench.",
+      "query_to_tool_ms": 8033.01,
+      "tool_to_result_ms": 638.07,
+      "result_to_reply_ms": 4341.03,
+      "end_to_end_ms": 13012.11,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 12,
+      "query_idx": 7,
+      "query": "is anybody there right now",
+      "tool_called": "detect_person",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "stm32-sensing-bench says: no people detected.",
+      "query_to_tool_ms": 8034.89,
+      "tool_to_result_ms": 652.21,
+      "result_to_reply_ms": 4544.22,
+      "end_to_end_ms": 13231.31,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 12,
+      "query_idx": 8,
+      "query": "tell me how many persons you can see",
+      "tool_called": "detect_person",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "I'm sorry, but I can't see any people. It's coming from the stm32 sensing bench.",
+      "query_to_tool_ms": 8033.58,
+      "tool_to_result_ms": 653.58,
+      "result_to_reply_ms": 6612.45,
+      "end_to_end_ms": 15299.62,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 12,
+      "query_idx": 9,
+      "query": "look for a person with the camera",
+      "tool_called": "detect_person",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "The camera didn’t detect any people. Let me know if you’d like to check another device.",
+      "query_to_tool_ms": 8028.31,
+      "tool_to_result_ms": 624.42,
+      "result_to_reply_ms": 5988.03,
+      "end_to_end_ms": 14640.76,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 18,
+      "query_idx": 0,
+      "query": "can you use the detect person tool",
+      "tool_called": "detect_person",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "No people detected from stm32-sensing-bench.",
+      "query_to_tool_ms": 9882.57,
+      "tool_to_result_ms": 635.92,
+      "result_to_reply_ms": 4341.48,
+      "end_to_end_ms": 14859.98,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 18,
+      "query_idx": 1,
+      "query": "is there a person in front of the camera",
+      "tool_called": "detect_person",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "The STM32 sensing bench says: no people detected.",
+      "query_to_tool_ms": 9886.54,
+      "tool_to_result_ms": 624.31,
+      "result_to_reply_ms": 4338.87,
+      "end_to_end_ms": 14849.73,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 18,
+      "query_idx": 2,
+      "query": "how many people are there",
+      "tool_called": "detect_person",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "There are no people detected from the stm32 sensing bench.",
+      "query_to_tool_ms": 9884.79,
+      "tool_to_result_ms": 631.37,
+      "result_to_reply_ms": 4542.34,
+      "end_to_end_ms": 15058.5,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 18,
+      "query_idx": 3,
+      "query": "do you see anyone",
+      "tool_called": "detect_person",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "No people detected from stm32-sensing-bench.",
+      "query_to_tool_ms": 9887.72,
+      "tool_to_result_ms": 674.31,
+      "result_to_reply_ms": 4335.28,
+      "end_to_end_ms": 14897.31,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 18,
+      "query_idx": 4,
+      "query": "check if someone is in the room",
+      "tool_called": "detect_person",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "The stm32 sensing bench says: no people detected.",
+      "query_to_tool_ms": 9880.78,
+      "tool_to_result_ms": 701.64,
+      "result_to_reply_ms": 4338.8,
+      "end_to_end_ms": 14921.23,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 18,
+      "query_idx": 5,
+      "query": "are there any people visible",
+      "tool_called": "detect_person",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "No people detected from stm32-sensing-bench.",
+      "query_to_tool_ms": 9875.33,
+      "tool_to_result_ms": 1642.13,
+      "result_to_reply_ms": 4342.6,
+      "end_to_end_ms": 15860.06,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 18,
+      "query_idx": 6,
+      "query": "detect the people in the frame",
+      "tool_called": "detect_person",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "No people detected from stm32-sensing-bench.",
+      "query_to_tool_ms": 9881.09,
+      "tool_to_result_ms": 641.88,
+      "result_to_reply_ms": 4338.36,
+      "end_to_end_ms": 14861.34,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 18,
+      "query_idx": 7,
+      "query": "is anybody there right now",
+      "tool_called": "detect_person",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "stm32-sensing-bench says: no people detected.",
+      "query_to_tool_ms": 9882.28,
+      "tool_to_result_ms": 624.63,
+      "result_to_reply_ms": 4548.61,
+      "end_to_end_ms": 15055.52,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 18,
+      "query_idx": 8,
+      "query": "tell me how many persons you can see",
+      "tool_called": "detect_person",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "I'm sorry, but I can't see any people. It's coming from the stm32 sensing bench.",
+      "query_to_tool_ms": 9881.46,
+      "tool_to_result_ms": 681.09,
+      "result_to_reply_ms": 6597.12,
+      "end_to_end_ms": 17159.67,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 18,
+      "query_idx": 9,
+      "query": "look for a person with the camera",
+      "tool_called": "detect_person",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "The camera didn’t detect any people. Let me know if you’d like to check another device.",
+      "query_to_tool_ms": 9870.69,
+      "tool_to_result_ms": 635.11,
+      "result_to_reply_ms": 5988.44,
+      "end_to_end_ms": 16494.24,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 24,
+      "query_idx": 0,
+      "query": "can you use the detect person tool",
+      "tool_called": "detect_person",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "No people detected from stm32-sensing-bench.",
+      "query_to_tool_ms": 11729.2,
+      "tool_to_result_ms": 648.06,
+      "result_to_reply_ms": 4343.82,
+      "end_to_end_ms": 16721.07,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 24,
+      "query_idx": 1,
+      "query": "is there a person in front of the camera",
+      "tool_called": "detect_person",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "The STM32 sensing bench says: no people detected.",
+      "query_to_tool_ms": 11726.65,
+      "tool_to_result_ms": 645.89,
+      "result_to_reply_ms": 4334.72,
+      "end_to_end_ms": 16707.26,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 24,
+      "query_idx": 2,
+      "query": "how many people are there",
+      "tool_called": "detect_person",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "There are no people detected from the stm32 sensing bench.",
+      "query_to_tool_ms": 11724.84,
+      "tool_to_result_ms": 633.58,
+      "result_to_reply_ms": 4540.78,
+      "end_to_end_ms": 16899.19,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 24,
+      "query_idx": 3,
+      "query": "do you see anyone",
+      "tool_called": "detect_person",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "No people detected from stm32-sensing-bench.",
+      "query_to_tool_ms": 11730.99,
+      "tool_to_result_ms": 618.2,
+      "result_to_reply_ms": 4339.13,
+      "end_to_end_ms": 16688.32,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 24,
+      "query_idx": 4,
+      "query": "check if someone is in the room",
+      "tool_called": "",
+      "tool_result": "",
+      "tool_result_raw": [],
+      "final_reply": "{\"name\": \"detect_person\", \"arguments\": {}}\n</tool_call>",
+      "query_to_tool_ms": 11318.9,
+      "tool_to_result_ms": 0.0,
+      "result_to_reply_ms": 0.0,
+      "end_to_end_ms": 11318.9,
+      "correct": 0,
+      "got_result": 0,
+      "error": ""
+    },
+    {
+      "n_tools": 24,
+      "query_idx": 5,
+      "query": "are there any people visible",
+      "tool_called": "detect_person",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "No people detected from stm32-sensing-bench.",
+      "query_to_tool_ms": 11730.06,
+      "tool_to_result_ms": 620.22,
+      "result_to_reply_ms": 4338.13,
+      "end_to_end_ms": 16688.41,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 24,
+      "query_idx": 6,
+      "query": "detect the people in the frame",
+      "tool_called": "",
+      "tool_result": "",
+      "tool_result_raw": [],
+      "final_reply": "{\"name\": \"detect_person\", \"arguments\": {}}\n</tool_call>",
+      "query_to_tool_ms": 11320.79,
+      "tool_to_result_ms": 0.0,
+      "result_to_reply_ms": 0.0,
+      "end_to_end_ms": 11320.8,
+      "correct": 0,
+      "got_result": 0,
+      "error": ""
+    },
+    {
+      "n_tools": 24,
+      "query_idx": 7,
+      "query": "is anybody there right now",
+      "tool_called": "detect_person",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "stm32-sensing-bench says: no people detected.",
+      "query_to_tool_ms": 11734.69,
+      "tool_to_result_ms": 636.46,
+      "result_to_reply_ms": 4549.19,
+      "end_to_end_ms": 16920.34,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 24,
+      "query_idx": 8,
+      "query": "tell me how many persons you can see",
+      "tool_called": "detect_person",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "I'm sorry, but I can't see any people. It's coming from the stm32 sensing bench.",
+      "query_to_tool_ms": 11732.76,
+      "tool_to_result_ms": 630.67,
+      "result_to_reply_ms": 6609.0,
+      "end_to_end_ms": 18972.43,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 24,
+      "query_idx": 9,
+      "query": "look for a person with the camera",
+      "tool_called": "detect_person",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "The camera didn’t detect any people. Let me know if you’d like to check another device.",
+      "query_to_tool_ms": 13797.91,
+      "tool_to_result_ms": 625.26,
+      "result_to_reply_ms": 5986.48,
+      "end_to_end_ms": 20409.65,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    }
+  ],
+  "aggregate": [
+    {
+      "n_tools": 1,
+      "n_samples": 10,
+      "n_correct": 10,
+      "accuracy": 1.0,
+      "n_got_result": 10,
+      "query_to_tool_ms_count": 10,
+      "query_to_tool_ms_mean": 4958.31,
+      "query_to_tool_ms_std": 5.89,
+      "query_to_tool_ms_min": 4952.57,
+      "query_to_tool_ms_max": 4974.59,
+      "tool_to_result_ms_count": 10,
+      "tool_to_result_ms_mean": 695.74,
+      "tool_to_result_ms_std": 88.36,
+      "tool_to_result_ms_min": 624.8,
+      "tool_to_result_ms_max": 947.08,
+      "result_to_reply_ms_count": 10,
+      "result_to_reply_ms_mean": 4770.72,
+      "result_to_reply_ms_std": 779.91,
+      "result_to_reply_ms_min": 4335.47,
+      "result_to_reply_ms_max": 6609.13,
+      "end_to_end_ms_count": 10,
+      "end_to_end_ms_mean": 10424.77,
+      "end_to_end_ms_std": 757.44,
+      "end_to_end_ms_min": 9929.68,
+      "end_to_end_ms_max": 12225.91
+    },
+    {
+      "n_tools": 6,
+      "n_samples": 10,
+      "n_correct": 10,
+      "accuracy": 1.0,
+      "n_got_result": 10,
+      "query_to_tool_ms_count": 10,
+      "query_to_tool_ms_mean": 6189.03,
+      "query_to_tool_ms_std": 3.99,
+      "query_to_tool_ms_min": 6181.03,
+      "query_to_tool_ms_max": 6194.84,
+      "tool_to_result_ms_count": 10,
+      "tool_to_result_ms_mean": 635.46,
+      "tool_to_result_ms_std": 12.5,
+      "tool_to_result_ms_min": 612.25,
+      "tool_to_result_ms_max": 656.48,
+      "result_to_reply_ms_count": 10,
+      "result_to_reply_ms_mean": 4768.63,
+      "result_to_reply_ms_std": 778.51,
+      "result_to_reply_ms_min": 4332.12,
+      "result_to_reply_ms_max": 6603.82,
+      "end_to_end_ms_count": 10,
+      "end_to_end_ms_mean": 11593.12,
+      "end_to_end_ms_std": 785.42,
+      "end_to_end_ms_min": 11139.92,
+      "end_to_end_ms_max": 13437.48
+    },
+    {
+      "n_tools": 12,
+      "n_samples": 10,
+      "n_correct": 10,
+      "accuracy": 1.0,
+      "n_got_result": 10,
+      "query_to_tool_ms_count": 10,
+      "query_to_tool_ms_mean": 8035.47,
+      "query_to_tool_ms_std": 3.74,
+      "query_to_tool_ms_min": 8028.31,
+      "query_to_tool_ms_max": 8043.01,
+      "tool_to_result_ms_count": 10,
+      "tool_to_result_ms_mean": 645.62,
+      "tool_to_result_ms_std": 18.25,
+      "tool_to_result_ms_min": 624.42,
+      "tool_to_result_ms_max": 681.36,
+      "result_to_reply_ms_count": 10,
+      "result_to_reply_ms_mean": 4773.02,
+      "result_to_reply_ms_std": 780.52,
+      "result_to_reply_ms_min": 4335.53,
+      "result_to_reply_ms_max": 6612.45,
+      "end_to_end_ms_count": 10,
+      "end_to_end_ms_mean": 13454.11,
+      "end_to_end_ms_std": 777.69,
+      "end_to_end_ms_min": 13004.57,
+      "end_to_end_ms_max": 15299.62
+    },
+    {
+      "n_tools": 18,
+      "n_samples": 10,
+      "n_correct": 10,
+      "accuracy": 1.0,
+      "n_got_result": 10,
+      "query_to_tool_ms_count": 10,
+      "query_to_tool_ms_mean": 9881.33,
+      "query_to_tool_ms_std": 4.82,
+      "query_to_tool_ms_min": 9870.69,
+      "query_to_tool_ms_max": 9887.72,
+      "tool_to_result_ms_count": 10,
+      "tool_to_result_ms_mean": 749.24,
+      "tool_to_result_ms_std": 298.7,
+      "tool_to_result_ms_min": 624.31,
+      "tool_to_result_ms_max": 1642.13,
+      "result_to_reply_ms_count": 10,
+      "result_to_reply_ms_mean": 4771.19,
+      "result_to_reply_ms_std": 776.99,
+      "result_to_reply_ms_min": 4335.28,
+      "result_to_reply_ms_max": 6597.12,
+      "end_to_end_ms_count": 10,
+      "end_to_end_ms_mean": 15401.76,
+      "end_to_end_ms_std": 781.49,
+      "end_to_end_ms_min": 14849.73,
+      "end_to_end_ms_max": 17159.67
+    },
+    {
+      "n_tools": 24,
+      "n_samples": 10,
+      "n_correct": 8,
+      "accuracy": 0.8,
+      "n_got_result": 8,
+      "query_to_tool_ms_count": 8,
+      "query_to_tool_ms_mean": 11988.39,
+      "query_to_tool_ms_std": 683.94,
+      "query_to_tool_ms_min": 11724.84,
+      "query_to_tool_ms_max": 13797.91,
+      "tool_to_result_ms_count": 8,
+      "tool_to_result_ms_mean": 632.29,
+      "tool_to_result_ms_std": 10.3,
+      "tool_to_result_ms_min": 618.2,
+      "tool_to_result_ms_max": 648.06,
+      "result_to_reply_ms_count": 8,
+      "result_to_reply_ms_mean": 4880.16,
+      "result_to_reply_ms_std": 837.35,
+      "result_to_reply_ms_min": 4334.72,
+      "result_to_reply_ms_max": 6609.0,
+      "end_to_end_ms_count": 8,
+      "end_to_end_ms_mean": 17500.83,
+      "end_to_end_ms_std": 1317.37,
+      "end_to_end_ms_min": 16688.32,
+      "end_to_end_ms_max": 20409.65
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "functiongemma": {
+    "handler": "functiongemma",
+    "n_all": 500,
+    "n_with_tool": 480,
+    "selection_all": 0.448,
+    "toolcall_all": 0.426,
+    "selection_with_tool_only": 0.4666666666666667,
+    "toolcall_with_tool_only": 0.44375,
+    "seconds": 374.4,
+    "first_sentence_seconds": 0.6148,
+    "mean_seconds_after_first": 0.7491,
+    "total_gen_tokens": 5594,
+    "mean_gen_tokens": 11.19
+  },
+  "functiongemma_simple": {
+    "handler": "functiongemma_simple",
+    "n_all": 500,
+    "n_with_tool": 480,
+    "selection_all": 0.41,
+    "toolcall_all": 0.388,
+    "selection_with_tool_only": 0.39375,
+    "toolcall_with_tool_only": 0.37083333333333335,
+    "seconds": 50.5,
+    "first_sentence_seconds": 0.1263,
+    "mean_seconds_after_first": 0.101,
+    "total_gen_tokens": 8631,
+    "mean_gen_tokens": 17.26
+  },
+  "functiongemma_cache": {
+    "handler": "functiongemma_cache",
+    "n_all": 500,
+    "n_with_tool": 480,
+    "selection_all": 0.448,
+    "toolcall_all": 0.426,
+    "selection_with_tool_only": 0.4666666666666667,
+    "toolcall_with_tool_only": 0.44375,
+    "seconds": 478.2,
+    "first_sentence_seconds": 0.6261,
+    "mean_seconds_after_first": 0.9571,
+    "total_gen_tokens": 5594,
+    "mean_gen_tokens": 11.19
+  }
+}

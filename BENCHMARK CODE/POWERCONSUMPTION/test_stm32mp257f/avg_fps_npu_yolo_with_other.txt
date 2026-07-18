@@ -1,0 +1,3 @@
+avg_fps=11.197
+frames=13437
+seconds=1200.08

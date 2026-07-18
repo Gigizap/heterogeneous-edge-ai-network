@@ -1,0 +1,2734 @@
+{
+  "role": "leader",
+  "device": "raspberry",
+  "leader_preset": "workflow1_qwen3_hailo",
+  "correct_tool": "detect_people",
+  "tool_counts": [
+    1,
+    6,
+    12,
+    18,
+    24
+  ],
+  "queries": [
+    "can you use the detect person tool",
+    "is there a person in front of the camera",
+    "how many people are there",
+    "do you see anyone",
+    "check if someone is in the room",
+    "are there any people visible",
+    "detect the people in the frame",
+    "is anybody there right now",
+    "tell me how many persons you can see",
+    "look for a person with the camera"
+  ],
+  "time_to_boot": {
+    "unit": "ms",
+    "samples": [
+      31032.62,
+      6781.28,
+      6759.79,
+      7032.83,
+      6763.67,
+      6920.39,
+      6995.61,
+      6753.96,
+      6777.29,
+      6924.65
+    ],
+    "count": 10,
+    "mean": 6874.21,
+    "std": 112.9,
+    "min": 6753.96,
+    "max": 7032.83
+  },
+  "prompt_specs": [
+    {
+      "n_tools": 1,
+      "tools": [
+        {
+          "type": "function",
+          "function": {
+            "name": "detect_people",
+            "description": "Detects the people that are currently visible. Use this when the user says 'do you see a person?', 'how many people?', or 'is there anyone?'.",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        }
+      ],
+      "dispatch_prompt": {
+        "messages": [
+          {
+            "role": "system",
+            "content": "You are a smart-home agent dispatcher. Call exactly ONE tool that best matches the user's intent. Extract any names or object targets precisely from the user's message. If nothing matches, reply normally without calling any tool. /no_think"
+          },
+          {
+            "role": "user",
+            "content": "can you use the detect person tool"
+          }
+        ],
+        "tools_attached": [
+          "detect_people"
+        ],
+        "note": "Hailo genai renders its own chat template internally; the exact rendered string is not exposed. 'messages' is what was passed to generate(); tool descriptions are in this config's 'tools'."
+      },
+      "answer_prompt": {
+        "messages": [
+          {
+            "role": "system",
+            "content": "You are a helpful assistant for a smart home agent network. The network has already executed a command and returned real data. Translate that raw result into a short, friendly reply for the user. DO NOT OUTPUT JSON, field names, brackets, or raw data structures. ALWAYS MENTION IN THE REPLY WHERE THE RESULTS ARE COMING FROM: the 'from' value is the device that executed the tool, and the user MUST be told which device(s) reported it. Always reply in the same language the user wrote in. /no_think"
+          },
+          {
+            "role": "user",
+            "content": "User request: can you use the detect person tool\nCommand executed: {\"name\": \"detect_people\", \"arguments\": {}}\n\nRESULT DATA (write your reply from this; the 'from' field is the device that ran the tool, so name it in your answer)\n[{\"from\": \"stm32-sensing-bench\", \"text\": \"stm32 detection says: no people detected\"}]\n"
+          }
+        ],
+        "note": "Hailo genai renders its own chat template internally; the exact rendered string is not exposed. 'messages' is what was passed to generate(); tool descriptions are in this config's 'tools'."
+      }
+    },
+    {
+      "n_tools": 6,
+      "tools": [
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_3",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_5",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_4",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_1",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "detect_people",
+            "description": "Detects the people that are currently visible. Use this when the user says 'do you see a person?', 'how many people?', or 'is there anyone?'.",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_2",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        }
+      ],
+      "dispatch_prompt": {
+        "messages": [
+          {
+            "role": "system",
+            "content": "You are a smart-home agent dispatcher. Call exactly ONE tool that best matches the user's intent. Extract any names or object targets precisely from the user's message. If nothing matches, reply normally without calling any tool. /no_think"
+          },
+          {
+            "role": "user",
+            "content": "can you use the detect person tool"
+          }
+        ],
+        "tools_attached": [
+          "wrong_tool_3",
+          "wrong_tool_5",
+          "wrong_tool_4",
+          "wrong_tool_1",
+          "detect_people",
+          "wrong_tool_2"
+        ],
+        "note": "Hailo genai renders its own chat template internally; the exact rendered string is not exposed. 'messages' is what was passed to generate(); tool descriptions are in this config's 'tools'."
+      },
+      "answer_prompt": {
+        "messages": [
+          {
+            "role": "system",
+            "content": "You are a helpful assistant for a smart home agent network. The network has already executed a command and returned real data. Translate that raw result into a short, friendly reply for the user. DO NOT OUTPUT JSON, field names, brackets, or raw data structures. ALWAYS MENTION IN THE REPLY WHERE THE RESULTS ARE COMING FROM: the 'from' value is the device that executed the tool, and the user MUST be told which device(s) reported it. Always reply in the same language the user wrote in. /no_think"
+          },
+          {
+            "role": "user",
+            "content": "User request: tell me how many persons you can see\nCommand executed: {\"name\": \"detect_people\", \"arguments\": {}}\n\nRESULT DATA (write your reply from this; the 'from' field is the device that ran the tool, so name it in your answer)\n[{\"from\": \"stm32-sensing-bench\", \"text\": \"stm32 detection says: no people detected\"}]\n"
+          }
+        ],
+        "note": "Hailo genai renders its own chat template internally; the exact rendered string is not exposed. 'messages' is what was passed to generate(); tool descriptions are in this config's 'tools'."
+      }
+    },
+    {
+      "n_tools": 12,
+      "tools": [
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_3",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_10",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_6",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_8",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_11",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_5",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_4",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_1",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_7",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "detect_people",
+            "description": "Detects the people that are currently visible. Use this when the user says 'do you see a person?', 'how many people?', or 'is there anyone?'.",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_9",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_2",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        }
+      ],
+      "dispatch_prompt": {
+        "messages": [
+          {
+            "role": "system",
+            "content": "You are a smart-home agent dispatcher. Call exactly ONE tool that best matches the user's intent. Extract any names or object targets precisely from the user's message. If nothing matches, reply normally without calling any tool. /no_think"
+          },
+          {
+            "role": "user",
+            "content": "can you use the detect person tool"
+          }
+        ],
+        "tools_attached": [
+          "wrong_tool_3",
+          "wrong_tool_10",
+          "wrong_tool_6",
+          "wrong_tool_8",
+          "wrong_tool_11",
+          "wrong_tool_5",
+          "wrong_tool_4",
+          "wrong_tool_1",
+          "wrong_tool_7",
+          "detect_people",
+          "wrong_tool_9",
+          "wrong_tool_2"
+        ],
+        "note": "Hailo genai renders its own chat template internally; the exact rendered string is not exposed. 'messages' is what was passed to generate(); tool descriptions are in this config's 'tools'."
+      },
+      "answer_prompt": {
+        "messages": [
+          {
+            "role": "system",
+            "content": "You are a helpful assistant for a smart home agent network. The network has already executed a command and returned real data. Translate that raw result into a short, friendly reply for the user. DO NOT OUTPUT JSON, field names, brackets, or raw data structures. ALWAYS MENTION IN THE REPLY WHERE THE RESULTS ARE COMING FROM: the 'from' value is the device that executed the tool, and the user MUST be told which device(s) reported it. Always reply in the same language the user wrote in. /no_think"
+          },
+          {
+            "role": "user",
+            "content": "User request: can you use the detect person tool\nCommand executed: {\"name\": \"detect_people\", \"arguments\": {}}\n\nRESULT DATA (write your reply from this; the 'from' field is the device that ran the tool, so name it in your answer)\n[{\"from\": \"stm32-sensing-bench\", \"text\": \"stm32 detection says: no people detected\"}]\n"
+          }
+        ],
+        "note": "Hailo genai renders its own chat template internally; the exact rendered string is not exposed. 'messages' is what was passed to generate(); tool descriptions are in this config's 'tools'."
+      }
+    },
+    {
+      "n_tools": 18,
+      "tools": [
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_16",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_3",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_10",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_6",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_8",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_11",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_17",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_5",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_13",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_4",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_15",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_12",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_1",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_14",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_7",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "detect_people",
+            "description": "Detects the people that are currently visible. Use this when the user says 'do you see a person?', 'how many people?', or 'is there anyone?'.",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_9",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_2",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        }
+      ],
+      "dispatch_prompt": {
+        "messages": [
+          {
+            "role": "system",
+            "content": "You are a smart-home agent dispatcher. Call exactly ONE tool that best matches the user's intent. Extract any names or object targets precisely from the user's message. If nothing matches, reply normally without calling any tool. /no_think"
+          },
+          {
+            "role": "user",
+            "content": "can you use the detect person tool"
+          }
+        ],
+        "tools_attached": [
+          "wrong_tool_16",
+          "wrong_tool_3",
+          "wrong_tool_10",
+          "wrong_tool_6",
+          "wrong_tool_8",
+          "wrong_tool_11",
+          "wrong_tool_17",
+          "wrong_tool_5",
+          "wrong_tool_13",
+          "wrong_tool_4",
+          "wrong_tool_15",
+          "wrong_tool_12",
+          "wrong_tool_1",
+          "wrong_tool_14",
+          "wrong_tool_7",
+          "detect_people",
+          "wrong_tool_9",
+          "wrong_tool_2"
+        ],
+        "note": "Hailo genai renders its own chat template internally; the exact rendered string is not exposed. 'messages' is what was passed to generate(); tool descriptions are in this config's 'tools'."
+      },
+      "answer_prompt": {
+        "messages": [
+          {
+            "role": "system",
+            "content": "You are a helpful assistant for a smart home agent network. The network has already executed a command and returned real data. Translate that raw result into a short, friendly reply for the user. DO NOT OUTPUT JSON, field names, brackets, or raw data structures. ALWAYS MENTION IN THE REPLY WHERE THE RESULTS ARE COMING FROM: the 'from' value is the device that executed the tool, and the user MUST be told which device(s) reported it. Always reply in the same language the user wrote in. /no_think"
+          },
+          {
+            "role": "user",
+            "content": "User request: can you use the detect person tool\nCommand executed: {\"name\": \"detect_people\", \"arguments\": {}}\n\nRESULT DATA (write your reply from this; the 'from' field is the device that ran the tool, so name it in your answer)\n[{\"from\": \"stm32-sensing-bench\", \"text\": \"stm32 detection says: no people detected\"}]\n"
+          }
+        ],
+        "note": "Hailo genai renders its own chat template internally; the exact rendered string is not exposed. 'messages' is what was passed to generate(); tool descriptions are in this config's 'tools'."
+      }
+    },
+    {
+      "n_tools": 24,
+      "tools": [
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_4",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_7",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "detect_people",
+            "description": "Detects the people that are currently visible. Use this when the user says 'do you see a person?', 'how many people?', or 'is there anyone?'.",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_17",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_23",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_22",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_16",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_3",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_13",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_15",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_1",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_14",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_20",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_10",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_21",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_8",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_18",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_9",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_2",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_6",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_5",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_12",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_11",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "wrong_tool_19",
+            "description": "do not call this tool",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        }
+      ],
+      "dispatch_prompt": {
+        "messages": [
+          {
+            "role": "system",
+            "content": "You are a smart-home agent dispatcher. Call exactly ONE tool that best matches the user's intent. Extract any names or object targets precisely from the user's message. If nothing matches, reply normally without calling any tool. /no_think"
+          },
+          {
+            "role": "user",
+            "content": "can you use the detect person tool"
+          }
+        ],
+        "tools_attached": [
+          "wrong_tool_4",
+          "wrong_tool_7",
+          "detect_people",
+          "wrong_tool_17",
+          "wrong_tool_23",
+          "wrong_tool_22",
+          "wrong_tool_16",
+          "wrong_tool_3",
+          "wrong_tool_13",
+          "wrong_tool_15",
+          "wrong_tool_1",
+          "wrong_tool_14",
+          "wrong_tool_20",
+          "wrong_tool_10",
+          "wrong_tool_21",
+          "wrong_tool_8",
+          "wrong_tool_18",
+          "wrong_tool_9",
+          "wrong_tool_2",
+          "wrong_tool_6",
+          "wrong_tool_5",
+          "wrong_tool_12",
+          "wrong_tool_11",
+          "wrong_tool_19"
+        ],
+        "note": "Hailo genai renders its own chat template internally; the exact rendered string is not exposed. 'messages' is what was passed to generate(); tool descriptions are in this config's 'tools'."
+      },
+      "answer_prompt": {
+        "messages": [
+          {
+            "role": "system",
+            "content": "You are a helpful assistant for a smart home agent network. The network has already executed a command and returned real data. Translate that raw result into a short, friendly reply for the user. DO NOT OUTPUT JSON, field names, brackets, or raw data structures. ALWAYS MENTION IN THE REPLY WHERE THE RESULTS ARE COMING FROM: the 'from' value is the device that executed the tool, and the user MUST be told which device(s) reported it. Always reply in the same language the user wrote in. /no_think"
+          },
+          {
+            "role": "user",
+            "content": "User request: is there a person in front of the camera\nCommand executed: {\"name\": \"detect_people\", \"arguments\": {}}\n\nRESULT DATA (write your reply from this; the 'from' field is the device that ran the tool, so name it in your answer)\n[{\"from\": \"stm32-sensing-bench\", \"text\": \"stm32 detection says: no people detected\"}]\n"
+          }
+        ],
+        "note": "Hailo genai renders its own chat template internally; the exact rendered string is not exposed. 'messages' is what was passed to generate(); tool descriptions are in this config's 'tools'."
+      }
+    }
+  ],
+  "samples": [
+    {
+      "n_tools": 1,
+      "query_idx": 0,
+      "query": "can you use the detect person tool",
+      "tool_called": "detect_people",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "No people detected, from stm32-sensing-bench.",
+      "query_to_tool_ms": 4974.47,
+      "dispatch_ttft_ms": 1860.17,
+      "dispatch_tokens_in": 224,
+      "dispatch_tokens_out": 15,
+      "dispatch_tps": 4.51,
+      "tool_to_result_ms": 632.36,
+      "result_to_reply_ms": 4560.84,
+      "answer_ttft_ms": 1859.6,
+      "answer_tokens_in": 209,
+      "answer_tokens_out": 13,
+      "answer_tps": 4.46,
+      "end_to_end_ms": 10167.66,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 1,
+      "query_idx": 1,
+      "query": "is there a person in front of the camera",
+      "tool_called": "detect_people",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "No people detected from stm32-sensing-bench.",
+      "query_to_tool_ms": 4974.42,
+      "dispatch_ttft_ms": 1858.51,
+      "dispatch_tokens_in": 226,
+      "dispatch_tokens_out": 15,
+      "dispatch_tps": 4.51,
+      "tool_to_result_ms": 628.36,
+      "result_to_reply_ms": 4355.28,
+      "answer_ttft_ms": 1859.56,
+      "answer_tokens_in": 211,
+      "answer_tokens_out": 12,
+      "answer_tps": 4.43,
+      "end_to_end_ms": 9958.06,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 1,
+      "query_idx": 2,
+      "query": "how many people are there",
+      "tool_called": "detect_people",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "There are no people detected from the stm32-sensing-bench.",
+      "query_to_tool_ms": 4975.35,
+      "dispatch_ttft_ms": 1858.93,
+      "dispatch_tokens_in": 222,
+      "dispatch_tokens_out": 15,
+      "dispatch_tps": 4.51,
+      "tool_to_result_ms": 631.09,
+      "result_to_reply_ms": 4974.18,
+      "answer_ttft_ms": 1858.4,
+      "answer_tokens_in": 207,
+      "answer_tokens_out": 15,
+      "answer_tps": 4.51,
+      "end_to_end_ms": 10580.62,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 1,
+      "query_idx": 3,
+      "query": "do you see anyone",
+      "tool_called": "detect_people",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "I don’t see any people right now. It’s from the stm32 sensing bench.",
+      "query_to_tool_ms": 4975.02,
+      "dispatch_ttft_ms": 1858.86,
+      "dispatch_tokens_in": 221,
+      "dispatch_tokens_out": 15,
+      "dispatch_tps": 4.51,
+      "tool_to_result_ms": 631.03,
+      "result_to_reply_ms": 5801.11,
+      "answer_ttft_ms": 1858.06,
+      "answer_tokens_in": 206,
+      "answer_tokens_out": 19,
+      "answer_tps": 4.58,
+      "end_to_end_ms": 11407.16,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 1,
+      "query_idx": 4,
+      "query": "check if someone is in the room",
+      "tool_called": "detect_people",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "No people detected from stm32-sensing-bench.",
+      "query_to_tool_ms": 4972.73,
+      "dispatch_ttft_ms": 1857.86,
+      "dispatch_tokens_in": 224,
+      "dispatch_tokens_out": 15,
+      "dispatch_tps": 4.51,
+      "tool_to_result_ms": 626.53,
+      "result_to_reply_ms": 4352.83,
+      "answer_ttft_ms": 1858.81,
+      "answer_tokens_in": 209,
+      "answer_tokens_out": 12,
+      "answer_tps": 4.43,
+      "end_to_end_ms": 9952.09,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 1,
+      "query_idx": 5,
+      "query": "are there any people visible",
+      "tool_called": "detect_people",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "No people detected from stm32-sensing-bench.",
+      "query_to_tool_ms": 4976.25,
+      "dispatch_ttft_ms": 1858.48,
+      "dispatch_tokens_in": 222,
+      "dispatch_tokens_out": 15,
+      "dispatch_tps": 4.51,
+      "tool_to_result_ms": 626.26,
+      "result_to_reply_ms": 4353.64,
+      "answer_ttft_ms": 1857.07,
+      "answer_tokens_in": 207,
+      "answer_tokens_out": 12,
+      "answer_tps": 4.42,
+      "end_to_end_ms": 9956.16,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 1,
+      "query_idx": 6,
+      "query": "detect the people in the frame",
+      "tool_called": "detect_people",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "No people detected from stm32-sensing-bench.",
+      "query_to_tool_ms": 4978.11,
+      "dispatch_ttft_ms": 1856.87,
+      "dispatch_tokens_in": 223,
+      "dispatch_tokens_out": 15,
+      "dispatch_tps": 4.5,
+      "tool_to_result_ms": 631.79,
+      "result_to_reply_ms": 4353.71,
+      "answer_ttft_ms": 1857.02,
+      "answer_tokens_in": 208,
+      "answer_tokens_out": 12,
+      "answer_tps": 4.42,
+      "end_to_end_ms": 9963.61,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 1,
+      "query_idx": 7,
+      "query": "is anybody there right now",
+      "tool_called": "detect_people",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "No one is detected right now, according to the stm32 sensing bench.",
+      "query_to_tool_ms": 4975.55,
+      "dispatch_ttft_ms": 1858.74,
+      "dispatch_tokens_in": 222,
+      "dispatch_tokens_out": 15,
+      "dispatch_tps": 4.51,
+      "tool_to_result_ms": 715.94,
+      "result_to_reply_ms": 5180.64,
+      "answer_ttft_ms": 1857.19,
+      "answer_tokens_in": 207,
+      "answer_tokens_out": 16,
+      "answer_tps": 4.53,
+      "end_to_end_ms": 10872.12,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 1,
+      "query_idx": 8,
+      "query": "tell me how many persons you can see",
+      "tool_called": "detect_people",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "I can see 0 people from stm32-sensing-bench.",
+      "query_to_tool_ms": 4979.32,
+      "dispatch_ttft_ms": 1858.95,
+      "dispatch_tokens_in": 225,
+      "dispatch_tokens_out": 15,
+      "dispatch_tps": 4.5,
+      "tool_to_result_ms": 622.43,
+      "result_to_reply_ms": 4972.87,
+      "answer_ttft_ms": 1857.53,
+      "answer_tokens_in": 210,
+      "answer_tokens_out": 15,
+      "answer_tps": 4.51,
+      "end_to_end_ms": 10574.62,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 1,
+      "query_idx": 9,
+      "query": "look for a person with the camera",
+      "tool_called": "detect_people",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "The camera from stm32-sensing-bench says there are no people detected.",
+      "query_to_tool_ms": 4974.31,
+      "dispatch_ttft_ms": 1858.79,
+      "dispatch_tokens_in": 224,
+      "dispatch_tokens_out": 15,
+      "dispatch_tps": 4.51,
+      "tool_to_result_ms": 612.57,
+      "result_to_reply_ms": 5388.62,
+      "answer_ttft_ms": 1858.29,
+      "answer_tokens_in": 209,
+      "answer_tokens_out": 17,
+      "answer_tps": 4.55,
+      "end_to_end_ms": 10975.5,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 6,
+      "query_idx": 0,
+      "query": "can you use the detect person tool",
+      "tool_called": "",
+      "tool_result": "",
+      "tool_result_raw": [],
+      "final_reply": "<tool_call></tool_call>\n{\"name\": \"detect_people\", \"arguments\": {}}\n</tool_call>",
+      "query_to_tool_ms": 6415.67,
+      "dispatch_ttft_ms": 3093.1,
+      "dispatch_tokens_in": 459,
+      "dispatch_tokens_out": 16,
+      "dispatch_tps": 4.53,
+      "tool_to_result_ms": 0.0,
+      "result_to_reply_ms": 0.0,
+      "answer_ttft_ms": null,
+      "answer_tokens_in": null,
+      "answer_tokens_out": null,
+      "answer_tps": null,
+      "end_to_end_ms": 6415.68,
+      "correct": 0,
+      "got_result": 0,
+      "error": ""
+    },
+    {
+      "n_tools": 6,
+      "query_idx": 1,
+      "query": "is there a person in front of the camera",
+      "tool_called": "",
+      "tool_result": "",
+      "tool_result_raw": [],
+      "final_reply": "<tool_call></tool_call>\n{\"name\": \"detect_people\", \"arguments\": {}}\n</tool_call>",
+      "query_to_tool_ms": 6415.65,
+      "dispatch_ttft_ms": 3092.54,
+      "dispatch_tokens_in": 461,
+      "dispatch_tokens_out": 16,
+      "dispatch_tps": 4.53,
+      "tool_to_result_ms": 0.0,
+      "result_to_reply_ms": 0.0,
+      "answer_ttft_ms": null,
+      "answer_tokens_in": null,
+      "answer_tokens_out": null,
+      "answer_tps": null,
+      "end_to_end_ms": 6415.65,
+      "correct": 0,
+      "got_result": 0,
+      "error": ""
+    },
+    {
+      "n_tools": 6,
+      "query_idx": 2,
+      "query": "how many people are there",
+      "tool_called": "",
+      "tool_result": "",
+      "tool_result_raw": [],
+      "final_reply": "<tool_call></tool_call>\n{\"name\": \"detect_people\", \"arguments\": {}}\n</tool_call>",
+      "query_to_tool_ms": 6416.28,
+      "dispatch_ttft_ms": 3092.97,
+      "dispatch_tokens_in": 457,
+      "dispatch_tokens_out": 16,
+      "dispatch_tps": 4.53,
+      "tool_to_result_ms": 0.0,
+      "result_to_reply_ms": 0.0,
+      "answer_ttft_ms": null,
+      "answer_tokens_in": null,
+      "answer_tokens_out": null,
+      "answer_tps": null,
+      "end_to_end_ms": 6416.28,
+      "correct": 0,
+      "got_result": 0,
+      "error": ""
+    },
+    {
+      "n_tools": 6,
+      "query_idx": 3,
+      "query": "do you see anyone",
+      "tool_called": "",
+      "tool_result": "",
+      "tool_result_raw": [],
+      "final_reply": "<tool_call></tool_call>\n{\"name\": \"detect_people\", \"arguments\": {}}\n</tool_call>",
+      "query_to_tool_ms": 6416.04,
+      "dispatch_ttft_ms": 3091.73,
+      "dispatch_tokens_in": 456,
+      "dispatch_tokens_out": 16,
+      "dispatch_tps": 4.53,
+      "tool_to_result_ms": 0.0,
+      "result_to_reply_ms": 0.0,
+      "answer_ttft_ms": null,
+      "answer_tokens_in": null,
+      "answer_tokens_out": null,
+      "answer_tps": null,
+      "end_to_end_ms": 6416.05,
+      "correct": 0,
+      "got_result": 0,
+      "error": ""
+    },
+    {
+      "n_tools": 6,
+      "query_idx": 4,
+      "query": "check if someone is in the room",
+      "tool_called": "",
+      "tool_result": "",
+      "tool_result_raw": [],
+      "final_reply": "<tool_call></tool_call>\n{\"name\": \"detect_people\", \"arguments\": {}}\n</tool_call>",
+      "query_to_tool_ms": 6414.52,
+      "dispatch_ttft_ms": 3090.67,
+      "dispatch_tokens_in": 459,
+      "dispatch_tokens_out": 16,
+      "dispatch_tps": 4.53,
+      "tool_to_result_ms": 0.0,
+      "result_to_reply_ms": 0.0,
+      "answer_ttft_ms": null,
+      "answer_tokens_in": null,
+      "answer_tokens_out": null,
+      "answer_tps": null,
+      "end_to_end_ms": 6414.52,
+      "correct": 0,
+      "got_result": 0,
+      "error": ""
+    },
+    {
+      "n_tools": 6,
+      "query_idx": 5,
+      "query": "are there any people visible",
+      "tool_called": "",
+      "tool_result": "",
+      "tool_result_raw": [],
+      "final_reply": "<tool_call></tool_call>\n{\"name\": \"detect_people\", \"arguments\": {}}\n</tool_call>",
+      "query_to_tool_ms": 6414.49,
+      "dispatch_ttft_ms": 3091.02,
+      "dispatch_tokens_in": 457,
+      "dispatch_tokens_out": 16,
+      "dispatch_tps": 4.53,
+      "tool_to_result_ms": 0.0,
+      "result_to_reply_ms": 0.0,
+      "answer_ttft_ms": null,
+      "answer_tokens_in": null,
+      "answer_tokens_out": null,
+      "answer_tps": null,
+      "end_to_end_ms": 6414.49,
+      "correct": 0,
+      "got_result": 0,
+      "error": ""
+    },
+    {
+      "n_tools": 6,
+      "query_idx": 6,
+      "query": "detect the people in the frame",
+      "tool_called": "",
+      "tool_result": "",
+      "tool_result_raw": [],
+      "final_reply": "<tool_call></tool_call>\n{\"name\": \"detect_people\", \"arguments\": {}}\n</tool_call>",
+      "query_to_tool_ms": 6416.45,
+      "dispatch_ttft_ms": 3091.95,
+      "dispatch_tokens_in": 458,
+      "dispatch_tokens_out": 16,
+      "dispatch_tps": 4.53,
+      "tool_to_result_ms": 0.0,
+      "result_to_reply_ms": 0.0,
+      "answer_ttft_ms": null,
+      "answer_tokens_in": null,
+      "answer_tokens_out": null,
+      "answer_tps": null,
+      "end_to_end_ms": 6416.45,
+      "correct": 0,
+      "got_result": 0,
+      "error": ""
+    },
+    {
+      "n_tools": 6,
+      "query_idx": 7,
+      "query": "is anybody there right now",
+      "tool_called": "",
+      "tool_result": "",
+      "tool_result_raw": [],
+      "final_reply": "<tool_call></tool_call>\n{\"name\": \"detect_people\", \"arguments\": {}}\n</tool_call>",
+      "query_to_tool_ms": 6417.05,
+      "dispatch_ttft_ms": 3093.28,
+      "dispatch_tokens_in": 457,
+      "dispatch_tokens_out": 16,
+      "dispatch_tps": 4.53,
+      "tool_to_result_ms": 0.0,
+      "result_to_reply_ms": 0.0,
+      "answer_ttft_ms": null,
+      "answer_tokens_in": null,
+      "answer_tokens_out": null,
+      "answer_tps": null,
+      "end_to_end_ms": 6417.05,
+      "correct": 0,
+      "got_result": 0,
+      "error": ""
+    },
+    {
+      "n_tools": 6,
+      "query_idx": 8,
+      "query": "tell me how many persons you can see",
+      "tool_called": "detect_people",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "I can see 0 people from stm32-sensing-bench.",
+      "query_to_tool_ms": 6208.48,
+      "dispatch_ttft_ms": 3092.65,
+      "dispatch_tokens_in": 460,
+      "dispatch_tokens_out": 15,
+      "dispatch_tps": 4.51,
+      "tool_to_result_ms": 622.38,
+      "result_to_reply_ms": 4975.58,
+      "answer_ttft_ms": 1858.96,
+      "answer_tokens_in": 210,
+      "answer_tokens_out": 15,
+      "answer_tps": 4.51,
+      "end_to_end_ms": 11806.43,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 6,
+      "query_idx": 9,
+      "query": "look for a person with the camera",
+      "tool_called": "",
+      "tool_result": "",
+      "tool_result_raw": [],
+      "final_reply": "<tool_call></tool_call>\n{\"name\": \"detect_people\", \"arguments\": {}}\n</tool_call>",
+      "query_to_tool_ms": 6417.03,
+      "dispatch_ttft_ms": 3093.92,
+      "dispatch_tokens_in": 459,
+      "dispatch_tokens_out": 16,
+      "dispatch_tps": 4.53,
+      "tool_to_result_ms": 0.0,
+      "result_to_reply_ms": 0.0,
+      "answer_ttft_ms": null,
+      "answer_tokens_in": null,
+      "answer_tokens_out": null,
+      "answer_tps": null,
+      "end_to_end_ms": 6417.04,
+      "correct": 0,
+      "got_result": 0,
+      "error": ""
+    },
+    {
+      "n_tools": 12,
+      "query_idx": 0,
+      "query": "can you use the detect person tool",
+      "tool_called": "detect_people",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "No people detected, from stm32-sensing-bench.",
+      "query_to_tool_ms": 8062.16,
+      "dispatch_ttft_ms": 4944.19,
+      "dispatch_tokens_in": 743,
+      "dispatch_tokens_out": 15,
+      "dispatch_tps": 4.51,
+      "tool_to_result_ms": 739.71,
+      "result_to_reply_ms": 4559.78,
+      "answer_ttft_ms": 1857.06,
+      "answer_tokens_in": 209,
+      "answer_tokens_out": 13,
+      "answer_tps": 4.46,
+      "end_to_end_ms": 13361.65,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 12,
+      "query_idx": 1,
+      "query": "is there a person in front of the camera",
+      "tool_called": "detect_people",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "No people detected from stm32-sensing-bench.",
+      "query_to_tool_ms": 8059.05,
+      "dispatch_ttft_ms": 4941.35,
+      "dispatch_tokens_in": 745,
+      "dispatch_tokens_out": 15,
+      "dispatch_tps": 4.51,
+      "tool_to_result_ms": 623.56,
+      "result_to_reply_ms": 4354.95,
+      "answer_ttft_ms": 1857.83,
+      "answer_tokens_in": 211,
+      "answer_tokens_out": 12,
+      "answer_tps": 4.42,
+      "end_to_end_ms": 13037.56,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 12,
+      "query_idx": 2,
+      "query": "how many people are there",
+      "tool_called": "detect_people",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "There are no people detected from the stm32-sensing-bench.",
+      "query_to_tool_ms": 8058.93,
+      "dispatch_ttft_ms": 4943.25,
+      "dispatch_tokens_in": 741,
+      "dispatch_tokens_out": 15,
+      "dispatch_tps": 4.51,
+      "tool_to_result_ms": 615.65,
+      "result_to_reply_ms": 4976.08,
+      "answer_ttft_ms": 1858.34,
+      "answer_tokens_in": 207,
+      "answer_tokens_out": 15,
+      "answer_tps": 4.51,
+      "end_to_end_ms": 13650.67,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 12,
+      "query_idx": 3,
+      "query": "do you see anyone",
+      "tool_called": "detect_people",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "I don’t see any people right now. It’s from the stm32 sensing bench.",
+      "query_to_tool_ms": 8060.73,
+      "dispatch_ttft_ms": 4942.65,
+      "dispatch_tokens_in": 740,
+      "dispatch_tokens_out": 15,
+      "dispatch_tps": 4.5,
+      "tool_to_result_ms": 638.14,
+      "result_to_reply_ms": 5806.14,
+      "answer_ttft_ms": 1857.83,
+      "answer_tokens_in": 206,
+      "answer_tokens_out": 19,
+      "answer_tps": 4.57,
+      "end_to_end_ms": 14505.01,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 12,
+      "query_idx": 4,
+      "query": "check if someone is in the room",
+      "tool_called": "detect_people",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "No people detected from stm32-sensing-bench.",
+      "query_to_tool_ms": 8061.92,
+      "dispatch_ttft_ms": 4941.97,
+      "dispatch_tokens_in": 743,
+      "dispatch_tokens_out": 15,
+      "dispatch_tps": 4.5,
+      "tool_to_result_ms": 622.87,
+      "result_to_reply_ms": 4355.22,
+      "answer_ttft_ms": 1858.79,
+      "answer_tokens_in": 209,
+      "answer_tokens_out": 12,
+      "answer_tps": 4.43,
+      "end_to_end_ms": 13040.0,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 12,
+      "query_idx": 5,
+      "query": "are there any people visible",
+      "tool_called": "detect_people",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "No people detected from stm32-sensing-bench.",
+      "query_to_tool_ms": 8062.28,
+      "dispatch_ttft_ms": 4944.75,
+      "dispatch_tokens_in": 741,
+      "dispatch_tokens_out": 15,
+      "dispatch_tps": 4.51,
+      "tool_to_result_ms": 628.51,
+      "result_to_reply_ms": 4354.79,
+      "answer_ttft_ms": 1857.71,
+      "answer_tokens_in": 207,
+      "answer_tokens_out": 12,
+      "answer_tps": 4.42,
+      "end_to_end_ms": 13045.58,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 12,
+      "query_idx": 6,
+      "query": "detect the people in the frame",
+      "tool_called": "detect_people",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "No people detected from stm32-sensing-bench.",
+      "query_to_tool_ms": 8060.55,
+      "dispatch_ttft_ms": 4942.58,
+      "dispatch_tokens_in": 742,
+      "dispatch_tokens_out": 15,
+      "dispatch_tps": 4.51,
+      "tool_to_result_ms": 626.64,
+      "result_to_reply_ms": 4353.89,
+      "answer_ttft_ms": 1857.38,
+      "answer_tokens_in": 208,
+      "answer_tokens_out": 12,
+      "answer_tps": 4.43,
+      "end_to_end_ms": 13041.08,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 12,
+      "query_idx": 7,
+      "query": "is anybody there right now",
+      "tool_called": "detect_people",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "No one is detected right now, according to the stm32 sensing bench.",
+      "query_to_tool_ms": 8057.71,
+      "dispatch_ttft_ms": 4942.47,
+      "dispatch_tokens_in": 741,
+      "dispatch_tokens_out": 15,
+      "dispatch_tps": 4.51,
+      "tool_to_result_ms": 621.48,
+      "result_to_reply_ms": 5183.03,
+      "answer_ttft_ms": 1858.55,
+      "answer_tokens_in": 207,
+      "answer_tokens_out": 16,
+      "answer_tps": 4.53,
+      "end_to_end_ms": 13862.22,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 12,
+      "query_idx": 8,
+      "query": "tell me how many persons you can see",
+      "tool_called": "detect_people",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "I can see 0 people from stm32-sensing-bench.",
+      "query_to_tool_ms": 8062.16,
+      "dispatch_ttft_ms": 4944.98,
+      "dispatch_tokens_in": 744,
+      "dispatch_tokens_out": 15,
+      "dispatch_tps": 4.51,
+      "tool_to_result_ms": 635.56,
+      "result_to_reply_ms": 4975.11,
+      "answer_ttft_ms": 1857.87,
+      "answer_tokens_in": 210,
+      "answer_tokens_out": 15,
+      "answer_tps": 4.51,
+      "end_to_end_ms": 13672.84,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 12,
+      "query_idx": 9,
+      "query": "look for a person with the camera",
+      "tool_called": "",
+      "tool_result": "",
+      "tool_result_raw": [],
+      "final_reply": "I can help you with that. Could you please specify the name or details of the person you're looking for?",
+      "query_to_tool_ms": 9714.94,
+      "dispatch_ttft_ms": 4944.36,
+      "dispatch_tokens_in": 743,
+      "dispatch_tokens_out": 23,
+      "dispatch_tps": 4.62,
+      "tool_to_result_ms": 0.0,
+      "result_to_reply_ms": 0.0,
+      "answer_ttft_ms": null,
+      "answer_tokens_in": null,
+      "answer_tokens_out": null,
+      "answer_tps": null,
+      "end_to_end_ms": 9714.95,
+      "correct": 0,
+      "got_result": 0,
+      "error": ""
+    },
+    {
+      "n_tools": 18,
+      "query_idx": 0,
+      "query": "can you use the detect person tool",
+      "tool_called": "detect_people",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "No people detected, from stm32-sensing-bench.",
+      "query_to_tool_ms": 9915.06,
+      "dispatch_ttft_ms": 6798.16,
+      "dispatch_tokens_in": 1031,
+      "dispatch_tokens_out": 15,
+      "dispatch_tps": 4.51,
+      "tool_to_result_ms": 667.44,
+      "result_to_reply_ms": 4562.34,
+      "answer_ttft_ms": 1858.49,
+      "answer_tokens_in": 209,
+      "answer_tokens_out": 13,
+      "answer_tps": 4.46,
+      "end_to_end_ms": 15144.83,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 18,
+      "query_idx": 1,
+      "query": "is there a person in front of the camera",
+      "tool_called": "detect_people",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "No people detected from stm32-sensing-bench.",
+      "query_to_tool_ms": 9917.48,
+      "dispatch_ttft_ms": 6798.27,
+      "dispatch_tokens_in": 1033,
+      "dispatch_tokens_out": 15,
+      "dispatch_tps": 4.5,
+      "tool_to_result_ms": 873.99,
+      "result_to_reply_ms": 4355.58,
+      "answer_ttft_ms": 1857.97,
+      "answer_tokens_in": 211,
+      "answer_tokens_out": 12,
+      "answer_tps": 4.42,
+      "end_to_end_ms": 15147.05,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 18,
+      "query_idx": 2,
+      "query": "how many people are there",
+      "tool_called": "detect_people",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "There are no people detected from the stm32-sensing-bench.",
+      "query_to_tool_ms": 9912.6,
+      "dispatch_ttft_ms": 6796.7,
+      "dispatch_tokens_in": 1029,
+      "dispatch_tokens_out": 15,
+      "dispatch_tps": 4.51,
+      "tool_to_result_ms": 633.08,
+      "result_to_reply_ms": 4976.39,
+      "answer_ttft_ms": 1858.88,
+      "answer_tokens_in": 207,
+      "answer_tokens_out": 15,
+      "answer_tps": 4.51,
+      "end_to_end_ms": 15522.07,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 18,
+      "query_idx": 3,
+      "query": "do you see anyone",
+      "tool_called": "detect_people",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "I don’t see any people right now. It’s from the stm32 sensing bench.",
+      "query_to_tool_ms": 9914.66,
+      "dispatch_ttft_ms": 6796.68,
+      "dispatch_tokens_in": 1028,
+      "dispatch_tokens_out": 15,
+      "dispatch_tps": 4.51,
+      "tool_to_result_ms": 622.58,
+      "result_to_reply_ms": 5803.31,
+      "answer_ttft_ms": 1858.02,
+      "answer_tokens_in": 206,
+      "answer_tokens_out": 19,
+      "answer_tps": 4.57,
+      "end_to_end_ms": 16340.55,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 18,
+      "query_idx": 4,
+      "query": "check if someone is in the room",
+      "tool_called": "detect_people",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "No people detected from stm32-sensing-bench.",
+      "query_to_tool_ms": 9916.23,
+      "dispatch_ttft_ms": 6800.41,
+      "dispatch_tokens_in": 1031,
+      "dispatch_tokens_out": 15,
+      "dispatch_tps": 4.51,
+      "tool_to_result_ms": 783.73,
+      "result_to_reply_ms": 4355.65,
+      "answer_ttft_ms": 1858.31,
+      "answer_tokens_in": 209,
+      "answer_tokens_out": 12,
+      "answer_tps": 4.42,
+      "end_to_end_ms": 15055.6,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 18,
+      "query_idx": 5,
+      "query": "are there any people visible",
+      "tool_called": "detect_people",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "No people detected from stm32-sensing-bench.",
+      "query_to_tool_ms": 9915.54,
+      "dispatch_ttft_ms": 6799.3,
+      "dispatch_tokens_in": 1029,
+      "dispatch_tokens_out": 15,
+      "dispatch_tps": 4.51,
+      "tool_to_result_ms": 615.94,
+      "result_to_reply_ms": 4354.27,
+      "answer_ttft_ms": 1857.81,
+      "answer_tokens_in": 207,
+      "answer_tokens_out": 12,
+      "answer_tps": 4.43,
+      "end_to_end_ms": 14885.75,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 18,
+      "query_idx": 6,
+      "query": "detect the people in the frame",
+      "tool_called": "detect_people",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "No people detected from stm32-sensing-bench.",
+      "query_to_tool_ms": 9914.95,
+      "dispatch_ttft_ms": 6797.97,
+      "dispatch_tokens_in": 1030,
+      "dispatch_tokens_out": 15,
+      "dispatch_tps": 4.51,
+      "tool_to_result_ms": 626.07,
+      "result_to_reply_ms": 4353.81,
+      "answer_ttft_ms": 1858.13,
+      "answer_tokens_in": 208,
+      "answer_tokens_out": 12,
+      "answer_tps": 4.43,
+      "end_to_end_ms": 14894.83,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 18,
+      "query_idx": 7,
+      "query": "is anybody there right now",
+      "tool_called": "detect_people",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "No one is detected right now, according to the stm32 sensing bench.",
+      "query_to_tool_ms": 9914.69,
+      "dispatch_ttft_ms": 6796.76,
+      "dispatch_tokens_in": 1029,
+      "dispatch_tokens_out": 15,
+      "dispatch_tps": 4.51,
+      "tool_to_result_ms": 665.16,
+      "result_to_reply_ms": 5181.93,
+      "answer_ttft_ms": 1857.28,
+      "answer_tokens_in": 207,
+      "answer_tokens_out": 16,
+      "answer_tps": 4.53,
+      "end_to_end_ms": 15761.77,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 18,
+      "query_idx": 8,
+      "query": "tell me how many persons you can see",
+      "tool_called": "detect_people",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "I can see 0 people from stm32-sensing-bench.",
+      "query_to_tool_ms": 9913.93,
+      "dispatch_ttft_ms": 6797.63,
+      "dispatch_tokens_in": 1032,
+      "dispatch_tokens_out": 15,
+      "dispatch_tps": 4.51,
+      "tool_to_result_ms": 626.17,
+      "result_to_reply_ms": 4977.08,
+      "answer_ttft_ms": 1858.63,
+      "answer_tokens_in": 210,
+      "answer_tokens_out": 15,
+      "answer_tps": 4.51,
+      "end_to_end_ms": 15517.18,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 18,
+      "query_idx": 9,
+      "query": "look for a person with the camera",
+      "tool_called": "wrong_tool_1",
+      "tool_result": "wrong_tool_1: wrong tool executed (placeholder)",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "wrong_tool_1: wrong tool executed (placeholder)"
+        }
+      ],
+      "final_reply": "The camera is not detecting anyone at the moment. The result is coming from the stm32-sensing-bench.",
+      "query_to_tool_ms": 10332.33,
+      "dispatch_ttft_ms": 6800.14,
+      "dispatch_tokens_in": 1031,
+      "dispatch_tokens_out": 17,
+      "dispatch_tps": 4.54,
+      "tool_to_result_ms": 30.3,
+      "result_to_reply_ms": 6838.3,
+      "answer_ttft_ms": 1858.72,
+      "answer_tokens_in": 213,
+      "answer_tokens_out": 24,
+      "answer_tps": 4.63,
+      "end_to_end_ms": 17200.94,
+      "correct": 0,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 24,
+      "query_idx": 0,
+      "query": "can you use the detect person tool",
+      "tool_called": "",
+      "tool_result": "",
+      "tool_result_raw": [],
+      "final_reply": "I can use the detect_people tool to detect the people that are currently visible.\n\n{\"name\": \"detect_people\", \"arguments\": {}}",
+      "query_to_tool_ms": 14456.12,
+      "dispatch_ttft_ms": 8649.33,
+      "dispatch_tokens_in": 1319,
+      "dispatch_tokens_out": 28,
+      "dispatch_tps": 4.66,
+      "tool_to_result_ms": 0.0,
+      "result_to_reply_ms": 0.0,
+      "answer_ttft_ms": null,
+      "answer_tokens_in": null,
+      "answer_tokens_out": null,
+      "answer_tps": null,
+      "end_to_end_ms": 14456.13,
+      "correct": 0,
+      "got_result": 0,
+      "error": ""
+    },
+    {
+      "n_tools": 24,
+      "query_idx": 1,
+      "query": "is there a person in front of the camera",
+      "tool_called": "detect_people",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "No people detected from stm32-sensing-bench.",
+      "query_to_tool_ms": 11768.41,
+      "dispatch_ttft_ms": 8650.25,
+      "dispatch_tokens_in": 1321,
+      "dispatch_tokens_out": 15,
+      "dispatch_tps": 4.5,
+      "tool_to_result_ms": 661.34,
+      "result_to_reply_ms": 4356.62,
+      "answer_ttft_ms": 1858.34,
+      "answer_tokens_in": 211,
+      "answer_tokens_out": 12,
+      "answer_tps": 4.42,
+      "end_to_end_ms": 16786.37,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 24,
+      "query_idx": 2,
+      "query": "how many people are there",
+      "tool_called": "detect_people",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "There are no people detected from the stm32-sensing-bench.",
+      "query_to_tool_ms": 11766.18,
+      "dispatch_ttft_ms": 8648.86,
+      "dispatch_tokens_in": 1317,
+      "dispatch_tokens_out": 15,
+      "dispatch_tps": 4.51,
+      "tool_to_result_ms": 623.68,
+      "result_to_reply_ms": 4977.3,
+      "answer_ttft_ms": 1858.77,
+      "answer_tokens_in": 207,
+      "answer_tokens_out": 15,
+      "answer_tps": 4.5,
+      "end_to_end_ms": 17367.16,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 24,
+      "query_idx": 3,
+      "query": "do you see anyone",
+      "tool_called": "detect_people",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "I don’t see any people right now. It’s from the stm32 sensing bench.",
+      "query_to_tool_ms": 11766.65,
+      "dispatch_ttft_ms": 8650.11,
+      "dispatch_tokens_in": 1316,
+      "dispatch_tokens_out": 15,
+      "dispatch_tps": 4.51,
+      "tool_to_result_ms": 623.96,
+      "result_to_reply_ms": 5804.27,
+      "answer_ttft_ms": 1858.91,
+      "answer_tokens_in": 206,
+      "answer_tokens_out": 19,
+      "answer_tps": 4.57,
+      "end_to_end_ms": 18194.88,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 24,
+      "query_idx": 4,
+      "query": "check if someone is in the room",
+      "tool_called": "detect_people",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "No people detected from stm32-sensing-bench.",
+      "query_to_tool_ms": 11766.39,
+      "dispatch_ttft_ms": 8650.77,
+      "dispatch_tokens_in": 1319,
+      "dispatch_tokens_out": 15,
+      "dispatch_tps": 4.51,
+      "tool_to_result_ms": 625.0,
+      "result_to_reply_ms": 4355.66,
+      "answer_ttft_ms": 1858.76,
+      "answer_tokens_in": 209,
+      "answer_tokens_out": 12,
+      "answer_tps": 4.42,
+      "end_to_end_ms": 16747.05,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 24,
+      "query_idx": 5,
+      "query": "are there any people visible",
+      "tool_called": "detect_people",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "No people detected from stm32-sensing-bench.",
+      "query_to_tool_ms": 11773.72,
+      "dispatch_ttft_ms": 8653.39,
+      "dispatch_tokens_in": 1317,
+      "dispatch_tokens_out": 15,
+      "dispatch_tps": 4.5,
+      "tool_to_result_ms": 615.42,
+      "result_to_reply_ms": 4353.75,
+      "answer_ttft_ms": 1858.71,
+      "answer_tokens_in": 207,
+      "answer_tokens_out": 12,
+      "answer_tps": 4.43,
+      "end_to_end_ms": 16742.89,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 24,
+      "query_idx": 6,
+      "query": "detect the people in the frame",
+      "tool_called": "detect_people",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "No people detected from stm32-sensing-bench.",
+      "query_to_tool_ms": 11767.29,
+      "dispatch_ttft_ms": 8650.29,
+      "dispatch_tokens_in": 1318,
+      "dispatch_tokens_out": 15,
+      "dispatch_tps": 4.51,
+      "tool_to_result_ms": 619.84,
+      "result_to_reply_ms": 4355.56,
+      "answer_ttft_ms": 1858.69,
+      "answer_tokens_in": 208,
+      "answer_tokens_out": 12,
+      "answer_tps": 4.42,
+      "end_to_end_ms": 16742.69,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 24,
+      "query_idx": 7,
+      "query": "is anybody there right now",
+      "tool_called": "detect_people",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "No one is detected right now, according to the stm32 sensing bench.",
+      "query_to_tool_ms": 11768.23,
+      "dispatch_ttft_ms": 8650.24,
+      "dispatch_tokens_in": 1317,
+      "dispatch_tokens_out": 15,
+      "dispatch_tps": 4.51,
+      "tool_to_result_ms": 614.65,
+      "result_to_reply_ms": 5179.76,
+      "answer_ttft_ms": 1857.39,
+      "answer_tokens_in": 207,
+      "answer_tokens_out": 16,
+      "answer_tps": 4.53,
+      "end_to_end_ms": 17562.64,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 24,
+      "query_idx": 8,
+      "query": "tell me how many persons you can see",
+      "tool_called": "detect_people",
+      "tool_result": "stm32 detection says: no people detected",
+      "tool_result_raw": [
+        {
+          "from": "stm32-sensing-bench",
+          "text": "stm32 detection says: no people detected"
+        }
+      ],
+      "final_reply": "I can see 0 people from stm32-sensing-bench.",
+      "query_to_tool_ms": 11765.99,
+      "dispatch_ttft_ms": 8649.03,
+      "dispatch_tokens_in": 1320,
+      "dispatch_tokens_out": 15,
+      "dispatch_tps": 4.51,
+      "tool_to_result_ms": 630.21,
+      "result_to_reply_ms": 4977.96,
+      "answer_ttft_ms": 1858.72,
+      "answer_tokens_in": 210,
+      "answer_tokens_out": 15,
+      "answer_tps": 4.5,
+      "end_to_end_ms": 17374.15,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_tools": 24,
+      "query_idx": 9,
+      "query": "look for a person with the camera",
+      "tool_called": "",
+      "tool_result": "",
+      "tool_result_raw": [],
+      "final_reply": "I'll check for any people visible with the camera.\n\n{\"name\": \"detect_people\", \"arguments\": {}}\n</tool_call>",
+      "query_to_tool_ms": 13632.9,
+      "dispatch_ttft_ms": 8652.32,
+      "dispatch_tokens_in": 1319,
+      "dispatch_tokens_out": 24,
+      "dispatch_tps": 4.63,
+      "tool_to_result_ms": 0.0,
+      "result_to_reply_ms": 0.0,
+      "answer_ttft_ms": null,
+      "answer_tokens_in": null,
+      "answer_tokens_out": null,
+      "answer_tps": null,
+      "end_to_end_ms": 13632.9,
+      "correct": 0,
+      "got_result": 0,
+      "error": ""
+    }
+  ],
+  "aggregate": [
+    {
+      "n_tools": 1,
+      "n_samples": 10,
+      "n_correct": 10,
+      "accuracy": 1.0,
+      "n_got_result": 10,
+      "query_to_tool_ms_count": 10,
+      "query_to_tool_ms_mean": 4975.55,
+      "query_to_tool_ms_std": 1.83,
+      "query_to_tool_ms_min": 4972.73,
+      "query_to_tool_ms_max": 4979.32,
+      "dispatch_ttft_ms_count": 10,
+      "dispatch_ttft_ms_mean": 1858.62,
+      "dispatch_ttft_ms_std": 0.8,
+      "dispatch_ttft_ms_min": 1856.87,
+      "dispatch_ttft_ms_max": 1860.17,
+      "dispatch_tokens_in_count": 0,
+      "dispatch_tokens_in_mean": null,
+      "dispatch_tokens_in_std": null,
+      "dispatch_tokens_in_min": null,
+      "dispatch_tokens_in_max": null,
+      "dispatch_tokens_out_count": 10,
+      "dispatch_tokens_out_mean": 15.0,
+      "dispatch_tokens_out_std": 0.0,
+      "dispatch_tokens_out_min": 15,
+      "dispatch_tokens_out_max": 15,
+      "dispatch_tps_count": 10,
+      "dispatch_tps_mean": 4.51,
+      "dispatch_tps_std": 0.0,
+      "dispatch_tps_min": 4.5,
+      "dispatch_tps_max": 4.51,
+      "tool_to_result_ms_count": 10,
+      "tool_to_result_ms_mean": 635.84,
+      "tool_to_result_ms_std": 27.29,
+      "tool_to_result_ms_min": 612.57,
+      "tool_to_result_ms_max": 715.94,
+      "result_to_reply_ms_count": 10,
+      "result_to_reply_ms_mean": 4829.37,
+      "result_to_reply_ms_std": 489.75,
+      "result_to_reply_ms_min": 4352.83,
+      "result_to_reply_ms_max": 5801.11,
+      "answer_ttft_ms_count": 10,
+      "answer_ttft_ms_mean": 1858.15,
+      "answer_ttft_ms_std": 0.91,
+      "answer_ttft_ms_min": 1857.02,
+      "answer_ttft_ms_max": 1859.6,
+      "answer_tokens_in_count": 0,
+      "answer_tokens_in_mean": null,
+      "answer_tokens_in_std": null,
+      "answer_tokens_in_min": null,
+      "answer_tokens_in_max": null,
+      "answer_tokens_out_count": 10,
+      "answer_tokens_out_mean": 14.3,
+      "answer_tokens_out_std": 2.37,
+      "answer_tokens_out_min": 12,
+      "answer_tokens_out_max": 19,
+      "answer_tps_count": 10,
+      "answer_tps_mean": 4.48,
+      "answer_tps_std": 0.06,
+      "answer_tps_min": 4.42,
+      "answer_tps_max": 4.58,
+      "end_to_end_ms_count": 10,
+      "end_to_end_ms_mean": 10440.76,
+      "end_to_end_ms_std": 495.21,
+      "end_to_end_ms_min": 9952.09,
+      "end_to_end_ms_max": 11407.16
+    },
+    {
+      "n_tools": 6,
+      "n_samples": 10,
+      "n_correct": 1,
+      "accuracy": 0.1,
+      "n_got_result": 1,
+      "query_to_tool_ms_count": 1,
+      "query_to_tool_ms_mean": 6208.48,
+      "query_to_tool_ms_std": 0.0,
+      "query_to_tool_ms_min": 6208.48,
+      "query_to_tool_ms_max": 6208.48,
+      "dispatch_ttft_ms_count": 1,
+      "dispatch_ttft_ms_mean": 3092.65,
+      "dispatch_ttft_ms_std": 0.0,
+      "dispatch_ttft_ms_min": 3092.65,
+      "dispatch_ttft_ms_max": 3092.65,
+      "dispatch_tokens_in_count": 0,
+      "dispatch_tokens_in_mean": null,
+      "dispatch_tokens_in_std": null,
+      "dispatch_tokens_in_min": null,
+      "dispatch_tokens_in_max": null,
+      "dispatch_tokens_out_count": 1,
+      "dispatch_tokens_out_mean": 15.0,
+      "dispatch_tokens_out_std": 0.0,
+      "dispatch_tokens_out_min": 15,
+      "dispatch_tokens_out_max": 15,
+      "dispatch_tps_count": 1,
+      "dispatch_tps_mean": 4.51,
+      "dispatch_tps_std": 0.0,
+      "dispatch_tps_min": 4.51,
+      "dispatch_tps_max": 4.51,
+      "tool_to_result_ms_count": 1,
+      "tool_to_result_ms_mean": 622.38,
+      "tool_to_result_ms_std": 0.0,
+      "tool_to_result_ms_min": 622.38,
+      "tool_to_result_ms_max": 622.38,
+      "result_to_reply_ms_count": 1,
+      "result_to_reply_ms_mean": 4975.58,
+      "result_to_reply_ms_std": 0.0,
+      "result_to_reply_ms_min": 4975.58,
+      "result_to_reply_ms_max": 4975.58,
+      "answer_ttft_ms_count": 1,
+      "answer_ttft_ms_mean": 1858.96,
+      "answer_ttft_ms_std": 0.0,
+      "answer_ttft_ms_min": 1858.96,
+      "answer_ttft_ms_max": 1858.96,
+      "answer_tokens_in_count": 0,
+      "answer_tokens_in_mean": null,
+      "answer_tokens_in_std": null,
+      "answer_tokens_in_min": null,
+      "answer_tokens_in_max": null,
+      "answer_tokens_out_count": 1,
+      "answer_tokens_out_mean": 15.0,
+      "answer_tokens_out_std": 0.0,
+      "answer_tokens_out_min": 15,
+      "answer_tokens_out_max": 15,
+      "answer_tps_count": 1,
+      "answer_tps_mean": 4.51,
+      "answer_tps_std": 0.0,
+      "answer_tps_min": 4.51,
+      "answer_tps_max": 4.51,
+      "end_to_end_ms_count": 1,
+      "end_to_end_ms_mean": 11806.43,
+      "end_to_end_ms_std": 0.0,
+      "end_to_end_ms_min": 11806.43,
+      "end_to_end_ms_max": 11806.43
+    },
+    {
+      "n_tools": 12,
+      "n_samples": 10,
+      "n_correct": 9,
+      "accuracy": 0.9,
+      "n_got_result": 9,
+      "query_to_tool_ms_count": 9,
+      "query_to_tool_ms_mean": 8060.61,
+      "query_to_tool_ms_std": 1.6,
+      "query_to_tool_ms_min": 8057.71,
+      "query_to_tool_ms_max": 8062.28,
+      "dispatch_ttft_ms_count": 9,
+      "dispatch_ttft_ms_mean": 4943.13,
+      "dispatch_ttft_ms_std": 1.19,
+      "dispatch_ttft_ms_min": 4941.35,
+      "dispatch_ttft_ms_max": 4944.98,
+      "dispatch_tokens_in_count": 0,
+      "dispatch_tokens_in_mean": null,
+      "dispatch_tokens_in_std": null,
+      "dispatch_tokens_in_min": null,
+      "dispatch_tokens_in_max": null,
+      "dispatch_tokens_out_count": 9,
+      "dispatch_tokens_out_mean": 15.0,
+      "dispatch_tokens_out_std": 0.0,
+      "dispatch_tokens_out_min": 15,
+      "dispatch_tokens_out_max": 15,
+      "dispatch_tps_count": 9,
+      "dispatch_tps_mean": 4.51,
+      "dispatch_tps_std": 0.0,
+      "dispatch_tps_min": 4.5,
+      "dispatch_tps_max": 4.51,
+      "tool_to_result_ms_count": 9,
+      "tool_to_result_ms_mean": 639.12,
+      "tool_to_result_ms_std": 36.16,
+      "tool_to_result_ms_min": 615.65,
+      "tool_to_result_ms_max": 739.71,
+      "result_to_reply_ms_count": 9,
+      "result_to_reply_ms_mean": 4768.78,
+      "result_to_reply_ms_std": 478.74,
+      "result_to_reply_ms_min": 4353.89,
+      "result_to_reply_ms_max": 5806.14,
+      "answer_ttft_ms_count": 9,
+      "answer_ttft_ms_mean": 1857.93,
+      "answer_ttft_ms_std": 0.52,
+      "answer_ttft_ms_min": 1857.06,
+      "answer_ttft_ms_max": 1858.79,
+      "answer_tokens_in_count": 0,
+      "answer_tokens_in_mean": null,
+      "answer_tokens_in_std": null,
+      "answer_tokens_in_min": null,
+      "answer_tokens_in_max": null,
+      "answer_tokens_out_count": 9,
+      "answer_tokens_out_mean": 14.0,
+      "answer_tokens_out_std": 2.31,
+      "answer_tokens_out_min": 12,
+      "answer_tokens_out_max": 19,
+      "answer_tps_count": 9,
+      "answer_tps_mean": 4.48,
+      "answer_tps_std": 0.05,
+      "answer_tps_min": 4.42,
+      "answer_tps_max": 4.57,
+      "end_to_end_ms_count": 9,
+      "end_to_end_ms_mean": 13468.51,
+      "end_to_end_ms_std": 476.86,
+      "end_to_end_ms_min": 13037.56,
+      "end_to_end_ms_max": 14505.01
+    },
+    {
+      "n_tools": 18,
+      "n_samples": 10,
+      "n_correct": 9,
+      "accuracy": 0.9,
+      "n_got_result": 10,
+      "query_to_tool_ms_count": 10,
+      "query_to_tool_ms_mean": 9956.75,
+      "query_to_tool_ms_std": 125.2,
+      "query_to_tool_ms_min": 9912.6,
+      "query_to_tool_ms_max": 10332.33,
+      "dispatch_ttft_ms_count": 10,
+      "dispatch_ttft_ms_mean": 6798.2,
+      "dispatch_ttft_ms_std": 1.3,
+      "dispatch_ttft_ms_min": 6796.68,
+      "dispatch_ttft_ms_max": 6800.41,
+      "dispatch_tokens_in_count": 0,
+      "dispatch_tokens_in_mean": null,
+      "dispatch_tokens_in_std": null,
+      "dispatch_tokens_in_min": null,
+      "dispatch_tokens_in_max": null,
+      "dispatch_tokens_out_count": 10,
+      "dispatch_tokens_out_mean": 15.2,
+      "dispatch_tokens_out_std": 0.6,
+      "dispatch_tokens_out_min": 15,
+      "dispatch_tokens_out_max": 17,
+      "dispatch_tps_count": 10,
+      "dispatch_tps_mean": 4.51,
+      "dispatch_tps_std": 0.01,
+      "dispatch_tps_min": 4.5,
+      "dispatch_tps_max": 4.54,
+      "tool_to_result_ms_count": 10,
+      "tool_to_result_ms_mean": 614.45,
+      "tool_to_result_ms_std": 210.55,
+      "tool_to_result_ms_min": 30.3,
+      "tool_to_result_ms_max": 873.99,
+      "result_to_reply_ms_count": 10,
+      "result_to_reply_ms_mean": 4975.87,
+      "result_to_reply_ms_std": 768.74,
+      "result_to_reply_ms_min": 4353.81,
+      "result_to_reply_ms_max": 6838.3,
+      "answer_ttft_ms_count": 10,
+      "answer_ttft_ms_mean": 1858.22,
+      "answer_ttft_ms_std": 0.46,
+      "answer_ttft_ms_min": 1857.28,
+      "answer_ttft_ms_max": 1858.88,
+      "answer_tokens_in_count": 0,
+      "answer_tokens_in_mean": null,
+      "answer_tokens_in_std": null,
+      "answer_tokens_in_min": null,
+      "answer_tokens_in_max": null,
+      "answer_tokens_out_count": 10,
+      "answer_tokens_out_mean": 15.0,
+      "answer_tokens_out_std": 3.71,
+      "answer_tokens_out_min": 12,
+      "answer_tokens_out_max": 24,
+      "answer_tps_count": 10,
+      "answer_tps_mean": 4.49,
+      "answer_tps_std": 0.07,
+      "answer_tps_min": 4.42,
+      "answer_tps_max": 4.63,
+      "end_to_end_ms_count": 10,
+      "end_to_end_ms_mean": 15547.06,
+      "end_to_end_ms_std": 695.6,
+      "end_to_end_ms_min": 14885.75,
+      "end_to_end_ms_max": 17200.94
+    },
+    {
+      "n_tools": 24,
+      "n_samples": 10,
+      "n_correct": 8,
+      "accuracy": 0.8,
+      "n_got_result": 8,
+      "query_to_tool_ms_count": 8,
+      "query_to_tool_ms_mean": 11767.86,
+      "query_to_tool_ms_std": 2.37,
+      "query_to_tool_ms_min": 11765.99,
+      "query_to_tool_ms_max": 11773.72,
+      "dispatch_ttft_ms_count": 8,
+      "dispatch_ttft_ms_mean": 8650.37,
+      "dispatch_ttft_ms_std": 1.3,
+      "dispatch_ttft_ms_min": 8648.86,
+      "dispatch_ttft_ms_max": 8653.39,
+      "dispatch_tokens_in_count": 0,
+      "dispatch_tokens_in_mean": null,
+      "dispatch_tokens_in_std": null,
+      "dispatch_tokens_in_min": null,
+      "dispatch_tokens_in_max": null,
+      "dispatch_tokens_out_count": 8,
+      "dispatch_tokens_out_mean": 15.0,
+      "dispatch_tokens_out_std": 0.0,
+      "dispatch_tokens_out_min": 15,
+      "dispatch_tokens_out_max": 15,
+      "dispatch_tps_count": 8,
+      "dispatch_tps_mean": 4.51,
+      "dispatch_tps_std": 0.0,
+      "dispatch_tps_min": 4.5,
+      "dispatch_tps_max": 4.51,
+      "tool_to_result_ms_count": 8,
+      "tool_to_result_ms_mean": 626.76,
+      "tool_to_result_ms_std": 13.92,
+      "tool_to_result_ms_min": 614.65,
+      "tool_to_result_ms_max": 661.34,
+      "result_to_reply_ms_count": 8,
+      "result_to_reply_ms_mean": 4795.11,
+      "result_to_reply_ms_std": 500.8,
+      "result_to_reply_ms_min": 4353.75,
+      "result_to_reply_ms_max": 5804.27,
+      "answer_ttft_ms_count": 8,
+      "answer_ttft_ms_mean": 1858.54,
+      "answer_ttft_ms_std": 0.46,
+      "answer_ttft_ms_min": 1857.39,
+      "answer_ttft_ms_max": 1858.91,
+      "answer_tokens_in_count": 0,
+      "answer_tokens_in_mean": null,
+      "answer_tokens_in_std": null,
+      "answer_tokens_in_min": null,
+      "answer_tokens_in_max": null,
+      "answer_tokens_out_count": 8,
+      "answer_tokens_out_mean": 14.12,
+      "answer_tokens_out_std": 2.42,
+      "answer_tokens_out_min": 12,
+      "answer_tokens_out_max": 19,
+      "answer_tps_count": 8,
+      "answer_tps_mean": 4.47,
+      "answer_tps_std": 0.06,
+      "answer_tps_min": 4.42,
+      "answer_tps_max": 4.57,
+      "end_to_end_ms_count": 8,
+      "end_to_end_ms_mean": 17189.73,
+      "end_to_end_ms_std": 496.62,
+      "end_to_end_ms_min": 16742.69,
+      "end_to_end_ms_max": 18194.88
+    }
+  ]
+}

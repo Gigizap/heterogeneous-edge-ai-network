@@ -1,0 +1,3752 @@
+{
+  "role": "leader",
+  "device": "stm32-reset",
+  "leader_preset": "functiongemma_cpu_reset",
+  "correct_tool": "detect_people",
+  "reply_counts": [
+    1,
+    5,
+    10,
+    15,
+    20
+  ],
+  "queries": [
+    "can you use the detect person tool",
+    "is there a person in front of the camera",
+    "how many people are there",
+    "do you see anyone",
+    "check if someone is in the room",
+    "are there any people visible",
+    "detect the people in the frame",
+    "is anybody there right now",
+    "tell me how many persons you can see",
+    "look for a person with the camera"
+  ],
+  "reply_text": "no people detected",
+  "prompt_specs": [
+    {
+      "n_replies": 1,
+      "tools": [
+        {
+          "type": "function",
+          "function": {
+            "name": "detect_people",
+            "description": "Detects the people that are currently visible. Use this when the user says 'do you see a person?', 'how many people?', or 'is there anyone?'.",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        }
+      ],
+      "dispatch_prompt": "<start_of_turn>developer\nYou are a smart-home agent dispatcher. You are a model that can do function calling with the following functions<start_function_declaration>declaration:detect_people{description:<escape>Detects the people that are currently visible. Use this when the user says 'do you see a person?', 'how many people?', or 'is there anyone?'.<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><end_of_turn>\n<start_of_turn>user\ncan you use the detect person tool<end_of_turn>\n<start_of_turn>model\n",
+      "answer_prompt": "<start_of_turn>developer\nYou are a smart home assistant. Turn the data into a short, friendly reply to the user. Reply in English. Summarize the reply, MENTION ALL THE IMPORTANT DATA RECEIVED FROM THE TOOL AND THE AVAILABLE SENSORS WHEN REPLYING.<start_function_declaration>declaration:detect_people{description:<escape>Detects the people that are currently visible. Use this when the user says 'do you see a person?', 'how many people?', or 'is there anyone?'.<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><end_of_turn>\n<start_of_turn>user\ncan you use the detect person tool<end_of_turn>\n<start_of_turn>model\n<start_function_call>call:detect_people{}<end_function_call><start_function_response>response:detect_people{value:[{from:<escape>sensing-agent-1<escape>,text:<escape>no people detected<escape>}]}<end_function_response>"
+    },
+    {
+      "n_replies": 5,
+      "tools": [
+        {
+          "type": "function",
+          "function": {
+            "name": "detect_people",
+            "description": "Detects the people that are currently visible. Use this when the user says 'do you see a person?', 'how many people?', or 'is there anyone?'.",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        }
+      ],
+      "dispatch_prompt": "<start_of_turn>developer\nYou are a smart-home agent dispatcher. You are a model that can do function calling with the following functions<start_function_declaration>declaration:detect_people{description:<escape>Detects the people that are currently visible. Use this when the user says 'do you see a person?', 'how many people?', or 'is there anyone?'.<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><end_of_turn>\n<start_of_turn>user\ncan you use the detect person tool<end_of_turn>\n<start_of_turn>model\n",
+      "answer_prompt": "<start_of_turn>developer\nYou are a smart home assistant. Turn the data into a short, friendly reply to the user. Reply in English. Summarize the reply, MENTION ALL THE IMPORTANT DATA RECEIVED FROM THE TOOL AND THE AVAILABLE SENSORS WHEN REPLYING.<start_function_declaration>declaration:detect_people{description:<escape>Detects the people that are currently visible. Use this when the user says 'do you see a person?', 'how many people?', or 'is there anyone?'.<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><end_of_turn>\n<start_of_turn>user\ncan you use the detect person tool<end_of_turn>\n<start_of_turn>model\n<start_function_call>call:detect_people{}<end_function_call><start_function_response>response:detect_people{value:[{from:<escape>sensing-agent-1<escape>,text:<escape>no people detected<escape>},{from:<escape>sensing-agent-2<escape>,text:<escape>no people detected<escape>},{from:<escape>sensing-agent-3<escape>,text:<escape>no people detected<escape>},{from:<escape>sensing-agent-4<escape>,text:<escape>no people detected<escape>},{from:<escape>sensing-agent-5<escape>,text:<escape>no people detected<escape>}]}<end_function_response>"
+    },
+    {
+      "n_replies": 10,
+      "tools": [
+        {
+          "type": "function",
+          "function": {
+            "name": "detect_people",
+            "description": "Detects the people that are currently visible. Use this when the user says 'do you see a person?', 'how many people?', or 'is there anyone?'.",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        }
+      ],
+      "dispatch_prompt": "<start_of_turn>developer\nYou are a smart-home agent dispatcher. You are a model that can do function calling with the following functions<start_function_declaration>declaration:detect_people{description:<escape>Detects the people that are currently visible. Use this when the user says 'do you see a person?', 'how many people?', or 'is there anyone?'.<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><end_of_turn>\n<start_of_turn>user\ncan you use the detect person tool<end_of_turn>\n<start_of_turn>model\n",
+      "answer_prompt": "<start_of_turn>developer\nYou are a smart home assistant. Turn the data into a short, friendly reply to the user. Reply in English. Summarize the reply, MENTION ALL THE IMPORTANT DATA RECEIVED FROM THE TOOL AND THE AVAILABLE SENSORS WHEN REPLYING.<start_function_declaration>declaration:detect_people{description:<escape>Detects the people that are currently visible. Use this when the user says 'do you see a person?', 'how many people?', or 'is there anyone?'.<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><end_of_turn>\n<start_of_turn>user\ncan you use the detect person tool<end_of_turn>\n<start_of_turn>model\n<start_function_call>call:detect_people{}<end_function_call><start_function_response>response:detect_people{value:[{from:<escape>sensing-agent-1<escape>,text:<escape>no people detected<escape>},{from:<escape>sensing-agent-2<escape>,text:<escape>no people detected<escape>},{from:<escape>sensing-agent-3<escape>,text:<escape>no people detected<escape>},{from:<escape>sensing-agent-4<escape>,text:<escape>no people detected<escape>},{from:<escape>sensing-agent-5<escape>,text:<escape>no people detected<escape>},{from:<escape>sensing-agent-6<escape>,text:<escape>no people detected<escape>},{from:<escape>sensing-agent-7<escape>,text:<escape>no people detected<escape>},{from:<escape>sensing-agent-8<escape>,text:<escape>no people detected<escape>},{from:<escape>sensing-agent-9<escape>,text:<escape>no people detected<escape>},{from:<escape>sensing-agent-10<escape>,text:<escape>no people detected<escape>}]}<end_function_response>"
+    },
+    {
+      "n_replies": 15,
+      "tools": [
+        {
+          "type": "function",
+          "function": {
+            "name": "detect_people",
+            "description": "Detects the people that are currently visible. Use this when the user says 'do you see a person?', 'how many people?', or 'is there anyone?'.",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        }
+      ],
+      "dispatch_prompt": "<start_of_turn>developer\nYou are a smart-home agent dispatcher. You are a model that can do function calling with the following functions<start_function_declaration>declaration:detect_people{description:<escape>Detects the people that are currently visible. Use this when the user says 'do you see a person?', 'how many people?', or 'is there anyone?'.<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><end_of_turn>\n<start_of_turn>user\ncan you use the detect person tool<end_of_turn>\n<start_of_turn>model\n",
+      "answer_prompt": "<start_of_turn>developer\nYou are a smart home assistant. Turn the data into a short, friendly reply to the user. Reply in English. Summarize the reply, MENTION ALL THE IMPORTANT DATA RECEIVED FROM THE TOOL AND THE AVAILABLE SENSORS WHEN REPLYING.<start_function_declaration>declaration:detect_people{description:<escape>Detects the people that are currently visible. Use this when the user says 'do you see a person?', 'how many people?', or 'is there anyone?'.<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><end_of_turn>\n<start_of_turn>user\ncan you use the detect person tool<end_of_turn>\n<start_of_turn>model\n<start_function_call>call:detect_people{}<end_function_call><start_function_response>response:detect_people{value:[{from:<escape>sensing-agent-1<escape>,text:<escape>no people detected<escape>},{from:<escape>sensing-agent-2<escape>,text:<escape>no people detected<escape>},{from:<escape>sensing-agent-3<escape>,text:<escape>no people detected<escape>},{from:<escape>sensing-agent-4<escape>,text:<escape>no people detected<escape>},{from:<escape>sensing-agent-5<escape>,text:<escape>no people detected<escape>},{from:<escape>sensing-agent-6<escape>,text:<escape>no people detected<escape>},{from:<escape>sensing-agent-7<escape>,text:<escape>no people detected<escape>},{from:<escape>sensing-agent-8<escape>,text:<escape>no people detected<escape>},{from:<escape>sensing-agent-9<escape>,text:<escape>no people detected<escape>},{from:<escape>sensing-agent-10<escape>,text:<escape>no people detected<escape>},{from:<escape>sensing-agent-11<escape>,text:<escape>no people detected<escape>},{from:<escape>sensing-agent-12<escape>,text:<escape>no people detected<escape>},{from:<escape>sensing-agent-13<escape>,text:<escape>no people detected<escape>},{from:<escape>sensing-agent-14<escape>,text:<escape>no people detected<escape>},{from:<escape>sensing-agent-15<escape>,text:<escape>no people detected<escape>}]}<end_function_response>"
+    },
+    {
+      "n_replies": 20,
+      "tools": [
+        {
+          "type": "function",
+          "function": {
+            "name": "detect_people",
+            "description": "Detects the people that are currently visible. Use this when the user says 'do you see a person?', 'how many people?', or 'is there anyone?'.",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        }
+      ],
+      "dispatch_prompt": "<start_of_turn>developer\nYou are a smart-home agent dispatcher. You are a model that can do function calling with the following functions<start_function_declaration>declaration:detect_people{description:<escape>Detects the people that are currently visible. Use this when the user says 'do you see a person?', 'how many people?', or 'is there anyone?'.<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><end_of_turn>\n<start_of_turn>user\ncan you use the detect person tool<end_of_turn>\n<start_of_turn>model\n",
+      "answer_prompt": "<start_of_turn>developer\nYou are a smart home assistant. Turn the data into a short, friendly reply to the user. Reply in English. Summarize the reply, MENTION ALL THE IMPORTANT DATA RECEIVED FROM THE TOOL AND THE AVAILABLE SENSORS WHEN REPLYING.<start_function_declaration>declaration:detect_people{description:<escape>Detects the people that are currently visible. Use this when the user says 'do you see a person?', 'how many people?', or 'is there anyone?'.<escape>,parameters:{type:<escape>OBJECT<escape>}}<end_function_declaration><end_of_turn>\n<start_of_turn>user\ncan you use the detect person tool<end_of_turn>\n<start_of_turn>model\n<start_function_call>call:detect_people{}<end_function_call><start_function_response>response:detect_people{value:[{from:<escape>sensing-agent-1<escape>,text:<escape>no people detected<escape>},{from:<escape>sensing-agent-2<escape>,text:<escape>no people detected<escape>},{from:<escape>sensing-agent-3<escape>,text:<escape>no people detected<escape>},{from:<escape>sensing-agent-4<escape>,text:<escape>no people detected<escape>},{from:<escape>sensing-agent-5<escape>,text:<escape>no people detected<escape>},{from:<escape>sensing-agent-6<escape>,text:<escape>no people detected<escape>},{from:<escape>sensing-agent-7<escape>,text:<escape>no people detected<escape>},{from:<escape>sensing-agent-8<escape>,text:<escape>no people detected<escape>},{from:<escape>sensing-agent-9<escape>,text:<escape>no people detected<escape>},{from:<escape>sensing-agent-10<escape>,text:<escape>no people detected<escape>},{from:<escape>sensing-agent-11<escape>,text:<escape>no people detected<escape>},{from:<escape>sensing-agent-12<escape>,text:<escape>no people detected<escape>},{from:<escape>sensing-agent-13<escape>,text:<escape>no people detected<escape>},{from:<escape>sensing-agent-14<escape>,text:<escape>no people detected<escape>},{from:<escape>sensing-agent-15<escape>,text:<escape>no people detected<escape>},{from:<escape>sensing-agent-16<escape>,text:<escape>no people detected<escape>},{from:<escape>sensing-agent-17<escape>,text:<escape>no people detected<escape>},{from:<escape>sensing-agent-18<escape>,text:<escape>no people detected<escape>},{from:<escape>sensing-agent-19<escape>,text:<escape>no people detected<escape>},{from:<escape>sensing-agent-20<escape>,text:<escape>no people detected<escape>}]}<end_function_response>"
+    }
+  ],
+  "samples": [
+    {
+      "n_replies": 1,
+      "query_idx": 0,
+      "query": "can you use the detect person tool",
+      "tool_called": "detect_people",
+      "tool_result": "no people detected",
+      "tool_result_raw": [
+        {
+          "from": "sensing-agent-1",
+          "text": "no people detected"
+        }
+      ],
+      "final_reply": "I detect the people that are currently visible. The value returned is: no people detected.",
+      "query_to_tool_ms": 9170.29,
+      "dispatch_ttft_ms": 7724.87,
+      "dispatch_tokens_in": 98,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.18,
+      "tool_to_result_ms": 0.04,
+      "result_to_reply_ms": 16469.03,
+      "answer_ttft_ms": 12678.42,
+      "answer_tokens_in": 162,
+      "answer_tokens_out": 18,
+      "answer_tps": 4.5,
+      "end_to_end_ms": 25639.36,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_replies": 1,
+      "query_idx": 1,
+      "query": "is there a person in front of the camera",
+      "tool_called": "detect_people",
+      "tool_result": "no people detected",
+      "tool_result_raw": [
+        {
+          "from": "sensing-agent-1",
+          "text": "no people detected"
+        }
+      ],
+      "final_reply": "Yes, there is a person in front of the camera.\n\nWhat other actions would you like me to perform?",
+      "query_to_tool_ms": 9301.94,
+      "dispatch_ttft_ms": 7864.88,
+      "dispatch_tokens_in": 100,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.2,
+      "tool_to_result_ms": 0.03,
+      "result_to_reply_ms": 17654.7,
+      "answer_ttft_ms": 12882.87,
+      "answer_tokens_in": 164,
+      "answer_tokens_out": 23,
+      "answer_tps": 4.62,
+      "end_to_end_ms": 26956.68,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_replies": 1,
+      "query_idx": 2,
+      "query": "how many people are there",
+      "tool_called": "detect_people",
+      "tool_result": "no people detected",
+      "tool_result_raw": [
+        {
+          "from": "sensing-agent-1",
+          "text": "no people detected"
+        }
+      ],
+      "final_reply": "There are no people detected.",
+      "query_to_tool_ms": 8991.85,
+      "dispatch_ttft_ms": 7557.95,
+      "dispatch_tokens_in": 96,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.2,
+      "tool_to_result_ms": 0.03,
+      "result_to_reply_ms": 13824.86,
+      "answer_ttft_ms": 12584.36,
+      "answer_tokens_in": 160,
+      "answer_tokens_out": 6,
+      "answer_tps": 4.06,
+      "end_to_end_ms": 22816.74,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_replies": 1,
+      "query_idx": 3,
+      "query": "do you see anyone",
+      "tool_called": "detect_people",
+      "tool_result": "no people detected",
+      "tool_result_raw": [
+        {
+          "from": "sensing-agent-1",
+          "text": "no people detected"
+        }
+      ],
+      "final_reply": "I detect that no people were detected. The tool reported that \"no people detected.\"",
+      "query_to_tool_ms": 8931.78,
+      "dispatch_ttft_ms": 7483.52,
+      "dispatch_tokens_in": 95,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.16,
+      "tool_to_result_ms": 0.03,
+      "result_to_reply_ms": 16052.38,
+      "answer_ttft_ms": 12501.81,
+      "answer_tokens_in": 159,
+      "answer_tokens_out": 17,
+      "answer_tps": 4.52,
+      "end_to_end_ms": 24984.18,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_replies": 1,
+      "query_idx": 4,
+      "query": "check if someone is in the room",
+      "tool_called": "detect_people",
+      "tool_result": "no people detected",
+      "tool_result_raw": [
+        {
+          "from": "sensing-agent-1",
+          "text": "no people detected"
+        }
+      ],
+      "final_reply": "No people were detected. The check yielded the following: no people were detected.",
+      "query_to_tool_ms": 9218.45,
+      "dispatch_ttft_ms": 7781.32,
+      "dispatch_tokens_in": 98,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.2,
+      "tool_to_result_ms": 0.03,
+      "result_to_reply_ms": 16032.88,
+      "answer_ttft_ms": 12679.03,
+      "answer_tokens_in": 162,
+      "answer_tokens_out": 16,
+      "answer_tps": 4.49,
+      "end_to_end_ms": 25251.36,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_replies": 1,
+      "query_idx": 5,
+      "query": "are there any people visible",
+      "tool_called": "detect_people",
+      "tool_result": "no people detected",
+      "tool_result_raw": [
+        {
+          "from": "sensing-agent-1",
+          "text": "no people detected"
+        }
+      ],
+      "final_reply": "Yes, there are no people visible. The sensing agent-1 was detected.",
+      "query_to_tool_ms": 9017.71,
+      "dispatch_ttft_ms": 7576.1,
+      "dispatch_tokens_in": 96,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.18,
+      "tool_to_result_ms": 0.03,
+      "result_to_reply_ms": 15871.56,
+      "answer_ttft_ms": 12548.43,
+      "answer_tokens_in": 160,
+      "answer_tokens_out": 16,
+      "answer_tps": 4.53,
+      "end_to_end_ms": 24889.3,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_replies": 1,
+      "query_idx": 6,
+      "query": "detect the people in the frame",
+      "tool_called": "detect_people",
+      "tool_result": "no people detected",
+      "tool_result_raw": [
+        {
+          "from": "sensing-agent-1",
+          "text": "no people detected"
+        }
+      ],
+      "final_reply": "I detect the people in the frame. The value for detection is: no people detected.",
+      "query_to_tool_ms": 9117.06,
+      "dispatch_ttft_ms": 7673.52,
+      "dispatch_tokens_in": 97,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.18,
+      "tool_to_result_ms": 0.03,
+      "result_to_reply_ms": 16351.34,
+      "answer_ttft_ms": 12626.86,
+      "answer_tokens_in": 161,
+      "answer_tokens_out": 18,
+      "answer_tps": 4.58,
+      "end_to_end_ms": 25468.42,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_replies": 1,
+      "query_idx": 7,
+      "query": "is anybody there right now",
+      "tool_called": "detect_people",
+      "tool_result": "no people detected",
+      "tool_result_raw": [
+        {
+          "from": "sensing-agent-1",
+          "text": "no people detected"
+        }
+      ],
+      "final_reply": "I am sorry, but I couldn't detect anyone. The tool reported that no people were detected.",
+      "query_to_tool_ms": 9000.65,
+      "dispatch_ttft_ms": 7551.0,
+      "dispatch_tokens_in": 96,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.16,
+      "tool_to_result_ms": 0.03,
+      "result_to_reply_ms": 16879.58,
+      "answer_ttft_ms": 12528.34,
+      "answer_tokens_in": 160,
+      "answer_tokens_out": 21,
+      "answer_tps": 4.61,
+      "end_to_end_ms": 25880.26,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_replies": 1,
+      "query_idx": 8,
+      "query": "tell me how many persons you can see",
+      "tool_called": "detect_people",
+      "tool_result": "no people detected",
+      "tool_result_raw": [
+        {
+          "from": "sensing-agent-1",
+          "text": "no people detected"
+        }
+      ],
+      "final_reply": "I detect that no people were detected. The system reported that there are no people visible.",
+      "query_to_tool_ms": 9229.05,
+      "dispatch_ttft_ms": 7794.02,
+      "dispatch_tokens_in": 99,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.2,
+      "tool_to_result_ms": 0.03,
+      "result_to_reply_ms": 16542.05,
+      "answer_ttft_ms": 12813.91,
+      "answer_tokens_in": 163,
+      "answer_tokens_out": 18,
+      "answer_tps": 4.57,
+      "end_to_end_ms": 25771.13,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_replies": 1,
+      "query_idx": 9,
+      "query": "look for a person with the camera",
+      "tool_called": "detect_people",
+      "tool_result": "no people detected",
+      "tool_result_raw": [
+        {
+          "from": "sensing-agent-1",
+          "text": "no people detected"
+        }
+      ],
+      "final_reply": "I detect that a person is currently visible. The value I received was: no people detected.",
+      "query_to_tool_ms": 9157.75,
+      "dispatch_ttft_ms": 7709.85,
+      "dispatch_tokens_in": 98,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.16,
+      "tool_to_result_ms": 0.03,
+      "result_to_reply_ms": 16612.19,
+      "answer_ttft_ms": 12674.32,
+      "answer_tokens_in": 162,
+      "answer_tokens_out": 19,
+      "answer_tps": 4.58,
+      "end_to_end_ms": 25769.97,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_replies": 5,
+      "query_idx": 0,
+      "query": "can you use the detect person tool",
+      "tool_called": "detect_people",
+      "tool_result": "no people detected\nno people detected\nno people detected\nno people detected\nno people detected",
+      "tool_result_raw": [
+        {
+          "from": "sensing-agent-1",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-2",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-3",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-4",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-5",
+          "text": "no people detected"
+        }
+      ],
+      "final_reply": "I have detected the people that are currently visible. Here are the details:\n\nNo people were detected.\n\nThe following individuals were detected:\n\n*   sensing-agent-1\n*   sensing-agent-2\n*   sensing-agent-3\n*   sensing-agent-4\n*   sensing-agent-5",
+      "query_to_tool_ms": 9159.99,
+      "dispatch_ttft_ms": 7719.01,
+      "dispatch_tokens_in": 98,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.18,
+      "tool_to_result_ms": 0.05,
+      "result_to_reply_ms": 33003.39,
+      "answer_ttft_ms": 18324.08,
+      "answer_tokens_in": 234,
+      "answer_tokens_out": 68,
+      "answer_tps": 4.57,
+      "end_to_end_ms": 42163.44,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_replies": 5,
+      "query_idx": 1,
+      "query": "is there a person in front of the camera",
+      "tool_called": "detect_people",
+      "tool_result": "no people detected\nno people detected\nno people detected\nno people detected\nno people detected",
+      "tool_result_raw": [
+        {
+          "from": "sensing-agent-1",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-2",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-3",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-4",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-5",
+          "text": "no people detected"
+        }
+      ],
+      "final_reply": "No, I couldn't detect any people from the camera. The system reported that no people were detected.",
+      "query_to_tool_ms": 9305.59,
+      "dispatch_ttft_ms": 7856.38,
+      "dispatch_tokens_in": 100,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.16,
+      "tool_to_result_ms": 0.04,
+      "result_to_reply_ms": 23027.5,
+      "answer_ttft_ms": 18425.09,
+      "answer_tokens_in": 236,
+      "answer_tokens_out": 22,
+      "answer_tps": 4.58,
+      "end_to_end_ms": 32333.13,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_replies": 5,
+      "query_idx": 2,
+      "query": "how many people are there",
+      "tool_called": "detect_people",
+      "tool_result": "no people detected\nno people detected\nno people detected\nno people detected\nno people detected",
+      "tool_result_raw": [
+        {
+          "from": "sensing-agent-1",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-2",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-3",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-4",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-5",
+          "text": "no people detected"
+        }
+      ],
+      "final_reply": "There are no people detected in the system.",
+      "query_to_tool_ms": 9100.64,
+      "dispatch_ttft_ms": 7571.69,
+      "dispatch_tokens_in": 96,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 3.94,
+      "tool_to_result_ms": 0.04,
+      "result_to_reply_ms": 19999.27,
+      "answer_ttft_ms": 18109.24,
+      "answer_tokens_in": 232,
+      "answer_tokens_out": 9,
+      "answer_tps": 4.27,
+      "end_to_end_ms": 29099.95,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_replies": 5,
+      "query_idx": 3,
+      "query": "do you see anyone",
+      "tool_called": "detect_people",
+      "tool_result": "no people detected\nno people detected\nno people detected\nno people detected\nno people detected",
+      "tool_result_raw": [
+        {
+          "from": "sensing-agent-1",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-2",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-3",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-4",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-5",
+          "text": "no people detected"
+        }
+      ],
+      "final_reply": "I detect the people that are currently visible. No people were detected. Here are the detections: sensing-agent-1, sensing-agent-2, sensing-agent-3, and sensing-agent-4.",
+      "query_to_tool_ms": 8923.51,
+      "dispatch_ttft_ms": 7484.28,
+      "dispatch_tokens_in": 95,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.19,
+      "tool_to_result_ms": 0.04,
+      "result_to_reply_ms": 27390.74,
+      "answer_ttft_ms": 18039.33,
+      "answer_tokens_in": 231,
+      "answer_tokens_out": 44,
+      "answer_tps": 4.61,
+      "end_to_end_ms": 36314.29,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_replies": 5,
+      "query_idx": 4,
+      "query": "check if someone is in the room",
+      "tool_called": "detect_people",
+      "tool_result": "no people detected\nno people detected\nno people detected\nno people detected\nno people detected",
+      "tool_result_raw": [
+        {
+          "from": "sensing-agent-1",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-2",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-3",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-4",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-5",
+          "text": "no people detected"
+        }
+      ],
+      "final_reply": "No people were detected in the room. The following actions were taken: no people were detected: sensing-agent-1, sensing-agent-2, sensing-agent-3, and sensing-agent-4.",
+      "query_to_tool_ms": 9198.33,
+      "dispatch_ttft_ms": 7754.28,
+      "dispatch_tokens_in": 98,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.17,
+      "tool_to_result_ms": 0.04,
+      "result_to_reply_ms": 27672.02,
+      "answer_ttft_ms": 18277.02,
+      "answer_tokens_in": 234,
+      "answer_tokens_out": 44,
+      "answer_tps": 4.59,
+      "end_to_end_ms": 36870.4,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_replies": 5,
+      "query_idx": 5,
+      "query": "are there any people visible",
+      "tool_called": "detect_people",
+      "tool_result": "no people detected\nno people detected\nno people detected\nno people detected\nno people detected",
+      "tool_result_raw": [
+        {
+          "from": "sensing-agent-1",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-2",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-3",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-4",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-5",
+          "text": "no people detected"
+        }
+      ],
+      "final_reply": "There are no people visible in the current environment.",
+      "query_to_tool_ms": 8991.6,
+      "dispatch_ttft_ms": 7555.07,
+      "dispatch_tokens_in": 96,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.2,
+      "tool_to_result_ms": 0.04,
+      "result_to_reply_ms": 20239.07,
+      "answer_ttft_ms": 18160.4,
+      "answer_tokens_in": 232,
+      "answer_tokens_out": 10,
+      "answer_tps": 4.37,
+      "end_to_end_ms": 29230.71,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_replies": 5,
+      "query_idx": 6,
+      "query": "detect the people in the frame",
+      "tool_called": "detect_people",
+      "tool_result": "no people detected\nno people detected\nno people detected\nno people detected\nno people detected",
+      "tool_result_raw": [
+        {
+          "from": "sensing-agent-1",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-2",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-3",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-4",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-5",
+          "text": "no people detected"
+        }
+      ],
+      "final_reply": "No people were detected in the frame. The following actions were taken: no people were detected: sensing-agent-1, sensing-agent-2, sensing-agent-3, and sensing-agent-4.",
+      "query_to_tool_ms": 9101.05,
+      "dispatch_ttft_ms": 7649.14,
+      "dispatch_tokens_in": 97,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.15,
+      "tool_to_result_ms": 0.04,
+      "result_to_reply_ms": 27552.09,
+      "answer_ttft_ms": 18180.71,
+      "answer_tokens_in": 233,
+      "answer_tokens_out": 44,
+      "answer_tps": 4.6,
+      "end_to_end_ms": 36653.18,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_replies": 5,
+      "query_idx": 7,
+      "query": "is anybody there right now",
+      "tool_called": "detect_people",
+      "tool_result": "no people detected\nno people detected\nno people detected\nno people detected\nno people detected",
+      "tool_result_raw": [
+        {
+          "from": "sensing-agent-1",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-2",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-3",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-4",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-5",
+          "text": "no people detected"
+        }
+      ],
+      "final_reply": "I have detected that there are no people visible right now.",
+      "query_to_tool_ms": 8986.76,
+      "dispatch_ttft_ms": 7544.2,
+      "dispatch_tokens_in": 96,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.18,
+      "tool_to_result_ms": 0.05,
+      "result_to_reply_ms": 20732.06,
+      "answer_ttft_ms": 18230.17,
+      "answer_tokens_in": 232,
+      "answer_tokens_out": 12,
+      "answer_tps": 4.43,
+      "end_to_end_ms": 29718.86,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_replies": 5,
+      "query_idx": 8,
+      "query": "tell me how many persons you can see",
+      "tool_called": "detect_people",
+      "tool_result": "no people detected\nno people detected\nno people detected\nno people detected\nno people detected",
+      "tool_result_raw": [
+        {
+          "from": "sensing-agent-1",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-2",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-3",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-4",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-5",
+          "text": "no people detected"
+        }
+      ],
+      "final_reply": "There are no people detected in the current system.",
+      "query_to_tool_ms": 9226.29,
+      "dispatch_ttft_ms": 7787.63,
+      "dispatch_tokens_in": 99,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.19,
+      "tool_to_result_ms": 0.04,
+      "result_to_reply_ms": 20423.8,
+      "answer_ttft_ms": 18346.35,
+      "answer_tokens_in": 235,
+      "answer_tokens_out": 10,
+      "answer_tps": 4.37,
+      "end_to_end_ms": 29650.13,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_replies": 5,
+      "query_idx": 9,
+      "query": "look for a person with the camera",
+      "tool_called": "detect_people",
+      "tool_result": "no people detected\nno people detected\nno people detected\nno people detected\nno people detected",
+      "tool_result_raw": [
+        {
+          "from": "sensing-agent-1",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-2",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-3",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-4",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-5",
+          "text": "no people detected"
+        }
+      ],
+      "final_reply": "I detect the people that are currently visible. No people were detected. The following persons were found: sensing-agent-1, sensing-agent-2, sensing-agent-3, and sensing-agent-4.",
+      "query_to_tool_ms": 9164.39,
+      "dispatch_ttft_ms": 7715.15,
+      "dispatch_tokens_in": 98,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.16,
+      "tool_to_result_ms": 0.04,
+      "result_to_reply_ms": 27929.76,
+      "answer_ttft_ms": 18297.0,
+      "answer_tokens_in": 234,
+      "answer_tokens_out": 45,
+      "answer_tps": 4.58,
+      "end_to_end_ms": 37094.19,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_replies": 10,
+      "query_idx": 0,
+      "query": "can you use the detect person tool",
+      "tool_called": "detect_people",
+      "tool_result": "no people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected",
+      "tool_result_raw": [
+        {
+          "from": "sensing-agent-1",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-2",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-3",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-4",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-5",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-6",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-7",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-8",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-9",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-10",
+          "text": "no people detected"
+        }
+      ],
+      "final_reply": "I have detected the people that are currently visible. Here are the details:\n\nNo people were detected.\nNo people were detected.\nNo people were detected.\nNo people were detected.\nNo people were detected.\nNo people were detected.\nNo people were detected.\nNo people were detected.",
+      "query_to_tool_ms": 9146.96,
+      "dispatch_ttft_ms": 7710.58,
+      "dispatch_tokens_in": 98,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.2,
+      "tool_to_result_ms": 0.06,
+      "result_to_reply_ms": 42022.58,
+      "answer_ttft_ms": 28221.04,
+      "answer_tokens_in": 325,
+      "answer_tokens_out": 63,
+      "answer_tps": 4.5,
+      "end_to_end_ms": 51169.6,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_replies": 10,
+      "query_idx": 1,
+      "query": "is there a person in front of the camera",
+      "tool_called": "detect_people",
+      "tool_result": "no people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected",
+      "tool_result_raw": [
+        {
+          "from": "sensing-agent-1",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-2",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-3",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-4",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-5",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-6",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-7",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-8",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-9",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-10",
+          "text": "no people detected"
+        }
+      ],
+      "final_reply": "I have detected the following people: no people were detected. The detection agent 1, detection agent 2, detection agent 3, and detection agent 4 were present. The detection agent 5 was not detected. The detection agent 6 was not detected. The detection agent 7 was not detected. The detection agent 8 was not detected. The detection agent 9 was not detected. The detection agent 10 was not detected.",
+      "query_to_tool_ms": 9354.28,
+      "dispatch_ttft_ms": 7903.13,
+      "dispatch_tokens_in": 100,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.15,
+      "tool_to_result_ms": 0.06,
+      "result_to_reply_ms": 48526.44,
+      "answer_ttft_ms": 28400.75,
+      "answer_tokens_in": 327,
+      "answer_tokens_out": 91,
+      "answer_tps": 4.48,
+      "end_to_end_ms": 57880.78,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_replies": 10,
+      "query_idx": 2,
+      "query": "how many people are there",
+      "tool_called": "detect_people",
+      "tool_result": "no people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected",
+      "tool_result_raw": [
+        {
+          "from": "sensing-agent-1",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-2",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-3",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-4",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-5",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-6",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-7",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-8",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-9",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-10",
+          "text": "no people detected"
+        }
+      ],
+      "final_reply": "There are no people detected in the system.",
+      "query_to_tool_ms": 9004.72,
+      "dispatch_ttft_ms": 7563.45,
+      "dispatch_tokens_in": 96,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.18,
+      "tool_to_result_ms": 0.06,
+      "result_to_reply_ms": 30072.37,
+      "answer_ttft_ms": 28093.0,
+      "answer_tokens_in": 323,
+      "answer_tokens_out": 9,
+      "answer_tps": 4.1,
+      "end_to_end_ms": 39077.15,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_replies": 10,
+      "query_idx": 3,
+      "query": "do you see anyone",
+      "tool_called": "detect_people",
+      "tool_result": "no people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected",
+      "tool_result_raw": [
+        {
+          "from": "sensing-agent-1",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-2",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-3",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-4",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-5",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-6",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-7",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-8",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-9",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-10",
+          "text": "no people detected"
+        }
+      ],
+      "final_reply": "I detect the people that are currently visible. Here are the detections:\n\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected",
+      "query_to_tool_ms": 8948.46,
+      "dispatch_ttft_ms": 7510.63,
+      "dispatch_tokens_in": 95,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.19,
+      "tool_to_result_ms": 0.06,
+      "result_to_reply_ms": 37193.27,
+      "answer_ttft_ms": 28030.34,
+      "answer_tokens_in": 322,
+      "answer_tokens_out": 42,
+      "answer_tps": 4.49,
+      "end_to_end_ms": 46141.79,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_replies": 10,
+      "query_idx": 4,
+      "query": "check if someone is in the room",
+      "tool_called": "detect_people",
+      "tool_result": "no people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected",
+      "tool_result_raw": [
+        {
+          "from": "sensing-agent-1",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-2",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-3",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-4",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-5",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-6",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-7",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-8",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-9",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-10",
+          "text": "no people detected"
+        }
+      ],
+      "final_reply": "No people were detected in the room. The following actions were taken: sensing-agent-1, sensing-agent-2, sensing-agent-3, sensing-agent-4, sensing-agent-5, sensing-agent-6, sensing-agent-7, sensing-agent-8, sensing-agent-9, sensing-agent-10.",
+      "query_to_tool_ms": 9180.5,
+      "dispatch_ttft_ms": 7727.88,
+      "dispatch_tokens_in": 98,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.15,
+      "tool_to_result_ms": 0.06,
+      "result_to_reply_ms": 44769.21,
+      "answer_ttft_ms": 28308.94,
+      "answer_tokens_in": 325,
+      "answer_tokens_out": 75,
+      "answer_tps": 4.5,
+      "end_to_end_ms": 53949.77,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_replies": 10,
+      "query_idx": 5,
+      "query": "are there any people visible",
+      "tool_called": "detect_people",
+      "tool_result": "no people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected",
+      "tool_result_raw": [
+        {
+          "from": "sensing-agent-1",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-2",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-3",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-4",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-5",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-6",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-7",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-8",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-9",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-10",
+          "text": "no people detected"
+        }
+      ],
+      "final_reply": "There are no people visible in the current environment.",
+      "query_to_tool_ms": 9003.15,
+      "dispatch_ttft_ms": 7565.73,
+      "dispatch_tokens_in": 96,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.19,
+      "tool_to_result_ms": 0.06,
+      "result_to_reply_ms": 30368.24,
+      "answer_ttft_ms": 28165.37,
+      "answer_tokens_in": 323,
+      "answer_tokens_out": 10,
+      "answer_tps": 4.14,
+      "end_to_end_ms": 39371.44,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_replies": 10,
+      "query_idx": 6,
+      "query": "detect the people in the frame",
+      "tool_called": "detect_people",
+      "tool_result": "no people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected",
+      "tool_result_raw": [
+        {
+          "from": "sensing-agent-1",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-2",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-3",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-4",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-5",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-6",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-7",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-8",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-9",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-10",
+          "text": "no people detected"
+        }
+      ],
+      "final_reply": "I have detected the people in the frame. Here are the details:\n\nNo people were detected.\nNo people were detected.\nNo people were detected.\nNo people were detected.\nNo people were detected.\nNo people were detected.",
+      "query_to_tool_ms": 9075.79,
+      "dispatch_ttft_ms": 7640.21,
+      "dispatch_tokens_in": 97,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.2,
+      "tool_to_result_ms": 0.06,
+      "result_to_reply_ms": 39075.48,
+      "answer_ttft_ms": 28145.59,
+      "answer_tokens_in": 324,
+      "answer_tokens_out": 50,
+      "answer_tps": 4.49,
+      "end_to_end_ms": 48151.33,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_replies": 10,
+      "query_idx": 7,
+      "query": "is anybody there right now",
+      "tool_called": "detect_people",
+      "tool_result": "no people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected",
+      "tool_result_raw": [
+        {
+          "from": "sensing-agent-1",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-2",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-3",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-4",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-5",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-6",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-7",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-8",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-9",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-10",
+          "text": "no people detected"
+        }
+      ],
+      "final_reply": "I have detected that there are no people visible right now.",
+      "query_to_tool_ms": 9034.48,
+      "dispatch_ttft_ms": 7590.58,
+      "dispatch_tokens_in": 96,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.18,
+      "tool_to_result_ms": 0.06,
+      "result_to_reply_ms": 30803.64,
+      "answer_ttft_ms": 28171.67,
+      "answer_tokens_in": 323,
+      "answer_tokens_out": 12,
+      "answer_tps": 4.22,
+      "end_to_end_ms": 39838.18,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_replies": 10,
+      "query_idx": 8,
+      "query": "tell me how many persons you can see",
+      "tool_called": "detect_people",
+      "tool_result": "no people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected",
+      "tool_result_raw": [
+        {
+          "from": "sensing-agent-1",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-2",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-3",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-4",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-5",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-6",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-7",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-8",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-9",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-10",
+          "text": "no people detected"
+        }
+      ],
+      "final_reply": "I can detect the people that are currently visible. In total, there are no detected persons.",
+      "query_to_tool_ms": 9232.94,
+      "dispatch_ttft_ms": 7795.18,
+      "dispatch_tokens_in": 99,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.19,
+      "tool_to_result_ms": 0.06,
+      "result_to_reply_ms": 32501.98,
+      "answer_ttft_ms": 28349.58,
+      "answer_tokens_in": 326,
+      "answer_tokens_out": 19,
+      "answer_tps": 4.36,
+      "end_to_end_ms": 41734.98,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_replies": 10,
+      "query_idx": 9,
+      "query": "look for a person with the camera",
+      "tool_called": "detect_people",
+      "tool_result": "no people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected",
+      "tool_result_raw": [
+        {
+          "from": "sensing-agent-1",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-2",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-3",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-4",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-5",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-6",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-7",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-8",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-9",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-10",
+          "text": "no people detected"
+        }
+      ],
+      "final_reply": "I have detected the following people: no people were detected. Here are the detections: sensing-agent-1, sensing-agent-2, sensing-agent-3, sensing-agent-4, sensing-agent-5, sensing-agent-6, sensing-agent-7, sensing-agent-8, sensing-agent-9, sensing-agent-10.",
+      "query_to_tool_ms": 9144.09,
+      "dispatch_ttft_ms": 7709.08,
+      "dispatch_tokens_in": 98,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.2,
+      "tool_to_result_ms": 0.06,
+      "result_to_reply_ms": 45463.93,
+      "answer_ttft_ms": 28221.29,
+      "answer_tokens_in": 325,
+      "answer_tokens_out": 78,
+      "answer_tps": 4.47,
+      "end_to_end_ms": 54608.08,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_replies": 15,
+      "query_idx": 0,
+      "query": "can you use the detect person tool",
+      "tool_called": "detect_people",
+      "tool_result": "no people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected",
+      "tool_result_raw": [
+        {
+          "from": "sensing-agent-1",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-2",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-3",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-4",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-5",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-6",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-7",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-8",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-9",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-10",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-11",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-12",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-13",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-14",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-15",
+          "text": "no people detected"
+        }
+      ],
+      "final_reply": "No, I couldn't use the detect person tool. The tool reported that **no people were detected**.",
+      "query_to_tool_ms": 9150.88,
+      "dispatch_ttft_ms": 7715.31,
+      "dispatch_tokens_in": 98,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.2,
+      "tool_to_result_ms": 0.08,
+      "result_to_reply_ms": 41235.6,
+      "answer_ttft_ms": 36433.97,
+      "answer_tokens_in": 420,
+      "answer_tokens_out": 22,
+      "answer_tps": 4.41,
+      "end_to_end_ms": 50386.55,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_replies": 15,
+      "query_idx": 1,
+      "query": "is there a person in front of the camera",
+      "tool_called": "detect_people",
+      "tool_result": "no people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected",
+      "tool_result_raw": [
+        {
+          "from": "sensing-agent-1",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-2",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-3",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-4",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-5",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-6",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-7",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-8",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-9",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-10",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-11",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-12",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-13",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-14",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-15",
+          "text": "no people detected"
+        }
+      ],
+      "final_reply": "I have detected the following people in front of the camera:\n\nNo people were detected.\n\nHere are the detections:\n*   sensing-agent-1: No people detected\n*   sensing-agent-2: No people detected\n*   sensing-agent-3: No people detected\n*   sensing-agent-4: No people detected\n*   sensing-agent-5: No people detected\n*   sensing-agent-6: No people detected\n*   sensing-agent-7: No people detected\n*   sensing-agent-8: No people detected\n*   sensing-agent-9: No people detected\n*   sensing-agent-10: No people detected\n*   sensing-agent-11: No people detected\n*   sensing-agent-12: No people detected\n*   sensing-agent-13: No people detected\n*   sensing-agent-14: No people detected\n*   sensing-agent-15: No people detected",
+      "query_to_tool_ms": 9357.06,
+      "dispatch_ttft_ms": 7905.11,
+      "dispatch_tokens_in": 100,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.15,
+      "tool_to_result_ms": 0.08,
+      "result_to_reply_ms": 84447.03,
+      "answer_ttft_ms": 36681.37,
+      "answer_tokens_in": 422,
+      "answer_tokens_out": 210,
+      "answer_tps": 4.38,
+      "end_to_end_ms": 93804.16,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_replies": 15,
+      "query_idx": 2,
+      "query": "how many people are there",
+      "tool_called": "detect_people",
+      "tool_result": "no people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected",
+      "tool_result_raw": [
+        {
+          "from": "sensing-agent-1",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-2",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-3",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-4",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-5",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-6",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-7",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-8",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-9",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-10",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-11",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-12",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-13",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-14",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-15",
+          "text": "no people detected"
+        }
+      ],
+      "final_reply": "There are no people detected. The tool reported that no people were detected.",
+      "query_to_tool_ms": 9003.42,
+      "dispatch_ttft_ms": 7566.01,
+      "dispatch_tokens_in": 96,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.19,
+      "tool_to_result_ms": 0.08,
+      "result_to_reply_ms": 39594.78,
+      "answer_ttft_ms": 36312.71,
+      "answer_tokens_in": 418,
+      "answer_tokens_out": 15,
+      "answer_tps": 4.31,
+      "end_to_end_ms": 48598.28,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_replies": 15,
+      "query_idx": 3,
+      "query": "do you see anyone",
+      "tool_called": "detect_people",
+      "tool_result": "no people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected",
+      "tool_result_raw": [
+        {
+          "from": "sensing-agent-1",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-2",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-3",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-4",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-5",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-6",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-7",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-8",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-9",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-10",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-11",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-12",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-13",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-14",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-15",
+          "text": "no people detected"
+        }
+      ],
+      "final_reply": "I detect the people that are currently visible. Here are the detections:\n\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo people detected\nNo",
+      "query_to_tool_ms": 8915.75,
+      "dispatch_ttft_ms": 7476.11,
+      "dispatch_tokens_in": 95,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.19,
+      "tool_to_result_ms": 0.08,
+      "result_to_reply_ms": 156559.89,
+      "answer_ttft_ms": 36350.88,
+      "answer_tokens_in": 417,
+      "answer_tokens_out": 511,
+      "answer_tps": 4.24,
+      "end_to_end_ms": 165475.71,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_replies": 15,
+      "query_idx": 4,
+      "query": "check if someone is in the room",
+      "tool_called": "detect_people",
+      "tool_result": "no people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected",
+      "tool_result_raw": [
+        {
+          "from": "sensing-agent-1",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-2",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-3",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-4",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-5",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-6",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-7",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-8",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-9",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-10",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-11",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-12",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-13",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-14",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-15",
+          "text": "no people detected"
+        }
+      ],
+      "final_reply": "No people were detected in the room. The following actions were performed: no people were detected.",
+      "query_to_tool_ms": 9159.79,
+      "dispatch_ttft_ms": 7716.53,
+      "dispatch_tokens_in": 98,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.18,
+      "tool_to_result_ms": 0.08,
+      "result_to_reply_ms": 40611.89,
+      "answer_ttft_ms": 36445.63,
+      "answer_tokens_in": 420,
+      "answer_tokens_out": 19,
+      "answer_tps": 4.36,
+      "end_to_end_ms": 49771.76,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_replies": 15,
+      "query_idx": 5,
+      "query": "are there any people visible",
+      "tool_called": "detect_people",
+      "tool_result": "no people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected",
+      "tool_result_raw": [
+        {
+          "from": "sensing-agent-1",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-2",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-3",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-4",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-5",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-6",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-7",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-8",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-9",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-10",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-11",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-12",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-13",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-14",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-15",
+          "text": "no people detected"
+        }
+      ],
+      "final_reply": "No, I have not detected any people visible. The system reported that no people were detected.",
+      "query_to_tool_ms": 9034.79,
+      "dispatch_ttft_ms": 7598.83,
+      "dispatch_tokens_in": 96,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.2,
+      "tool_to_result_ms": 0.1,
+      "result_to_reply_ms": 40415.13,
+      "answer_ttft_ms": 36256.95,
+      "answer_tokens_in": 418,
+      "answer_tokens_out": 19,
+      "answer_tps": 4.37,
+      "end_to_end_ms": 49450.02,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_replies": 15,
+      "query_idx": 6,
+      "query": "detect the people in the frame",
+      "tool_called": "detect_people",
+      "tool_result": "no people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected",
+      "tool_result_raw": [
+        {
+          "from": "sensing-agent-1",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-2",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-3",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-4",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-5",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-6",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-7",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-8",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-9",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-10",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-11",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-12",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-13",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-14",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-15",
+          "text": "no people detected"
+        }
+      ],
+      "final_reply": "The people in the frame have been detected. Here are the details:\n\nNo people were detected.\n\nFrom sensing-agent-1 to sensing-agent-15:\nNo people were detected.",
+      "query_to_tool_ms": 9076.65,
+      "dispatch_ttft_ms": 7640.49,
+      "dispatch_tokens_in": 97,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.2,
+      "tool_to_result_ms": 0.08,
+      "result_to_reply_ms": 45398.25,
+      "answer_ttft_ms": 36410.07,
+      "answer_tokens_in": 419,
+      "answer_tokens_out": 41,
+      "answer_tps": 4.47,
+      "end_to_end_ms": 54474.98,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_replies": 15,
+      "query_idx": 7,
+      "query": "is anybody there right now",
+      "tool_called": "detect_people",
+      "tool_result": "no people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected",
+      "tool_result_raw": [
+        {
+          "from": "sensing-agent-1",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-2",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-3",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-4",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-5",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-6",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-7",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-8",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-9",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-10",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-11",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-12",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-13",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-14",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-15",
+          "text": "no people detected"
+        }
+      ],
+      "final_reply": "I have detected the following people: no people were detected.",
+      "query_to_tool_ms": 8992.62,
+      "dispatch_ttft_ms": 7557.25,
+      "dispatch_tokens_in": 96,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.2,
+      "tool_to_result_ms": 0.08,
+      "result_to_reply_ms": 38969.01,
+      "answer_ttft_ms": 36335.32,
+      "answer_tokens_in": 418,
+      "answer_tokens_out": 12,
+      "answer_tps": 4.24,
+      "end_to_end_ms": 47961.71,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_replies": 15,
+      "query_idx": 8,
+      "query": "tell me how many persons you can see",
+      "tool_called": "detect_people",
+      "tool_result": "no people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected",
+      "tool_result_raw": [
+        {
+          "from": "sensing-agent-1",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-2",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-3",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-4",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-5",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-6",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-7",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-8",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-9",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-10",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-11",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-12",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-13",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-14",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-15",
+          "text": "no people detected"
+        }
+      ],
+      "final_reply": "I have detected the following persons:\n\nNo people were detected.\n\nHere are the detections:\n*   sensing-agent-1: No people detected\n*   sensing-agent-2: No people detected\n*   sensing-agent-3: No people detected\n*   sensing-agent-4: No people detected\n*   sensing-agent-5: No people detected\n*   sensing-agent-6: No people detected\n*   sensing-agent-7: No people detected\n*   sensing-agent-8: No people detected\n*   sensing-agent-9: No people detected\n*   sensing-agent-10: No people detected\n*   sensing-agent-11: No people detected\n*   sensing-agent-12: No people detected\n*   sensing-agent-13: No people detected\n*   sensing-agent-14: No people detected\n*   sensing-agent-15: No people detected",
+      "query_to_tool_ms": 9230.66,
+      "dispatch_ttft_ms": 7790.44,
+      "dispatch_tokens_in": 99,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.19,
+      "tool_to_result_ms": 0.08,
+      "result_to_reply_ms": 83034.81,
+      "answer_ttft_ms": 36567.73,
+      "answer_tokens_in": 421,
+      "answer_tokens_out": 205,
+      "answer_tps": 4.39,
+      "end_to_end_ms": 92265.55,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_replies": 15,
+      "query_idx": 9,
+      "query": "look for a person with the camera",
+      "tool_called": "detect_people",
+      "tool_result": "no people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected",
+      "tool_result_raw": [
+        {
+          "from": "sensing-agent-1",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-2",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-3",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-4",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-5",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-6",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-7",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-8",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-9",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-10",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-11",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-12",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-13",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-14",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-15",
+          "text": "no people detected"
+        }
+      ],
+      "final_reply": "I have detected the following people: no people were detected.",
+      "query_to_tool_ms": 9165.6,
+      "dispatch_ttft_ms": 7726.33,
+      "dispatch_tokens_in": 98,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.19,
+      "tool_to_result_ms": 0.08,
+      "result_to_reply_ms": 39055.92,
+      "answer_ttft_ms": 36426.05,
+      "answer_tokens_in": 420,
+      "answer_tokens_out": 12,
+      "answer_tps": 4.24,
+      "end_to_end_ms": 48221.6,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_replies": 20,
+      "query_idx": 0,
+      "query": "can you use the detect person tool",
+      "tool_called": "detect_people",
+      "tool_result": "no people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected",
+      "tool_result_raw": [
+        {
+          "from": "sensing-agent-1",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-2",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-3",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-4",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-5",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-6",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-7",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-8",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-9",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-10",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-11",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-12",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-13",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-14",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-15",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-16",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-17",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-18",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-19",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-20",
+          "text": "no people detected"
+        }
+      ],
+      "final_reply": "I have detected the following people: no people were detected.",
+      "query_to_tool_ms": 9155.43,
+      "dispatch_ttft_ms": 7713.96,
+      "dispatch_tokens_in": 98,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.18,
+      "tool_to_result_ms": 0.09,
+      "result_to_reply_ms": 47633.59,
+      "answer_ttft_ms": 44857.0,
+      "answer_tokens_in": 515,
+      "answer_tokens_out": 12,
+      "answer_tps": 4.03,
+      "end_to_end_ms": 56789.11,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_replies": 20,
+      "query_idx": 1,
+      "query": "is there a person in front of the camera",
+      "tool_called": "detect_people",
+      "tool_result": "no people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected",
+      "tool_result_raw": [
+        {
+          "from": "sensing-agent-1",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-2",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-3",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-4",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-5",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-6",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-7",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-8",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-9",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-10",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-11",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-12",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-13",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-14",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-15",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-16",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-17",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-18",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-19",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-20",
+          "text": "no people detected"
+        }
+      ],
+      "final_reply": "I detect no people in front of the camera.",
+      "query_to_tool_ms": 9303.87,
+      "dispatch_ttft_ms": 7866.7,
+      "dispatch_tokens_in": 100,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.2,
+      "tool_to_result_ms": 0.09,
+      "result_to_reply_ms": 47365.0,
+      "answer_ttft_ms": 45057.69,
+      "answer_tokens_in": 517,
+      "answer_tokens_out": 10,
+      "answer_tps": 3.98,
+      "end_to_end_ms": 56668.96,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_replies": 20,
+      "query_idx": 2,
+      "query": "how many people are there",
+      "tool_called": "detect_people",
+      "tool_result": "no people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected",
+      "tool_result_raw": [
+        {
+          "from": "sensing-agent-1",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-2",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-3",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-4",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-5",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-6",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-7",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-8",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-9",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-10",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-11",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-12",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-13",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-14",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-15",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-16",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-17",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-18",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-19",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-20",
+          "text": "no people detected"
+        }
+      ],
+      "final_reply": "There are no people detected in the system.",
+      "query_to_tool_ms": 9000.01,
+      "dispatch_ttft_ms": 7555.56,
+      "dispatch_tokens_in": 96,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.17,
+      "tool_to_result_ms": 0.09,
+      "result_to_reply_ms": 46788.66,
+      "answer_ttft_ms": 44705.92,
+      "answer_tokens_in": 513,
+      "answer_tokens_out": 9,
+      "answer_tps": 3.93,
+      "end_to_end_ms": 55788.77,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_replies": 20,
+      "query_idx": 3,
+      "query": "do you see anyone",
+      "tool_called": "detect_people",
+      "tool_result": "no people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected",
+      "tool_result_raw": [
+        {
+          "from": "sensing-agent-1",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-2",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-3",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-4",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-5",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-6",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-7",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-8",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-9",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-10",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-11",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-12",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-13",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-14",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-15",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-16",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-17",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-18",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-19",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-20",
+          "text": "no people detected"
+        }
+      ],
+      "final_reply": "I detect no people.",
+      "query_to_tool_ms": 8921.57,
+      "dispatch_ttft_ms": 7480.26,
+      "dispatch_tokens_in": 95,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.18,
+      "tool_to_result_ms": 0.1,
+      "result_to_reply_ms": 45595.08,
+      "answer_ttft_ms": 44424.55,
+      "answer_tokens_in": 512,
+      "answer_tokens_out": 5,
+      "answer_tps": 3.55,
+      "end_to_end_ms": 54516.75,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_replies": 20,
+      "query_idx": 4,
+      "query": "check if someone is in the room",
+      "tool_called": "detect_people",
+      "tool_result": "no people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected",
+      "tool_result_raw": [
+        {
+          "from": "sensing-agent-1",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-2",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-3",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-4",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-5",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-6",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-7",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-8",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-9",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-10",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-11",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-12",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-13",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-14",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-15",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-16",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-17",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-18",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-19",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-20",
+          "text": "no people detected"
+        }
+      ],
+      "final_reply": "I have detected the following people: no people were detected.",
+      "query_to_tool_ms": 9158.75,
+      "dispatch_ttft_ms": 7718.71,
+      "dispatch_tokens_in": 98,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.19,
+      "tool_to_result_ms": 0.1,
+      "result_to_reply_ms": 47616.04,
+      "answer_ttft_ms": 44838.24,
+      "answer_tokens_in": 515,
+      "answer_tokens_out": 12,
+      "answer_tps": 4.03,
+      "end_to_end_ms": 56774.88,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_replies": 20,
+      "query_idx": 5,
+      "query": "are there any people visible",
+      "tool_called": "detect_people",
+      "tool_result": "no people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected",
+      "tool_result_raw": [
+        {
+          "from": "sensing-agent-1",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-2",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-3",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-4",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-5",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-6",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-7",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-8",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-9",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-10",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-11",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-12",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-13",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-14",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-15",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-16",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-17",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-18",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-19",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-20",
+          "text": "no people detected"
+        }
+      ],
+      "final_reply": "I have detected the following people visible:\n\n*   from: sensing-agent-1\n*   from: sensing-agent-2\n*   from: sensing-agent-3\n*   from: sensing-agent-4\n*   from: sensing-agent-5\n*   from: sensing-agent-6\n*   from: sensing-agent-7\n*   from: sensing-agent-8\n*   from: sensing-agent-9\n*   from: sensing-agent-10\n*   from: sensing-agent-11\n*   from: sensing-agent-12\n*   from: sensing-agent-13\n*   from: sensing-agent-14\n*   from: sensing-agent-15\n*   from: sensing-agent-16\n*   from: sensing-agent-17\n*   from: sensing-agent-18\n*   from: sensing-agent-19\n*   from: sensing-agent-20\n\nI cannot detect any more people.",
+      "query_to_tool_ms": 8988.95,
+      "dispatch_ttft_ms": 7549.59,
+      "dispatch_tokens_in": 96,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.19,
+      "tool_to_result_ms": 0.09,
+      "result_to_reply_ms": 97186.3,
+      "answer_ttft_ms": 44670.79,
+      "answer_tokens_in": 513,
+      "answer_tokens_out": 227,
+      "answer_tps": 4.31,
+      "end_to_end_ms": 106175.34,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_replies": 20,
+      "query_idx": 6,
+      "query": "detect the people in the frame",
+      "tool_called": "detect_people",
+      "tool_result": "no people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected",
+      "tool_result_raw": [
+        {
+          "from": "sensing-agent-1",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-2",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-3",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-4",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-5",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-6",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-7",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-8",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-9",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-10",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-11",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-12",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-13",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-14",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-15",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-16",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-17",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-18",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-19",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-20",
+          "text": "no people detected"
+        }
+      ],
+      "final_reply": "I have detected the following people:\n\n*   No people were detected.\n*   No people were detected.\n*   No people were detected.\n*   No people were detected.\n*   No people were detected.\n*   No people were detected.\n*   No people were detected.\n*   No people were detected.\n*   No people were detected.\n\n*   sensing-agent-16: No people were detected.\n*   sensing-agent-17: No people were detected.\n*   sensing-agent-18: No people were detected.\n*   sensing-agent-19: No people were detected.\n*   sensing-agent-20: No people were detected.",
+      "query_to_tool_ms": 9067.08,
+      "dispatch_ttft_ms": 7633.77,
+      "dispatch_tokens_in": 97,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.21,
+      "tool_to_result_ms": 0.09,
+      "result_to_reply_ms": 80118.35,
+      "answer_ttft_ms": 44767.42,
+      "answer_tokens_in": 514,
+      "answer_tokens_out": 154,
+      "answer_tps": 4.33,
+      "end_to_end_ms": 89185.52,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_replies": 20,
+      "query_idx": 7,
+      "query": "is anybody there right now",
+      "tool_called": "detect_people",
+      "tool_result": "no people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected",
+      "tool_result_raw": [
+        {
+          "from": "sensing-agent-1",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-2",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-3",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-4",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-5",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-6",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-7",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-8",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-9",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-10",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-11",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-12",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-13",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-14",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-15",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-16",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-17",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-18",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-19",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-20",
+          "text": "no people detected"
+        }
+      ],
+      "final_reply": "I detect no people at all.",
+      "query_to_tool_ms": 8998.4,
+      "dispatch_ttft_ms": 7554.04,
+      "dispatch_tokens_in": 96,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.17,
+      "tool_to_result_ms": 0.1,
+      "result_to_reply_ms": 46286.29,
+      "answer_ttft_ms": 44655.01,
+      "answer_tokens_in": 513,
+      "answer_tokens_out": 7,
+      "answer_tps": 3.78,
+      "end_to_end_ms": 55284.78,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_replies": 20,
+      "query_idx": 8,
+      "query": "tell me how many persons you can see",
+      "tool_called": "detect_people",
+      "tool_result": "no people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected",
+      "tool_result_raw": [
+        {
+          "from": "sensing-agent-1",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-2",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-3",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-4",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-5",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-6",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-7",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-8",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-9",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-10",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-11",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-12",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-13",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-14",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-15",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-16",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-17",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-18",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-19",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-20",
+          "text": "no people detected"
+        }
+      ],
+      "final_reply": "I have detected the following persons:\n\nNo people were detected.\n\nHere are the detections:\n*   sensing-agent-1: No people detected\n*   sensing-agent-2: No people detected\n*   sensing-agent-3: No people detected\n*   sensing-agent-4: No people detected\n*   sensing-agent-5: No people detected\n*   sensing-agent-6: No people detected\n*   sensing-agent-7: No people detected\n*   sensing-agent-8: No people detected\n*   sensing-agent-9: No people detected\n*   sensing-agent-10: No people detected\n*   sensing-agent-11: No people detected\n*   sensing-agent-12: No people detected\n*   sensing-agent-13: No people detected\n*   sensing-agent-14: No people detected\n*   sensing-agent-15: No people detected\n*   sensing-agent-16: No people detected\n*   sensing-agent-17: No people detected\n*   sensing-agent-18: No people detected\n*   sensing-agent-19: No people detected\n*   sensing-agent-20: No people detected",
+      "query_to_tool_ms": 9236.55,
+      "dispatch_ttft_ms": 7795.16,
+      "dispatch_tokens_in": 99,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.18,
+      "tool_to_result_ms": 0.1,
+      "result_to_reply_ms": 107629.0,
+      "answer_ttft_ms": 44931.71,
+      "answer_tokens_in": 516,
+      "answer_tokens_out": 270,
+      "answer_tps": 4.29,
+      "end_to_end_ms": 116865.65,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    },
+    {
+      "n_replies": 20,
+      "query_idx": 9,
+      "query": "look for a person with the camera",
+      "tool_called": "detect_people",
+      "tool_result": "no people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected\nno people detected",
+      "tool_result_raw": [
+        {
+          "from": "sensing-agent-1",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-2",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-3",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-4",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-5",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-6",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-7",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-8",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-9",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-10",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-11",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-12",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-13",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-14",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-15",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-16",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-17",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-18",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-19",
+          "text": "no people detected"
+        },
+        {
+          "from": "sensing-agent-20",
+          "text": "no people detected"
+        }
+      ],
+      "final_reply": "I have detected the following people: no people were detected.",
+      "query_to_tool_ms": 9153.53,
+      "dispatch_ttft_ms": 7711.93,
+      "dispatch_tokens_in": 98,
+      "dispatch_tokens_out": 7,
+      "dispatch_tps": 4.18,
+      "tool_to_result_ms": 0.1,
+      "result_to_reply_ms": 47631.12,
+      "answer_ttft_ms": 44866.84,
+      "answer_tokens_in": 515,
+      "answer_tokens_out": 12,
+      "answer_tps": 4.04,
+      "end_to_end_ms": 56784.75,
+      "correct": 1,
+      "got_result": 1,
+      "error": ""
+    }
+  ],
+  "aggregate": [
+    {
+      "n_replies": 1,
+      "n_samples": 10,
+      "n_correct": 10,
+      "accuracy": 1.0,
+      "n_got_result": 10,
+      "query_to_tool_ms_count": 10,
+      "query_to_tool_ms_mean": 9113.65,
+      "query_to_tool_ms_std": 116.1,
+      "query_to_tool_ms_min": 8931.78,
+      "query_to_tool_ms_max": 9301.94,
+      "dispatch_ttft_ms_count": 10,
+      "dispatch_ttft_ms_mean": 7671.7,
+      "dispatch_ttft_ms_std": 118.59,
+      "dispatch_ttft_ms_min": 7483.52,
+      "dispatch_ttft_ms_max": 7864.88,
+      "dispatch_tokens_in_count": 10,
+      "dispatch_tokens_in_mean": 97.3,
+      "dispatch_tokens_in_std": 1.49,
+      "dispatch_tokens_in_min": 95,
+      "dispatch_tokens_in_max": 100,
+      "dispatch_tokens_out_count": 10,
+      "dispatch_tokens_out_mean": 7.0,
+      "dispatch_tokens_out_std": 0.0,
+      "dispatch_tokens_out_min": 7,
+      "dispatch_tokens_out_max": 7,
+      "dispatch_tps_count": 10,
+      "dispatch_tps_mean": 4.18,
+      "dispatch_tps_std": 0.02,
+      "dispatch_tps_min": 4.16,
+      "dispatch_tps_max": 4.2,
+      "tool_to_result_ms_count": 10,
+      "tool_to_result_ms_mean": 0.03,
+      "tool_to_result_ms_std": 0.0,
+      "tool_to_result_ms_min": 0.03,
+      "tool_to_result_ms_max": 0.04,
+      "result_to_reply_ms_count": 10,
+      "result_to_reply_ms_mean": 16229.06,
+      "result_to_reply_ms_std": 935.45,
+      "result_to_reply_ms_min": 13824.86,
+      "result_to_reply_ms_max": 17654.7,
+      "answer_ttft_ms_count": 10,
+      "answer_ttft_ms_mean": 12651.84,
+      "answer_ttft_ms_std": 116.29,
+      "answer_ttft_ms_min": 12501.81,
+      "answer_ttft_ms_max": 12882.87,
+      "answer_tokens_in_count": 10,
+      "answer_tokens_in_mean": 161.3,
+      "answer_tokens_in_std": 1.49,
+      "answer_tokens_in_min": 159,
+      "answer_tokens_in_max": 164,
+      "answer_tokens_out_count": 10,
+      "answer_tokens_out_mean": 17.2,
+      "answer_tokens_out_std": 4.26,
+      "answer_tokens_out_min": 6,
+      "answer_tokens_out_max": 23,
+      "answer_tps_count": 10,
+      "answer_tps_mean": 4.51,
+      "answer_tps_std": 0.15,
+      "answer_tps_min": 4.06,
+      "answer_tps_max": 4.62,
+      "end_to_end_ms_count": 10,
+      "end_to_end_ms_mean": 25342.74,
+      "end_to_end_ms_std": 1004.33,
+      "end_to_end_ms_min": 22816.74,
+      "end_to_end_ms_max": 26956.68
+    },
+    {
+      "n_replies": 5,
+      "n_samples": 10,
+      "n_correct": 10,
+      "accuracy": 1.0,
+      "n_got_result": 10,
+      "query_to_tool_ms_count": 10,
+      "query_to_tool_ms_mean": 9115.81,
+      "query_to_tool_ms_std": 113.51,
+      "query_to_tool_ms_min": 8923.51,
+      "query_to_tool_ms_max": 9305.59,
+      "dispatch_ttft_ms_count": 10,
+      "dispatch_ttft_ms_mean": 7663.68,
+      "dispatch_ttft_ms_std": 115.48,
+      "dispatch_ttft_ms_min": 7484.28,
+      "dispatch_ttft_ms_max": 7856.38,
+      "dispatch_tokens_in_count": 10,
+      "dispatch_tokens_in_mean": 97.3,
+      "dispatch_tokens_in_std": 1.49,
+      "dispatch_tokens_in_min": 95,
+      "dispatch_tokens_in_max": 100,
+      "dispatch_tokens_out_count": 10,
+      "dispatch_tokens_out_mean": 7.0,
+      "dispatch_tokens_out_std": 0.0,
+      "dispatch_tokens_out_min": 7,
+      "dispatch_tokens_out_max": 7,
+      "dispatch_tps_count": 10,
+      "dispatch_tps_mean": 4.15,
+      "dispatch_tps_std": 0.07,
+      "dispatch_tps_min": 3.94,
+      "dispatch_tps_max": 4.2,
+      "tool_to_result_ms_count": 10,
+      "tool_to_result_ms_mean": 0.04,
+      "tool_to_result_ms_std": 0.0,
+      "tool_to_result_ms_min": 0.04,
+      "tool_to_result_ms_max": 0.05,
+      "result_to_reply_ms_count": 10,
+      "result_to_reply_ms_mean": 24796.97,
+      "result_to_reply_ms_std": 4269.84,
+      "result_to_reply_ms_min": 19999.27,
+      "result_to_reply_ms_max": 33003.39,
+      "answer_ttft_ms_count": 10,
+      "answer_ttft_ms_mean": 18238.94,
+      "answer_ttft_ms_std": 111.61,
+      "answer_ttft_ms_min": 18039.33,
+      "answer_ttft_ms_max": 18425.09,
+      "answer_tokens_in_count": 10,
+      "answer_tokens_in_mean": 233.3,
+      "answer_tokens_in_std": 1.49,
+      "answer_tokens_in_min": 231,
+      "answer_tokens_in_max": 236,
+      "answer_tokens_out_count": 10,
+      "answer_tokens_out_mean": 30.8,
+      "answer_tokens_out_std": 19.7,
+      "answer_tokens_out_min": 9,
+      "answer_tokens_out_max": 68,
+      "answer_tps_count": 10,
+      "answer_tps_mean": 4.5,
+      "answer_tps_std": 0.12,
+      "answer_tps_min": 4.27,
+      "answer_tps_max": 4.61,
+      "end_to_end_ms_count": 10,
+      "end_to_end_ms_mean": 33912.83,
+      "end_to_end_ms_std": 4284.38,
+      "end_to_end_ms_min": 29099.95,
+      "end_to_end_ms_max": 42163.44
+    },
+    {
+      "n_replies": 10,
+      "n_samples": 10,
+      "n_correct": 10,
+      "accuracy": 1.0,
+      "n_got_result": 10,
+      "query_to_tool_ms_count": 10,
+      "query_to_tool_ms_mean": 9112.54,
+      "query_to_tool_ms_std": 117.34,
+      "query_to_tool_ms_min": 8948.46,
+      "query_to_tool_ms_max": 9354.28,
+      "dispatch_ttft_ms_count": 10,
+      "dispatch_ttft_ms_mean": 7671.64,
+      "dispatch_ttft_ms_std": 114.6,
+      "dispatch_ttft_ms_min": 7510.63,
+      "dispatch_ttft_ms_max": 7903.13,
+      "dispatch_tokens_in_count": 10,
+      "dispatch_tokens_in_mean": 97.3,
+      "dispatch_tokens_in_std": 1.49,
+      "dispatch_tokens_in_min": 95,
+      "dispatch_tokens_in_max": 100,
+      "dispatch_tokens_out_count": 10,
+      "dispatch_tokens_out_mean": 7.0,
+      "dispatch_tokens_out_std": 0.0,
+      "dispatch_tokens_out_min": 7,
+      "dispatch_tokens_out_max": 7,
+      "dispatch_tps_count": 10,
+      "dispatch_tps_mean": 4.18,
+      "dispatch_tps_std": 0.02,
+      "dispatch_tps_min": 4.15,
+      "dispatch_tps_max": 4.2,
+      "tool_to_result_ms_count": 10,
+      "tool_to_result_ms_mean": 0.06,
+      "tool_to_result_ms_std": 0.0,
+      "tool_to_result_ms_min": 0.06,
+      "tool_to_result_ms_max": 0.06,
+      "result_to_reply_ms_count": 10,
+      "result_to_reply_ms_mean": 38079.71,
+      "result_to_reply_ms_std": 6583.09,
+      "result_to_reply_ms_min": 30072.37,
+      "result_to_reply_ms_max": 48526.44,
+      "answer_ttft_ms_count": 10,
+      "answer_ttft_ms_mean": 28210.76,
+      "answer_ttft_ms_std": 109.31,
+      "answer_ttft_ms_min": 28030.34,
+      "answer_ttft_ms_max": 28400.75,
+      "answer_tokens_in_count": 10,
+      "answer_tokens_in_mean": 324.3,
+      "answer_tokens_in_std": 1.49,
+      "answer_tokens_in_min": 322,
+      "answer_tokens_in_max": 327,
+      "answer_tokens_out_count": 10,
+      "answer_tokens_out_mean": 44.9,
+      "answer_tokens_out_std": 29.58,
+      "answer_tokens_out_min": 9,
+      "answer_tokens_out_max": 91,
+      "answer_tps_count": 10,
+      "answer_tps_mean": 4.38,
+      "answer_tps_std": 0.15,
+      "answer_tps_min": 4.1,
+      "answer_tps_max": 4.5,
+      "end_to_end_ms_count": 10,
+      "end_to_end_ms_mean": 47192.31,
+      "end_to_end_ms_std": 6660.56,
+      "end_to_end_ms_min": 39077.15,
+      "end_to_end_ms_max": 57880.78
+    },
+    {
+      "n_replies": 15,
+      "n_samples": 10,
+      "n_correct": 10,
+      "accuracy": 1.0,
+      "n_got_result": 10,
+      "query_to_tool_ms_count": 10,
+      "query_to_tool_ms_mean": 9108.72,
+      "query_to_tool_ms_std": 123.48,
+      "query_to_tool_ms_min": 8915.75,
+      "query_to_tool_ms_max": 9357.06,
+      "dispatch_ttft_ms_count": 10,
+      "dispatch_ttft_ms_mean": 7669.24,
+      "dispatch_ttft_ms_std": 120.09,
+      "dispatch_ttft_ms_min": 7476.11,
+      "dispatch_ttft_ms_max": 7905.11,
+      "dispatch_tokens_in_count": 10,
+      "dispatch_tokens_in_mean": 97.3,
+      "dispatch_tokens_in_std": 1.49,
+      "dispatch_tokens_in_min": 95,
+      "dispatch_tokens_in_max": 100,
+      "dispatch_tokens_out_count": 10,
+      "dispatch_tokens_out_mean": 7.0,
+      "dispatch_tokens_out_std": 0.0,
+      "dispatch_tokens_out_min": 7,
+      "dispatch_tokens_out_max": 7,
+      "dispatch_tps_count": 10,
+      "dispatch_tps_mean": 4.19,
+      "dispatch_tps_std": 0.01,
+      "dispatch_tps_min": 4.15,
+      "dispatch_tps_max": 4.2,
+      "tool_to_result_ms_count": 10,
+      "tool_to_result_ms_mean": 0.08,
+      "tool_to_result_ms_std": 0.01,
+      "tool_to_result_ms_min": 0.08,
+      "tool_to_result_ms_max": 0.1,
+      "result_to_reply_ms_count": 10,
+      "result_to_reply_ms_mean": 60932.23,
+      "result_to_reply_ms_std": 36146.22,
+      "result_to_reply_ms_min": 38969.01,
+      "result_to_reply_ms_max": 156559.89,
+      "answer_ttft_ms_count": 10,
+      "answer_ttft_ms_mean": 36422.07,
+      "answer_ttft_ms_std": 118.8,
+      "answer_ttft_ms_min": 36256.95,
+      "answer_ttft_ms_max": 36681.37,
+      "answer_tokens_in_count": 10,
+      "answer_tokens_in_mean": 419.3,
+      "answer_tokens_in_std": 1.49,
+      "answer_tokens_in_min": 417,
+      "answer_tokens_in_max": 422,
+      "answer_tokens_out_count": 10,
+      "answer_tokens_out_mean": 106.6,
+      "answer_tokens_out_std": 153.95,
+      "answer_tokens_out_min": 12,
+      "answer_tokens_out_max": 511,
+      "answer_tps_count": 10,
+      "answer_tps_mean": 4.34,
+      "answer_tps_std": 0.08,
+      "answer_tps_min": 4.24,
+      "answer_tps_max": 4.47,
+      "end_to_end_ms_count": 10,
+      "end_to_end_ms_mean": 70041.03,
+      "end_to_end_ms_std": 36129.22,
+      "end_to_end_ms_min": 47961.71,
+      "end_to_end_ms_max": 165475.71
+    },
+    {
+      "n_replies": 20,
+      "n_samples": 10,
+      "n_correct": 10,
+      "accuracy": 1.0,
+      "n_got_result": 10,
+      "query_to_tool_ms_count": 10,
+      "query_to_tool_ms_mean": 9098.41,
+      "query_to_tool_ms_std": 116.25,
+      "query_to_tool_ms_min": 8921.57,
+      "query_to_tool_ms_max": 9303.87,
+      "dispatch_ttft_ms_count": 10,
+      "dispatch_ttft_ms_mean": 7657.97,
+      "dispatch_ttft_ms_std": 117.19,
+      "dispatch_ttft_ms_min": 7480.26,
+      "dispatch_ttft_ms_max": 7866.7,
+      "dispatch_tokens_in_count": 10,
+      "dispatch_tokens_in_mean": 97.3,
+      "dispatch_tokens_in_std": 1.49,
+      "dispatch_tokens_in_min": 95,
+      "dispatch_tokens_in_max": 100,
+      "dispatch_tokens_out_count": 10,
+      "dispatch_tokens_out_mean": 7.0,
+      "dispatch_tokens_out_std": 0.0,
+      "dispatch_tokens_out_min": 7,
+      "dispatch_tokens_out_max": 7,
+      "dispatch_tps_count": 10,
+      "dispatch_tps_mean": 4.19,
+      "dispatch_tps_std": 0.01,
+      "dispatch_tps_min": 4.17,
+      "dispatch_tps_max": 4.21,
+      "tool_to_result_ms_count": 10,
+      "tool_to_result_ms_mean": 0.1,
+      "tool_to_result_ms_std": 0.01,
+      "tool_to_result_ms_min": 0.09,
+      "tool_to_result_ms_max": 0.1,
+      "result_to_reply_ms_count": 10,
+      "result_to_reply_ms_mean": 61384.94,
+      "result_to_reply_ms_std": 22860.31,
+      "result_to_reply_ms_min": 45595.08,
+      "result_to_reply_ms_max": 107629.0,
+      "answer_ttft_ms_count": 10,
+      "answer_ttft_ms_mean": 44777.52,
+      "answer_ttft_ms_std": 166.27,
+      "answer_ttft_ms_min": 44424.55,
+      "answer_ttft_ms_max": 45057.69,
+      "answer_tokens_in_count": 10,
+      "answer_tokens_in_mean": 514.3,
+      "answer_tokens_in_std": 1.49,
+      "answer_tokens_in_min": 512,
+      "answer_tokens_in_max": 517,
+      "answer_tokens_out_count": 10,
+      "answer_tokens_out_mean": 71.8,
+      "answer_tokens_out_std": 98.63,
+      "answer_tokens_out_min": 5,
+      "answer_tokens_out_max": 270,
+      "answer_tps_count": 10,
+      "answer_tps_mean": 4.03,
+      "answer_tps_std": 0.23,
+      "answer_tps_min": 3.55,
+      "answer_tps_max": 4.33,
+      "end_to_end_ms_count": 10,
+      "end_to_end_ms_mean": 70483.45,
+      "end_to_end_ms_std": 22870.96,
+      "end_to_end_ms_min": 54516.75,
+      "end_to_end_ms_max": 116865.65
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "part": "C",
+  "n": 480,
+  "replies_n": [
+    1,
+    5,
+    10,
+    15,
+    20
+  ],
+  "prompts": [
+    "summary_prompt"
+  ],
+  "mean_gen_tokens": {
+    "FunctionGemma-270M": {
+      "summary_prompt/N1": 27.88,
+      "summary_prompt/N5": 119.58,
+      "summary_prompt/N10": 194.05,
+      "summary_prompt/N15": 334.12,
+      "summary_prompt/N20": 242.67
+    },
+    "Qwen3-1.7B-think": {
+      "summary_prompt/N1": 157.9,
+      "summary_prompt/N5": 296.91,
+      "summary_prompt/N10": 367.44,
+      "summary_prompt/N15": 406.14,
+      "summary_prompt/N20": 421.66
+    },
+    "Qwen3-1.7B-nothink": {
+      "summary_prompt/N1": 39.58,
+      "summary_prompt/N5": 112.11,
+      "summary_prompt/N10": 161.83,
+      "summary_prompt/N15": 203.12,
+      "summary_prompt/N20": 243.19
+    }
+  }
+}

@@ -1,0 +1,105 @@
+{
+  "skills": [
+    {
+      "file": "face_recognition_pipeline",
+      "function": "recognize_faces_now",
+      "command": "recognize"
+    },
+    {
+      "file": "face_recognition_pipeline",
+      "function": "add_face_now",
+      "command": "add_face"
+    },
+    {
+      "file": "face_recognition_pipeline",
+      "function": "eliminate_face",
+      "command": "remove_face"
+    },
+    {
+      "file": "face_recognition_pipeline",
+      "function": "list_saved_faces",
+      "command": "list_faces"
+    },
+    {
+      "file": "test_object_detection_pipeline",
+      "function": "detect_objects_now",
+      "command": "detect_objects_now"
+    },
+    {
+      "file": "test_object_detection_pipeline",
+      "function": "run_till_detect",
+      "command": "run_till_detect",
+      "threaded": true
+    }
+  ],
+ 
+
+  "tool_defs": [
+    {
+      "type": "function",
+      "function": {
+        "name": "recognize",
+        "description": "Open camera and identify who is in front of it",
+        "parameters": { "type": "object", "properties": {}, "required": [] }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "add_face",
+        "description": "Register the person in frame under a given name",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "name": { "type": "string", "description": "Name to register the face under" }
+          },
+          "required": ["name"]
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "remove_face",
+        "description": "Delete a registered face by name",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "name": { "type": "string", "description": "Name of the face to delete" }
+          },
+          "required": ["name"]
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "list_faces",
+        "description": "Return the list of all registered face names",
+        "parameters": { "type": "object", "properties": {}, "required": [] }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "detect_objects_now",
+        "description": "Open camera and detect objects currently in frame",
+        "parameters": { "type": "object", "properties": {}, "required": [] }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "run_till_detect",
+        "description": "Loop object recognition until a specific target is spotted",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "target_object": { "type": "string", "description": "Object name to watch for" }
+          },
+          "required": ["target_object"]
+        }
+      }
+    }
+  ]
+}

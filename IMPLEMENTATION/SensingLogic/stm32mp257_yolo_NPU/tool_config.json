@@ -1,0 +1,19 @@
+{
+  "skills": [
+    {
+      "file": "person_detection",
+      "function": "detect_people",
+      "command": "person_detection"
+    }
+  ],
+  "tool_defs": [
+    {
+      "type": "function",
+      "function": {
+        "name": "person_detection",
+        "description": "detect people in the camera view that are visible now and return how many persons are seen. Use this when the user says 'how many people do you see?' or similar.",
+        "parameters": { "type": "object", "properties": {}, "required": [] }
+      }
+    }
+  ]
+}
