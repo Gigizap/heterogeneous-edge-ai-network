@@ -1,6 +1,4 @@
 #!/usr/bin/env python3
-"""YOLOv8n person detection — STM32MP257F-DK NPU"""
-
 import os, sys, time
 import cv2
 import numpy as np
@@ -25,7 +23,6 @@ GST_PIPELINE = (
     "appsink drop=true max-buffers=1 sync=false"
 ).format(CAM_W, CAM_H)
 
-
 def preprocess(frame):
     h, w = frame.shape[:2]
     r = min(INPUT_SIZE / h, INPUT_SIZE / w)
@@ -39,9 +36,7 @@ def preprocess(frame):
     img = np.clip(np.round(img / 0.003921568859368563) + (-128), -128, 127).astype(np.int8)
     return np.expand_dims(img, 0), r, dw, dh
 
-
 def nms(boxes, scores, iou_thres):
-    # boxes: (N,4) as x,y,w,h
     x1 = boxes[:, 0]; y1 = boxes[:, 1]
     x2 = boxes[:, 0] + boxes[:, 2]; y2 = boxes[:, 1] + boxes[:, 3]
     areas = boxes[:, 2] * boxes[:, 3]
@@ -59,7 +54,6 @@ def nms(boxes, scores, iou_thres):
         iou = inter / (areas[i] + areas[order[1:]] - inter + 1e-9)
         order = order[1:][iou <= iou_thres]
     return keep
-
 
 def postprocess(raw, r, dw, dh):
     out = ((raw.astype(np.int32) - OUT_ZP) * OUT_SCALE)
@@ -82,13 +76,11 @@ def postprocess(raw, r, dw, dh):
     keep_idx = np.array(keep_idx)
     return boxes[keep_idx], confs[keep_idx], np.zeros(len(keep_idx), dtype=int)
 
-
 def save_avg(frames, elapsed):
     avg = frames / elapsed if elapsed > 0 else 0.0
     with open(RESULT_FILE, "w") as f:
         f.write(f"avg_fps={avg:.3f}\nframes={frames}\nseconds={elapsed:.2f}\n")
-    print(f"\n>>> {avg:.2f} FPS over {elapsed:.1f}s → {RESULT_FILE}")
-
+    print(f"\n>>> {avg:.2f} FPS over {elapsed:.1f}s -> {RESULT_FILE}")
 
 def main():
     model = stai_mpu_network(model_path=MODEL_PATH, use_hw_acceleration=True)
@@ -96,7 +88,7 @@ def main():
     if not cap.isOpened():
         sys.exit("Cannot open camera")
 
-    print(f"NPU detection running. Results → {RESULT_FILE}. Ctrl+C to stop.")
+    print(f"NPU detection running. Results -> {RESULT_FILE}. Ctrl+C to stop.")
     fps, prev, start, n, saved = 0.0, time.time(), time.time(), 0, False
 
     try:

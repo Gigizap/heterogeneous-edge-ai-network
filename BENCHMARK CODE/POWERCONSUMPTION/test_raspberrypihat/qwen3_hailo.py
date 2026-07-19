@@ -1,27 +1,4 @@
 #!/usr/bin/env python3
-"""
-qwen_hailo.py  --  continuous LLM inference load on Hailo-10H (power measurement)
-
-Loads qwen3:1.7b (.hef) once, then loops forever.
-Saves stats either when 20 minutes of wall-clock elapse OR when you press
-Ctrl+C (whichever first), using everything up to that moment. On Ctrl+C the
-current cycle is treated as finished right then.
-
-Per cycle we measure two phases:
-  gap  = time from end of previous generation to the FIRST token of this cycle
-         (i.e. clear_context + prompt prefill / load)
-  gen  = time spent streaming tokens
-
-Saved stats (identical to the CPU script):
-  added_gap_load_prompt_time  = total gap seconds
-  number_of_gaps              = how many gaps occurred
-  total_time                  = gap + gen seconds
-  generation_only_tok_per_s   = tokens / gen seconds
-  total_tok_per_s             = tokens / total seconds
-
-Install:  cd hailo-apps && pip install -e ".[gen-ai]"
-Run:      python3 qwen_hailo.py        Stop: Ctrl+C
-"""
 import os
 import time
 import signal
@@ -54,7 +31,6 @@ def _handle_sigint(signum, frame):
     print("\n[qwen_hailo] stopping after current token... (Ctrl+C again to force)",
           flush=True)
 
-
 def save_stats(tokens, gen_time, gap_time, n_gaps):
     total_time = gen_time + gap_time
     gen_tps   = tokens / gen_time   if gen_time   > 0 else 0.0
@@ -70,14 +46,10 @@ def save_stats(tokens, gen_time, gap_time, n_gaps):
           f"gen-only {gen_tps:.2f} tok/s, total {total_tps:.2f} tok/s, "
           f"gap {gap_time:.1f}s over {n_gaps} gaps", flush=True)
 
-
-# shared counters (same scheme as the CPU script)
 S = {"start": 0.0, "tokens": 0, "gen_time": 0.0, "gap_time": 0.0,
      "n_gaps": 0, "saved": False}
 
-
 def generate_once(llm, gap_start) -> int:
-    """Stream one cycle. gap_start = time the previous generation ended."""
     n = 0
     gen_start = None
     last_tick = None
@@ -85,7 +57,7 @@ def generate_once(llm, gap_start) -> int:
         with llm.generate(prompt=MESSAGES, temperature=TEMPERATURE, seed=SEED,
                           max_generated_tokens=MAX_TOKENS) as gen:
             for _token in gen:
-                if gen_start is None:                 # first token of this cycle
+                if gen_start is None:
                     gen_start = time.time()
                     S["gap_time"] += gen_start - gap_start
                     S["n_gaps"] += 1
@@ -106,11 +78,8 @@ def generate_once(llm, gap_start) -> int:
                 if _STOP:
                     break
     except Exception as e:
-        # Stopping the Hailo generator mid-stream can raise HAILO_INTERNAL_FAILURE.
-        # That's expected on Ctrl+C — ignore it so the stats still get saved.
         print(f"\n[qwen_hailo] generator stopped ({e})", flush=True)
     return n
-
 
 def main():
     signal.signal(signal.SIGINT, _handle_sigint)
@@ -120,7 +89,7 @@ def main():
     params.group_id = "1"
     vdevice = VDevice(params)
     llm = HailoLLM(vdevice, HEF_PATH)
-    print(f"[qwen_hailo] LLM loaded from {HEF_PATH}. Continuous load — Ctrl+C to stop.",
+    print(f"[qwen_hailo] LLM loaded from {HEF_PATH}. Continuous load - Ctrl+C to stop.",
           flush=True)
 
     S["start"] = time.time()
@@ -144,7 +113,6 @@ def main():
     except KeyboardInterrupt:
         pass
     finally:
-        # safety net: save even if something unexpected happened before the save
         if not S["saved"]:
             save_stats(S["tokens"], S["gen_time"], S["gap_time"], S["n_gaps"])
             S["saved"] = True
@@ -157,7 +125,6 @@ def main():
         except Exception as e:
             print(f"[qwen_hailo] vdevice.release() failed: {e}")
         print("[qwen_hailo] stopped.", flush=True)
-
 
 if __name__ == "__main__":
     main()

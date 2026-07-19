@@ -1,40 +1,3 @@
-"""
-FunctionGemma chat handler for llama-cpp-python — WITH grammar-constrained decoding.
-
-Format verified against Google's official spec:
-  https://ai.google.dev/gemma/docs/functiongemma/formatting-and-best-practices
-  https://ai.google.dev/gemma/docs/core/prompt-structure
-and cross-checked against the chat_template embedded in the Unsloth GGUF.
-
-Key format facts this handler obeys:
-  * Tool definitions go in a single leading `developer` turn, prefixed with the
-    mandatory trigger phrase, each tool wrapped in
-    <start_function_declaration>declaration:NAME{...}<end_function_declaration>.
-  * A call is `<start_function_call>call:NAME{key:value,...}<end_function_call>`
-    where keys are bare and STRING values are wrapped in <escape>...<escape>;
-    numbers and booleans are bare.
-  * A tool RESULT is emitted bare (NO <start_of_turn> wrapper, NO trailing
-    <end_of_turn>) as
-    <start_function_response>response:NAME{key:value,...}<end_function_response>.
-  * <start_function_response> is an additional stop sequence.
-  * The model is trained ONLY for single-turn and PARALLEL calls — not
-    multi-step chaining. Parallel calls => several <end_function_call> blocks
-    in one model turn, so we must NOT stop on <end_function_call>.
-
-Usage:
-    import llama_cpp
-    import functiongemma_handler  # noqa: F401  (registers "functiongemma")
-
-    llm = llama_cpp.Llama(
-        model_path="functiongemma-270m-it-Q4_K_M.gguf",
-        chat_format="functiongemma",
-        n_ctx=2048,
-    )
-    resp = llm.create_chat_completion(messages=[...], tools=[...])
-
-Import EITHER this file OR functiongemma_handler_simple.py, not both.
-"""
-
 import json
 from typing import Any, Dict, List, Optional, Union
 
@@ -51,16 +14,10 @@ _FG_TYPES = {
     "boolean": "BOOLEAN", "object": "OBJECT", "array": "ARRAY",
 }
 
-
-# --------------------------------------------------------------------------- #
-# Value formatting (spec: strings escaped, numbers/bools bare)
-# --------------------------------------------------------------------------- #
 def _escape(s: str) -> str:
     return f"<escape>{s}<escape>"
 
-
 def _fmt_value(v: Any) -> str:
-    """Render a Python value into FunctionGemma's call/response value syntax."""
     if isinstance(v, bool):
         return "true" if v else "false"
     if isinstance(v, (int, float)):
@@ -72,23 +29,16 @@ def _fmt_value(v: Any) -> str:
         return "[" + ",".join(_fmt_value(x) for x in v) + "]"
     return _escape(str(v))
 
-
 def _fmt_args(arguments: Union[str, Dict[str, Any]]) -> str:
-    """Render call/response arguments. Keys are bare; values per _fmt_value."""
     if isinstance(arguments, str):
         try:
             arguments = json.loads(arguments)
         except json.JSONDecodeError:
-            return arguments  # already FG-formatted; pass through
+            return arguments
     return ",".join(f"{k}:{_fmt_value(v)}" for k, v in arguments.items())
 
-
-# --------------------------------------------------------------------------- #
-# Tool declaration block
-# --------------------------------------------------------------------------- #
 def _fg_type(t: str) -> str:
     return _FG_TYPES.get(t, "STRING")
-
 
 def _param_schema(properties: Dict[str, Any], required: List[str]) -> str:
     parts = []
@@ -112,7 +62,6 @@ def _param_schema(properties: Dict[str, Any], required: List[str]) -> str:
     out += f"type:{_escape('OBJECT')}"
     return out
 
-
 def _declaration(tool: Dict[str, Any]) -> str:
     func = tool["function"] if tool.get("type") == "function" else tool
     params = func.get("parameters", {}) or {}
@@ -125,15 +74,10 @@ def _declaration(tool: Dict[str, Any]) -> str:
     decl += "}"
     return f"<start_function_declaration>{decl}<end_function_declaration>"
 
-
-# --------------------------------------------------------------------------- #
-# Prompt construction
-# --------------------------------------------------------------------------- #
 def _build_prompt(messages, tools) -> str:
     prompt = ""
     msgs = list(messages)
 
-    # Leading developer turn: system/developer content and/or tool declarations.
     lead_sys = None
     if msgs and msgs[0]["role"] in ("system", "developer"):
         lead_sys = msgs.pop(0)
@@ -148,7 +92,7 @@ def _build_prompt(messages, tools) -> str:
             prompt += "".join(_declaration(t) for t in tools)
         prompt += "<end_of_turn>\n"
 
-    prev_was_toolish = False  # tracks tool_call / tool_response (no <end_of_turn>)
+    prev_was_toolish = False
     for msg in msgs:
         role = msg["role"]
         content = msg.get("content")
@@ -173,11 +117,9 @@ def _build_prompt(messages, tools) -> str:
                         f"<start_function_call>call:{fn['name']}"
                         f"{{{_fmt_args(fn['arguments'])}}}<end_function_call>"
                     )
-                # No <end_of_turn> after a tool_call turn (matches template).
                 prev_was_toolish = True
 
         elif role == "tool":
-            # Tool result: emitted bare, no <start_of_turn>, no <end_of_turn>.
             name = msg.get("name", "")
             prompt += (
                 f"<start_function_response>response:{name}"
@@ -185,22 +127,14 @@ def _build_prompt(messages, tools) -> str:
             )
             prev_was_toolish = True
 
-    # Generation prompt. The template omits the leading <start_of_turn>model
-    # if the previous turn was a tool_response (model continues directly).
     if not prev_was_toolish:
         prompt += "<start_of_turn>model\n"
     return prompt
 
-
-# --------------------------------------------------------------------------- #
-# GBNF grammar generation
-# --------------------------------------------------------------------------- #
 def _gbnf_lit(s: str) -> str:
     return s.replace("\\", "\\\\").replace('"', '\\"')
 
-
 def _build_call_grammar(tools: List[Dict[str, Any]], allow_parallel: bool = True) -> str:
-    """GBNF matching one OR a sequence of valid FunctionGemma calls."""
     lines: List[str] = []
     tool_refs: List[str] = []
     need = {"str": False, "num": False, "bool": False}
@@ -255,10 +189,6 @@ def _build_call_grammar(tools: List[Dict[str, Any]], allow_parallel: bool = True
         out.append('boolval ::= "true" | "false"')
     return "\n".join(out)
 
-
-# --------------------------------------------------------------------------- #
-# Output parsing
-# --------------------------------------------------------------------------- #
 def _split_args(args_str: str) -> Dict[str, Any]:
     result: Dict[str, Any] = {}
     if not args_str.strip():
@@ -302,15 +232,7 @@ def _split_args(args_str: str) -> Dict[str, Any]:
         result[key] = val
     return result
 
-
 def _parse_calls(text: str) -> List[Dict[str, str]]:
-    """Extract every complete call:name{...} block.
-
-    Robust to the 270M failure mode where the model emits the FIRST call wrapped
-    in <start_function_call> but the runaway repeats as bare `call:...` without a
-    new opening tag. We split on the closing tag, strip any opening tag, and
-    require a complete `{...}` so a truncated trailing fragment is discarded.
-    """
     end = "<end_function_call>"
     calls: List[Dict[str, str]] = []
     for seg in text.split(end):
@@ -321,10 +243,10 @@ def _parse_calls(text: str) -> List[Dict[str, str]]:
         body = seg[idx + len("call:"):]
         brace = body.find("{")
         if brace == -1:
-            continue  # no args block started -> incomplete, skip
+            continue
         rbrace = body.rfind("}")
         if rbrace == -1 or rbrace < brace:
-            continue  # closing brace missing -> truncated fragment, skip
+            continue
         name = body[:brace].strip()
         if not name:
             continue
@@ -332,10 +254,6 @@ def _parse_calls(text: str) -> List[Dict[str, str]]:
         calls.append({"name": name, "arguments": json.dumps(args)})
     return calls
 
-
-# --------------------------------------------------------------------------- #
-# Handler
-# --------------------------------------------------------------------------- #
 @register_chat_completion_handler("functiongemma")
 def functiongemma_handler(
     llama: llama_cpp.Llama,
@@ -366,9 +284,6 @@ def functiongemma_handler(
 
     prompt = _build_prompt(messages, tools)
 
-    # Force a structurally-valid call when a fresh user request needs tools.
-    # Skip after a tool result (model should answer in prose) and when
-    # tool_choice explicitly defers/forbids.
     last_role = messages[-1]["role"] if messages else None
     force_call = (
         bool(tools)
@@ -376,17 +291,10 @@ def functiongemma_handler(
         and tool_choice not in ("auto", "none")
     )
     if grammar is None and force_call:
-        # Default: single-call grammar. Once one <start_function_call>...
-        # <end_function_call> completes, the root rule is satisfied and the only
-        # legal next token is end-of-generation -> the model is forced to STOP.
-        # This is what kills the 270M runaway-repeat at the source. Opt into
-        # allow_parallel=True only if you actually need parallel calls and accept
-        # that this model may over-generate.
         grammar = llama_cpp.LlamaGrammar.from_string(
             _build_call_grammar(tools, allow_parallel=allow_parallel), verbose=False
         )
 
-    # Stop tokens. <start_function_response> per spec. We do stop on <end_function_call> so parallel calls cannot complete.
     stop_tokens = [stop] if isinstance(stop, str) else list(stop or [])
     for s in ("<end_of_turn>", "<end_function_call>", "<start_function_response>"):
         if s not in stop_tokens:
@@ -412,8 +320,6 @@ def functiongemma_handler(
 
     text = completion["choices"][0]["text"]
     calls = _parse_calls(text) if tools else []
-    # In single-call mode keep only the first call. Even if the no-grammar path
-    # over-generated, the user gets one clean call instead of a runaway list.
     if calls and not allow_parallel:
         calls = calls[:1]
 

@@ -1,23 +1,3 @@
-"""
-FunctionGemma chat handler for llama-cpp-python — SIMPLE version, NO grammar.
-
-Same spec-verified prompt format and parsing as functiongemma_handler.py, but
-without GBNF grammar generation/enforcement. The model generates freely; we
-parse the result and recover gracefully if it isn't a valid call.
-
-Format verified against:
-  https://ai.google.dev/gemma/docs/functiongemma/formatting-and-best-practices
-  https://ai.google.dev/gemma/docs/core/prompt-structure
-
-Trade-off vs. the grammar version:
-  + Less code; nothing to keep in sync with tool schemas.
-  + Model may freely answer in prose instead of calling a tool.
-  - No structural guarantee on the output (wrong names / bad types possible).
-  (It is still possible to pass grammar= if built externally.)
-
-Import EITHER this file OR functiongemma_handler.py, not both.
-"""
-
 import json
 from typing import Any, Dict, List, Optional, Union
 
@@ -34,10 +14,8 @@ _FG_TYPES = {
     "boolean": "BOOLEAN", "object": "OBJECT", "array": "ARRAY",
 }
 
-
 def _escape(s: str) -> str:
     return f"<escape>{s}<escape>"
-
 
 def _fmt_value(v: Any) -> str:
     if isinstance(v, bool):
@@ -50,7 +28,6 @@ def _fmt_value(v: Any) -> str:
         return "[" + ",".join(_fmt_value(x) for x in v) + "]"
     return _escape(str(v))
 
-
 def _fmt_args(arguments: Union[str, Dict[str, Any]]) -> str:
     if isinstance(arguments, str):
         try:
@@ -59,20 +36,7 @@ def _fmt_args(arguments: Union[str, Dict[str, Any]]) -> str:
             return arguments
     return ",".join(f"{k}:{_fmt_value(v)}" for k, v in arguments.items())
 
-
 def _fmt_tool_response(content: Any) -> str:
-    """Render the body of a <start_function_response>…<end_function_response>.
-
-    Tool results in the wild are not always a flat {key: value} object:
-      * a dict   -> rendered as key:value pairs (the spec's happy path)
-      * a list   -> e.g. [{"from": "cam", "name": "Unknown", "confidence": 0.31}];
-                    common for sensor/array results. Rendered as a value:[...] list.
-      * a scalar -> wrapped as value:<scalar>.
-    A JSON string is parsed first; anything that fails to parse is escaped as-is.
-
-    This replaces the old `_fmt_args(content)` call, which assumed a dict and
-    crashed with `'list' object has no attribute 'items'` on list payloads.
-    """
     parsed: Any = content
     if isinstance(content, str):
         try:
@@ -86,10 +50,8 @@ def _fmt_tool_response(content: Any) -> str:
         return f"value:{_fmt_value(list(parsed))}"
     return f"value:{_fmt_value(parsed)}"
 
-
 def _fg_type(t: str) -> str:
     return _FG_TYPES.get(t, "STRING")
-
 
 def _param_schema(properties: Dict[str, Any], required: List[str]) -> str:
     parts = []
@@ -113,7 +75,6 @@ def _param_schema(properties: Dict[str, Any], required: List[str]) -> str:
     out += f"type:{_escape('OBJECT')}"
     return out
 
-
 def _declaration(tool: Dict[str, Any]) -> str:
     func = tool["function"] if tool.get("type") == "function" else tool
     params = func.get("parameters", {}) or {}
@@ -122,7 +83,6 @@ def _declaration(tool: Dict[str, Any]) -> str:
         decl += f",parameters:{{{_param_schema(params.get('properties', {}), params.get('required', []))}}}"
     decl += "}"
     return f"<start_function_declaration>{decl}<end_function_declaration>"
-
 
 def _build_prompt(messages, tools) -> str:
     prompt = ""
@@ -176,20 +136,6 @@ def _build_prompt(messages, tools) -> str:
         prompt += "<start_of_turn>model\n"
     return prompt
 
-
-# --------------------------------------------------------------------------- #
-# Output parsing
-#
-# Ported verbatim from functiongemma_handler.py so the two handlers parse
-# identically. This rfind-based parser is robust to the missing-stop-token
-# case: it locates the LAST closing brace, so a complete-but-unterminated call
-# (no trailing <end_function_call> because generation hit max_tokens) still
-# parses, and nested-brace arguments aren't truncated. A genuinely truncated
-# fragment with no closing brace is skipped rather than mis-parsed.
-#
-# This replaces the previous regex-based parser (_CALL_RE / _ARG_RE / _cast),
-# whose non-greedy `\{(.*?)\}` truncated nested-brace arguments.
-# --------------------------------------------------------------------------- #
 def _split_args(args_str: str) -> Dict[str, Any]:
     result: Dict[str, Any] = {}
     if not args_str.strip():
@@ -233,15 +179,7 @@ def _split_args(args_str: str) -> Dict[str, Any]:
         result[key] = val
     return result
 
-
 def _parse_calls(text: str) -> List[Dict[str, str]]:
-    """Extract every complete call:name{...} block.
-
-    Robust to the 270M failure mode where the model emits the FIRST call wrapped
-    in <start_function_call> but the runaway repeats as bare `call:...` without a
-    new opening tag. We split on the closing tag, strip any opening tag, and
-    require a complete `{...}` so a truncated trailing fragment is discarded.
-    """
     end = "<end_function_call>"
     calls: List[Dict[str, str]] = []
     for seg in text.split(end):
@@ -252,17 +190,16 @@ def _parse_calls(text: str) -> List[Dict[str, str]]:
         body = seg[idx + len("call:"):]
         brace = body.find("{")
         if brace == -1:
-            continue  # no args block started -> incomplete, skip
+            continue
         rbrace = body.rfind("}")
         if rbrace == -1 or rbrace < brace:
-            continue  # closing brace missing -> truncated fragment, skip
+            continue
         name = body[:brace].strip()
         if not name:
             continue
         args = _split_args(body[brace + 1:rbrace])
         calls.append({"name": name, "arguments": json.dumps(args)})
     return calls
-
 
 @register_chat_completion_handler("functiongemma")
 def functiongemma_handler(
@@ -291,11 +228,6 @@ def functiongemma_handler(
     prompt = _build_prompt(messages, tools)
 
     stop_tokens = [stop] if isinstance(stop, str) else list(stop or [])
-    # No grammar here to force a stop, so we stop on <end_function_call>: the
-    # model halts right after the first complete call, which kills the 270M
-    # runaway-repeat at generation time (saving wasted tokens). The trade-off is
-    # this disables parallel calls on the no-grammar path -- use the grammar
-    # handler with allow_parallel=True if parallel is needed (broken).
     for s in ("<end_of_turn>", "<end_function_call>", "<start_function_response>"):
         if s not in stop_tokens:
             stop_tokens.append(s)
@@ -312,7 +244,7 @@ def functiongemma_handler(
         repeat_penalty=repeat_penalty,
         model=model,
         logits_processor=logits_processor,
-        grammar=grammar,  # only used if explicitely passed in
+        grammar=grammar,
     )
 
     text = completion["choices"][0]["text"]

@@ -1,7 +1,4 @@
 #!/usr/bin/env python3
-"""Launcher for STM32MP257F-DK benchmarks.
-Runs each config for 21 min then auto-advances to the next."""
-
 import os, sys, signal, subprocess, time
 
 SCRIPTS = {
@@ -19,8 +16,7 @@ CONFIGS = [
     ("detect CPU + functiongemma CPU", ["detect_cpu", "gemma"], "with_other_cpu"),
 ]
 
-RUN_SECONDS = None  # set at startup
-
+RUN_SECONDS = None
 
 def run_config(label, keys, tag):
     print(f"\n{'='*60}")
@@ -48,7 +44,6 @@ def run_config(label, keys, tag):
 
     print("--- idle 20s before next config ---")
     time.sleep(20)
-
 
 def main():
     try:
@@ -91,7 +86,6 @@ def main():
 
     else:
         sys.exit("Out of range.")
-
 
 if __name__ == "__main__":
     main()

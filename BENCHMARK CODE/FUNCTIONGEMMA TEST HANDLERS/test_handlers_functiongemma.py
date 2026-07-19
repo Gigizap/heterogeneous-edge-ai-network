@@ -1,44 +1,23 @@
 #!/usr/bin/env python3
-"""
-fg_compare.py — Compare FunctionGemma using three handlers on N sentences
-                with the FULL available tool set. Saves per-sentence outputs.
-
-Just edit the CONFIG paths below and click Run.
-
-Handlers compared (each must register under a DISTINCT chat_format name to
-avoid collisions):
-  functiongemma_handler.py        -> "functiongemma"
-  functiongemma_simple_handler.py -> "functiongemma_simple"
-  functiongemma_cache_handler.py  -> "functiongemma_cache"
-"""
-
 from __future__ import annotations
 import json, re, time, gc
 from pathlib import Path
 from llama_cpp import Llama
 
-# ═══════════════════════════════════════════════════════════════
-#  CONFIG — EDIT THESE THREE PATHS, THEN JUST CLICK RUN
-# ═══════════════════════════════════════════════════════════════
 MODEL_PATH = "models/functiongemma-270m-it-Q4_K_M.gguf"
 DATASET    = "dataset.json"
 TOOLS      = "tools.json"
 
 LIMIT      = 500
 OUTPUT_DIR = "fg_compare_out"
-# ═══════════════════════════════════════════════════════════════
 
 SEED = 7
 P_DISPATCH_FG = "You are a model that can do function calling with the following functions"
 
-# ───────────────────────────────────────────────
-# Loading
-# ───────────────────────────────────────────────
 def load_tools(path):
     raw = json.loads(Path(path).read_text(encoding="utf-8"))
     by_name = {t["function"]["name"]: t for t in raw}
     return raw, by_name
-
 
 def load_dataset(path, limit=100):
     raw = json.loads(Path(path).read_text(encoding="utf-8"))
@@ -54,36 +33,26 @@ def load_dataset(path, limit=100):
         out.append({"id": i, "prompt": prompt, "expected": expected})
     return out[:limit]
 
-
-# ───────────────────────────────────────────────
-# Model loading — one per handler
-# ───────────────────────────────────────────────
 def load_llm(path, handler):
-    """handler key -> imported module + chat_format name it registers under"""
     if handler == "functiongemma":
-        import functiongemma_handler  # noqa
+        import functiongemma_handler
         chat_format = "functiongemma"
     elif handler == "functiongemma_simple":
-        import functiongemma_simple_handler  # noqa
-        chat_format = "functiongemma_simple"   # must match the @register name
+        import functiongemma_simple_handler
+        chat_format = "functiongemma_simple"
     elif handler == "functiongemma_cache":
-        import functiongemma_cache_handler  # noqa
-        chat_format = "functiongemma_cache"    # must match the @register name
+        import functiongemma_cache_handler
+        chat_format = "functiongemma_cache"
     else:
         chat_format = handler
     return Llama(model_path=path, n_ctx=4096,
                  chat_format=chat_format, n_gpu_layers=-1, verbose=False)
 
-
-# ───────────────────────────────────────────────
-# Dispatch — returns (name, args, raw_text, gen_tokens)
-# ───────────────────────────────────────────────
 def _lc(tdefs):
     return [{"type": "function", "function": {
         "name": t.get("function", t)["name"],
         "description": t.get("function", t).get("description", ""),
         "parameters": t.get("function", t).get("parameters", {})}} for t in tdefs]
-
 
 def dispatch(llm, text, tdefs):
     tools = _lc(tdefs)
@@ -97,10 +66,6 @@ def dispatch(llm, text, tdefs):
 
     msg = r["choices"][0]["message"]
     raw = msg.get("content", "") or ""
-    # Faithful count of what the model actually generated. Per llama.cpp's
-    # _create_completion this is len(completion_tokens): every sampled token is
-    # counted (incl. trimmed stop-string tokens, incl. runaway repeats), except
-    # the terminal EOS which breaks the loop before being appended.
     gen_tokens = (r.get("usage") or {}).get("completion_tokens", 0)
 
     if msg.get("tool_calls"):
@@ -127,10 +92,6 @@ def dispatch(llm, text, tdefs):
         if n in raw: return n, {}, raw, gen_tokens
     return None, None, raw, gen_tokens
 
-
-# ───────────────────────────────────────────────
-# Param matching
-# ───────────────────────────────────────────────
 def pmatch(exp, pred):
     exp, pred = exp or {}, pred or {}
     if exp.keys() != pred.keys():
@@ -141,10 +102,6 @@ def pmatch(exp, pred):
         return v.strip().lower() if isinstance(v, str) else v
     return all(norm(exp[k]) == norm(pred[k]) for k in exp)
 
-
-# ───────────────────────────────────────────────
-# Eval — returns (summary, per_sentence_list)
-# ───────────────────────────────────────────────
 def evaluate(handler, data, all_tools, model_path):
     print(f"\n{'='*55}\n  Handler: {handler}\n{'='*55}")
     llm = load_llm(model_path, handler)
@@ -156,8 +113,7 @@ def evaluate(handler, data, all_tools, model_path):
     per_sentence = []
 
     total_gen_tokens = 0
-    first_sentence_seconds = None  # cold-start: first dispatch (incl. any one-time
-                                   # grammar compile for the cached/grammar handlers)
+    first_sentence_seconds = None
     t0 = time.time()
 
     for idx, row in enumerate(data):
@@ -197,8 +153,6 @@ def evaluate(handler, data, all_tools, model_path):
         })
 
     dt = time.time() - t0
-    # Mean over sentences after the first, to isolate the warm per-call cost
-    # from the cold first call.
     rest_seconds = [p["seconds"] for p in per_sentence[1:]]
     mean_rest = (sum(rest_seconds) / len(rest_seconds)) if rest_seconds else 0.0
 
@@ -233,7 +187,6 @@ def evaluate(handler, data, all_tools, model_path):
         pass
     return summary, per_sentence
 
-
 def main():
     out = Path(OUTPUT_DIR); out.mkdir(parents=True, exist_ok=True)
 
@@ -254,13 +207,12 @@ def main():
         summaries[handler] = summary
         (out / fname).write_text(
             json.dumps(per_sentence, indent=2, ensure_ascii=False), encoding="utf-8")
-        print(f"  per-sentence outputs → {out / fname}")
+        print(f"  per-sentence outputs -> {out / fname}")
 
     (out / "summary.json").write_text(
         json.dumps(summaries, indent=2), encoding="utf-8")
-    print(f"\n✓ Summary → {out / 'summary.json'}")
-    print(f"✓ Done — {out}")
-
+    print(f"\nSummary -> {out / 'summary.json'}")
+    print(f"Done - {out}")
 
 if __name__ == "__main__":
     main()

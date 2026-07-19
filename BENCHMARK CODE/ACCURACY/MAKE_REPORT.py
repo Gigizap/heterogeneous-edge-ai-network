@@ -1,34 +1,4 @@
 #!/usr/bin/env python3
-r"""
-make_report.py — paper-ready figures + LaTeX tables for Parts A/B/C.
-
-Reads the artifacts produced by the pipeline:
-  benchmark.py   -> results_a.json, results_b.json, results_c_tokens.json
-  grade_partc.py -> grading/grades.csv   (judge grades, after manual annotation)
-
-and emits, into --output (default <results>/report):
-
-  Figures (one accuracy/quality + one tokens per part):
-    partA_accuracy.png   selection (solid) & sel+params (dashed), tool-only, vs pool size
-    partA_tokens.png     mean generated tokens / question vs pool size
-    partB_accuracy.png   LLMs + Jina reranker, selection accuracy vs pool size
-    partB_tokens.png     mean generated tokens / question vs pool size (reranker = 0)
-    partC_grade.png      judge grade vs N replies: mean±std band + median line
-    partC_tokens.png     mean generated tokens vs N replies
-
-  Tables (booktabs LaTeX, \input-able):
-    tableA.tex   config × pool size : selection / sel+params / null-abstention / tokens
-    tableB.tex   config (+ reranker) × pool size : selection accuracy
-    tableC.tex   config × N : median, mean±std, mean tokens
-
-Each configuration (e.g. Qwen3-1.7B-think vs -nothink) is a distinct series and
-gets one stable colour reused across every figure.
-
-Usage:
-  python make_report.py --results results/
-  python make_report.py --results results/ --grades results/grading/grades.csv
-"""
-
 from __future__ import annotations
 import argparse, json, csv, re, statistics
 from collections import defaultdict
@@ -45,13 +15,9 @@ _PALETTE = [
     "#8c564b", "#e377c2", "#17becf", "#bcbd22", "#7f7f7f",
 ]
 
-# ═══════════════════════════════════════════════════════════════
-# Loading helpers
-# ═══════════════════════════════════════════════════════════════
-
 def _load_json(path: Path):
     if not path.exists():
-        print(f"  [warn] missing {path.name} — related outputs will be skipped")
+        print(f"  [warn] missing {path.name} - related outputs will be skipped")
         return None
     try:
         return json.loads(path.read_text(encoding="utf-8"))
@@ -59,17 +25,13 @@ def _load_json(path: Path):
         print(f"  [warn] could not parse {path.name}: {e}")
         return None
 
-
 def _sizes(res, key="sizes"):
     return [int(x) for x in res.get(key, [])]
-
 
 def _series(d, sizes):
     return [d.get(str(s)) for s in sizes]
 
-
 def load_grades(csv_path: Path):
-    """Return (data, skipped): data[config][N] = list of int grades."""
     data = defaultdict(lambda: defaultdict(list))
     skipped = 0
     if not csv_path or not csv_path.exists():
@@ -93,9 +55,7 @@ def load_grades(csv_path: Path):
             data[config][n].append(gi)
     return data, skipped
 
-
 def parse_c_tokens(token_summary):
-    """{label: {prompt: {N(int): mean_tokens}}} from 'prompt/N<k>' keys."""
     out = {}
     for lb, d in (token_summary or {}).items():
         per_prompt = {}
@@ -107,13 +67,7 @@ def parse_c_tokens(token_summary):
         out[lb] = per_prompt
     return out
 
-
 def collapse_c_tokens(parsed):
-    """Flatten {label: {prompt: {N: tok}}} to {label: {N: tok}}.
-
-    Part C uses a single summary prompt, so we just take the (only) prompt.
-    If several prompts exist, the first sorted one is used.
-    """
     flat = {}
     for lb, per_prompt in parsed.items():
         if not per_prompt:
@@ -121,11 +75,6 @@ def collapse_c_tokens(parsed):
         prompt = sorted(per_prompt)[0]
         flat[lb] = per_prompt[prompt]
     return flat
-
-
-# ═══════════════════════════════════════════════════════════════
-# Colour map (stable per configuration across every figure)
-# ═══════════════════════════════════════════════════════════════
 
 def build_color_map(res_a, res_b, c_tokens_flat, grades):
     labels = []
@@ -150,26 +99,15 @@ def build_color_map(res_a, res_b, c_tokens_flat, grades):
     cmap[RERANKER_LABEL] = "#000000"
     return cmap
 
-
-# ═══════════════════════════════════════════════════════════════
-# Number formatting for tables
-# ═══════════════════════════════════════════════════════════════
-
 def _f(x, nd=3):
     return "--" if x is None else f"{x:.{nd}f}"
-
 
 def _tex_escape(s: str) -> str:
     return str(s).replace("_", r"\_").replace("&", r"\&").replace("%", r"\%")
 
-
-# ═══════════════════════════════════════════════════════════════
-# PART A — figures
-# ═══════════════════════════════════════════════════════════════
-
 def fig_a_accuracy(res_a, cmap, out: Path):
     if not res_a or not res_a.get("selection_with_tool_only"):
-        print("  [skip] Part A accuracy — no data"); return
+        print("  [skip] Part A accuracy - no data"); return
     sizes = _sizes(res_a)
     fig, ax = plt.subplots(figsize=(8, 5))
     for lb, d in res_a["selection_with_tool_only"].items():
@@ -180,34 +118,28 @@ def fig_a_accuracy(res_a, cmap, out: Path):
             ax.plot(sizes, _series(td, sizes), "--s", lw=1.5, color=col, alpha=0.65)
     ax.set_xlabel("Available tools (pool size)")
     ax.set_ylabel("Accuracy")
-    ax.set_title("Part A — Tool-only accuracy (solid = selection, dashed = +params)")
+    ax.set_title("Part A - Tool-only accuracy (solid = selection, dashed = +params)")
     ax.set_xticks(sizes); ax.set_ylim(-0.02, 1.05); ax.grid(alpha=0.3)
     ax.legend(fontsize=8)
     fig.tight_layout(); _save(fig, out / "partA_accuracy.png")
 
-
 def fig_a_tokens(res_a, cmap, out: Path):
     if not res_a or not res_a.get("mean_gen_tokens"):
-        print("  [skip] Part A tokens — no data"); return
+        print("  [skip] Part A tokens - no data"); return
     sizes = _sizes(res_a)
     fig, ax = plt.subplots(figsize=(8, 5))
     for lb, d in res_a["mean_gen_tokens"].items():
         ax.plot(sizes, _series(d, sizes), "-o", lw=2, color=cmap.get(lb), label=lb)
     ax.set_xlabel("Available tools (pool size)")
     ax.set_ylabel("Mean generated tokens / question")
-    ax.set_title("Part A — Generation cost vs pool size")
+    ax.set_title("Part A - Generation cost vs pool size")
     ax.set_xticks(sizes); ax.set_ylim(bottom=0); ax.grid(alpha=0.3)
     ax.legend(fontsize=8)
     fig.tight_layout(); _save(fig, out / "partA_tokens.png")
 
-
-# ═══════════════════════════════════════════════════════════════
-# PART B — figures
-# ═══════════════════════════════════════════════════════════════
-
 def fig_b_accuracy(res_b, cmap, out: Path):
     if not res_b:
-        print("  [skip] Part B accuracy — no data"); return
+        print("  [skip] Part B accuracy - no data"); return
     sizes = _sizes(res_b)
     fig, ax = plt.subplots(figsize=(8, 5))
     if res_b.get("reranker"):
@@ -218,15 +150,14 @@ def fig_b_accuracy(res_b, cmap, out: Path):
     ax.set_xlabel("Available tools (pool size)")
     ax.set_ylabel("Selection accuracy")
     n = res_b.get("n", 0)
-    ax.set_title(f"Part B — Selection accuracy: LLMs vs reranker (n={n})")
+    ax.set_title(f"Part B - Selection accuracy: LLMs vs reranker (n={n})")
     ax.set_xticks(sizes); ax.set_ylim(-0.02, 1.05); ax.grid(alpha=0.3)
     ax.legend(fontsize=8)
     fig.tight_layout(); _save(fig, out / "partB_accuracy.png")
 
-
 def fig_b_tokens(res_b, cmap, out: Path):
     if not res_b or not res_b.get("mean_gen_tokens"):
-        print("  [skip] Part B tokens — no data"); return
+        print("  [skip] Part B tokens - no data"); return
     sizes = _sizes(res_b)
     fig, ax = plt.subplots(figsize=(8, 5))
     for lb, d in res_b["mean_gen_tokens"].items():
@@ -235,19 +166,14 @@ def fig_b_tokens(res_b, cmap, out: Path):
             color=cmap[RERANKER_LABEL], label=f"{RERANKER_LABEL} (0)")
     ax.set_xlabel("Available tools (pool size)")
     ax.set_ylabel("Mean generated tokens / question")
-    ax.set_title("Part B — Generation cost vs pool size")
+    ax.set_title("Part B - Generation cost vs pool size")
     ax.set_xticks(sizes); ax.set_ylim(bottom=0); ax.grid(alpha=0.3)
     ax.legend(fontsize=8)
     fig.tight_layout(); _save(fig, out / "partB_tokens.png")
 
-
-# ═══════════════════════════════════════════════════════════════
-# PART C — figures
-# ═══════════════════════════════════════════════════════════════
-
 def fig_c_grade(grades, cmap, out: Path, replies_n=None):
     if not grades:
-        print("  [skip] Part C grade — no grades.csv data"); return
+        print("  [skip] Part C grade - no grades.csv data"); return
     fig, ax = plt.subplots(figsize=(8, 5))
     for lb in sorted(grades):
         ns = sorted(grades[lb])
@@ -263,16 +189,15 @@ def fig_c_grade(grades, cmap, out: Path, replies_n=None):
                         color=col, alpha=0.12)
     ax.set_xlabel("Number of function replies shown (N)")
     ax.set_ylabel("Judge grade (1-10)")
-    ax.set_title("Part C — Answer quality vs N (solid = mean ±1 std, dotted = median)")
+    ax.set_title("Part C - Answer quality vs N (solid = mean ±1 std, dotted = median)")
     xticks = sorted({n for d in grades.values() for n in d})
     ax.set_xticks(xticks); ax.set_ylim(0.5, 10.5); ax.grid(alpha=0.3)
     ax.legend(fontsize=8)
     fig.tight_layout(); _save(fig, out / "partC_grade.png")
 
-
 def fig_c_tokens(c_tokens_flat, cmap, out: Path, replies_n=None):
     if not c_tokens_flat:
-        print("  [skip] Part C tokens — no data"); return
+        print("  [skip] Part C tokens - no data"); return
     fig, ax = plt.subplots(figsize=(8, 5))
     for lb in sorted(c_tokens_flat):
         nmap = c_tokens_flat[lb]
@@ -280,32 +205,25 @@ def fig_c_tokens(c_tokens_flat, cmap, out: Path, replies_n=None):
         ax.plot(ns, [nmap[n] for n in ns], "-o", lw=2, color=cmap.get(lb), label=lb)
     ax.set_xlabel("Number of function replies shown (N)")
     ax.set_ylabel("Mean generated tokens / question")
-    ax.set_title("Part C — Generation cost vs N")
+    ax.set_title("Part C - Generation cost vs N")
     if replies_n:
         ax.set_xticks([int(x) for x in replies_n])
     ax.set_ylim(bottom=0); ax.grid(alpha=0.3)
     ax.legend(fontsize=8)
     fig.tight_layout(); _save(fig, out / "partC_tokens.png")
 
-
 def _save(fig, path: Path):
     fig.savefig(path, dpi=150)
     plt.close(fig)
     print(f"  saved {path.name}")
 
-
-# ═══════════════════════════════════════════════════════════════
-# Tables (booktabs LaTeX)
-# ═══════════════════════════════════════════════════════════════
-
 def _write_tex(path: Path, lines):
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")
     print(f"  saved {path.name}")
 
-
 def table_a(res_a, out: Path):
     if not res_a or not res_a.get("selection_with_tool_only"):
-        print("  [skip] tableA — no data"); return
+        print("  [skip] tableA - no data"); return
     sizes = _sizes(res_a)
     smin, smax = sizes[0], sizes[-1]
     sel = res_a["selection_with_tool_only"]
@@ -342,10 +260,9 @@ def table_a(res_a, out: Path):
     lines += [r"\bottomrule", r"\end{tabular}", r"\end{table}"]
     _write_tex(out / "tableA.tex", lines)
 
-
 def table_b(res_b, out: Path):
     if not res_b:
-        print("  [skip] tableB — no data"); return
+        print("  [skip] tableB - no data"); return
     sizes = _sizes(res_b)
     cols = "l" + "r" * len(sizes)
     head = " & ".join([f"$n{{=}}{s}$" for s in sizes])
@@ -371,11 +288,9 @@ def table_b(res_b, out: Path):
     lines += [r"\bottomrule", r"\end{tabular}", r"\end{table}"]
     _write_tex(out / "tableB.tex", lines)
 
-
 def table_c(grades, c_tokens_flat, out: Path):
     if not grades and not c_tokens_flat:
-        print("  [skip] tableC — no data"); return
-    # union of all N across both sources
+        print("  [skip] tableC - no data"); return
     all_n = sorted({n for d in grades.values() for n in d}
                    | {n for d in c_tokens_flat.values() for n in d})
     all_lb = sorted(set(grades) | set(c_tokens_flat))
@@ -424,11 +339,6 @@ def table_c(grades, c_tokens_flat, out: Path):
     lines += [r"\bottomrule", r"\end{tabular}", r"\end{table}"]
     _write_tex(out / "tableC.tex", lines)
 
-
-# ═══════════════════════════════════════════════════════════════
-# Main
-# ═══════════════════════════════════════════════════════════════
-
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--results", default="results",
@@ -437,7 +347,7 @@ def main():
                     help="path to grades.csv (default <results>/grading/grades.csv)")
     ap.add_argument("--no-grades", action="store_true",
                     help="skip Part C judge grades entirely (grade figure/table "
-                         "columns omitted) — use until grades are computed")
+                         "columns omitted) - use until grades are computed")
     ap.add_argument("--output", default=None,
                     help="output dir (default <results>/report)")
     a = ap.parse_args()
@@ -477,8 +387,7 @@ def main():
     table_b(res_b, out)
     table_c(grades, c_tokens_flat, out)
 
-    print(f"\nDone — {out}")
-
+    print(f"\nDone - {out}")
 
 if __name__ == "__main__":
     main()

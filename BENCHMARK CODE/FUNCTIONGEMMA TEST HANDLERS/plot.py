@@ -1,35 +1,16 @@
 #!/usr/bin/env python3
-"""
-fg_plot.py — Plot handler comparison from the summary.json produced by fg_compare.py.
-
-For each handler it shows:
-  * Accuracy (all four metrics computed by fg_compare):
-      - selection_all
-      - toolcall_all
-      - selection_with_tool_only
-      - toolcall_with_tool_only
-  * Cold-start time (first_sentence_seconds) and total time (seconds)
-  * Average tokens generated per sentence (mean_gen_tokens)
-
-Just point SUMMARY at the summary.json and click Run.
-"""
-
 from __future__ import annotations
 import json
 from pathlib import Path
 
 import matplotlib
-matplotlib.use("Agg")  # headless: write to file, no display needed
+matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 
-# ═══════════════════════════════════════════════════════════════
-#  CONFIG
-# ═══════════════════════════════════════════════════════════════
 SUMMARY = "fg_compare_out/summary.json"
 OUTPUT  = "fg_compare_out/comparison.png"
 TABLE   = "fg_compare_out/comparison.tex"
-# ═══════════════════════════════════════════════════════════════
 
 ACC_METRICS = [
     ("selection_all",            "Selection (all)"),
@@ -38,18 +19,7 @@ ACC_METRICS = [
     ("toolcall_with_tool_only",  "Tool-call (tool only)"),
 ]
 
-
 def build_latex_table(summaries):
-    """Build a LaTeX table from the per-handler summary dicts.
-
-    Columns (accuracy reported on the tool-bearing subset only):
-      Handler  : handler name
-      Sel      : selection accuracy on the tool-bearing subset
-      TC       : tool-call (selection + params) accuracy on the tool-bearing subset
-      Cold(s)  : cold-start latency (first sentence)
-      Total(s) : total wall-clock time
-      Tok      : mean generated tokens / sentence
-    """
     rows = []
     for handler, s in summaries.items():
         name = handler.replace("_", r"\_")
@@ -78,7 +48,6 @@ def build_latex_table(summaries):
         "\\end{table}\n"
     )
 
-
 def main():
     summaries = json.loads(Path(SUMMARY).read_text(encoding="utf-8"))
     handlers = list(summaries.keys())
@@ -92,7 +61,6 @@ def main():
 
     x = np.arange(len(handlers))
 
-    # ── Left: grouped accuracy bars ──────────────────────────────
     n_metrics = len(ACC_METRICS)
     width = 0.8 / n_metrics
 
@@ -112,7 +80,6 @@ def main():
     ax_acc.legend(fontsize=8, loc="upper right")
     ax_acc.grid(axis="y", alpha=0.3)
 
-    # ── Middle: cold-start vs total time ─────────────────────────
     cold = [summaries[h].get("first_sentence_seconds") or 0 for h in handlers]
     total = [summaries[h].get("seconds") or 0 for h in handlers]
 
@@ -131,7 +98,6 @@ def main():
     ax_time.legend(fontsize=8, loc="upper left")
     ax_time.grid(axis="y", alpha=0.3)
 
-    # ── Right: average tokens generated per sentence ─────────────
     mean_tok = [summaries[h].get("mean_gen_tokens") or 0 for h in handlers]
     b_tok = ax_tok.bar(x, mean_tok, 0.5, color="#5fae6b")
     for b, v in zip(b_tok, mean_tok):
@@ -147,14 +113,13 @@ def main():
     fig.tight_layout(rect=[0, 0, 1, 0.96])
     Path(OUTPUT).parent.mkdir(parents=True, exist_ok=True)
     fig.savefig(OUTPUT, dpi=150)
-    print(f"✓ Plot → {OUTPUT}")
+    print(f"Plot -> {OUTPUT}")
 
     latex = build_latex_table(summaries)
     Path(TABLE).parent.mkdir(parents=True, exist_ok=True)
     Path(TABLE).write_text(latex, encoding="utf-8")
-    print(f"✓ Table → {TABLE}")
+    print(f"Table -> {TABLE}")
     print("\n" + latex)
-
 
 if __name__ == "__main__":
     main()

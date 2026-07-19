@@ -1,38 +1,4 @@
 #!/usr/bin/env python3
-"""
-grade_partc.py — LLM-as-judge grading of Part C summaries.
-
-Walks every partC_<config>__<prompt>__N<n>.json produced by benchmark.py and,
-for each record, asks an OpenAI-compatible chat endpoint to grade how well
-"model_final_reply" answers the user query given the tool call and the data the
-tool returned. The judge is instructed to reply with ONLY {"grade": <1-10>}.
-
-For each record we extract the integer grade from the model's answer:
-  * If a valid grade JSON is found  -> the grade goes into the CSV.
-  * If NOT (no parseable JSON)       -> the CSV gets a placeholder "ID_<k>"
-                                        and the full datapoint + the judge's raw
-                                        answer are appended to a pending file so
-                                        you can annotate them by hand later.
-
-Outputs (into --output):
-  grades.csv                 one row per record (see columns below)
-  raw_judge_answers.jsonl    raw model output for EVERY record, keyed by row_id
-  pending_annotation.jsonl   un-parseable cases, keyed by the SAME row id
-
-CSV columns:
-  row_id, config, prompt, n_replies, source_file, record_index, grade
-  - grade is an int 1-10 when parsed, otherwise the placeholder ID_<k>.
-  - row_id is a stable, unique key: <config>|<prompt>|N<n>|<record_index>
-
-Usage:
-  export OPENAI_API_KEY=sk-...
-  python grade_partc.py --results results/ \
-      --base-url https://api.openai.com/v1 --model gpt-4o-mini
-  # local / vLLM / Ollama / LM Studio:
-  python grade_partc.py --results results/ \
-      --base-url http://localhost:8000/v1 --model my-model --api-key dummy
-"""
-
 from __future__ import annotations
 import argparse
 import csv
@@ -52,7 +18,6 @@ except ImportError:
     print("This script needs `requests`  ->  pip install requests")
     sys.exit(1)
 
-
 SYSTEM_PROMPT = (
     "\nYou are an expert evaluator. Given a user query, the function/tool call "
     "that was made, and the data the function returned, grade from 1 to 10 how "
@@ -71,22 +36,9 @@ SYSTEM_PROMPT = (
     '<integer 1-10>}. Always state the grade in json.\n'
 )
 
-# partC_<config>__<prompt>__N<n>.json   (config/prompt may contain underscores)
 FILE_RE = re.compile(r"^partC_(.+?)__(.+?)__N(\d+)\.json$")
 
-
-# ---------------------------------------------------------------------------
-# Grade extraction from a model answer
-# ---------------------------------------------------------------------------
 def extract_grade(text: str) -> Optional[int]:
-    """Return an int grade 1-10 if a valid grade can be parsed, else None.
-
-    Strategy (most-strict first):
-      1. Whole answer parses as JSON with an int-ish 'grade' in range.
-      2. A ```json ...``` / ``` ...``` fenced block parses likewise.
-      3. Any {...} substring containing "grade" parses likewise.
-      4. A loose  "grade": N  regex within range.
-    """
     if not text:
         return None
 
@@ -100,7 +52,6 @@ def extract_grade(text: str) -> Optional[int]:
                 return g
         return None
 
-    # 1) whole thing
     try:
         g = _valid(json.loads(text.strip()))
         if g is not None:
@@ -108,7 +59,6 @@ def extract_grade(text: str) -> Optional[int]:
     except Exception:
         pass
 
-    # 2) fenced code blocks
     for m in re.finditer(r"```(?:json)?\s*(.*?)```", text, re.DOTALL | re.IGNORECASE):
         try:
             g = _valid(json.loads(m.group(1).strip()))
@@ -117,7 +67,6 @@ def extract_grade(text: str) -> Optional[int]:
         except Exception:
             continue
 
-    # 3) any object literal mentioning "grade"
     for m in re.finditer(r"\{[^{}]*\"grade\"[^{}]*\}", text, re.DOTALL):
         try:
             g = _valid(json.loads(m.group(0)))
@@ -126,7 +75,6 @@ def extract_grade(text: str) -> Optional[int]:
         except Exception:
             continue
 
-    # 4) loose key:value
     m = re.search(r"\"?grade\"?\s*[:=]\s*(\d{1,2})", text, re.IGNORECASE)
     if m:
         try:
@@ -138,12 +86,7 @@ def extract_grade(text: str) -> Optional[int]:
 
     return None
 
-
-# ---------------------------------------------------------------------------
-# LLM call (OpenAI-compatible /chat/completions)
-# ---------------------------------------------------------------------------
 def build_user_content(rec: dict) -> str:
-    """Send the judge exactly the fields it grades, as pretty JSON."""
     payload = {
         "user": rec.get("user", ""),
         "tool_call": rec.get("tool_call", {}),
@@ -152,10 +95,8 @@ def build_user_content(rec: dict) -> str:
     }
     return json.dumps(payload, ensure_ascii=False, indent=2)
 
-
 def call_judge(base_url: str, api_key: str, model: str, user_content: str,
                temperature: float, timeout: int, max_retries: int) -> Tuple[Optional[str], Optional[str]]:
-    """Return (answer_text, error). On success error is None."""
     url = base_url.rstrip("/") + "/chat/completions"
     headers = {"Content-Type": "application/json"}
     if api_key:
@@ -184,12 +125,7 @@ def call_judge(base_url: str, api_key: str, model: str, user_content: str,
             time.sleep(min(2 ** attempt, 15))
     return None, last_err
 
-
-# ---------------------------------------------------------------------------
-# Collect records
-# ---------------------------------------------------------------------------
 def collect_records(results: Path):
-    """Yield (row_id, config, prompt, n, source_file, record_index, rec)."""
     files = sorted(results.glob("partC_*.json"))
     for f in files:
         m = FILE_RE.match(f.name)
@@ -208,8 +144,6 @@ def collect_records(results: Path):
             row_id = f"{config}|{prompt}|N{n}|{i}"
             yield row_id, config, prompt, n, f.name, i, rec
 
-
-# ---------------------------------------------------------------------------
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--results", default="results",
@@ -250,14 +184,14 @@ def main():
     if a.limit:
         records = records[: a.limit]
     if not records:
-        print("No Part C records found — nothing to grade.")
+        print("No Part C records found - nothing to grade.")
         return
     print(f"Found {len(records)} records to grade across "
           f"{len(set(r[1] for r in records))} configuration(s).\n")
 
     rows = []
     pending = []
-    raw_log = []          # raw judge output for EVERY record
+    raw_log = []
     pending_counter = 0
 
     for k, (row_id, config, prompt, n, src, idx, rec) in enumerate(records, 1):
@@ -304,7 +238,6 @@ def main():
             "grade": grade_cell,
         })
 
-        # raw judge output for EVERY datapoint (parsed or not)
         raw_log.append({
             "row_id": row_id,
             "config": config,
@@ -323,7 +256,6 @@ def main():
         if a.sleep:
             time.sleep(a.sleep)
 
-    # write CSV
     with csv_path.open("w", newline="", encoding="utf-8") as fh:
         w = csv.DictWriter(fh, fieldnames=[
             "row_id", "config", "prompt", "n_replies",
@@ -331,12 +263,10 @@ def main():
         w.writeheader()
         w.writerows(rows)
 
-    # write pending (only un-parsed)
     with pending_path.open("w", encoding="utf-8") as fh:
         for p in pending:
             fh.write(json.dumps(p, ensure_ascii=False) + "\n")
 
-    # write raw judge output for EVERY record
     with raw_path.open("w", encoding="utf-8") as fh:
         for r in raw_log:
             fh.write(json.dumps(r, ensure_ascii=False) + "\n")
@@ -347,7 +277,6 @@ def main():
     print(f"Wrote {pending_path}  ({len(pending)} need manual annotation)")
     if pending:
         print("Run annotate_pending.py next to fill in the ID_* placeholders.")
-
 
 if __name__ == "__main__":
     main()

@@ -1,38 +1,4 @@
 #!/usr/bin/env python3
-"""
-test_images.py — run the edge YOLO models on your laptop against local images.
-
-Drop any images (.jpg/.png/...) into the ./test folder and run this script. It
-feeds each image through BOTH of the project's sensing models and shows you what
-they detect:
-
-  - ONNX  : raspberrypi5_yolo_CPU/yolov8n.onnx                 (640px, 80 COCO classes)
-  - TFLite: stm32mp257_yolo_CPU/yolov8n_320_quant...person.tflite (320px, person only)
-
-The pre/post-processing here is copied verbatim from the on-device sensing
-skills, so what you see on the laptop matches what the boards actually feed the
-models. The ONLY change vs. the device code is the frame source: instead of a
-Pi camera / STM32 ISP, the frame comes from cv2.imread() (which, like those
-camera paths, hands us a BGR image — so the pipelines are byte-for-byte the same).
-
-For every input image it writes an annotated copy (boxes + labels) to
-./test/results/ and prints a per-image detection summary to the console.
-
-Usage:
-    python test_images.py                      # both models, ./test folder
-    python test_images.py --models onnx        # only the ONNX model
-    python test_images.py --models tflite      # only the TFLite person model
-    python test_images.py --folder some/dir    # use a different input folder
-    python test_images.py --conf 0.4           # override confidence threshold
-    python test_images.py --show               # also pop up windows (needs a GUI)
-
-Backends (install on your laptop as needed):
-    pip install opencv-python numpy
-    pip install onnxruntime                    # for the .onnx model
-    pip install ai-edge-litert                 # for the .tflite model
-        (or: pip install tflite-runtime / tensorflow)
-"""
-
 import argparse
 import sys
 from pathlib import Path
@@ -44,9 +10,6 @@ try:
 except ImportError:
     sys.exit("ERROR: OpenCV is required.  Install it with:  pip install opencv-python")
 
-# --------------------------------------------------------------------------- #
-# Paths / constants
-# --------------------------------------------------------------------------- #
 ROOT = Path(__file__).resolve().parent
 _REPO = ROOT.parent
 
@@ -58,7 +21,6 @@ TFLITE_MODEL_PATH = (
 
 IMAGE_EXTS = {".jpg", ".jpeg", ".png", ".bmp", ".webp", ".tif", ".tiff"}
 
-# ONNX (Raspberry Pi CPU preset) — full COCO object detector
 ONNX_INPUT_SIZE = 640
 ONNX_CONF_THRES = 0.25
 ONNX_IOU_THRES = 0.45
@@ -76,15 +38,10 @@ COCO_NAMES = [
     "teddy bear", "hair drier", "toothbrush",
 ]
 
-# TFLite (STM32MP257F CPU preset) — quantized person-only detector
 TFLITE_INPUT_SIZE = 320
 TFLITE_CONF_THRES = 0.25
 TFLITE_IOU_THRES = 0.45
 
-
-# --------------------------------------------------------------------------- #
-# ONNX pipeline — copied from raspberrypi5_yolo_CPU/yolo_object_detection.py
-# --------------------------------------------------------------------------- #
 def _onnx_letterbox(img, new_shape=640, color=(114, 114, 114)):
     h, w = img.shape[:2]
     r = min(new_shape / h, new_shape / w)
@@ -98,14 +55,12 @@ def _onnx_letterbox(img, new_shape=640, color=(114, 114, 114)):
                              cv2.BORDER_CONSTANT, value=color)
     return img, r, (dw, dh)
 
-
 def _onnx_preprocess(frame):
     img, r, (dw, dh) = _onnx_letterbox(frame, ONNX_INPUT_SIZE)
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     img = img.astype(np.float32) / 255.0
     img = np.transpose(img, (2, 0, 1))[None]
     return np.ascontiguousarray(img), r, dw, dh
-
 
 def _onnx_postprocess(output, r, dw, dh, conf_thres):
     preds = np.squeeze(output).T
@@ -131,7 +86,6 @@ def _onnx_postprocess(output, r, dw, dh, conf_thres):
     idxs = np.array(idxs).flatten()
     return boxes[idxs], confidences[idxs], class_ids[idxs]
 
-
 class OnnxDetector:
     name = "onnx"
 
@@ -145,7 +99,6 @@ class OnnxDetector:
         self.input_name = self.session.get_inputs()[0].name
 
     def detect(self, frame):
-        """frame: BGR image (as from cv2.imread). Returns list of detections."""
         blob, r, dw, dh = _onnx_preprocess(frame)
         outputs = self.session.run(None, {self.input_name: blob})
         boxes, confs, class_ids = _onnx_postprocess(outputs[0], r, dw, dh, self.conf_thres)
@@ -154,14 +107,10 @@ class OnnxDetector:
             dets.append({
                 "label": COCO_NAMES[int(cid)],
                 "confidence": float(conf),
-                "box": [float(v) for v in box],  # [x, y, w, h] top-left
+                "box": [float(v) for v in box],
             })
         return dets
 
-
-# --------------------------------------------------------------------------- #
-# TFLite pipeline — copied from stm32mp257_yolo_CPU/person_detection.py
-# --------------------------------------------------------------------------- #
 def _tflite_preprocess(frame, dtype, scale, zp):
     h, w = frame.shape[:2]
     r = min(TFLITE_INPUT_SIZE / h, TFLITE_INPUT_SIZE / w)
@@ -177,7 +126,6 @@ def _tflite_preprocess(frame, dtype, scale, zp):
     elif dtype == np.int8:
         img = np.clip(np.round(img / scale) + zp, -128, 127).astype(np.int8)
     return np.expand_dims(img, 0), r, dw, dh
-
 
 def _tflite_nms(boxes, scores, iou_thres):
     x1 = boxes[:, 0]; y1 = boxes[:, 1]
@@ -195,7 +143,6 @@ def _tflite_nms(boxes, scores, iou_thres):
         order = order[1:][iou <= iou_thres]
     return keep
 
-
 def _tflite_postprocess(raw, r, dw, dh, conf_thres):
     preds = np.squeeze(raw.astype(np.float32))
     if preds.shape[0] == 5:
@@ -205,7 +152,7 @@ def _tflite_postprocess(raw, r, dw, dh, conf_thres):
     preds, confs = preds[keep], confs[keep]
     if len(confs) == 0:
         return [], []
-    boxes = preds[:, :4].copy() * TFLITE_INPUT_SIZE          # normalized 0..1 -> pixels
+    boxes = preds[:, :4].copy() * TFLITE_INPUT_SIZE
     boxes[:, 0] = (boxes[:, 0] - boxes[:, 2] / 2 - dw) / r
     boxes[:, 1] = (boxes[:, 1] - boxes[:, 3] / 2 - dh) / r
     boxes[:, 2] /= r
@@ -216,9 +163,7 @@ def _tflite_postprocess(raw, r, dw, dh, conf_thres):
     keep_idx = np.array(keep_idx)
     return boxes[keep_idx], confs[keep_idx]
 
-
 def _load_tflite_interpreter(model_path):
-    """Try the same backends the board uses, plus laptop-friendly fallbacks."""
     errors = []
     for loader in (
         lambda: __import__("ai_edge_litert.interpreter", fromlist=["Interpreter"]).Interpreter,
@@ -227,7 +172,7 @@ def _load_tflite_interpreter(model_path):
     ):
         try:
             Interpreter = loader()
-        except Exception as e:  # noqa: BLE001 - record and try the next backend
+        except Exception as e:
             errors.append(str(e))
             continue
         return Interpreter(model_path=str(model_path))
@@ -236,9 +181,8 @@ def _load_tflite_interpreter(model_path):
         "    pip install ai-edge-litert   (recommended on a laptop)\n"
         "    pip install tflite-runtime\n"
         "    pip install tensorflow\n"
-        "Import errors were:\n  - " + "\n  - ".join(errors)
+        "Import errors were:\n - " + "\n - ".join(errors)
     )
-
 
 class TfliteDetector:
     name = "tflite"
@@ -255,7 +199,6 @@ class TfliteDetector:
         self.scale, self.zp = self.inp["quantization"]
 
     def detect(self, frame):
-        """frame: BGR image (as from cv2.imread). Returns list of detections."""
         blob, r, dw, dh = _tflite_preprocess(frame, self.dtype, self.scale, self.zp)
         self.interp.set_tensor(self.inp["index"], blob)
         self.interp.invoke()
@@ -266,21 +209,15 @@ class TfliteDetector:
             dets.append({
                 "label": "person",
                 "confidence": float(conf),
-                "box": [float(v) for v in box],  # [x, y, w, h] top-left
+                "box": [float(v) for v in box],
             })
         return dets
 
-
-# --------------------------------------------------------------------------- #
-# Drawing / reporting
-# --------------------------------------------------------------------------- #
 def _color_for(label):
-    """Stable per-label BGR color."""
     h = (hash(label) % 180)
     hsv = np.uint8([[[h, 200, 230]]])
     bgr = cv2.cvtColor(hsv, cv2.COLOR_HSV2BGR)[0][0]
     return int(bgr[0]), int(bgr[1]), int(bgr[2])
-
 
 def draw_detections(image, dets, title):
     out = image.copy()
@@ -289,7 +226,6 @@ def draw_detections(image, dets, title):
         x, y, w, h = d["box"]
         x1, y1 = int(round(x)), int(round(y))
         x2, y2 = int(round(x + w)), int(round(y + h))
-        # clamp to image so labels stay visible
         x1, y1 = max(0, x1), max(0, y1)
         x2, y2 = min(W - 1, x2), min(H - 1, y2)
         color = _color_for(d["label"])
@@ -300,12 +236,10 @@ def draw_detections(image, dets, title):
         cv2.rectangle(out, (x1, ty - th - 4), (x1 + tw + 2, ty), color, -1)
         cv2.putText(out, text, (x1 + 1, ty - 2), cv2.FONT_HERSHEY_SIMPLEX,
                     0.5, (0, 0, 0), 1, cv2.LINE_AA)
-    # banner
     cv2.rectangle(out, (0, 0), (W, 22), (0, 0, 0), -1)
     cv2.putText(out, f"{title}: {len(dets)} detection(s)", (6, 16),
                 cv2.FONT_HERSHEY_SIMPLEX, 0.55, (255, 255, 255), 1, cv2.LINE_AA)
     return out
-
 
 def summarize(dets):
     if not dets:
@@ -313,10 +247,6 @@ def summarize(dets):
     parts = [f"{d['label']} ({d['confidence']:.2f})" for d in dets]
     return f"{len(dets)} detection(s): " + ", ".join(parts)
 
-
-# --------------------------------------------------------------------------- #
-# Main
-# --------------------------------------------------------------------------- #
 def build_detectors(which, conf):
     detectors = []
     want_onnx = which in ("both", "onnx")
@@ -326,16 +256,15 @@ def build_detectors(which, conf):
         try:
             detectors.append(OnnxDetector(ONNX_CONF_THRES if conf is None else conf))
             print(f"[ok] ONNX model loaded:   {ONNX_MODEL_PATH.name}")
-        except Exception as e:  # noqa: BLE001
+        except Exception as e:
             print(f"[skip] ONNX model unavailable: {e}")
     if want_tflite:
         try:
             detectors.append(TfliteDetector(TFLITE_CONF_THRES if conf is None else conf))
             print(f"[ok] TFLite model loaded: {TFLITE_MODEL_PATH.name}")
-        except Exception as e:  # noqa: BLE001
+        except Exception as e:
             print(f"[skip] TFLite model unavailable: {e}")
     return detectors
-
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__,
@@ -370,7 +299,7 @@ def main():
 
     detectors = build_detectors(args.models, args.conf)
     if not detectors:
-        print("No model backends available — install onnxruntime and/or a TFLite runtime "
+        print("No model backends available - install onnxruntime and/or a TFLite runtime "
               "(see the header of this file).")
         sys.exit(1)
 
@@ -401,7 +330,6 @@ def main():
 
     print("\n" + "-" * 60)
     print(f"Done. Annotated images written to: {out_dir}")
-
 
 if __name__ == "__main__":
     main()

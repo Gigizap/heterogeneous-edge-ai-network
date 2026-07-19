@@ -34,3 +34,5 @@ You also need Ollama installed with `glm-4.7-flash` pulled.
 6. Run `MAKE_REPORT.py`
 7. Run `GRADE_PART_C_PLOTTING.py`
 8. Results are in `results/` and `results/grading/` and `results/report/`
+
+Part C grading (`GRADE_PART_C.py`) uses an LLM-as-judge that must reply with only `{"grade": <1-10>}`, and writes: `grades.csv` (one row per record), `raw_judge_answers.jsonl` (the raw judge output for every record), and `pending_annotation.jsonl` (records whose grade could not be parsed, to annotate by hand with `ANNOTATE_PENDING.py`).

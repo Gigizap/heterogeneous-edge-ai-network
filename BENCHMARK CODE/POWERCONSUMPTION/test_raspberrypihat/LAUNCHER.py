@@ -1,17 +1,9 @@
 #!/usr/bin/env python3
-"""
-Launcher: pick a combo and run two things at the same time.
-Uses the system Python for everything — no conda envs.
-
-When a combo runs more than one worker, a BENCH_TAG is exported so each
-worker writes to a distinct result file (e.g. avg_fps_cpu_yolo_with_other.txt
-instead of overwriting avg_fps_cpu_yolo.txt). Solo runs use the tag "solo".
-"""
 import os
 import subprocess
 import sys
 
-PYTHON = sys.executable  # whatever python3 invoked this script
+PYTHON = sys.executable
 
 CMDS = {
     "cpu_qwen":   ["qwen3_cpu.py"],
@@ -31,13 +23,10 @@ MENU = [
     ("cpu run_leader.py",      ["run_leader"]),
 ]
 
-
 def make_env(tag):
-    """Copy current env and set the BENCH_TAG."""
     e = os.environ.copy()
     e["BENCH_TAG"] = tag
     return e
-
 
 def main():
     print("\nChoose what to run:\n")
@@ -78,7 +67,6 @@ def main():
             except subprocess.TimeoutExpired:
                 p.kill()
         print("Done.")
-
 
 if __name__ == "__main__":
     main()

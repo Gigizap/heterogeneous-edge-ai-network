@@ -1,6 +1,4 @@
 #!/usr/bin/env python3
-"""YOLOv8n person detection — STM32MP257F-DK CPU"""
-
 import os, sys, time
 import cv2
 import numpy as np
@@ -19,14 +17,12 @@ WINDOW_SECONDS = 20 * 60
 TAG = os.environ.get("BENCH_TAG", "")
 RESULT_FILE = f"avg_fps_cpu_yolo_{TAG}.txt" if TAG else "avg_fps_cpu_yolo.txt"
 
-# RGB16 forces the ISP to give color (not grayscale R8)
 GST_PIPELINE = (
     "libcamerasrc name=cs src::stream-role=view-finder cs.src ! "
     "video/x-raw,format=RGB16,width={},height={} ! "
     "videoconvert ! video/x-raw,format=BGR ! "
     "appsink drop=true max-buffers=1 sync=false"
 ).format(CAM_W, CAM_H)
-
 
 def preprocess(frame, dtype, scale, zp):
     h, w = frame.shape[:2]
@@ -44,7 +40,6 @@ def preprocess(frame, dtype, scale, zp):
         img = np.clip(np.round(img / scale) + zp, -128, 127).astype(np.int8)
     return np.expand_dims(img, 0), r, dw, dh
 
-
 def nms(boxes, scores, iou_thres):
     x1 = boxes[:, 0]; y1 = boxes[:, 1]
     x2 = boxes[:, 0] + boxes[:, 2]; y2 = boxes[:, 1] + boxes[:, 3]
@@ -61,7 +56,6 @@ def nms(boxes, scores, iou_thres):
         order = order[1:][iou <= iou_thres]
     return keep
 
-
 def postprocess(raw, r, dw, dh):
     preds = np.squeeze(raw.astype(np.float32))
     if preds.shape[0] == 5:
@@ -71,7 +65,7 @@ def postprocess(raw, r, dw, dh):
     preds, confs = preds[keep], confs[keep]
     if len(confs) == 0:
         return [], []
-    boxes = preds[:, :4].copy() * INPUT_SIZE          # normalized 0..1 -> pixels
+    boxes = preds[:, :4].copy() * INPUT_SIZE
     boxes[:, 0] = (boxes[:, 0] - boxes[:, 2] / 2 - dw) / r
     boxes[:, 1] = (boxes[:, 1] - boxes[:, 3] / 2 - dh) / r
     boxes[:, 2] /= r
@@ -82,13 +76,11 @@ def postprocess(raw, r, dw, dh):
     keep_idx = np.array(keep_idx)
     return boxes[keep_idx], confs[keep_idx]
 
-
 def save_avg(frames, elapsed):
     avg = frames / elapsed if elapsed > 0 else 0.0
     with open(RESULT_FILE, "w") as f:
         f.write(f"avg_fps={avg:.3f}\nframes={frames}\nseconds={elapsed:.2f}\n")
-    print(f"\n>>> {avg:.2f} FPS over {elapsed:.1f}s → {RESULT_FILE}")
-
+    print(f"\n>>> {avg:.2f} FPS over {elapsed:.1f}s -> {RESULT_FILE}")
 
 def main():
     interp = Interpreter(model_path=MODEL_PATH)
@@ -102,7 +94,7 @@ def main():
     if not cap.isOpened():
         sys.exit("Cannot open camera")
 
-    print(f"CPU detection running. Results → {RESULT_FILE}. Press q or Ctrl+C to stop.")
+    print(f"CPU detection running. Results -> {RESULT_FILE}. Press q or Ctrl+C to stop.")
     fps, prev, start, n, saved = 0.0, time.time(), time.time(), 0, False
 
     try:

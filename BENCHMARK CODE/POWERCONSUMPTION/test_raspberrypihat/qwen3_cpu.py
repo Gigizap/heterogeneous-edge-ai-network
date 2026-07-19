@@ -1,27 +1,4 @@
 #!/usr/bin/env python3
-"""
-qwen_cpu.py  --  continuous LLM inference load on the Raspberry Pi 5 CPU
-                 (for power measurement)
-
-Loads qwen3:1.7b (.gguf) once via llama.cpp, then loops forever.
-Saves stats either when 20 minutes of wall-clock elapse OR when you press
-Ctrl+C (whichever first), using everything up to that moment. On Ctrl+C the
-current cycle is treated as finished right then.
-
-Per cycle we measure two phases:
-  gap  = time from end of previous generation to the FIRST token of this cycle
-         (i.e. clear_context + prompt prefill / load)
-  gen  = time spent streaming tokens
-
-Saved stats:
-  added_gap_load_prompt_time  = total gap seconds
-  number_of_gaps              = how many gaps occurred
-  total_time                  = gap + gen seconds
-  generation_only_tok_per_s   = tokens / gen seconds
-  total_tok_per_s             = tokens / total seconds
-
-Run:   python3 qwen_cpu.py        Stop: Ctrl+C
-"""
 import os
 import sys
 import time
@@ -50,7 +27,6 @@ def _handle_sigint(signum, frame):
     signal.signal(signal.SIGINT, signal.default_int_handler)
     print("\n[qwen_cpu] stopping after current token... (Ctrl+C again to force)")
 
-
 def save_stats(tokens, gen_time, gap_time, n_gaps):
     total_time = gen_time + gap_time
     gen_tps   = tokens / gen_time   if gen_time   > 0 else 0.0
@@ -65,7 +41,6 @@ def save_stats(tokens, gen_time, gap_time, n_gaps):
     print(f"\n[qwen_cpu] >>> saved to {RESULT_FILE}: "
           f"gen-only {gen_tps:.2f} tok/s, total {total_tps:.2f} tok/s, "
           f"gap {gap_time:.1f}s over {n_gaps} gaps")
-
 
 def main():
     signal.signal(signal.SIGINT, _handle_sigint)
@@ -91,7 +66,6 @@ def main():
     try:
         prev_gen_end = start
         for cycle in itertools.count(1):
-            # gap phase begins here (clear_context + building/prefilling the prompt)
             gap_start = prev_gen_end
             stream = llm.create_completion(prompt=PROMPT, max_tokens=MAX_TOKENS,
                                            temperature=0.8, stream=True)
@@ -99,14 +73,14 @@ def main():
             n_tokens = 0
             gen_start = None
             for chunk in stream:
-                if gen_start is None:                 # first token of this cycle
+                if gen_start is None:
                     gen_start = time.time()
                     gap_time += gen_start - gap_start
                     n_gaps += 1
                     last_tick = gen_start
 
                 now = time.time()
-                gen_time += now - last_tick            # accrue gen time per token
+                gen_time += now - last_tick
                 last_tick = now
 
                 n_tokens += 1
@@ -133,7 +107,6 @@ def main():
         pass
 
     print("\n[qwen_cpu] stopped.")
-
 
 if __name__ == "__main__":
     main()

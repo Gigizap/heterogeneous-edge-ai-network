@@ -1,22 +1,9 @@
 #!/usr/bin/env python3
-"""
-dump_templates.py — print the chat template baked into every GGUF model.
-
-Loads each *.gguf under --models-dir and prints its
-tokenizer.chat_template metadata (the Jinja template the generic
-llama-cpp handler uses to render messages).
-
-Usage:
-  python dump_templates.py --models-dir models/
-  python dump_templates.py --models-dir models/ --save templates/
-"""
-
 from __future__ import annotations
 import argparse
 from pathlib import Path
 
 from llama_cpp import Llama
-
 
 def main():
     ap = argparse.ArgumentParser()
@@ -40,8 +27,6 @@ def main():
         print(f"  {g.name}")
         print("=" * 70)
         try:
-            # vocab_only avoids loading weights — fast, low memory; metadata
-            # (incl. the chat template) is still fully available.
             llm = Llama(model_path=str(g), vocab_only=True, verbose=False)
         except Exception as e:
             print(f"  [ERROR loading] {e}")
@@ -50,8 +35,6 @@ def main():
         md_dict = getattr(llm, "metadata", {}) or {}
         tmpl = md_dict.get("tokenizer.chat_template")
 
-        # Some GGUFs ship multiple named templates as
-        # tokenizer.chat_template.<name>; collect those too.
         named = {k: v for k, v in md_dict.items()
                  if k.startswith("tokenizer.chat_template.")}
 
@@ -73,7 +56,6 @@ def main():
 
     if save_dir:
         print(f"\nSaved templates to {save_dir}")
-
 
 if __name__ == "__main__":
     main()

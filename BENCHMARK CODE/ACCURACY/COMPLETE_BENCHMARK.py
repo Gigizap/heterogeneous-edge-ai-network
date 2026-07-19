@@ -1,34 +1,4 @@
 #!/usr/bin/env python3
-"""
-benchmark.py — Tool-calling benchmark (Part A + Part B + Part C)
-
-Models (in --models-dir):
-  - functiongemma-270m-it-Q4_K_M.gguf   (uses the functiongemma chat handler)
-  - Qwen3-1.7B-Q4_K_M.gguf              (uses the qwen3 chat handler)
-
-Qwen3 is evaluated as TWO variants — thinking and non-thinking — controlled by
-the presence of "/no_think" in the system prompt. FunctionGemma is a single
-variant. So the effective model list is:
-  FunctionGemma-270M, Qwen3-1.7B (think), Qwen3-1.7B (no_think)
-
-Part A:  LLM tool calling — full tool set, pools 4/8/12/16/20/24
-         Tool-call accuracy (name+params) + selection accuracy saved
-         Reports metrics BOTH including and excluding null-tool sentences
-Part B:  LLM vs Jina Reranker — zero-param tools only, pools 4/8/12/16
-         Selection accuracy saved for both LLMs and Reranker
-Part C:  Summarize-from-tool-results — single system prompt (P_C_SUMMARY) for
-         ALL variants (functiongemma included), N replies 1/5/10/15/20
-
-raw_text (msg["_raw_text"]) and token usage are saved for Parts A, B and C.
-
-Plotting is no longer done here — run plot_results.py against the --output
-directory to produce a single rich figure covering all parts.
-
-Usage:
-  python benchmark.py --dataset dataset.json --tools tools.json --models-dir models/ --output results/
-  python plot_results.py --results results/
-"""
-
 from __future__ import annotations
 import argparse, json, random, re, sys, time, gc
 from pathlib import Path
@@ -39,21 +9,17 @@ import torch
 from llama_cpp import Llama
 from transformers import AutoModelForSequenceClassification
 
-# Force UTF-8 on stdout so print()-ing model output (emoji, accents) doesn't
-# crash on Windows' cp1252 console. Guarded because some redirected stdouts
-# (pipes, IDE consoles) don't expose .reconfigure().
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
-# Register chat-format handlers on import (each registers its own chat_format).
 try:
-    import functiongemma_simple_handler  # noqa: F401 (registers "functiongemma")
+    import functiongemma_simple_handler
     HAS_FG = True
 except ImportError:
     HAS_FG = False
 
 try:
-    import qwen3_handler  # noqa: F401  (registers "qwen3")
+    import qwen3_handler
     HAS_QWEN3 = True
 except ImportError:
     HAS_QWEN3 = False
@@ -61,15 +27,12 @@ except ImportError:
 print("functiongemma has handler", HAS_FG)
 print("qwen3 has handler", HAS_QWEN3)
 
-# ═══════════════════════════════════════════════════════════════
 SEED = 7
 
-# Hard-coded LIMIT (no CLI). Set to a number to test only the first N sentences
-# (fast smoke-test); set to False/None to run on the full dataset.
 LIMIT = False
 
-POOL_A = [4, 8, 12, 16, 20, 24]       # Part A: Full tool set
-POOL_B = [4, 8, 12, 16]               # Part B: Zero-param tools only
+POOL_A = [4, 8, 12, 16, 20, 24]
+POOL_B = [4, 8, 12, 16]
 
 P_DISPATCH = (
     "You are a smart-home agent dispatcher. "
@@ -81,13 +44,10 @@ P_DISPATCH_FG = (
     "You are a model that can do function calling with the following functions"
 )
 
-# Suffix appended to a qwen3 system prompt to DISABLE thinking.
 NO_THINK = " /no_think"
 
-# ── Part C: summarize-from-tool-results ──────────────────────────
-REPLIES_N = [1, 5, 10, 15, 20]   # number of function replies the model sees
+REPLIES_N = [1, 5, 10, 15, 20]
 
-# Single system prompt used for EVERY variant in Part C (functiongemma too).
 P_C_SUMMARY = (
     "You are a smart home assistant. Turn the data into a short friendly reply "
     "to the user. Reply in English. Summarize the reply, MENTION ALL THE IMPORTANT "
@@ -95,16 +55,10 @@ P_C_SUMMARY = (
 )
 P_C_PROMPTS = {"summary_prompt": P_C_SUMMARY}
 
-# ═══════════════════════════════════════════════════════════════
-# Data & Tools Loading
-# ═══════════════════════════════════════════════════════════════
-
 def load_tools(path: str):
-    """Loads tools from JSON and derives BY_NAME and NO_PARAM structures."""
     raw_tools = json.loads(Path(path).read_text(encoding="utf-8"))
     by_name = {t["function"]["name"]: t for t in raw_tools}
 
-    # Dynamically find tools with zero parameters
     no_param = sorted([
         t["function"]["name"] for t in raw_tools
         if not t["function"].get("parameters", {}).get("properties")
@@ -112,18 +66,16 @@ def load_tools(path: str):
 
     return raw_tools, by_name, no_param
 
-
 def load_dataset(path: str) -> List[Dict]:
     raw = json.loads(Path(path).read_text(encoding="utf-8"))
     out = []
     for i, r in enumerate(raw):
-        # Support both array format and object format
         if isinstance(r, dict):
             prompt = r["query"]
             if r.get("tool") is not None:
                 expected = {"name": r["tool"], "arguments": r.get("parameters", {})}
             else:
-                expected = None  # Handles "tool": null
+                expected = None
             replies = r.get("replies", [])
         else:
             prompt = r[0]
@@ -134,7 +86,6 @@ def load_dataset(path: str) -> List[Dict]:
     if LIMIT:
         out = out[:LIMIT]
     return out
-
 
 def make_pools(universe, data, sizes, seed=SEED):
     rng = random.Random(seed)
@@ -155,12 +106,6 @@ def make_pools(universe, data, sizes, seed=SEED):
             pools[str(n)][str(row["id"])] = [t["function"]["name"] for t in subset]
     return {"seed": seed, "sizes": sizes, "pools": pools}
 
-
-# ── Pool caching (sentence_id × n_tools) as TXT ──────────────────
-# Format (tab-separated, one row per sentence_id × pool_size):
-#   n_tools \t sentence_id \t tool1,tool2,...
-# A header line records seed and sizes for sanity-checking.
-
 def write_pools_txt(pools, path: Path):
     lines = [f"# seed={pools['seed']} sizes={','.join(map(str, pools['sizes']))}"]
     for n in pools["sizes"]:
@@ -168,7 +113,6 @@ def write_pools_txt(pools, path: Path):
         for sid in sorted(block, key=lambda x: int(x)):
             lines.append(f"{n}\t{sid}\t{','.join(block[sid])}")
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")
-
 
 def read_pools_txt(path: Path):
     pools = {}
@@ -190,9 +134,7 @@ def read_pools_txt(path: Path):
         sizes = sorted(int(k) for k in pools)
     return {"seed": seed, "sizes": sizes, "pools": pools}
 
-
 def get_or_make_pools(universe, data, sizes, path: Path, label=""):
-    """Reuse pool assignments from TXT if present; otherwise compute and cache."""
     if path.exists():
         print(f"  Reusing cached pools{(' ' + label) if label else ''} from {path}")
         return read_pools_txt(path)
@@ -201,29 +143,16 @@ def get_or_make_pools(universe, data, sizes, path: Path, label=""):
     print(f"  Saved pools{(' ' + label) if label else ''} to {path}")
     return pools
 
-
-# ── Grading + per-model logging ──────────────────────────────────
-# Grade labels (cumulative quality of a single prediction):
-#   incorrect          → wrong tool selected (or a tool called when none expected,
-#                         or no/other tool when one was expected)
-#   correct_selection  → right tool name (or correct abstention on null cases),
-#                         but parameters don't fully match
-#   correct_tool_call  → right tool name AND all parameters match
-# (correct_tool_call implies correct_selection; for null-tool cases a correct
-#  abstention has no params, so the best attainable grade is correct_selection.)
-
 def grade(gt_name, gt_args, pred_name, pred_args):
     if pred_name != gt_name:
         return "incorrect"
-    if gt_name is None:        # correct abstention — no parameters to match
+    if gt_name is None:
         return "correct_selection"
     if pmatch(gt_args, pred_args):
         return "correct_tool_call"
     return "correct_selection"
 
-
 def open_model_log(out: Path, label: str, part: str):
-    """Open a per-model TSV log: sentence_id × pool_size → gt, pred, grade, raw_text."""
     safe = re.sub(r"[^A-Za-z0-9._-]+", "_", label)
     path = out / f"log_{part}_{safe}.tsv"
     f = path.open("w", encoding="utf-8")
@@ -231,11 +160,8 @@ def open_model_log(out: Path, label: str, part: str):
             "grade\tgen_tokens\traw_text\n")
     return f, path
 
-
 def _tsv_clean(s: str) -> str:
-    """Make a string safe for a single TSV cell (no tabs/newlines)."""
     return (s or "").replace("\\", "\\\\").replace("\t", "\\t").replace("\n", "\\n").replace("\r", "\\r")
-
 
 def log_row(f, sid, n_tools, gt_name, gt_args, pred_name, pred_args, g,
             gen_tokens=0, raw_text=""):
@@ -245,20 +171,12 @@ def log_row(f, sid, n_tools, gt_name, gt_args, pred_name, pred_args, g,
             f"{js(gt_args)}\t{pred_name if pred_name is not None else 'null'}\t"
             f"{js(pred_args)}\t{g}\t{gen_tokens}\t{_tsv_clean(raw_text)}\n")
 
-# ═══════════════════════════════════════════════════════════════
-# Models
-# ═══════════════════════════════════════════════════════════════
-
-# pattern -> (label, params_b, kind)
-#   kind: "fg" → functiongemma handler, "qwen3" → qwen3 handler, "" → default
 _PAT = {
     "functiongemma": ("FunctionGemma-270M", 0.27, "fg"),
     "qwen3-1.7b":    ("Qwen3-1.7B",         1.7,  "qwen3"),
 }
 
-
 def find_models(d):
-    """Discover GGUF files and expand qwen3 into thinking / non-thinking variants."""
     raw = []
     for g in sorted(d.glob("**/*.gguf")):
         fn = g.name.lower()
@@ -269,7 +187,6 @@ def find_models(d):
         else:
             raw.append({"path": str(g), "label": g.stem, "params_b": 0.0, "kind": ""})
 
-    # Expand into evaluation variants.
     out = []
     for mi in raw:
         if mi["kind"] == "qwen3":
@@ -282,11 +199,7 @@ def find_models(d):
                         "qwen3": False, "think": False})
     return out
 
-
-# Cache loaded Llama objects keyed by gguf path so the two qwen3 variants share
-# a single in-memory model (they differ only by system prompt).
 _LLM_CACHE: Dict[str, Llama] = {}
-
 
 def load_llm(mi):
     path = mi["path"]
@@ -304,31 +217,21 @@ def load_llm(mi):
     _LLM_CACHE[path] = llm
     return llm
 
-
 def free_llm(mi):
-    """Drop a cached Llama (call once all variants for a path are done)."""
     path = mi["path"]
     if path in _LLM_CACHE:
         del _LLM_CACHE[path]
         gc.collect()
         torch.cuda.empty_cache()
 
-
 def variants_share_path(models, idx):
-    """True if a later model entry reuses the same gguf path (don't free yet)."""
     p = models[idx]["path"]
     return any(m["path"] == p for m in models[idx + 1:])
 
-
 def sys_prompt_for(mi, base):
-    """Append /no_think for the qwen3 non-thinking variant."""
     if mi.get("qwen3") and not mi.get("think"):
         return base + NO_THINK
     return base
-
-# ═══════════════════════════════════════════════════════════════
-# Dispatch (tool selection)
-# ═══════════════════════════════════════════════════════════════
 
 def _lc(tdefs):
     return [{"type": "function", "function": {
@@ -336,9 +239,7 @@ def _lc(tdefs):
         "description": t.get("function", t).get("description", ""),
         "parameters": t.get("function", t).get("parameters", {})}} for t in tdefs]
 
-
 def dispatch(llm, text, tdefs, mi):
-    """Run one dispatch. Returns (name, args, gen_tokens, raw_text)."""
     fg = mi["fg"]
     tools = _lc(tdefs)
     if fg:
@@ -359,7 +260,6 @@ def dispatch(llm, text, tdefs, mi):
     msg = r["choices"][0]["message"]
     raw = msg.get("content", "") or ""
     raw_text = msg.get("_raw_text", "") or ""
-    # Faithful count of generated tokens (llama.cpp usage.completion_tokens).
     gen_tokens = (r.get("usage") or {}).get("completion_tokens", 0)
 
     if msg.get("tool_calls"):
@@ -388,10 +288,6 @@ def dispatch(llm, text, tdefs, mi):
 
     return None, None, gen_tokens, raw_text
 
-# ═══════════════════════════════════════════════════════════════
-# Param Matching
-# ═══════════════════════════════════════════════════════════════
-
 def pmatch(exp, pred):
     exp = exp or {}
     pred = pred or {}
@@ -410,10 +306,6 @@ def pmatch(exp, pred):
 
     return all(norm(exp[k]) == norm(pred[k]) for k in exp)
 
-# ═══════════════════════════════════════════════════════════════
-# Reranker
-# ═══════════════════════════════════════════════════════════════
-
 class Reranker:
     def __init__(self):
         print("[reranker] loading …")
@@ -429,17 +321,12 @@ class Reranker:
     def done(self):
         del self.m; gc.collect(); torch.cuda.empty_cache()
 
-
 def _doc(t):
     f = t.get("function", t)
     return f"{f['name']}: {f.get('description', '')}"
 
-# ═══════════════════════════════════════════════════════════════
-# PART A — LLM Tool Calling (Full Tool Set)
-# ═══════════════════════════════════════════════════════════════
-
 def run_a(data, models, out, all_tools, by_name):
-    print("\n" + "=" * 60 + "\n  PART A — LLM Tool Calling (Full Tool Set)\n" + "=" * 60)
+    print("\n" + "=" * 60 + "\n  PART A - LLM Tool Calling (Full Tool Set)\n" + "=" * 60)
 
     sub_a = [r for r in data if r["expected"]]
     n_all = len(data)
@@ -454,8 +341,8 @@ def run_a(data, models, out, all_tools, by_name):
     tc_acc_all   = defaultdict(dict)
     sel_acc_filt = defaultdict(dict)
     tc_acc_filt  = defaultdict(dict)
-    null_acc     = defaultdict(dict)   # accuracy on the null-tool subset only
-    tok_mean     = defaultdict(dict)   # mean gen tokens / question
+    null_acc     = defaultdict(dict)
+    tok_mean     = defaultdict(dict)
 
     for idx, mi in enumerate(models):
         lb = mi["label"]
@@ -492,7 +379,6 @@ def run_a(data, models, out, all_tools, by_name):
                     if gt_name is not None:
                         s_ok_filt += 1
                     else:
-                        # null-tool case: correct = model also abstained
                         n_ok_null += 1
 
                 if match_args:
@@ -515,7 +401,7 @@ def run_a(data, models, out, all_tools, by_name):
                   f"{time.time()-t0:.1f}s")
 
         logf.close()
-        print(f"    log → {logpath}")
+        print(f"    log -> {logpath}")
         if not variants_share_path(models, idx):
             free_llm(mi)
 
@@ -536,12 +422,8 @@ def run_a(data, models, out, all_tools, by_name):
     res_path.write_text(json.dumps(res, indent=2), encoding="utf-8")
     print(f"  Saved Part A results to {res_path}")
 
-# ═══════════════════════════════════════════════════════════════
-# PART B — LLMs vs. Jina Reranker (Zero-Param Tools)
-# ═══════════════════════════════════════════════════════════════
-
 def run_b(data, models, out, all_tools, by_name, no_param):
-    print("\n" + "=" * 60 + "\n  PART B — LLMs vs. Reranker (Zero-Param Tools)\n" + "=" * 60)
+    print("\n" + "=" * 60 + "\n  PART B - LLMs vs. Reranker (Zero-Param Tools)\n" + "=" * 60)
 
     sub = [r for r in data if r["expected"] and r["expected"]["name"] in no_param]
     uni = [t for t in all_tools if t["function"]["name"] in no_param]
@@ -562,14 +444,13 @@ def run_b(data, models, out, all_tools, by_name, no_param):
             pred = pt[top]["function"]["name"]
             gt_name = r["expected"]["name"]
             g = "correct_selection" if pred == gt_name else "incorrect"
-            # raw_text for the reranker = the doc string it ranked highest
             log_row(rrlogf, r["id"], ps, gt_name, None, pred, None, g,
                     0, docs[top])
             if pred == gt_name: ok += 1
         rr_acc[str(ps)] = ok / len(sub) if sub else 0
         print(f"  reranker pool={ps}: {rr_acc[str(ps)]:.4f}")
     rrlogf.close()
-    print(f"  log → {rrlogpath}")
+    print(f"  log -> {rrlogpath}")
     rr.done()
 
     llm_acc = {}
@@ -599,7 +480,7 @@ def run_b(data, models, out, all_tools, by_name, no_param):
             tok_mean[lb][str(ps)] = tok_q
             print(f"    pool={ps}: {a:.4f}  tok/q={tok_q:.1f}  {time.time()-t0:.1f}s")
         logf.close()
-        print(f"    log → {logpath}")
+        print(f"    log -> {logpath}")
         if not variants_share_path(models, idx):
             free_llm(mi)
 
@@ -611,17 +492,7 @@ def run_b(data, models, out, all_tools, by_name, no_param):
     res_path.write_text(json.dumps(res, indent=2), encoding="utf-8")
     print(f"  Saved Part B results to {res_path}")
 
-# ═══════════════════════════════════════════════════════════════
-# PART C — Summarize from tool results (N replies × single prompt)
-# ═══════════════════════════════════════════════════════════════
-
 def load_dataset_replies(path: str) -> List[Dict]:
-    """Loads dataset_tools_w_replies.json.
-
-    Each tool-bearing entry is [query, {name, arguments}, [reply, reply, ...]]
-    (array form) or the dict form {query, tool, parameters, replies}.
-    Only entries that actually have a tool ground truth are kept.
-    """
     raw = json.loads(Path(path).read_text(encoding="utf-8"))
     out = []
     for i, r in enumerate(raw):
@@ -642,13 +513,6 @@ def load_dataset_replies(path: str) -> List[Dict]:
         out = out[:LIMIT]
     return out
 
-
-# ── Reply-sample cache (sentence_id × n_replies → selected indices) ──
-# "First-N after a seeded shuffle": each sentence's 20 reply indices are
-# shuffled once with a per-sentence seed, then the first N are taken. This
-# guarantees nesting (the N=5 set ⊂ N=10 set) and identical samples across
-# models/prompts. Cached as TXT: n_replies \t sentence_id \t idx,idx,...
-
 def make_reply_samples(data, sizes, seed=SEED):
     samples = {}
     for n in sizes:
@@ -661,7 +525,6 @@ def make_reply_samples(data, sizes, seed=SEED):
             samples[str(n)][str(row["id"])] = sorted(order[:k])
     return {"seed": seed, "sizes": sizes, "samples": samples}
 
-
 def write_samples_txt(s, path: Path):
     lines = [f"# seed={s['seed']} sizes={','.join(map(str, s['sizes']))}"]
     for n in s["sizes"]:
@@ -669,7 +532,6 @@ def write_samples_txt(s, path: Path):
         for sid in sorted(block, key=lambda x: int(x)):
             lines.append(f"{n}\t{sid}\t{','.join(map(str, block[sid]))}")
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")
-
 
 def read_samples_txt(path: Path):
     samples = {}; seed = SEED; sizes = []
@@ -689,7 +551,6 @@ def read_samples_txt(path: Path):
         sizes = sorted(int(k) for k in samples)
     return {"seed": seed, "sizes": sizes, "samples": samples}
 
-
 def get_or_make_reply_samples(data, sizes, path: Path):
     if path.exists():
         print(f"  Reusing cached reply samples from {path}")
@@ -699,11 +560,7 @@ def get_or_make_reply_samples(data, sizes, path: Path):
     print(f"  Saved reply samples to {path}")
     return s
 
-
 def summarize(llm, system_prompt, query, gt, replies, by_name, mi):
-    """Feed query + assistant tool_call + tool result (N replies) and get the
-    model's final natural-language reply.
-    Returns (text, raw_text, gen_tokens)."""
     fg = mi["fg"]
     tname = gt["name"]
     targs = gt.get("arguments", {}) or {}
@@ -722,11 +579,6 @@ def summarize(llm, system_prompt, query, gt, replies, by_name, mi):
     ]
     kw = dict(messages=msgs, temperature=0.0, seed=SEED, repeat_penalty=1.1)
     if tools:
-        # note for peer reviewers: definitions of called tool are passed again
-        # this risks repetition in the summarization but is generally harmless, 
-        # some frameworks omit it however since there is no history
-        # if a tool replies "parameter not valid" in this context
-        # The model sees what parameters are valid and could notify user 
         kw["tools"] = tools
     if not fg:
         kw["max_tokens"] = 1024
@@ -740,14 +592,13 @@ def summarize(llm, system_prompt, query, gt, replies, by_name, mi):
     gen_tokens = (r.get("usage") or {}).get("completion_tokens", 0)
     return text, raw_text, gen_tokens
 
-
 def run_c(data_rep, models, out, by_name):
     print("\n" + "=" * 60 +
-          "\n  PART C — Summarize from Tool Results (N replies)\n" +
+          "\n  PART C - Summarize from Tool Results (N replies)\n" +
           "=" * 60)
 
     if not data_rep:
-        print("  No tool-bearing sentences with replies — skipping Part C")
+        print("  No tool-bearing sentences with replies - skipping Part C")
         return
 
     print(f"  {len(data_rep)} sentences, N_replies={REPLIES_N}, "
@@ -755,7 +606,7 @@ def run_c(data_rep, models, out, by_name):
 
     samples = get_or_make_reply_samples(data_rep, REPLIES_N, out / "reply_samples_c.txt")
 
-    token_summary = defaultdict(dict)   # label -> "pname/N" -> mean tokens
+    token_summary = defaultdict(dict)
 
     for idx, mi in enumerate(models):
         lb = mi["label"]
@@ -791,7 +642,7 @@ def run_c(data_rep, models, out, by_name):
                 mean_tok = tok_sum / len(data_rep) if data_rep else 0
                 token_summary[lb][f"{pkey}/N{n}"] = round(mean_tok, 2)
                 print(f"    {pkey} N={n}: mean_tok={mean_tok:.1f} "
-                      f"{time.time()-t0:.1f}s → {fname.name}")
+                      f"{time.time()-t0:.1f}s -> {fname.name}")
 
         if not variants_share_path(models, idx):
             free_llm(mi)
@@ -803,10 +654,6 @@ def run_c(data_rep, models, out, by_name):
         "mean_gen_tokens": dict(token_summary),
     }, indent=2), encoding="utf-8")
     print(f"  Saved Part C token summary to {tok_path}")
-
-# ═══════════════════════════════════════════════════════════════
-# Main
-# ═══════════════════════════════════════════════════════════════
 
 def main():
     ap = argparse.ArgumentParser()
@@ -822,25 +669,22 @@ def main():
 
     out = Path(a.output); out.mkdir(parents=True, exist_ok=True)
     if LIMIT:
-        print(f"[LIMIT] Active — testing only the first {LIMIT} sentences")
+        print(f"[LIMIT] Active - testing only the first {LIMIT} sentences")
 
-    # Load Data
     data = load_dataset(a.dataset)
     print(f"Loaded {len(data)} questions from {a.dataset}")
 
-    # Load Tools dynamically
     all_tools, by_name, no_param = load_tools(a.tools)
     print(f"Loaded {len(all_tools)} tools from {a.tools} ({len(no_param)} zero-param)")
 
-    # Find Models (qwen3 is expanded into think / nothink variants)
     models = find_models(Path(a.models_dir))
     if not models:
         print("No GGUF models found."); sys.exit(1)
     for m in models:
         if m["fg"]:
-            tag = " ← FG handler"
+            tag = " <- FG handler"
         elif m["qwen3"]:
-            tag = f" ← qwen3 handler ({'think' if m['think'] else 'no_think'})"
+            tag = f" <- qwen3 handler ({'think' if m['think'] else 'no_think'})"
         else:
             tag = ""
         print(f"  {m['label']} ({m['params_b']}B){tag}")
@@ -859,8 +703,7 @@ def main():
             run_c(data_rep, models, out, by_name)
         else:
             print(f"[skip C] {a.replies_dataset} not found")
-    print("\n✓ Done —", out)
-
+    print("\nDone - ", out)
 
 if __name__ == "__main__":
     main()

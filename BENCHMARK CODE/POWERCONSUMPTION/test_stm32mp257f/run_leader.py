@@ -1,32 +1,13 @@
-"""
-run_leader.py — fully self-contained. One file, no project imports.
-
-A single agent with id "leader" that:
-  * runs P2PTransport + Discovery (registers peers as they appear)
-  * prints every message it receives
-  * every 5s sends {"text": "HI FROM LEADER"} to all known peers
-
-    python run_leader.py
-
-Run alongside run_agents.py: the Agent-test-N agents will find "leader",
-send it HI, and receive HI FROM LEADER back.
-
-Ctrl-C stops it.
-"""
-
 import asyncio
 import json
 import socket
 import threading
 import time
 
-# ── Discovery (UDP presence broadcast) ───────────────────────────────────────
-
 DISCOVERY_PORT = 9999
 BROADCAST_ADDR = "255.255.255.255"
 ANNOUNCE_INTERVAL = 5
 PEER_TIMEOUT = 15
-
 
 class Discovery:
     def __init__(self, agent_id, tcp_port, on_peer_found, on_peer_lost):
@@ -64,9 +45,6 @@ class Discovery:
     async def _listen_loop(self):
         sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        # SO_REUSEPORT: lets several processes on ONE machine all receive the
-        # UDP broadcasts. With only SO_REUSEADDR the kernel delivers each
-        # datagram to just one socket, so peers get missed intermittently.
         if hasattr(socket, "SO_REUSEPORT"):
             sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
         sock.bind(("0.0.0.0", DISCOVERY_PORT))
@@ -105,9 +83,6 @@ class Discovery:
                 print(f"[discovery] lost peer: {p}")
                 self.on_peer_lost(p)
 
-
-# ── P2PTransport (TCP send/recv) ──────────────────────────────────────────────
-
 class P2PTransport:
     def __init__(self, agent_id, port, on_message):
         self.agent_id = agent_id
@@ -140,8 +115,6 @@ class P2PTransport:
         except Exception as e:
             print(f"failed to send to {peer_id}: {e}")
             return
-        # Closing races with the receiver tearing down after it reads our \n.
-        # The data is already delivered at this point, so swallow teardown errors.
         try:
             writer.close()
             await writer.wait_closed()
@@ -188,7 +161,7 @@ class P2PTransport:
         finally:
             writer.close()
             await writer.wait_closed()
-    
+
     def send_sync(self, peer_id: str, msg: dict):
         if self._event_loop is None:
             return
@@ -197,24 +170,16 @@ class P2PTransport:
             self._event_loop
         )
 
-    
-
-
-# ── leader ────────────────────────────────────────────────────────────────────
-
 AGENT_ID = "leader"
 PORT = 6000
-
 
 def start_loop():
     loop = asyncio.new_event_loop()
     threading.Thread(target=loop.run_forever, daemon=True).start()
     return loop
 
-
 def schedule(loop, coro):
     return asyncio.run_coroutine_threadsafe(coro, loop)
-
 
 def main():
     loop = start_loop()
@@ -237,20 +202,15 @@ def main():
     try:
         while True:
             time.sleep(5)
-            # discovery._peers is the source of truth (filled by UDP directly).
-            # We broadcast straight from it so there's no dependence on the
-            # async register_peer having landed in transport._peers yet.
             peers = dict(discovery._peers)
             if not peers:
                 print("[leader] no peers yet")
                 continue
             for pid, info in peers.items():
-                # make sure transport knows this peer, then send
                 schedule(loop, transport.register_peer(pid, info["ip"], info["port"]))
                 transport.send_sync(pid, {"text": "HI FROM LEADER"})
     except KeyboardInterrupt:
         print("\n[leader] stopping.")
-
 
 if __name__ == "__main__":
     main()

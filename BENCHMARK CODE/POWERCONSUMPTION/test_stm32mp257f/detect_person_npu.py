@@ -1,6 +1,4 @@
 #!/usr/bin/env python3
-"""YOLOv8n person detection — STM32MP257F-DK NPU"""
-
 import os, sys, time
 import cv2
 import numpy as np
@@ -16,14 +14,12 @@ WINDOW_SECONDS = 20 * 60
 TAG = os.environ.get("BENCH_TAG", "")
 RESULT_FILE = f"avg_fps_npu_yolo_{TAG}.txt" if TAG else "avg_fps_npu_yolo.txt"
 
-# RGB16 forces the ISP to give color (not grayscale R8)
 GST_PIPELINE = (
     "libcamerasrc name=cs src::stream-role=view-finder cs.src ! "
     "video/x-raw,format=RGB16,width={},height={} ! "
     "videoconvert ! video/x-raw,format=BGR ! "
     "appsink drop=true max-buffers=1 sync=false"
 ).format(CAM_W, CAM_H)
-
 
 def preprocess(frame):
     h, w = frame.shape[:2]
@@ -37,7 +33,6 @@ def preprocess(frame):
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB).astype(np.float32) / 255.0
     img = np.clip(np.round(img / 0.003921568859368563) + (-128), -128, 127).astype(np.int8)
     return np.expand_dims(img, 0), r, dw, dh
-
 
 def nms(boxes, scores, iou_thres):
     x1 = boxes[:, 0]; y1 = boxes[:, 1]
@@ -55,9 +50,8 @@ def nms(boxes, scores, iou_thres):
         order = order[1:][iou <= iou_thres]
     return keep
 
-
 def postprocess(raw, r, dw, dh):
-    preds = np.squeeze(np.asarray(raw, dtype=np.float32))   # model outputs float 0..1
+    preds = np.squeeze(np.asarray(raw, dtype=np.float32))
     if preds.shape[0] == 5:
         preds = preds.T
     confs = preds[:, 4]
@@ -65,7 +59,7 @@ def postprocess(raw, r, dw, dh):
     preds, confs = preds[keep], confs[keep]
     if len(confs) == 0:
         return [], []
-    boxes = preds[:, :4].copy() * INPUT_SIZE          # normalized 0..1 -> pixels
+    boxes = preds[:, :4].copy() * INPUT_SIZE
     boxes[:, 0] = (boxes[:, 0] - boxes[:, 2] / 2 - dw) / r
     boxes[:, 1] = (boxes[:, 1] - boxes[:, 3] / 2 - dh) / r
     boxes[:, 2] /= r
@@ -76,13 +70,11 @@ def postprocess(raw, r, dw, dh):
     keep_idx = np.array(keep_idx)
     return boxes[keep_idx], confs[keep_idx]
 
-
 def save_avg(frames, elapsed):
     avg = frames / elapsed if elapsed > 0 else 0.0
     with open(RESULT_FILE, "w") as f:
         f.write(f"avg_fps={avg:.3f}\nframes={frames}\nseconds={elapsed:.2f}\n")
-    print(f"\n>>> {avg:.2f} FPS over {elapsed:.1f}s → {RESULT_FILE}")
-
+    print(f"\n>>> {avg:.2f} FPS over {elapsed:.1f}s -> {RESULT_FILE}")
 
 def main():
     model = stai_mpu_network(model_path=MODEL_PATH, use_hw_acceleration=True)
@@ -90,7 +82,7 @@ def main():
     if not cap.isOpened():
         sys.exit("Cannot open camera")
 
-    print(f"NPU detection running. Results → {RESULT_FILE}. Press q or Ctrl+C to stop.")
+    print(f"NPU detection running. Results -> {RESULT_FILE}. Press q or Ctrl+C to stop.")
     fps, prev, start, n, saved = 0.0, time.time(), time.time(), 0, False
 
     try:

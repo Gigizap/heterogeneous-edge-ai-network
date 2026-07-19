@@ -1,6 +1,6 @@
 # functiongemma test handlers
 
-This compares accuracy and latency of the grammar-enforcing handlers (used in the related works section).
+This compares accuracy and latency of the grammar-enforcing handlers (used in the related works section). Three handlers are compared over the full tool set, each registered under a distinct `chat_format`: `functiongemma_handler.py` (`functiongemma`), `functiongemma_simple_handler.py` (`functiongemma_simple`), and `functiongemma_cache_handler.py` (`functiongemma_cache`).
 
 ## setup
 

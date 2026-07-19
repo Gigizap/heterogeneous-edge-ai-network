@@ -1,43 +1,3 @@
-"""
-Qwen3 chat handler for llama-cpp-python — SIMPLE version, NO grammar.
-
-Same idea as the functiongemma no-grammar handler, but using Qwen3's native
-ChatML + Hermes-style tool-call format instead of Gemma's <start_function_call>
-tags. The model generates freely; we parse the result and recover gracefully if
-it isn't a valid call.
-
-Why this exists: feeding Qwen3 the Gemma prompt format makes it ignore the tools
-and just print the <tool_call> blocks (or prose) as plain text, because the
-default llama.cpp chat template for Qwen expects ChatML. This handler builds the
-prompt the way Qwen3 was trained and parses the matching output.
-
-Format follows the Qwen3 chat template (tokenizer_config.json):
-  * tools advertised in the system turn inside <tools>…</tools> as one JSON
-    object per line, each = the full {"type":"function","function":{…}} tool;
-  * calls emitted as:
-        <tool_call>
-        {"name": "fn", "arguments": {...}}
-        </tool_call>
-    (one block per call, possibly several in a row);
-  * tool results sent back inside a user turn:
-        <|im_start|>user
-        <tool_response>
-        ...
-        </tool_response><|im_end|>
-    consecutive tool messages are merged into a single user turn;
-  * <think>…</think> reasoning is stripped from assistant content on parse and
-    not re-fed into history (matches the template, which only keeps the reasoning
-    of the very last turn).
-
-Trade-off vs. a grammar version:
-  + Less code; nothing to keep in sync with tool schemas.
-  + Model may freely answer in prose instead of calling a tool.
-  - No structural guarantee on output (wrong names / bad types possible).
-  (You can still pass grammar= if you build one externally.)
-
-Import this file to register the "qwen3" handler.
-"""
-
 import json
 import re
 from typing import Any, Dict, List, Optional, Union
@@ -66,25 +26,14 @@ TOOLS_POSTAMBLE = (
     "</tool_call>"
 )
 
-
 def _tool_json(tool: Dict[str, Any]) -> str:
-    """Normalize a tool to the {"type":"function","function":{…}} shape Qwen
-    expects, then dump it compact-but-readable (matches `tool | tojson`)."""
     if tool.get("type") == "function" and "function" in tool:
         obj = tool
     else:
-        # bare function dict -> wrap it
         obj = {"type": "function", "function": tool}
     return json.dumps(obj, ensure_ascii=False)
 
-
 def _thinking_from_messages(messages) -> Optional[bool]:
-    """Scan messages for the latest /no_think or /think marker.
-
-    Returns False if the last marker is /no_think, True if /think, None if
-    neither appears (caller then leaves thinking at the model default). Only a
-    standalone token is matched, so words like 'rethink' don't trigger it.
-    """
     result: Optional[bool] = None
     for msg in messages:
         text = _stringify(msg.get("content"))
@@ -92,24 +41,14 @@ def _thinking_from_messages(messages) -> Optional[bool]:
             result = (m.group(1) == "think")
     return result
 
-
 def _strip_think(content: str) -> str:
-    """Remove a leading/inline <think>…</think> block from assistant content.
-
-    The Qwen template only preserves reasoning for the final turn and strips it
-    everywhere else; for history we always drop it so old reasoning doesn't leak
-    back into the prompt.
-    """
     if not content:
         return content
     if "</think>" in content:
-        # keep only what comes after the last </think>
         content = content.split("</think>")[-1].lstrip("\n")
     return content
 
-
 def _stringify(content: Any) -> str:
-    """Coerce a message content (str | list-of-parts | None) into plain text."""
     if content is None:
         return ""
     if isinstance(content, str):
@@ -125,7 +64,6 @@ def _stringify(content: Any) -> str:
         return "".join(out)
     return str(content)
 
-
 def _build_prompt(messages, tools, enable_thinking: Optional[bool] = None) -> str:
     msgs = list(messages)
 
@@ -135,7 +73,6 @@ def _build_prompt(messages, tools, enable_thinking: Optional[bool] = None) -> st
 
     prompt = ""
 
-    # ---- system turn (with optional tool advertisement) ----
     if tools:
         prompt += f"{IM_START}system\n"
         if lead_sys is not None:
@@ -152,7 +89,6 @@ def _build_prompt(messages, tools, enable_thinking: Optional[bool] = None) -> st
         if sys_text.strip():
             prompt += f"{IM_START}system\n{sys_text.strip()}{IM_END}\n"
 
-    # ---- conversation ----
     i = 0
     n = len(msgs)
     while i < n:
@@ -179,7 +115,6 @@ def _build_prompt(messages, tools, enable_thinking: Optional[bool] = None) -> st
                 args = fn.get("arguments", {})
                 if not isinstance(args, str):
                     args = json.dumps(args, ensure_ascii=False)
-                # newline before each call block (and between content + first call)
                 if content or idx > 0:
                     prompt += "\n"
                 prompt += (
@@ -191,7 +126,6 @@ def _build_prompt(messages, tools, enable_thinking: Optional[bool] = None) -> st
             i += 1
 
         elif role == "tool":
-            # merge consecutive tool messages into one user turn
             prompt += f"{IM_START}user"
             while i < n and msgs[i]["role"] == "tool":
                 prompt += (
@@ -210,29 +144,9 @@ def _build_prompt(messages, tools, enable_thinking: Optional[bool] = None) -> st
         prompt += "<think>\n\n</think>\n\n"
     return prompt
 
-
-# --------------------------------------------------------------------------- #
-# Output parsing
-#
-# Qwen emits each call as a <tool_call>…</tool_call> block whose body is JSON:
-#     <tool_call>
-#     {"name": "fn", "arguments": {"a": 1}}
-#     </tool_call>
-# We extract every such block and json-load it. We're tolerant of:
-#   * a missing closing </tool_call> on the LAST block (hit max_tokens) — we
-#     fall back to brace-matching to recover the JSON object;
-#   * a leaked <think>…</think> preceding the calls (stripped for content).
-# A block whose JSON can't be parsed is skipped rather than mis-emitted.
-# --------------------------------------------------------------------------- #
 _TOOLCALL_RE = re.compile(r"<tool_call>\s*(.*?)\s*</tool_call>", re.DOTALL)
 
-
 def _extract_first_json_object(s: str) -> Optional[str]:
-    """Return the first balanced {...} JSON object substring, or None.
-
-    Brace-aware and string/escape-aware so braces inside string values don't
-    throw off the depth count. Used to rescue an unterminated final tool_call.
-    """
     start = s.find("{")
     if start == -1:
         return None
@@ -257,14 +171,11 @@ def _extract_first_json_object(s: str) -> Optional[str]:
                     return s[start : j + 1]
     return None
 
-
 def _parse_calls(text: str) -> List[Dict[str, str]]:
     calls: List[Dict[str, str]] = []
 
-    # 1) well-formed, closed blocks
     bodies = _TOOLCALL_RE.findall(text)
 
-    # 2) rescue an unterminated trailing <tool_call> (no closing tag)
     last_open = text.rfind("<tool_call>")
     if last_open != -1:
         tail = text[last_open + len("<tool_call>"):]
@@ -280,7 +191,6 @@ def _parse_calls(text: str) -> List[Dict[str, str]]:
         try:
             obj = json.loads(body)
         except json.JSONDecodeError:
-            # last-ditch: pull a balanced object out of noisy text
             rescued = _extract_first_json_object(body)
             if rescued is None:
                 continue
@@ -293,7 +203,6 @@ def _parse_calls(text: str) -> List[Dict[str, str]]:
             continue
         args = obj.get("arguments", {})
         if isinstance(args, str):
-            # arguments may already be a JSON string; keep it if valid, else wrap
             try:
                 json.loads(args)
                 args_str = args
@@ -304,7 +213,6 @@ def _parse_calls(text: str) -> List[Dict[str, str]]:
         calls.append({"name": name, "arguments": args_str})
 
     return calls
-
 
 @register_chat_completion_handler("qwen3")
 def qwen3_handler(
@@ -331,19 +239,11 @@ def qwen3_handler(
     if functions and not tools:
         tools = [{"type": "function", "function": f} for f in functions]
 
-    # llama-cpp-python's create_chat_completion validates kwargs and won't
-    # forward an unknown `enable_thinking` here, so we also honor a /no_think
-    # (or /think) marker placed in any message's text. Explicit kwarg wins;
-    # otherwise the LAST marker found in the conversation decides, matching
-    # Qwen's own "latest marker" semantics.
     if enable_thinking is None:
         enable_thinking = _thinking_from_messages(messages)
 
     prompt = _build_prompt(messages, tools, enable_thinking=enable_thinking)
 
-    # Stop on <|im_end|> (turn end). We do NOT stop on </tool_call> so the model
-    # can emit several parallel calls in one turn; the runaway risk that the
-    # gemma handler guards against isn't the failure mode here.
     stop_tokens = [stop] if isinstance(stop, str) else list(stop or [])
     if IM_END not in stop_tokens:
         stop_tokens.append(IM_END)
@@ -360,7 +260,7 @@ def qwen3_handler(
         repeat_penalty=repeat_penalty,
         model=model,
         logits_processor=logits_processor,
-        grammar=grammar,  # only used if explicitly passed in
+        grammar=grammar,
     )
 
     text = completion["choices"][0]["text"]
@@ -381,7 +281,6 @@ def qwen3_handler(
         }
         finish = "tool_calls"
     else:
-        # strip any reasoning block from the visible content
         message = {"role": "assistant", "content": _strip_think(text).strip()}
         finish = "stop"
 

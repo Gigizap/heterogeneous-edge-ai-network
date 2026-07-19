@@ -1,16 +1,4 @@
 #!/usr/bin/env python3
-"""
-Live object detection on Raspberry Pi 5 CPU
-Model : yolov8n.onnx  (full 80-class COCO, 640x640, decoded output [1,84,8400])
-Camera: Raspberry Pi Camera Module 2 (Picamera2)
-
-Counts frames against wall-clock time. Saves the average FPS either when
-20 minutes elapse OR when you stop (q / Ctrl+C), whichever comes first,
-using everything counted up to that moment.
-
-Run:   python3 detect_cpu.py        Quit: q in window, or Ctrl+C
-"""
-
 import os
 import time
 import cv2
@@ -42,7 +30,6 @@ COCO_NAMES = [
     "teddy bear","hair drier","toothbrush"
 ]
 
-
 def letterbox(img, new_shape=640, color=(114, 114, 114)):
     h, w = img.shape[:2]
     r = min(new_shape / h, new_shape / w)
@@ -56,14 +43,11 @@ def letterbox(img, new_shape=640, color=(114, 114, 114)):
                              cv2.BORDER_CONSTANT, value=color)
     return img, r, (dw, dh)
 
-
 def preprocess(frame):
     img, r, (dw, dh) = letterbox(frame, INPUT_SIZE)
-    #img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     img = img.astype(np.float32) / 255.0
     img = np.transpose(img, (2, 0, 1))[None]
     return np.ascontiguousarray(img), r, dw, dh
-
 
 def postprocess(output, r, dw, dh):
     preds = np.squeeze(output).T
@@ -89,7 +73,6 @@ def postprocess(output, r, dw, dh):
     idxs = np.array(idxs).flatten()
     return boxes[idxs], confidences[idxs], class_ids[idxs]
 
-
 def save_avg(window_frames, elapsed):
     avg = window_frames / elapsed if elapsed > 0 else 0.0
     with open(RESULT_FILE, "w") as f:
@@ -98,7 +81,6 @@ def save_avg(window_frames, elapsed):
         f.write(f"window_seconds={elapsed:.2f}\n")
     print(f"\n[detect_cpu] >>> avg = {avg:.2f} FPS over {elapsed:.1f}s "
           f"saved to {RESULT_FILE}")
-
 
 def main():
     session = ort.InferenceSession(MODEL_PATH, providers=["CPUExecutionProvider"])
@@ -124,7 +106,6 @@ def main():
     try:
         while True:
             frame = picam2.capture_array()
-            #frame = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
 
             blob, r, dw, dh = preprocess(frame)
             outputs = session.run(None, {input_name: blob})
@@ -152,19 +133,18 @@ def main():
 
             cv2.imshow("YOLOv8n CPU", frame)
             if cv2.waitKey(1) & 0xFF == ord("q"):
-                if not saved:                       # stopped early -> save what we have
+                if not saved:
                     save_avg(window_frames, time.time() - start)
                     saved = True
                 break
     except KeyboardInterrupt:
-        if not saved:                               # stopped early -> save what we have
+        if not saved:
             save_avg(window_frames, time.time() - start)
             saved = True
     finally:
         picam2.stop()
         cv2.destroyAllWindows()
         cv2.waitKey(1)
-
 
 if __name__ == "__main__":
     main()

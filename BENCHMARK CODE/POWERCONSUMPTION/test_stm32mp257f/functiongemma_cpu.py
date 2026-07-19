@@ -1,6 +1,4 @@
 #!/usr/bin/env python3
-"""functiongemma CPU — continuous LLM inference for benchmarking."""
-
 import os, sys, time, signal, itertools
 from llama_cpp import Llama
 
@@ -24,7 +22,6 @@ def _handle_sigint(signum, frame):
     signal.signal(signal.SIGINT, signal.default_int_handler)
     print("\n[gemma] stopping after current token...")
 
-
 def save_stats(tokens, gen_time, gap_time, n_gaps):
     total_time = gen_time + gap_time
     gen_tps   = tokens / gen_time   if gen_time   > 0 else 0.0
@@ -39,13 +36,12 @@ def save_stats(tokens, gen_time, gap_time, n_gaps):
     print(f"\n[gemma] >>> saved to {RESULT_FILE}: "
           f"gen {gen_tps:.2f} tok/s, total {total_tps:.2f} tok/s")
 
-
 def main():
     signal.signal(signal.SIGINT, _handle_sigint)
     print(f"[gemma] loading {GGUF_PATH} on {N_THREADS} threads...")
     llm = Llama(model_path=GGUF_PATH, n_ctx=N_CTX, n_threads=N_THREADS,
                 n_gpu_layers=0, verbose=False)
-    print(f"[gemma] loaded. Results → {RESULT_FILE}. Ctrl+C to stop.")
+    print(f"[gemma] loaded. Results -> {RESULT_FILE}. Ctrl+C to stop.")
 
     start = time.time()
     tokens, gen_time, gap_time, n_gaps = 0, 0.0, 0.0, 0

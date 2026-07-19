@@ -1,24 +1,4 @@
 #!/usr/bin/env python3
-"""
-plot_grades.py — visualise the Part C judge grades.
-
-Reads grades.csv (from grade_partc.py, after any manual annotation) and plots,
-for each tested configuration, the grade against the number of function replies
-shown to the model (x-axis = N replies).
-
-By default it plots the MEAN grade per (config, N) with a shaded ±1 std band and
-the per-point sample count. Rows whose grade is still an ID_<k> placeholder
-(never annotated) are skipped and reported.
-
-Outputs (into --output, default <grading>/plots):
-  grade_vs_replies.png
-  grade_vs_replies.csv   the aggregated mean/std/n behind the plot
-
-Usage:
-  python plot_grades.py --grading results/grading
-  python plot_grades.py --csv results/grading/grades.csv --agg median
-"""
-
 from __future__ import annotations
 import argparse
 import csv
@@ -34,16 +14,10 @@ PALETTE = ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728",
            "#9467bd", "#8c564b", "#e377c2", "#7f7f7f",
            "#bcbd22", "#17becf"]
 
-
 def _color(i):
     return PALETTE[i % len(PALETTE)]
 
-
 def load_grades(csv_path: Path):
-    """Return (data, skipped) where
-       data[config][n] = list of int grades,
-       skipped = count of un-annotated ID_* rows.
-    """
     data = defaultdict(lambda: defaultdict(list))
     skipped = 0
     with csv_path.open(encoding="utf-8") as fh:
@@ -65,12 +39,10 @@ def load_grades(csv_path: Path):
             data[config][n].append(gi)
     return data, skipped
 
-
 def aggregate(grades, how: str):
     if how == "median":
         return statistics.median(grades)
-    return sum(grades) / len(grades)  # mean
-
+    return sum(grades) / len(grades)
 
 def main():
     ap = argparse.ArgumentParser()
@@ -94,15 +66,14 @@ def main():
 
     data, skipped = load_grades(csv_path)
     if not data:
-        print("No numeric grades found — annotate the pending rows first.")
+        print("No numeric grades found - annotate the pending rows first.")
         return
     if skipped:
         print(f"[note] skipped {skipped} un-annotated/invalid row(s) "
               "(still ID_* placeholders).")
 
-    # aggregate
     configs = sorted(data.keys())
-    agg_rows = []   # for the csv dump
+    agg_rows = []
     fig, ax = plt.subplots(figsize=(9, 5.5))
 
     for i, config in enumerate(configs):
@@ -126,7 +97,6 @@ def main():
         ax.plot(ns, ys, "-o", lw=2, color=col, label=config)
         if not a.no_band and len(ns) > 0:
             ax.fill_between(ns, los, his, color=col, alpha=0.12)
-        # annotate sample counts at each point
         for n, y in zip(ns, ys):
             cnt = len(data[config][n])
             ax.annotate(f"n={cnt}", (n, y), textcoords="offset points",
@@ -147,7 +117,6 @@ def main():
     plt.close(fig)
     print(f"Wrote {png}")
 
-    # dump the aggregated numbers
     agg_csv = out / "grade_vs_replies.csv"
     with agg_csv.open("w", newline="", encoding="utf-8") as fh:
         w = csv.DictWriter(fh, fieldnames=[
@@ -155,7 +124,6 @@ def main():
         w.writeheader()
         w.writerows(agg_rows)
     print(f"Wrote {agg_csv}")
-
 
 if __name__ == "__main__":
     main()

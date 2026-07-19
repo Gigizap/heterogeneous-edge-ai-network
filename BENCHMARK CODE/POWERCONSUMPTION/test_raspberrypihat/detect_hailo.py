@@ -1,16 +1,4 @@
 #!/usr/bin/env python3
-"""
-Live object detection on Raspberry Pi 5 + Hailo-10H (AI HAT+ 2)
-Model : yolov8n.hef  (full 80-class COCO, 640x640, NMS baked in)
-Camera: Raspberry Pi Camera Module 2 (Picamera2)
-
-Counts frames against wall-clock time. Saves the average FPS either when
-20 minutes elapse OR when you stop (q / Ctrl+C), whichever comes first,
-using everything counted up to that moment.
-
-Run:  python3 detect_hailo.py     Quit: q in window, or Ctrl+C
-"""
-
 import os
 import time
 import cv2
@@ -23,7 +11,7 @@ HEF_PATH   = "yolov8n.hef"
 IMGSZ      = 640
 CONF_THRES = 0.25
 CAM_SIZE   = (1280, 720)
-SWAP_RB    = True   # Hailo-10H input is RGB, but Picamera2 preview is BGR by default
+SWAP_RB    = True
 
 WINDOW_SECONDS = 20 * 60
 _TAG        = os.environ.get("BENCH_TAG", "solo")
@@ -41,7 +29,6 @@ COCO_NAMES = [
     "microwave","oven","toaster","sink","refrigerator","book","clock","vase","scissors",
     "teddy bear","hair drier","toothbrush"
 ]
-
 
 def parse_nms_by_class(raw, ow, oh):
     boxes, scores, class_ids = [], [], []
@@ -61,7 +48,6 @@ def parse_nms_by_class(raw, ow, oh):
             class_ids.append(cls_idx)
     return boxes, scores, class_ids
 
-
 def save_avg(window_frames, elapsed):
     avg = window_frames / elapsed if elapsed > 0 else 0.0
     with open(RESULT_FILE, "w") as f:
@@ -70,7 +56,6 @@ def save_avg(window_frames, elapsed):
         f.write(f"window_seconds={elapsed:.2f}\n")
     print(f"\n[detect_hailo] >>> avg = {avg:.2f} FPS over {elapsed:.1f}s "
           f"saved to {RESULT_FILE}")
-
 
 def main():
     params = VDevice.create_params()
@@ -143,19 +128,18 @@ def main():
 
                     cv2.imshow("YOLOv8n Hailo-10H", bgr)
                     if cv2.waitKey(1) & 0xFF == ord("q"):
-                        if not saved:               # stopped early -> save what we have
+                        if not saved:
                             save_avg(window_frames, time.time() - start)
                             saved = True
                         break
             except KeyboardInterrupt:
-                if not saved:                       # stopped early -> save what we have
+                if not saved:
                     save_avg(window_frames, time.time() - start)
                     saved = True
             finally:
                 picam2.stop()
                 cv2.destroyAllWindows()
                 cv2.waitKey(1)
-
 
 if __name__ == "__main__":
     main()

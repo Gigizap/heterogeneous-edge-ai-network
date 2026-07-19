@@ -1,39 +1,10 @@
 #!/usr/bin/env python3
-"""
-annotate_pending.py — manually grade the records the LLM judge couldn't be
-parsed for, and write your grades back into grades.csv (replacing the ID_<k>
-placeholders).
-
-It pairs the two files by the stable `row_id`:
-  - pending_annotation.jsonl : the un-parsed datapoints (+ judge's raw answer)
-  - grades.csv               : has ID_<k> placeholders in the `grade` column
-
-For each pending item it prints the query, tool call, function replies, the
-model's final reply and the judge's raw (un-parseable) answer, then asks you for
-an integer grade 1-10. Enter:
-    1-10   record the grade
-    s      skip (leave the placeholder for later)
-    q      save & quit
-
-Already-annotated rows (grade is now a number, not ID_*) are skipped
-automatically, so you can run this repeatedly until everything is filled.
-
-Whenever you record a grade, a per-question annotation file is also written to
-the annotations/ folder (one JSON file per row_id) containing the query, tool
-call, function replies, the model's final reply, the judge's raw answer and the
-human-assigned grade.
-
-Usage:
-  python annotate_pending.py --grading results/grading
-"""
-
 from __future__ import annotations
 import argparse
 import csv
 import json
 import re
 from pathlib import Path
-
 
 def load_csv(path: Path):
     with path.open(encoding="utf-8") as fh:
@@ -42,13 +13,11 @@ def load_csv(path: Path):
         fields = r.fieldnames
     return rows, fields
 
-
 def save_csv(path: Path, rows, fields):
     with path.open("w", newline="", encoding="utf-8") as fh:
         w = csv.DictWriter(fh, fieldnames=fields)
         w.writeheader()
         w.writerows(rows)
-
 
 def load_pending(path: Path):
     items = []
@@ -60,9 +29,7 @@ def load_pending(path: Path):
             items.append(json.loads(line))
     return items
 
-
 def save_annotation(annotations_dir: Path, item: dict, grade: str):
-    """Write a single per-question annotation file into annotations/."""
     annotations_dir.mkdir(parents=True, exist_ok=True)
     record = {
         "row_id": item.get("row_id"),
@@ -75,17 +42,14 @@ def save_annotation(annotations_dir: Path, item: dict, grade: str):
         "judge_raw_answer": item.get("judge_raw_answer", ""),
         "grade": int(grade),
     }
-    # Sanitize row_id for use as a filename. Windows forbids: < > : " / \ | ? *
     raw_id = str(item.get("row_id", "unknown"))
     safe_id = re.sub(r'[<>:"/\\|?*]', "_", raw_id)
-    # Also strip control chars and trailing dots/spaces (also illegal on Windows).
     safe_id = re.sub(r"[\x00-\x1f]", "_", safe_id).rstrip(". ") or "unknown"
     out_path = annotations_dir / f"{safe_id}.json"
     out_path.write_text(
         json.dumps(record, ensure_ascii=False, indent=2), encoding="utf-8"
     )
     return out_path
-
 
 def show(item: dict, idx: int, total: int):
     bar = "=" * 70
@@ -109,7 +73,6 @@ def show(item: dict, idx: int, total: int):
         print(f"\n[judge error: {item['judge_error']}]")
     print(bar)
 
-
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--grading", default="results/grading",
@@ -132,19 +95,18 @@ def main():
         return
     pending = load_pending(pending_path)
     if not pending:
-        print(f"No pending items in {pending_path} — nothing to annotate.")
+        print(f"No pending items in {pending_path} - nothing to annotate.")
         return
 
     rows, fields = load_csv(csv_path)
     by_id = {r["row_id"]: r for r in rows}
     pending_by_id = {it["row_id"]: it for it in pending}
 
-    # Only items whose CSV cell is still an ID_* placeholder need work.
     todo = []
     for it in pending:
         row = by_id.get(it["row_id"])
         if row is None:
-            print(f"  [warn] {it['row_id']} not in grades.csv — skipping")
+            print(f"  [warn] {it['row_id']} not in grades.csv - skipping")
             continue
         if str(row["grade"]).startswith("ID_"):
             todo.append(it)
@@ -184,10 +146,9 @@ def main():
     print(f"Annotations saved in {annotations_dir}")
     if remaining:
         print(f"{remaining} placeholder(s) still un-graded "
-              "— run again to finish them.")
+              " - run again to finish them.")
     else:
         print("All records now have a numeric grade.")
-
 
 if __name__ == "__main__":
     main()
