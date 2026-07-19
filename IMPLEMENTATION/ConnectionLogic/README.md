@@ -1,6 +1,6 @@
 # P2P Device Network
 
-A zero-configuration peer-to-peer communication layer for embedded Linux devices. Nodes discover each other automatically, maintain a live peer registry, and exchange messages over direct TCP connections — no broker, no central server.
+A zero-configuration peer-to-peer communication layer for embedded Linux devices. Nodes discover each other automatically, maintain a live peer registry, and exchange messages over direct TCP connections - no broker, no central server.
 NOTE: THE PARAGRAPHS REGARDING MESH NETWORKING ARE ONLY THEORETICAL AND HAVE YET TO BE IMPLEMENTED. AS OF RN THE CONNECTION IS ESTABLISHED EITHER VIA LAN (requires editing BROADCAST_ADDR IN discovery.py TO SPECIFY THE SUBNET) EITHER VIA WIFI (BROADCAST_ADDR = 255.255.255.255, IP assigned thanks to dhcp).
 
 ---
@@ -9,13 +9,13 @@ NOTE: THE PARAGRAPHS REGARDING MESH NETWORKING ARE ONLY THEORETICAL AND HAVE YET
 
 ### Generic schema
 
-Any IP-capable device running the stack can participate. Devices discover each other via a shared broadcast domain and establish direct P2P connections. An optional DHCP/infrastructure layer handles IP assignment — if using a mesh network, this is replaced by static or MAC-derived addressing.
+Any IP-capable device running the stack can participate. Devices discover each other via a shared broadcast domain and establish direct P2P connections. An optional DHCP/infrastructure layer handles IP assignment - if using a mesh network, this is replaced by static or MAC-derived addressing.
 
 ![Generic network schema](../../figures/network_general.png)
 
 ### Minimal setup
 
-The smallest meaningful deployment is a Raspberry Pi 5 (with Hailo accelerator) connected to an STM32MP257FDK board. Both run the same stack. A shared network — wired or wireless — provides IP connectivity.
+The smallest meaningful deployment is a Raspberry Pi 5 (with Hailo accelerator) connected to an STM32MP257FDK board. Both run the same stack. A shared network - wired or wireless - provides IP connectivity.
 
 ![Minimal two-device setup](../../figures/network_minimal.png)
 
@@ -33,7 +33,7 @@ The system is split into two cooperating modules. `Discovery` handles the "who's
 
 | Layer | Role |
 |---|---|
-| `run_leader`/`sensing_agent` | Calls `transport.send()` or `transport.broadcast()` by agent ID — never touches IPs directly |
+| `run_leader`/`sensing_agent` | Calls `transport.send()` or `transport.broadcast()` by agent ID - never touches IPs directly |
 | `P2PTransport` | TCP server + client. Maintains peer registry. Dispatches to `on_message` callback on receipt |
 | `Discovery` | UDP broadcast announcer + listener. Fires `on_peer_found` / `on_peer_lost` as the network changes |
 | Network layer | Any IP network: direct Ethernet, router WiFi, or mesh (e.g. batman-adv). The code is layer-agnostic |
@@ -50,11 +50,11 @@ The two modules wire together through callbacks. `Discovery`'s `on_peer_found` i
 |---|---|---|
 | `_announce_loop` | UDP broadcast | Sends `HELLO` every 5s on all interfaces |
 | `_listen_loop` | UDP, port 9999 | Receives `HELLO` from peers, calls `_register()` |
-| `_watchdog_loop` | — | Evicts peers not seen within 15s timeout |
+| `_watchdog_loop` | - | Evicts peers not seen within 15s timeout |
 
-> **Multi-interface note.** The announcer sends to the limited broadcast address `255.255.255.255`, which the OS routes out a single interface — typically the one owning the default route. On a device with both Ethernet and WiFi active on different subnets, this means peers on the non-default interface won't receive the announcement. The listener binds to `0.0.0.0` and receives on all interfaces, so the receive side works regardless. If you need simultaneous discovery across multiple interfaces, the announcer should be modified to enumerate the device's interfaces and send one broadcast per subnet (e.g. `10.0.0.255` and `192.168.1.255`).
+> **Multi-interface note.** The announcer sends to the limited broadcast address `255.255.255.255`, which the OS routes out a single interface - typically the one owning the default route. On a device with both Ethernet and WiFi active on different subnets, this means peers on the non-default interface won't receive the announcement. The listener binds to `0.0.0.0` and receives on all interfaces, so the receive side works regardless. If you need simultaneous discovery across multiple interfaces, the announcer should be modified to enumerate the device's interfaces and send one broadcast per subnet (e.g. `10.0.0.255` and `192.168.1.255`).
 
-All access to the shared `_peers` dict is protected by a `threading.Lock()`. The lock is released before calling `on_peer_found` or `on_peer_lost` to avoid deadlocks — callers must not re-acquire the lock inside those callbacks.
+All access to the shared `_peers` dict is protected by a `threading.Lock()`. The lock is released before calling `on_peer_found` or `on_peer_lost` to avoid deadlocks - callers must not re-acquire the lock inside those callbacks.
 
 ---
 
@@ -66,8 +66,8 @@ All access to the shared `_peers` dict is protected by a `threading.Lock()`. The
 |---|---|
 | `send(peer_id, msg)` | Opens a TCP connection to the named peer, sends a JSON message, closes the socket |
 | `broadcast(msg)` | Snapshots the peer registry, calls `send()` for each peer. Unreachable peers are logged, not raised |
-| `register_peer()` | Wired to Discovery's `on_peer_found` — adds a peer to the routing table |
-| `unregister_peer()` | Wired to Discovery's `on_peer_lost` — removes a peer from the routing table |
+| `register_peer()` | Wired to Discovery's `on_peer_found` - adds a peer to the routing table |
+| `unregister_peer()` | Wired to Discovery's `on_peer_lost` - removes a peer from the routing table |
 
 > **Asyncio** The current implementation uses asyncio to manage the TCP connections.
 
@@ -109,7 +109,7 @@ transport.broadcast({"type": "status", "value": 42})
 
 The stack is network-agnostic and works over any IP-capable transport. Mesh networks (such as batman-adv) are one option, particularly useful in environments without a central router or access point.
 
-With batman-adv, each device's physical WiFi interface (`wlan0`) is put into ad-hoc mode and managed by the batman-adv kernel module, which presents a virtual `bat0` interface to the OS. From Python's perspective, `bat0` is just a regular network interface — no code changes required.
+With batman-adv, each device's physical WiFi interface (`wlan0`) is put into ad-hoc mode and managed by the batman-adv kernel module, which presents a virtual `bat0` interface to the OS. From Python's perspective, `bat0` is just a regular network interface - no code changes required.
 The easiest setup with mesh networking is preconfiguring static IPs, this implies the need to assign different IPs when there is the need to scale and / or add modules.
 ---
 
@@ -119,8 +119,8 @@ Each device needs a unique IP before it can participate. The right approach depe
 
 | Method | Best for | Notes |
 |---|---|---|
-| DHCP (router) | Standard networks | Works out of the box. Cannot be used with mesh — a new node can't get an IP before joining the mesh (bootstrap problem) |
-| MAC-hash + /16 subnet | Small–medium fleets | Derives IP from MAC address. Conflict probability ≈0.07% for 10 devices. Requires no coordination |
+| DHCP (router) | Standard networks | Works out of the box. Cannot be used with mesh - a new node can't get an IP before joining the mesh (bootstrap problem) |
+| MAC-hash + /16 subnet | Small-medium fleets | Derives IP from MAC address. Conflict probability ≈0.07% for 10 devices. Requires no coordination |
 | Hardcoded per device | Small stable fleets | Simplest and safest. Zero conflict risk. Edit a config file once per device |
 | Coordinator + leader election | Large dynamic fleets | One node acts as DHCP server. On failure a new coordinator is elected (e.g. highest MAC wins). Complex to implement correctly |
 
@@ -128,7 +128,7 @@ DHCP is recommended and requires no additional setup when using a router.
 
 > **IP collision warning.** 
 If using static IPs:
-Two devices sharing an IP break the network at the ARP layer — *even if they listen on different ports*. The router/switch can only map an IP to one MAC address at a time, and the two devices will continuously fight over the ARP entry by sending conflicting announcements. Whichever device "wins" the ARP race at any moment receives all traffic for that IP; the other becomes invisible. Connections flap, packets get dropped, and applications see intermittent failures with no clear cause. Different listening ports do not solve the problem because it happens before TCP is even involved. Always ensure unique IPs before connecting devices (if using a static-IP approach with no DHCP).
+Two devices sharing an IP break the network at the ARP layer - *even if they listen on different ports*. The router/switch can only map an IP to one MAC address at a time, and the two devices will continuously fight over the ARP entry by sending conflicting announcements. Whichever device "wins" the ARP race at any moment receives all traffic for that IP; the other becomes invisible. Connections flap, packets get dropped, and applications see intermittent failures with no clear cause. Different listening ports do not solve the problem because it happens before TCP is even involved. Always ensure unique IPs before connecting devices (if using a static-IP approach with no DHCP).
 
 
 ---
@@ -152,13 +152,13 @@ Before diving into platform-specific issues, confirm the basics:
 
 1. **Same subnet?** Run `ip -4 addr show` on Linux or `ipconfig` on Windows on each device. All agents should share the same first three octets (e.g. all `192.168.1.x`). Different subnets means UDP broadcasts won't cross.
 2. **Sockets actually listening?**
-   - Linux: `ss -tlnp | grep <tcp_port>` and `ss -ulnp | grep 9999`
-   - Windows: `Get-NetTCPConnection -LocalPort <tcp_port> -State Listen` and `Get-NetUDPEndpoint -LocalPort 9999`
+  - Linux: `ss -tlnp | grep <tcp_port>` and `ss -ulnp | grep 9999`
+  - Windows: `Get-NetTCPConnection -LocalPort <tcp_port> -State Listen` and `Get-NetUDPEndpoint -LocalPort 9999`
 3. **Direct connectivity?** From the other device, `ping <ip>` should succeed and `nc -v <ip> <tcp_port>` should connect.
-   - `ping` fails → routing / subnet / client isolation issue, not firewall
-   - `nc` says "Connection refused" → process isn't listening
-   - `nc` hangs / "Connection timed out" → firewall is silently dropping packets
-   - `nc` connects → firewall is fine, the issue is in the application
+  - `ping` fails → routing / subnet / client isolation issue, not firewall
+  - `nc` says "Connection refused" → process isn't listening
+  - `nc` hangs / "Connection timed out" → firewall is silently dropping packets
+  - `nc` connects → firewall is fine, the issue is in the application
 
 ### Linux
 
@@ -185,7 +185,7 @@ Other things to check:
 
 ⚠️ **Windows is the platform where things go wrong most often.** Windows Firewall blocks inbound connections by default. This is the single most common reason the agent appears to start fine but never receives messages.
 
-#### Step 1 — Check for existing block rules w.r.t. the Python interpreter
+#### Step 1 - Check for existing block rules w.r.t. the Python interpreter
 
 Open **PowerShell as Administrator** and run:
 
@@ -205,9 +205,9 @@ Get-NetFirewallRule -Direction Inbound -Action Block -Enabled True |
 
 Replace `<full path to your python.exe>` with the actual path. To find it, run `(Get-Command python).Source` inside the conda env / venv you'll use to run the agent.
 
-> Block rules win over Allow rules in Windows Firewall. If a Block rule exists for your Python executable, no amount of Allow rules will help — you have to disable the Block first.
+> Block rules win over Allow rules in Windows Firewall. If a Block rule exists for your Python executable, no amount of Allow rules will help - you have to disable the Block first.
 
-#### Step 2 — Add allow rules for the agent
+#### Step 2 - Add allow rules for the agent
 
 Still in admin PowerShell, replace `<python_path>` and `<tcp_port>` with your values:
 
@@ -230,7 +230,7 @@ These rules should be scoped to:
 
 ADVICE: double check what you do with the security of your connections because it is easy to mess up!
 
-#### Step 3 — Make sure your network is marked Private
+#### Step 3 - Make sure your network is marked Private
 
 Run:
 
@@ -246,7 +246,7 @@ Set-NetConnectionProfile -Name "<your network name>" -NetworkCategory Private
 
 If you also see a profile called `"Unidentified network"` / `"Rete non identificata"` on the same interface, that's a Windows quirk and usually harmless as long as your real network is Private. If you want to also cover that case, duplicate the rules with `-Profile Public` (the `LocalSubnet` + `Program` scoping keeps them safe).
 
-#### Step 4 — Verify
+#### Step 4 - Verify
 
 With the agent running on Windows, from another machine on the LAN:
 
@@ -254,7 +254,7 @@ With the agent running on Windows, from another machine on the LAN:
 nc -v <windows_ip> <tcp_port>
 ```
 
-If it connects, you're set. If it hangs, go back to Step 1 — there's still a Block rule winning.
+If it connects, you're set. If it hangs, go back to Step 1 - there's still a Block rule winning.
 
 #### To remove the rules later
 
@@ -273,8 +273,8 @@ Remove-NetFirewallRule -DisplayName "P2P Transport TCP"
 ### Known gotchas (any platform)
 
 - **Different subnets.** If two agents have IPs like `192.168.1.x` and `192.168.2.x`, they're on different subnets and UDP broadcasts won't cross between them. This happens on:
-  - Mesh WiFi systems with separate IoT/guest SSIDs
-  - Networks with "AP isolation" / "client isolation" enabled
-  - Mixing wired LAN and WiFi when the router treats them as different networks
-  - VPNs intercepting traffic
+ - Mesh WiFi systems with separate IoT/guest SSIDs
+ - Networks with "AP isolation" / "client isolation" enabled
+ - Mixing wired LAN and WiFi when the router treats them as different networks
+ - VPNs intercepting traffic
 - **Client isolation.** Some routers (especially hotspot wifis of e.g. samsung smartphones) block client-to-client traffic even on the same subnet. If `ping` between two devices fails but both have internet, suspect this. Disable isolation in the router admin panel (if possible) or change network.

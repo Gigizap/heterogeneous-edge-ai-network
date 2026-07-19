@@ -34,7 +34,7 @@ Note: the Hailo website references the base model ([Qwen/Qwen3-1.7B](https://hug
 
 | File | Target | Source |
 |---|---|---|
-| `yolov8n.hef` | Hailo | [Hailo Model Zoo — HAILO10H object detection](https://github.com/hailo-ai/hailo_model_zoo/blob/master/docs/public_models/HAILO10H/HAILO10H_object_detection.rst) |
+| `yolov8n.hef` | Hailo | [Hailo Model Zoo - HAILO10H object detection](https://github.com/hailo-ai/hailo_model_zoo/blob/master/docs/public_models/HAILO10H/HAILO10H_object_detection.rst) |
 | `yolov8n.onnx` | CPU | Same link above |
 
 ## Usage

@@ -5,9 +5,9 @@ leader can resume chats without losing context or dropping an unanswered
 question.
 
 Code:
-- [`LeaderLogic/backup_manager.py`](backup_manager.py) — the `BackupManager`
-- [`ElectionLogic/election.py`](../ElectionLogic/election.py) — peer ranking / `backup_peers()`
-- [`main.py`](../main.py) — wiring, push points, restore-on-boot
+- [`LeaderLogic/backup_manager.py`](backup_manager.py) - the `BackupManager`
+- [`ElectionLogic/election.py`](../ElectionLogic/election.py) - peer ranking / `backup_peers()`
+- [`main.py`](../main.py) - wiring, push points, restore-on-boot
 
 ---
 
@@ -41,10 +41,10 @@ devices total → only the one other device is used).
 The leader calls `backup.push(chat_id, messages)` on every Telegram turn, and
 it happens **twice per turn** in [main.py](../main.py):
 
-1. **Before inference** — backs up `prior history + new user message`
+1. **Before inference** - backs up `prior history + new user message`
    immediately, so an unanswered question survives even on leader types that
    keep no history.
-2. **After inference** — pushes the updated transcript so the slot no longer
+2. **After inference** - pushes the updated transcript so the slot no longer
    looks "pending" (prevents a double-answer on a later failover).
 
 `push()` caches locally, then sends a `CONV_BACKUP` message to **each** peer in
@@ -56,7 +56,7 @@ cached locally. Each receiver stores it and returns a `CONV_BACKUP_ACK`.
 When a node boots as leader it calls `backup.restore_all(timeout=3.0)`:
 
 1. Broadcast `CONV_RESTORE_REQ` with `chat_id="*"`.
-2. `time.sleep(3.0)` — passive wait while peers reply with one
+2. `time.sleep(3.0)` - passive wait while peers reply with one
    `CONV_RESTORE_RESP` per stored conversation, merged into the local store.
 3. Return a copy of the **entire local store**.
 
@@ -81,18 +81,18 @@ takes ~15 s.
 
 ## Failure analysis (with `REPLICATION_FACTOR = 2`)
 
-**Single failure — leader dies.** New leader = strongest survivor = the
+**Single failure - leader dies.** New leader = strongest survivor = the
 2nd-strongest = a device that was already a backup target. The history is
 **already in its local store**; restore succeeds immediately. The broadcast +
-3 s sleep in `restore_all` does no real work in this case — it's a fallback /
+3 s sleep in `restore_all` does no real work in this case - it's a fallback /
 safety net for inconsistent peer-table views, not the primary path.
 
-**Double failure — leader + one backup die.** New leader = 3rd-strongest,
+**Double failure - leader + one backup die.** New leader = 3rd-strongest,
 which was the *second* backup target, so it also holds a replica → history
 **survives**. (Under the old factor-1 design this case lost the conversation
 entirely, because only the single 2nd-strongest device ever held a copy.)
 
-**Triple failure — leader + both backups die.** History is lost. Raise
+**Triple failure - leader + both backups die.** History is lost. Raise
 `REPLICATION_FACTOR` to tolerate more simultaneous losses, at the cost of more
 per-message network traffic.
 

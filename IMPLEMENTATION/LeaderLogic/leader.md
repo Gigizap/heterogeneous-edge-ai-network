@@ -43,7 +43,7 @@ class Workflow:
 ```
 
 `get_history` and `load_history` may be no-ops for small models that do
-not maintain history — `main.py` checks `hasattr` before calling them.
+not maintain history - `main.py` checks `hasattr` before calling them.
 
 ## Existing presets
 

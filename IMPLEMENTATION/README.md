@@ -21,9 +21,9 @@ A distributed agentic system where a fleet of embedded devices collaborate over 
 
 Every user request goes through a two-step inference pipeline:
 
-1. **Dispatch** — the LLM converts the user's natural-language message into a canonical command, using the available skill list fetched dynamically from the network.
-2. **Broadcast** — the command is sent over TCP to all known peers; replies are collected (configurable timeout, default 3 s).
-3. **Answer** — a second LLM call formats the collected results into a human-friendly Telegram reply.
+1. **Dispatch** - the LLM converts the user's natural-language message into a canonical command, using the available skill list fetched dynamically from the network.
+2. **Broadcast** - the command is sent over TCP to all known peers; replies are collected (configurable timeout, default 3 s).
+3. **Answer** - a second LLM call formats the collected results into a human-friendly Telegram reply.
 
 ### Architecture
 
@@ -62,12 +62,12 @@ These are the **Operational** plane of the [communication protocol](#communicati
 A function that a sensing device can execute. Each device advertises its tools to the leader via `tools/list` (pulled by the leader when the device joins). Tools are OpenAI-compatible function definitions, so the LLM can decide which tool in the network best serves the user's request.
 
 **Skill**
-A broader term referring to what a sensing device can do — essentially an alias for the available tools on that device.
+A broader term referring to what a sensing device can do - essentially an alias for the available tools on that device.
 
 **Sensing Device**
 Any device in the network that ships with a preset folder under `SensingLogic/`. Each preset contains a `tool_config.json` with:
-- `tool_defs` — OpenAI-compatible tool definitions exposed to the LLM.
-- `skills` — maps the tool name (as the LLM sees it) to the actual function and file to execute. This decoupling improves LLM dispatch accuracy.
+- `tool_defs` - OpenAI-compatible tool definitions exposed to the LLM.
+- `skills` - maps the tool name (as the LLM sees it) to the actual function and file to execute. This decoupling improves LLM dispatch accuracy.
 
 **Leader**
 One device in the network elected as leader. The leader manages user communication (Telegram) and dispatches commands to sensing devices. The leader can simultaneously act as a sensing device.
@@ -103,14 +103,14 @@ Each device is assigned a hardware preset in its `device_profile.json`, which de
 | Generic device | `generic_leader.py` | Score-selected (see below) | llama.cpp / GGUF |
 | STM32MP257FDK | `stm32mp257fdk_leader.py` | `functiongemma:270m` | llama.cpp / GGUF, CPU only |
 
-#### Generic leader — score-based model selection
+#### Generic leader - score-based model selection
 
 The generic leader picks its GGUF model from the device score computed at startup. The score reflects available RAM, CPU, and hardware capabilities.
 
 | Score | Model | Backend |
 |---|---|---|
 | ≥ 170 | `qwen3:1.7b` | llama.cpp, CPU |
-| 120 – 169 | `granite:350m` | llama.cpp, CPU |
+| 120 - 169 | `granite:350m` | llama.cpp, CPU |
 | < 120 | `functiongemma:270m` | llama.cpp, CPU + FG handler |
 
 Score-based selection is controlled by the `LLM_detection_with_score` flag in `generic_leader.py` (default `False` → always `granite:350m`).
@@ -127,7 +127,7 @@ Score-based selection is controlled by the `LLM_detection_with_score` flag in `g
 
 The system uses two separate config files per device:
 
-**`software_config.json`** — static, shared across leader and sensing roles (the agent-ID is **not** here — it lives in `device_profile.json`):
+**`software_config.json`** - static, shared across leader and sensing roles (the agent-ID is **not** here - it lives in `device_profile.json`):
 ```json
 {
   "agent":    { "tcp_port": 5555 },
@@ -136,7 +136,7 @@ The system uses two separate config files per device:
 }
 ```
 
-**`LeaderLogic/raspberry_config.json`** — Pi+Hailo leader only, device-specific inference config:
+**`LeaderLogic/raspberry_config.json`** - Pi+Hailo leader only, device-specific inference config:
 ```json
 {
   "llm_cpu":              { "host": "http://127.0.0.1:11434", "model": "qwen3:1.7b" },
@@ -145,7 +145,7 @@ The system uses two separate config files per device:
 }
 ```
 
-**`SensingLogic/<preset>/tool_config.json`** — sensing device only, defines the tools it exposes to the network:
+**`SensingLogic/<preset>/tool_config.json`** - sensing device only, defines the tools it exposes to the network:
 ```json
 {
   "skills":   [{ "file": "...", "function": "...", "command": "..." }],
@@ -160,13 +160,13 @@ The system uses two separate config files per device:
 Model files are kept in two different places depending on which agent uses them:
 
 - **Leader LLM models** go in the top-level **`IMPLEMENTATION/models/`** folder. The generic / STM32 leaders look there for their GGUF (e.g. `Qwen3-1.7B-Q4_K_M.gguf`, `functiongemma-270m-it-Q4_K_M.gguf`) and download it from Hugging Face into that folder if it is missing. For the Pi + Hailo leader, the native `.hef` is found via the `hailo.hef_path` entry in `LeaderLogic/raspberry_config.json` (e.g. `models/qwen3-1.7b.hef`).
-- **Sensing models** go **inside the sensing agent's own preset folder**, next to its code — each preset resolves its model relative to itself (`Path(__file__).parent / "<model>"`). For example `SensingLogic/raspberrypi5_yolo_NPU/yolov8n.hef`, `raspberrypi5_yolo_CPU/yolov8n.onnx`, and `stm32mp257_yolo_NPU/yolov8n_320_quant_pt_uf_od_coco-person-st.nb`. Drop a new sensing model in the same folder as the skill that loads it.
+- **Sensing models** go **inside the sensing agent's own preset folder**, next to its code - each preset resolves its model relative to itself (`Path(__file__).parent / "<model>"`). For example `SensingLogic/raspberrypi5_yolo_NPU/yolov8n.hef`, `raspberrypi5_yolo_CPU/yolov8n.onnx`, and `stm32mp257_yolo_NPU/yolov8n_320_quant_pt_uf_od_coco-person-st.nb`. Drop a new sensing model in the same folder as the skill that loads it.
 
 ---
 
 ### Available Skills
 
-Skills are defined per sensing device in `tool_config.json` and discovered dynamically by the leader via `fetchskills` — no leader configuration change is needed when new skills are added.
+Skills are defined per sensing device in `tool_config.json` and discovered dynamically by the leader via `fetchskills` - no leader configuration change is needed when new skills are added.
 
 Example skills on the STM32MP257FDK legacy sensing agent:
 
@@ -190,7 +190,7 @@ Available to the leader:
 
 ## Communication
 
-The P2P networking layer handles peer discovery and message transport with zero manual configuration. Nodes discover each other automatically via UDP broadcast and exchange messages over direct TCP connections — no broker, no central server.
+The P2P networking layer handles peer discovery and message transport with zero manual configuration. Nodes discover each other automatically via UDP broadcast and exchange messages over direct TCP connections - no broker, no central server.
 
 → See [`ConnectionLogic/README.md`](ConnectionLogic/README.md) for full details.
 
@@ -217,12 +217,12 @@ All messages are JSON. Discovery runs over UDP (port `9999`); everything else is
 
 ## Setup
 
-> **Requirements depend on the role.** There is no single requirements file — what a device needs depends on what it runs:
+> **Requirements depend on the role.** There is no single requirements file - what a device needs depends on what it runs:
 > - **Everyone:** `requirements/base.txt` (`psutil`, `requests`).
-> - **Leader:** an LLM backend — `requirements/generic.txt` (`llama-cpp-python`) for the generic leader, `requirements/stm32mp257fdk.txt` for the STM32 (llama.cpp **cross-compiled**, see below), or `requirements/hailo.txt` (Hailo SDK + Ollama, no llama-cpp-python) for the Pi+Hailo leader.
-> - **Sensing:** the model runtime for its preset — `SensingLogic/<preset>/requirements.txt`. A sensing-only device needs **no** LLM backend; a leader-only device needs **no** detection runtime.
+> - **Leader:** an LLM backend - `requirements/generic.txt` (`llama-cpp-python`) for the generic leader, `requirements/stm32mp257fdk.txt` for the STM32 (llama.cpp **cross-compiled**, see below), or `requirements/hailo.txt` (Hailo SDK + Ollama, no llama-cpp-python) for the Pi+Hailo leader.
+> - **Sensing:** the model runtime for its preset - `SensingLogic/<preset>/requirements.txt`. A sensing-only device needs **no** LLM backend; a leader-only device needs **no** detection runtime.
 >
-> On first run, `main.py` auto-installs the pip-installable lines for the roles you pick. The hardware runtimes (`hailo_platform`, `stai_mpu`, `tflite_runtime`, `picamera2`, STM32 `llama-cpp-python`) are **not** pip packages — each preset's requirements file documents the real `apt` / `x-linux-ai` / Hailo SDK / cross-compile command in its comments.
+> On first run, `main.py` auto-installs the pip-installable lines for the roles you pick. The hardware runtimes (`hailo_platform`, `stai_mpu`, `tflite_runtime`, `picamera2`, STM32 `llama-cpp-python`) are **not** pip packages - each preset's requirements file documents the real `apt` / `x-linux-ai` / Hailo SDK / cross-compile command in its comments.
 
 ### Minimal Test Setup
 
@@ -240,7 +240,7 @@ As shown in [`ConnectionLogic/README.md`](ConnectionLogic/README.md) (`image/net
 
 2. Connect the Hailo accelerator to the board through the PCIe port.
 
-3. Install Hailo dependencies. The required version (5.3) is **not available via `apt`** — download the `.deb` packages manually from the [Hailo Developer Zone](https://hailo.ai/developer-zone/) and install with `dpkg`:
+3. Install Hailo dependencies. The required version (5.3) is **not available via `apt`** - download the `.deb` packages manually from the [Hailo Developer Zone](https://hailo.ai/developer-zone/) and install with `dpkg`:
 
 ```bash
 sudo dpkg -i hailort_<version>_arm64.deb
@@ -270,19 +270,19 @@ Check that llama.cpp backend gets compiled with the correct arm support.
 
 2. Install the AI expansion package:
 
-   1. **Ensure Internet Connection** — connect the board to the network (via Ethernet or WiFi). Follow the instructions in *"3. Automatic WiFi configuration at start up"* on the [ST wiki](https://wiki.st.com/stm32mpu/wiki/How_to_setup_a_WLAN_connection#Automatic_WiFi_configuration_at_start_up).
+   1. **Ensure Internet Connection** - connect the board to the network (via Ethernet or WiFi). Follow the instructions in *"3. Automatic WiFi configuration at start up"* on the [ST wiki](https://wiki.st.com/stm32mpu/wiki/How_to_setup_a_WLAN_connection#Automatic_WiFi_configuration_at_start_up).
 
-   2. **Synchronize Repository** — sync the OpenSTLinux package repository:
+   2. **Synchronize Repository** - sync the OpenSTLinux package repository:
 ```bash
 apt-get update
 ```
 
-   3. **Install Tool Package** — install the core AI management tool:
+   3. **Install Tool Package** - install the core AI management tool:
 ```bash
 apt-get install x-linux-ai-tool
 ```
 
-   4. **Verify Installation** — check the version (e.g. `6.2.0`):
+   4. **Verify Installation** - check the version (e.g. `6.2.0`):
 ```bash
 x-linux-ai -v
 ```
@@ -297,7 +297,7 @@ x-linux-ai -i python3-libstai-mpu        # provides the `stai_mpu` module (NPU p
 x-linux-ai -i stai-mpu-tflite            # TFLite plugin (CPU preset)
 ```
 
-> These are the deps documented in each STM32 sensing preset's `requirements.txt` — they are installed via `apt` / `x-linux-ai`, **not** pip. If this device is also an STM32 **leader** (FunctionGemma), see *Cross-compiling `llama-cpp-python` for the STM32MP2* below.
+> These are the deps documented in each STM32 sensing preset's `requirements.txt` - they are installed via `apt` / `x-linux-ai`, **not** pip. If this device is also an STM32 **leader** (FunctionGemma), see *Cross-compiling `llama-cpp-python` for the STM32MP2* below.
 
 4. Attach the camera to the board.
 
@@ -307,7 +307,7 @@ More info on the AI packages: [X-LINUX-AI expansion package](https://wiki.st.com
 
 ### Cross-compiling `llama-cpp-python` for the STM32MP2 (Cortex-A35)
 
-Only needed if the STM32MP257F-DK acts as a **leader** (runs FunctionGemma via llama.cpp). `llama-cpp-python` is left commented in `requirements/stm32mp257fdk.txt` because a plain `pip install` builds without NEON or runs out of memory on the board — instead **cross-compile the wheel on an x86_64 host** and install it on the board.
+Only needed if the STM32MP257F-DK acts as a **leader** (runs FunctionGemma via llama.cpp). `llama-cpp-python` is left commented in `requirements/stm32mp257fdk.txt` because a plain `pip install` builds without NEON or runs out of memory on the board - instead **cross-compile the wheel on an x86_64 host** and install it on the board.
 
 Target: OpenSTLinux `5.0.15-...-scarthgap-mpu-v26.02.18`, Cortex-A35 (AArch64).
 
