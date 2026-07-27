@@ -1,3 +1,0 @@
-huggingface-hub
-numpy
-llama-cpp-python

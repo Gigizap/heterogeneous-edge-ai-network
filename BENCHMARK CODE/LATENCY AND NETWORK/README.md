@@ -38,6 +38,6 @@ fleet's worth of load on a real leader without N physical boards:
 
 | Folder | Contents |
 |---|---|
-| [SCRIPTS](SCRIPTS) | `aggregate_network.py` turns the leader-side traffic capture in `network_data/` into per-fleet-size metrics and writes `WRITING_REPORT/network.tex`. |
-| [REPORT SCRIPTS](REPORT%20SCRIPTS) | `explore.py`, `analysis.py`, `gen_tex.py`, `validate_tex.py`: read the logs in `NEW RESULTS/`, compute the statistics, and generate `WRITING_REPORT/latency.tex` and its figures. Run from this folder. |
+| [SCRIPTS](SCRIPTS) | `aggregate_network.py` turns the leader-side traffic capture in `network_data/` into per-fleet-size metrics. |
+| [REPORT SCRIPTS](REPORT%20SCRIPTS) | `explore.py`, `analysis.py`, `gen_tex.py`, `validate_tex.py`: read the logs in `NEW RESULTS/`, compute the statistics, and generate the LaTeX tables and figures. Run from this folder. |
 | [NEW RESULTS](NEW%20RESULTS) | The leader-log JSON result sets the report is built from: `VARYING TOOLS 1 reply/` and `VARYING REPLIES 1 tool/`. |

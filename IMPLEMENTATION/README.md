@@ -77,47 +77,37 @@ The unique identifier used to distinguish agents in the network. If a device act
 
 ---
 
-### Leader Inference Modes (Raspberry Pi 5 + Hailo only)
+### Leader Presets
 
-The Raspberry Pi 5 + Hailo leader (`piandhailo_leader.py`) supports three inference modes, cyclable at runtime by sending `/changehost` in Telegram:
+A leader preset is a folder under `LeaderLogic/<preset>/` holding a `leader.py` - the leader-side mirror of a `SensingLogic/<preset>/` folder holding a `tool_config.json`. The shared entry point, `LeaderLogic/run_leader.py`, owns the network wiring and the two-step pipeline (query → tool → devices, tool result → reply); each preset only supplies the two model-specific pieces of it (`dispatch`, `answer`). See [`LeaderLogic/leader.md`](LeaderLogic/leader.md) for the exact contract.
 
-| Mode | Dispatch | Answer | Notes |
+Each device is assigned a leader preset in its `device_profile.json` (the menu at first-run setup is built from whatever preset folders exist, so a new one becomes selectable with no code change - see `ElectionLogic.identity.discover_leader_presets()`).
+
+| Preset folder | Dispatch | Answer | Hardware |
 |---|---|---|---|
-| `workflow1` | Hailo NPU (`qwen3:1.7b`, native `.hef`) | Hailo NPU | Fully on-chip; fastest end-to-end |
-| `workflow2` | CPU Ollama (`qwen3:1.7b`, OpenAI tool-calling) | CPU Ollama | No NPU required |
-| `workflow3` | CPU Ollama (`functiongemma:270m`, OpenAI tool-calling) | Hailo NPU (`qwen3:1.7b`) | Best dispatch accuracy + fast answer |
+| `raspberry_cpu` | `qwen3:1.7b` (CPU Ollama) | same (CPU Ollama) | Raspberry Pi 5 |
+| `raspberry_hailo` | `qwen3:1.7b` (Hailo native `.hef`) | same (Hailo NPU) | Raspberry Pi 5 + Hailo AI HAT 2 |
+| `raspberry_cpuhailo` | `functiongemma:270m` (CPU Ollama) | `qwen3:1.7b` (Hailo NPU) | Raspberry Pi 5 + Hailo AI HAT 2 |
+| `generic` | Score-selected (see below) | same | Any device |
+| `stm32mp257fdk` | `functiongemma:270m` (llama.cpp) | same | STM32MP257FDK |
+| `mock` | - | - | Any device (no LLM; election/backup/failover testing) |
 
-`workflow3` is the recommended mode: FunctionGemma is purpose-built for tool-calling and runs cheaply on CPU, while the Hailo NPU handles the more expensive answer-generation step.
-
-The active mode is shown by `/status`.
-
----
-
-### Leader Election and Device Presets
-
-Each device is assigned a hardware preset in its `device_profile.json`, which determines which leader module is loaded on election.
-
-| Device | Leader module | Model | Backend |
-|---|---|---|---|
-| Raspberry Pi 5 + Hailo AI HAT 2 | `piandhailo_leader.py` | `qwen3:1.7b` | Hailo native `.hef` + CPU Ollama |
-| Generic device | `generic_leader.py` | Score-selected (see below) | llama.cpp / GGUF |
-| STM32MP257FDK | `stm32mp257fdk_leader.py` | `functiongemma:270m` | llama.cpp / GGUF, CPU only |
+`raspberry_cpuhailo` is the recommended Pi+Hailo preset: FunctionGemma is purpose-built for tool-calling and runs cheaply on CPU, while the Hailo NPU handles the more expensive answer-generation step. Unlike the old `/changehost`-cycled workflow modes, each Pi+Hailo preset is now a separate, static leader selection made once at first-run setup.
 
 #### Generic leader - score-based model selection
 
-The generic leader picks its GGUF model from the device score computed at startup. The score reflects available RAM, CPU, and hardware capabilities.
+The `generic` preset picks its GGUF model from the device score computed at startup. The score reflects available RAM, CPU, and hardware capabilities.
 
 | Score | Model | Backend |
 |---|---|---|
 | ≥ 170 | `qwen3:1.7b` | llama.cpp, CPU |
-| 120 - 169 | `granite:350m` | llama.cpp, CPU |
-| < 120 | `functiongemma:270m` | llama.cpp, CPU + FG handler |
+| < 170 | `functiongemma:270m` | llama.cpp, CPU + FG handler |
 
-Score-based selection is controlled by the `LLM_detection_with_score` flag in `generic_leader.py` (default `False` → always `granite:350m`).
+Score-based selection is controlled by the `LLM_detection_with_score` flag in `LeaderLogic/generic/leader.py` (default `False` → always `functiongemma:270m`).
 
 #### Fallback chain example
 
-- Primary leader: Raspberry Pi 5 + Hailo, running `qwen3:1.7b`.
+- Primary leader: Raspberry Pi 5 + Hailo, e.g. running the `raspberry_cpuhailo` preset.
 - If the Pi fails, leader election promotes the next highest-scoring device.
 - The STM32MP257FDK can act as leader using `functiongemma:270m` via llama.cpp (lower performance).
 
@@ -136,7 +126,7 @@ The system uses two separate config files per device:
 }
 ```
 
-**`LeaderLogic/raspberry_config.json`** - Pi+Hailo leader only, device-specific inference config:
+**`LeaderLogic/<preset>/config.json`** - Pi+Hailo presets only, device-specific inference config (each preset reads only the section(s) it needs):
 ```json
 {
   "llm_cpu":              { "host": "http://127.0.0.1:11434", "model": "qwen3:1.7b" },
@@ -159,7 +149,7 @@ The system uses two separate config files per device:
 
 Model files are kept in two different places depending on which agent uses them:
 
-- **Leader LLM models** go in the top-level **`IMPLEMENTATION/models/`** folder. The generic / STM32 leaders look there for their GGUF (e.g. `Qwen3-1.7B-Q4_K_M.gguf`, `functiongemma-270m-it-Q4_K_M.gguf`) and download it from Hugging Face into that folder if it is missing. For the Pi + Hailo leader, the native `.hef` is found via the `hailo.hef_path` entry in `LeaderLogic/raspberry_config.json` (e.g. `models/qwen3-1.7b.hef`).
+- **Leader LLM models** go in the top-level **`IMPLEMENTATION/models/`** folder. The `generic` / `stm32mp257fdk` presets look there for their GGUF (e.g. `Qwen3-1.7B-Q4_K_M.gguf`, `functiongemma-270m-it-Q4_K_M.gguf`) and download it from Hugging Face into that folder if it is missing. For the `raspberry_hailo` / `raspberry_cpuhailo` presets, the native `.hef` is found via the `hailo.hef_path` entry in `LeaderLogic/<preset>/config.json` (e.g. `models/qwen3-1.7b.hef`).
 - **Sensing models** go **inside the sensing agent's own preset folder**, next to its code - each preset resolves its model relative to itself (`Path(__file__).parent / "<model>"`). For example `SensingLogic/raspberrypi5_yolo_NPU/yolov8n.hef`, `raspberrypi5_yolo_CPU/yolov8n.onnx`, and `stm32mp257_yolo_NPU/yolov8n_320_quant_pt_uf_od_coco-person-st.nb`. Drop a new sensing model in the same folder as the skill that loads it.
 
 ---
@@ -178,6 +168,8 @@ Example skills on the STM32MP257FDK legacy sensing agent:
 | `list_faces` | List all enrolled faces |
 | `detect_objects_now` | Single-shot object detection |
 | `run_till_detect <object>` | Continuously detect until target is found |
+
+The `meeting_room_raspberry` and `meeting_room_stm` presets are a worked example of the same mechanism: each exposes a single `detect_people_number` skill that counts the people in a meeting room, so asking the leader whether the room is free fans the tool out to whichever devices are watching it.
 
 Available to the leader:
 
@@ -219,7 +211,7 @@ All messages are JSON. Discovery runs over UDP (port `9999`); everything else is
 
 > **Requirements depend on the role.** There is no single requirements file - what a device needs depends on what it runs:
 > - **Everyone:** `requirements/base.txt` (`psutil`, `requests`).
-> - **Leader:** an LLM backend - `requirements/generic.txt` (`llama-cpp-python`) for the generic leader, `requirements/stm32mp257fdk.txt` for the STM32 (llama.cpp **cross-compiled**, see below), or `requirements/hailo.txt` (Hailo SDK + Ollama, no llama-cpp-python) for the Pi+Hailo leader.
+> - **Leader:** an LLM backend - `LeaderLogic/<preset>/requirements.txt`, e.g. `LeaderLogic/generic/requirements.txt` (`llama-cpp-python`), `LeaderLogic/stm32mp257fdk/requirements.txt` (llama.cpp **cross-compiled**, see below), or `LeaderLogic/raspberry_cpu|raspberry_hailo|raspberry_cpuhailo/requirements.txt` (Ollama and/or the Hailo SDK, no llama-cpp-python).
 > - **Sensing:** the model runtime for its preset - `SensingLogic/<preset>/requirements.txt`. A sensing-only device needs **no** LLM backend; a leader-only device needs **no** detection runtime.
 >
 > On first run, `main.py` auto-installs the pip-installable lines for the roles you pick. The hardware runtimes (`hailo_platform`, `stai_mpu`, `tflite_runtime`, `picamera2`, STM32 `llama-cpp-python`) are **not** pip packages - each preset's requirements file documents the real `apt` / `x-linux-ai` / Hailo SDK / cross-compile command in its comments.
@@ -231,6 +223,7 @@ As shown in [`ConnectionLogic/README.md`](ConnectionLogic/README.md) (`image/net
 - **Raspberry Pi 5** (optionally with Hailo AI HAT 2)
 - **STM32MP257FDK**
 - **camera module BCAMSIMX$MZ1** (camera module for STM32MP257FDK board)
+- **picamera2**
 
 ---
 
@@ -254,9 +247,9 @@ curl -fsSL https://ollama.com/install.sh | sh
 ollama pull qwen3:1.7b
 ```
 
-5. Place the `qwen3:1.7b` `.hef` file at the path set in `LeaderLogic/raspberry_config.json` (`hailo.hef_path`).
+5. Place the `qwen3:1.7b` `.hef` file at the path set in `LeaderLogic/raspberry_hailo/config.json` and `LeaderLogic/raspberry_cpuhailo/config.json` (`hailo.hef_path`).
 
-6. You can also install llama-cpp-python and use generic_leader as the Leader preset.
+6. You can also install llama-cpp-python and use the `generic` preset as the Leader preset instead.
 ```bash
 pip install llama-cpp-python
 ```
@@ -307,7 +300,7 @@ More info on the AI packages: [X-LINUX-AI expansion package](https://wiki.st.com
 
 ### Cross-compiling `llama-cpp-python` for the STM32MP2 (Cortex-A35)
 
-Only needed if the STM32MP257F-DK acts as a **leader** (runs FunctionGemma via llama.cpp). `llama-cpp-python` is left commented in `requirements/stm32mp257fdk.txt` because a plain `pip install` builds without NEON or runs out of memory on the board - instead **cross-compile the wheel on an x86_64 host** and install it on the board.
+Only needed if the STM32MP257F-DK acts as a **leader** (runs FunctionGemma via llama.cpp). `llama-cpp-python` is left commented in `LeaderLogic/stm32mp257fdk/requirements.txt` because a plain `pip install` builds without NEON or runs out of memory on the board - instead **cross-compile the wheel on an x86_64 host** and install it on the board.
 
 Target: OpenSTLinux `5.0.15-...-scarthgap-mpu-v26.02.18`, Cortex-A35 (AArch64).
 
@@ -382,6 +375,7 @@ scp ./dist/llama_cpp_python-*.whl root@<board-ip>:/tmp/
 #### 7. Install (board)
 
 ```bash
+# you may need to install pip first
 pip install /tmp/llama_cpp_python-*.whl
 ```
 
@@ -402,38 +396,6 @@ llm = Llama(model_path="model.gguf", n_threads=2)   # 2 = both A35 cores
 ---
 
 ## Benchmarks
-
-### Leader latency (on target)
-
-[`BenchmarkLeader/`](BenchmarkLeader/) measures a leader's **full end-to-end pipeline latency** on real edge hardware:
-
-```
-query received
-  → fetch_and_merge_skills()   (network round-trip)
-  → LLM dispatch picks a tool  (query → tool)
-  → broadcast the tool call to the other device
-  → sensing result received    (tool → result)
-  → LLM turns the result into a natural-language reply  (result → reply)
-```
-
-You run **one of the two bench scripts as the leader on one device, while the other device runs a normal sensing agent** (`python main.py`). The script brings up its own leader transport, waits for the sensing agent to appear, then times every stage. The "number of tools" axis is simulated by padding the real tool fetched from the network with dummy `wrong_tool_i` entries up to `n ∈ {1, 5, 10, 15, 20}`.
-
-| Script | Leader (device) | Correct tool | Sensing agent on the other device |
-|---|---|---|---|
-| [`bench_objects.py`](BenchmarkLeader/bench_objects.py) | FunctionGemma on CPU (STM32MP257FDK) | `object_detection` | Raspberry Pi 5 + Hailo, preset `raspberrypi5_yolo_NPU` |
-| [`bench_people.py`](BenchmarkLeader/bench_people.py) | Qwen3 on Hailo (Raspberry Pi 5) | `person_detection` | STM32MP257FDK, preset `stm32mp257_yolo_CPU` / `_NPU` |
-
-```bash
-# on the device that hosts the sensing agent
-python main.py
-
-# on the device under test (the leader), once the sensing agent is up
-python -m BenchmarkLeader.bench_objects                     # FunctionGemma leader
-python -m BenchmarkLeader.bench_people [think|no_think|both] # Qwen3/Hailo leader (default: both)
-python -m BenchmarkLeader.bench_people probe                 # check if Hailo qwen3 reasons (no network needed)
-```
-
-Per-sample and aggregated results (stage means: fetch, dispatch, query→tool, tool→result, result→reply, end-to-end) are written as CSV + JSON under `BenchmarkLeader/results/`.
 
 ### Accuracy & power consumption
 

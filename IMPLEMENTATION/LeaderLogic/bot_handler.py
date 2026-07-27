@@ -55,6 +55,12 @@ class TelegramBot:
         except Exception as e:
             log.warning("send_message error: %s", e)
 
+        # Telegram clears typing when a message arrives, so an intermediate
+        # message (e.g. "using <tool> on ...") would blank it until the next
+        # refresh tick. Re-arm at once if this chat is still working.
+        if chat_id in self._active_typing:
+            self._send_typing(chat_id)
+
     def reply_to_last(self, text: str):
         """
         Convenience wrapper: reply to whoever sent the last message.
@@ -68,26 +74,33 @@ class TelegramBot:
             log.warning("reply_to_last: no chat yet, dropping: %s", text)
 
     def start_typing_indicator(self, chat_id: int):
+        # Send the FIRST action synchronously so typing shows the instant the
+        # message is received: requests.post releases the GIL during its I/O, so
+        # it goes out even though the caller thread is about to enter a long,
+        # GIL-holding inference call. A background thread then only refreshes it
+        # (Telegram's typing state lapses after ~5s) until stop clears it.
         cancel = threading.Event()
         self._active_typing[chat_id] = cancel
+        self._send_typing(chat_id)
         def loop():
-            while True:
-                try:
-                    requests.post(
-                        f"{self._base}/sendChatAction",
-                        json={"chat_id": chat_id, "action": "typing"},
-                        timeout=10,
-                    )
-                except Exception as e:
-                    log.warning("typing error: %s", e)
-                if cancel.wait(timeout=4):
-                    break
+            while not cancel.wait(timeout=4):
+                self._send_typing(chat_id)
         threading.Thread(target=loop, daemon=True).start()
 
     def stop_typing_indicator(self, chat_id: int):
         cancel = self._active_typing.pop(chat_id, None)
         if cancel:
             cancel.set()
+
+    def _send_typing(self, chat_id: int):
+        try:
+            requests.post(
+                f"{self._base}/sendChatAction",
+                json={"chat_id": chat_id, "action": "typing"},
+                timeout=10,
+            )
+        except Exception as e:
+            log.warning("typing error: %s", e)
 
     # ----------------------------------------------------------------- private
 

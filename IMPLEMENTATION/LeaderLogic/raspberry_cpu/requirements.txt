@@ -1,0 +1,2 @@
+# Leader requirements - Raspberry Pi, CPU-only (qwen3:1.7b via Ollama, OpenAI-compatible HTTP).
+# ollama - separate system service, not pip; see README for install steps.

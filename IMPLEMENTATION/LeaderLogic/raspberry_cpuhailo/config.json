@@ -1,0 +1,11 @@
+{
+  "llm_cpu_tool_calling": {
+    "host":    "http://127.0.0.1:11434",
+    "api_key": "",
+    "model":   "functiongemma"
+  },
+
+  "hailo": {
+    "hef_path": "models/qwen3-1.7b.hef"
+  }
+}

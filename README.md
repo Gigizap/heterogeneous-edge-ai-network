@@ -90,7 +90,9 @@ The repository has two top-level parts: the working **implementation** of the ne
 |---|---|---|---|
 | Raspberry Pi 5 + Hailo AI HAT+ 2 | Leader / Sensing | Hailo H10 (40 TOPS) | `qwen3:1.7b` |
 | STM32MP257F-DK | Leader / Sensing | On-chip NPU | `functiongemma:270m` |
-| Generic Linux device (e.g. Intel NUC) | Leader / Sensing | CPU (llama.cpp) | score-selected GGUF |
+| Generic device (Linux or Windows PC) | Leader / Sensing | llama.cpp (CPU or GPU) | `functiongemma:270m`* |
+
+\* new leader and sensing presets can be added as subfolders in `/LeaderLogic` and in `/SensingLogic`
 
 ---
 
@@ -116,7 +118,7 @@ All documentation lives next to the code it describes. Start with the implementa
 
 ## Quick start
 
-[`IMPLEMENTATION/`](IMPLEMENTATION/README.md) is the folder you **copy onto every device** in the network. Every node runs the *same* code - what an agent does is decided by its `device_profile.json` and presets, not by a different program. On each device, install the requirements and run `main.py`; it reads the device profile, scores the hardware, discovers peers, and joins leader election automatically.
+[`IMPLEMENTATION/`](IMPLEMENTATION/README.md) is the folder you **copy onto every device** in the network. Every node runs the *same* codebase. On each device, install the requirements and run `main.py`; it reads the device profile, scores the hardware, discovers peers, and joins leader election automatically.
 
 ```bash
 # on each device, inside the copied IMPLEMENTATION/ folder

@@ -1,0 +1,5 @@
+{
+  "hailo": {
+    "hef_path": "models/qwen3-1.7b.hef"
+  }
+}

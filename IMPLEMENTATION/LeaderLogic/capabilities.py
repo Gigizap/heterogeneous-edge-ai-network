@@ -18,13 +18,13 @@ CAPABILITY_ANNOUNCE P2P message schema
   "type":            "CAPABILITY_ANNOUNCE",
   "from":            <agent_id>,
   "leader_id":       <agent_id>,
-  "preset":          "hailo" | "jetson" | "nuc" | null,
+  "preset":          "generic" | "raspberry_cpu" | "raspberry_hailo" | "raspberry_cpuhailo" | "stm32mp257fdk" | null,
   "model":           "qwen2.5-coder:1.5b",
   "history_support": true,
   "hardware":        {ram_gb, cpu_cores, has_gpu, has_hailo, has_npu},
   "score":           215,
   "connected_peers": 3,
-  "commands":        ["/changehost", "/status"],
+  "commands":        ["/status"],
   "ts":              1234567890.0
 }
 """
@@ -37,12 +37,7 @@ log = logging.getLogger(__name__)
 
 # ── presets → known commands ──────────────────────────────────────────────────
 
-_PRESET_COMMANDS: dict[str | None, list[str]] = {
-    "piandhailo":    ["/changehost", "/status"],
-    "stm32mp257fdk": ["/status"],
-    "generic":       ["/status"],
-    None:            ["/status"],
-}
+_DEFAULT_COMMANDS = ["/status"]
 
 # Models small enough to lack history (parameter count threshold, in billions)
 _HISTORY_THRESHOLD_B = 7.0
@@ -68,7 +63,7 @@ def announce(
       - all P2P peers (structured payload)
     """
     preset    = profile.get("leader_preset")
-    commands  = _PRESET_COMMANDS.get(preset, ["/status"])
+    commands  = _DEFAULT_COMMANDS
     has_hist  = model_params_b >= _HISTORY_THRESHOLD_B
 
     telegram_text = _build_telegram_text(
@@ -118,7 +113,7 @@ def status_text(
 ) -> str:
     """Build the reply for the `/status` command (current model + capabilities)."""
     preset   = profile.get("leader_preset")
-    commands = _PRESET_COMMANDS.get(preset, ["/status"])
+    commands = _DEFAULT_COMMANDS
     has_hist = model_params_b >= _HISTORY_THRESHOLD_B
     return f"[SYSTEM MESSAGE]\n*Status* — `{agent_id}`\n\n" + _capability_lines(
         preset      = preset,
@@ -143,7 +138,7 @@ def resume_notice(
     """Message for a user whose reply was interrupted by a leader failover:
     a heads-up that a new leader is resuming, followed by its capabilities."""
     preset   = profile.get("leader_preset")
-    commands = _PRESET_COMMANDS.get(preset, ["/status"])
+    commands = _DEFAULT_COMMANDS
     has_hist = model_params_b >= _HISTORY_THRESHOLD_B
     return (
         "The previous leader disconnected. The new leader is resuming your "

@@ -1,0 +1,5 @@
+# Leader requirements - Raspberry Pi + Hailo AI HAT, split (FunctionGemma CPU
+# dispatch + Hailo NPU answer).
+# hailo_platform - install via the Hailo SDK, not pip; see README for install steps.
+# ollama - separate system service, not pip; see README for install steps.
+# numpy - not imported by this preset; hailort pulls it in anyway.

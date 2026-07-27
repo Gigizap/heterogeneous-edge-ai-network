@@ -1,0 +1,19 @@
+{
+  "skills": [
+    {
+      "file": "people_counter",
+      "function": "detect_people_number",
+      "command": "detect_people_number"
+    }
+  ],
+  "tool_defs": [
+    {
+      "type": "function",
+      "function": {
+        "name": "detect_people_number",
+        "description": "detects the people in the meeting room and returns how many people are present. Use this when asked about the availability of the meeting room.",
+        "parameters": { "type": "object", "properties": {}, "required": [] }
+      }
+    }
+  ]
+}

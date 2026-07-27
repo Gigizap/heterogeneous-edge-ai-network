@@ -1,0 +1,7 @@
+# Sensing preset — STM32MP257F-DK (OpenSTLinux), meeting-room people counter (YOLOv8n person detection, NPU/STAI MPU).
+# Install on the board. These are NOT pip packages — use apt / X-LINUX-AI.
+
+# NOT pip — OpenSTLinux system packages:
+#   numpy / opencv : apt-get install python3-numpy python3-opencv
+#   stai_mpu       : x-linux-ai -i python3-libstai-mpu
+# (nothing to pip-install for this preset)

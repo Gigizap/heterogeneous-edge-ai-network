@@ -6,8 +6,8 @@ Stupidly simple, self-contained smoke test for LLM inference on a Hailo NPU.
 Loads the .hef and runs one prompt, streaming tokens to stdout.
 
 Lives at the IMPLEMENTATION/ root (next to LeaderLogic/ and models/). The HEF
-path is read from LeaderLogic/raspberry_config.json (same as bench_people.py)
-and resolved against this folder, so it works no matter where you run from.
+path is read from LeaderLogic/raspberry_hailo/config.json and resolved against
+this folder, so it works no matter where you run from.
 
     python3 test_hailo_inference_LLM.py
 """
@@ -19,7 +19,7 @@ from hailo_platform import VDevice
 from hailo_platform.genai import LLM as HailoLLM
 
 IMPL_ROOT = Path(__file__).resolve().parent
-CONFIG = IMPL_ROOT / "LeaderLogic" / "raspberry_config.json"
+CONFIG = IMPL_ROOT / "LeaderLogic" / "raspberry_hailo" / "config.json"
 HEF = IMPL_ROOT / json.loads(CONFIG.read_text())["hailo"]["hef_path"]
 
 MESSAGES = [

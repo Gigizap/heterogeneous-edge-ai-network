@@ -25,7 +25,3 @@ See [LATENCY AND NETWORK/README.md](LATENCY%20AND%20NETWORK/README.md).
 Runs both edge YOLO models (ONNX 640px / 80-class COCO, and the TFLite 320px person-only model) on a laptop against local images, using the same preprocessing the boards use.
 See [test/README.md](test/README.md); run [`test_images.py`](test_images.py).
 
-## Writing report
-
-The LaTeX sections and generated tables/figures for the report: `latency.tex`, `network.tex`, and the `graphs/` tables. Produced by the Latency and network analysis scripts.
-See [WRITING_REPORT/](WRITING_REPORT).

@@ -1,7 +1,15 @@
 *.gguf
 
+# Downloaded LLM weights (multi-GB). Sensing presets keep their own small
+# models next to their code, so only the model dirs are ignored.
+models/
+
+# Generated per device by first-run setup, not shared config.
+device_profile*.json
+
 # Python bytecode caches (build artifacts, regenerated from source)
 __pycache__/
 *.py[cod]
 
-CLAUDE.md
+# Editor settings, per developer.
+.vscode/

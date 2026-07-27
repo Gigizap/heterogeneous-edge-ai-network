@@ -66,6 +66,10 @@ class LeaderNetwork:
         """Send the picked tool to its owners; return [{from, text}, ...]."""
         return self.dispatcher.dispatch(name, arguments)
 
+    def owners(self, name):
+        """Agent ids that currently own `name` - who dispatch() is about to hit."""
+        return self.registry.owners(name)
+
     # ── skill discovery ──────────────────────────────────────────────────────
 
     def _request_tools(self, peer_id: str):

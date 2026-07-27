@@ -1,0 +1,3 @@
+# Leader requirements - Raspberry Pi + Hailo AI HAT, NPU-only (qwen3 native .hef).
+# hailo_platform - install via the Hailo SDK, not pip; see README for install steps.
+# numpy - not imported by this preset; hailort pulls it in anyway.

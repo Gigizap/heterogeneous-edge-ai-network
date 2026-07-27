@@ -297,7 +297,7 @@ def _resume_pending_requests(leader, pending):
 
 def _boot_leader(prof: dict):
     global _current_leader, _leader_resources
-    import importlib
+    import LeaderLogic.run_leader as run_leader
     from LeaderLogic.capabilities import announce, resume_notice
     from LeaderLogic.bot_handler  import TelegramBot
 
@@ -330,16 +330,13 @@ def _boot_leader(prof: dict):
     if restored:
         leaderlog.info("restored %d conversation(s)", len(restored))
 
-    module_path = get_leader_module(prof)
-    try:
-        leader_mod = importlib.import_module(module_path)
-    except ImportError:
-        leaderlog.warning("%s not found — falling back to generic", module_path)
-        leader_mod = importlib.import_module("LeaderLogic.generic_leader")
-
-    leader = leader_mod.boot(cfg=cfg, agent_id=LEADER_ID,
+    # run_leader picks the leader implementation matching this device's
+    # leader_preset (a LeaderLogic/<preset>/ folder) and boots it; leader_mod
+    # (run_leader itself) exposes MODEL_NAME / MODEL_PARAMS_B for /status.
+    leader = run_leader.boot(cfg=cfg, agent_id=LEADER_ID,
                              transport=leader_transport,
                              discovery=leader_discovery, bot=bot, profile=profile)
+    leader_mod = run_leader
 
     pending = []   # chats whose backup ended in an unanswered user turn
     if restored:

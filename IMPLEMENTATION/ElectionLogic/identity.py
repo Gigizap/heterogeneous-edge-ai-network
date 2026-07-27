@@ -11,7 +11,9 @@ device_profile.json schema:
 {
     "agent_id":          "camera-corridor",
     "sensing_preset":     "stm32mp257fdk",   // folder under SensingLogic/, or null (no sensing)
-    "leader_preset":     "generic",         // "piandhailo" | "stm32mp257fdk" | "generic" | "mock" | "none"
+    "leader_preset":     "generic",         // folder under LeaderLogic/ ("raspberry_cpu" |
+                                             // "raspberry_hailo" | "raspberry_cpuhailo" |
+                                             // "stm32mp257fdk" | "generic"), or "mock" | "none"
     "cpu_cores":         8,
     "cpu_tflops":        0.5,               // user-declared peak CPU compute (TFLOPS)
     "ram_bandwidth_gbs": 25.6,              // user-declared memory bandwidth (GB/s)
@@ -28,35 +30,12 @@ from utils import available_cpu_cores
 
 PROFILE_PATH  = Path(__file__).parent.parent / "device_profile.json"
 SENSING_DIR   = Path(__file__).parent.parent / "SensingLogic"
+LEADER_DIR    = Path(__file__).parent.parent / "LeaderLogic"
 
-# Leader preset tags → their leader module.  Order is the menu order.
-PRESET_OPTIONS = {
-    "1": ("piandhailo",    "LeaderLogic.piandhailo_leader"),
-    "2": ("stm32mp257fdk", "LeaderLogic.stm32mp257fdk_leader"),
-    "3": ("generic",       "LeaderLogic.generic_leader"),   # safe default
-    "4": ("none",          None),                           # follower only
-    "5": ("mock",          "LeaderLogic.run_mock_leader"),  # no-LLM test leader
-}
-
-# Human labels for the leader-preset menu (kept aligned with PRESET_OPTIONS).
-_PRESET_LABELS = {
-    "1": "Raspberry Pi + Hailo",
-    "2": "STM32MP257F-DK",
-    "3": "Generic (auto-select model by RAM/score)  <- safe default",
-    "4": "None (follower only, no leader capability)",
-    "5": "Mock (no LLM - test election / backup / failover)",
-}
-
-# Leader-preset tag → its requirements file under requirements/.
-# NOTE: the file name does NOT always match the tag — `piandhailo` uses
-# `hailo.txt` (numpy only; the Hailo .hef + Ollama need no llama-cpp-python).
-# Without this map the old code fell back to generic.txt for piandhailo and
-# wrongly tried to compile llama-cpp-python on the Pi.
-_LEADER_REQS = {
-    "piandhailo":    "hailo.txt",
-    "stm32mp257fdk": "stm32mp257fdk.txt",
-    "generic":       "generic.txt",
-}
+# A leader preset is any folder under LeaderLogic/ holding a leader.py - the
+# tag IS the folder name, mirroring SensingLogic/<preset>/tool_config.json.
+# Discovered dynamically (see discover_leader_presets()), same as sensing.
+_DEFAULT_LEADER_PRESET = "generic"   # safe default: works on any device
 
 
 # ── public API ────────────────────────────────────────────────────────────────
@@ -135,15 +114,32 @@ def get_leader_module(profile: dict) -> str | None:
     or None if the device has no leader capability (preset == "none").
 
     Called by main.py at startup to determine if this device can lead,
-    and again in _boot_leader() to import the correct leader module.
+    and again in run_leader.boot() to import the correct leader module.
+    The tag IS the LeaderLogic/ folder name (see discover_leader_presets()).
     """
     preset = profile.get("leader_preset")
-    if preset == "none":
+    if not preset or preset == "none":
         return None
-    for _key, (tag, module) in PRESET_OPTIONS.items():
-        if tag == preset:
-            return module
-    return "LeaderLogic.generic_leader"
+    return f"LeaderLogic.{preset}.leader"
+
+
+def discover_leader_presets() -> list[str]:
+    """
+    Return the available leader presets: every sub-folder of LeaderLogic/
+    that holds a leader.py. Each such folder *is* a leader preset, so dropping
+    in a new one makes it selectable automatically with no code change - the
+    leader-side mirror of discover_sensing_presets().
+    """
+    presets = []
+    if not LEADER_DIR.is_dir():
+        return presets
+    for child in sorted(LEADER_DIR.iterdir()):
+        if not child.is_dir():
+            continue
+        if not (child / "leader.py").exists():
+            continue
+        presets.append(child.name)
+    return presets
 
 
 # ── prompts ───────────────────────────────────────────────────────────────────
@@ -250,20 +246,35 @@ def _prompt_leader_preset() -> str:
     """
     Ask what leader capability this device has.
 
-    Returns one of the PRESET_OPTIONS tags: "piandhailo", "stm32mp257fdk",
-    "generic", "mock" (no-LLM test leader), or "none" (follower only).
+    The menu is built from the folders actually present in LeaderLogic/
+    (those holding a leader.py), plus a "none" option for a sensing-only /
+    no-leader device. Returns the folder name (tag) or "none".
     """
-    print("\nLeader capability of this device:")
-    for key in sorted(PRESET_OPTIONS):
-        print(f"  [{key}] {_PRESET_LABELS[key]}")
+    presets = discover_leader_presets()
 
-    valid = ", ".join(sorted(PRESET_OPTIONS))
+    print("\nLeader capability of this device:")
+    for i, name in enumerate(presets, start=1):
+        tag = "  <- safe default" if name == _DEFAULT_LEADER_PRESET else ""
+        print(f"  [{i}] {name}{tag}")
+    none_choice = len(presets) + 1
+    print(f"  [{none_choice}] none  (follower only, no leader capability)")
+
+    if not presets:
+        print("  (no valid leader presets found under LeaderLogic/ — defaulting to none)")
+        return "none"
+
+    default = (str(presets.index(_DEFAULT_LEADER_PRESET) + 1)
+               if _DEFAULT_LEADER_PRESET in presets else str(none_choice))
     while True:
-        choice = input("  Choice [3]: ").strip() or "3"
-        if choice in PRESET_OPTIONS:
-            preset, _module = PRESET_OPTIONS[choice]
+        choice = input(f"  Choice [{default}]: ").strip() or default
+        if choice == str(none_choice):
+            print("  No leader capability on this device.")
+            return "none"
+        if choice.isdigit() and 1 <= int(choice) <= len(presets):
+            preset = presets[int(choice) - 1]
             print(f"  Leader preset: {preset}")
             return preset
+        print(f"  Please enter a number between 1 and {none_choice}.")
         print(f"  Please enter one of: {valid}.")
 
 
@@ -329,7 +340,7 @@ def _install_dependencies(leader_preset: str | None, sensing_preset: str | None)
     """
     Pip-install the requirements for this device's role(s):
       - requirements/base.txt                          (always)
-      - requirements/<leader>.txt                      (if it can lead; see _LEADER_REQS)
+      - LeaderLogic/<leader_preset>/requirements.txt    (if it can lead)
       - SensingLogic/<sensing_preset>/requirements.txt  (if it senses)
 
     Requirements files list only pip-installable packages; hardware runtimes
@@ -342,11 +353,9 @@ def _install_dependencies(leader_preset: str | None, sensing_preset: str | None)
     root  = Path(__file__).parent.parent
     files = [root / "requirements" / "base.txt"]
 
-    # "mock" is the no-LLM test leader: it needs nothing beyond base.txt, so skip
-    # the leader requirements (which would otherwise fall back to generic.txt and
-    # try to build llama-cpp-python).
+    # "mock" is the no-LLM test leader: it needs nothing beyond base.txt.
     if leader_preset and leader_preset not in ("none", "mock"):
-        files.append(root / "requirements" / _LEADER_REQS.get(leader_preset, "generic.txt"))
+        files.append(LEADER_DIR / leader_preset / "requirements.txt")
 
     if sensing_preset:
         files.append(SENSING_DIR / sensing_preset / "requirements.txt")
