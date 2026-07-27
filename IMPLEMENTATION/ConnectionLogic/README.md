@@ -13,12 +13,6 @@ Any IP-capable device running the stack can participate. Devices discover each o
 
 ![Generic network schema](../../figures/mesh_network_compact.png)
 
-### Minimal setup
-
-The smallest meaningful deployment is a Raspberry Pi 5 (with Hailo accelerator) connected to an STM32MP257FDK board. Both run the same stack. A shared network - wired or wireless - provides IP connectivity.
-
-![Minimal two-device setup](../../figures/mesh_network_compact.png)
-
 ### Tested setup
 
 The setup tested in development includes a Raspberry Pi 5 (with Hailo), an STM32MP257FDK, an Intel NUC, and one or more generic Linux devices. All nodes run the same code. Any device can broadcast to all others or send targeted messages.
