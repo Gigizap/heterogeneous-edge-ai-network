@@ -56,7 +56,9 @@ Python plus `ctypes` (no compiled CPython extension), so other 3.x versions
 will likely work but are untested.
 
 Only for this board family. On a Cortex-A76 (Raspberry Pi 5) this build runs
-but leaves performance unused - that core has dotprod, so rebuild for it.
+but leaves performance unused - that core has dotprod, so rebuild for it if you need to run llama.cpp on raspberry's CPU. 
+However, in that case, ollama is preferred because it is much easier to install and performs comparatevely well.
+If you are using the Hailo AI HAT +2, then llama.cpp is not required as you will be using the hailo platform software.
 
 ## Usage
 
