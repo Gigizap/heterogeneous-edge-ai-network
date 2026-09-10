@@ -15,9 +15,26 @@ the STM32MP2 (Cortex-A35)" in [`IMPLEMENTATION/README.md`](../../../README.md).
 tar xzf llama_cpp_python-0.3.23-cortexa35.tar.gz -C /usr/lib/python3.12/site-packages/
 ```
 
-That is the whole install. The archive contains the `llama_cpp/` package
-(Python bindings + the `.so` backends in `llama_cpp/lib/`) and its
-`dist-info/`, so `pip show llama-cpp-python` still reports it correctly.
+The archive contains the `llama_cpp/` package (Python bindings + the `.so`
+backends in `llama_cpp/lib/`) and its `dist-info/`, so
+`pip show llama-cpp-python` still reports it correctly.
+
+Then register the library directory with the dynamic linker, or the import
+fails with `libggml.so.0: cannot open shared object file`:
+
+```sh
+echo /usr/lib/python3.12/site-packages/llama_cpp/lib > /etc/ld.so.conf.d/llama_cpp.conf
+ldconfig
+```
+
+`ldconfig` warns `libmtmd.so.0 is not a symbolic link`; that is harmless and
+comes from the upstream wheel.
+
+The bindings also need `diskcache` and `jinja2` at import time:
+
+```sh
+apt-get install python3-diskcache python3-jinja2
+```
 
 Extract with `tar`, not `scp -r`: the flat library names
 (`libllama.so`, `libllama.so.0`) are symlinks to the versioned files, and
@@ -48,7 +65,7 @@ no `asimddp`), so a dotprod build would crash with SIGILL.
 | glibc | >= 2.39 | 2.39 |
 | libstdc++ | >= 6.0.32 | 6.0.32 |
 | Python | 3.12 (tested) | 3.12.12 |
-| Python deps | `diskcache`, `jinja2`, `numpy`, `typing_extensions` | already present |
+| Python deps | `diskcache`, `jinja2`, `numpy`, `typing_extensions` | `apt-get install python3-diskcache python3-jinja2` |
 
 glibc/libstdc++/aarch64 are hard requirements - the `.so` files link against
 them. Python 3.12 is what this was built and tested on; the package is pure

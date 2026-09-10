@@ -52,7 +52,12 @@ election = None # will be set later if device can lead
 
 # ── identity + scoring ────────────────────────────────────────────────────────
 
+first_run      = not profile_path.exists()
 profile        = load_or_create_profile(profile_path=profile_path)
+if first_run:
+    # first-run setup writes the Telegram credentials into software_config.json,
+    # so re-read what was loaded above before the file had them
+    cfg = json.loads((Path(__file__).parent / "software_config.json").read_text())
 AGENT_ID       = profile["agent_id"]
 LEADER_ID      = f"{AGENT_ID}-leader"
 LEADER_PORT    = TCP_PORT + 1
