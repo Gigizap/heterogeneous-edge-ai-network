@@ -374,9 +374,30 @@ More info on the AI packages: [X-LINUX-AI expansion package](https://wiki.st.com
 
 ---
 
+### Installing `llama-cpp-python` on the STM32MP2 (prebuilt, no pip)
+
+Needed if the STM32MP257F-DK acts as a **leader** (runs FunctionGemma via llama.cpp). A prebuilt Cortex-A35 build ships in [`LeaderLogic/stm32mp257fdk/prebuilt/`](LeaderLogic/stm32mp257fdk/prebuilt/) - use it and skip the cross-compile below. pip is unreliable on these images, so the install is a plain extract:
+
+```sh
+tar xzf llama_cpp_python-0.3.23-cortexa35.tar.gz -C /usr/lib/python3.12/site-packages/
+```
+
+Verify (`REPACK = 1` means you got the optimized build):
+
+```sh
+python3 -c "from llama_cpp import llama_cpp; llama_cpp.llama_backend_init(); print(llama_cpp.llama_print_system_info().decode())"
+# CPU : NEON = 1 | ARM_FMA = 1 | LLAMAFILE = 1 | REPACK = 1 |
+```
+
+See [`prebuilt/README.md`](LeaderLogic/stm32mp257fdk/prebuilt/README.md) for requirements and details.
+
+---
+
 ### Cross-compiling `llama-cpp-python` for the STM32MP2 (Cortex-A35)
 
-Only needed if the STM32MP257F-DK acts as a **leader** (runs FunctionGemma via llama.cpp). `llama-cpp-python` is left commented in `LeaderLogic/stm32mp257fdk/requirements.txt` because a plain `pip install` builds without NEON or runs out of memory on the board - instead **cross-compile the wheel on an x86_64 host** and install it on the board.
+Only needed to **rebuild** the package above (new llama.cpp version, different Python, or another CPU). To just install it on a board, use the prebuilt archive instead.
+
+`llama-cpp-python` is left commented in `LeaderLogic/stm32mp257fdk/requirements.txt` because a plain `pip install` builds without NEON or runs out of memory on the board - instead **cross-compile the wheel on an x86_64 host** and install it on the board.
 
 Target: OpenSTLinux `5.0.15-...-scarthgap-mpu-v26.02.18`, Cortex-A35 (AArch64).
 
