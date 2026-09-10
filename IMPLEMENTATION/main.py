@@ -392,12 +392,29 @@ def _boot_leader(prof: dict):
             peer_count     = len(getattr(leader_discovery, "_peers", {})),
         )
         for chat_id, _ in pending:
-            bot.send_message(chat_id, notice)
+            bot.send_card(chat_id, notice)
 
         threading.Thread(target=_resume_pending_requests,
                          args=(leader, pending), daemon=True).start()
 
 # ── telegram handler ──────────────────────────────────────────────────────────
+
+def _live_tools(leader):
+    """[(tool_name, [owner_agent_id, ...]), ...] currently reachable, or None.
+
+    None means this leader has no tool registry at all (the mock preset), which
+    the cards render differently from "a registry that is currently empty".
+    """
+    if not hasattr(leader, "net"):
+        return None
+    try:
+        names = sorted({(td.get("function", td)).get("name")
+                        for td in leader.net.available_tools()})
+        return [(n, sorted(leader.net.owners(n))) for n in names]
+    except Exception as e:
+        leaderlog.warning("could not list tools: %s", e)
+        return None
+
 
 def _on_telegram_message(chat_id: int, text: str):
     t0 = time.perf_counter()   # query received — timed to the backup below
@@ -407,6 +424,48 @@ def _on_telegram_message(chat_id: int, text: str):
     if pair is None:
         return
     leader, backup = pair
+
+    # /loop keeps the tool a question picks running after the answer: the leader
+    # re-dispatches it and messages the user again whenever the result changes.
+    # It stays on until "/loop off"; each new question stops the previous loop.
+    # /start greets a new chat: what the fleet does, which skills are reachable
+    # right now, and the command keyboard.
+    if text.strip() in ("/start", "/start@"):
+        from LeaderLogic.capabilities import welcome_text
+        from LeaderLogic.bot_handler import MAIN_KEYBOARD
+        mod = res["leader_mod"]
+        res["bot"].send_card(chat_id, welcome_text(
+            agent_id       = LEADER_ID,
+            profile        = res["profile"],
+            model_name     = getattr(mod, "MODEL_NAME", "unknown"),
+            model_params_b = getattr(mod, "MODEL_PARAMS_B", 0.0),
+            hardware       = HW_INFO,
+            peer_count     = len(getattr(res["discovery"], "_peers", {})),
+            tools          = _live_tools(leader),
+        ), reply_markup=MAIN_KEYBOARD)
+        return
+
+    # /capabilities lists the tools reachable right now and which devices own
+    # each one. Read straight from the leader's live registry, so a sensing
+    # device joining or leaving is reflected on the next call.
+    if text.strip() == "/capabilities":
+        from LeaderLogic.capabilities import capabilities_text
+        res["bot"].send_card(chat_id, capabilities_text(_live_tools(leader)))
+        return
+
+    if text.strip() in ("/loop", "/loop off"):
+        on = text.strip() == "/loop"
+        if hasattr(leader, "set_loop"):        # the mock preset has no pipeline
+            leader.set_loop(on)
+            res["bot"].send_card(
+                chat_id,
+                "🔁 <b>Loop on</b>\nAfter each answer I'll keep re-running the "
+                "skill it used, and message you when the result changes."
+                if on else
+                "⏹ <b>Loop off</b>\nI'll answer once per question.")
+        else:
+            res["bot"].send_card(chat_id, "⚠️ This leader does not support /loop.")
+        return
 
     # /status reports the current model + leader capabilities. Built from the same
     # data as the capability broadcast; multi-workflow leaders append their active
@@ -424,7 +483,7 @@ def _on_telegram_message(chat_id: int, text: str):
         )
         if hasattr(leader, "status_extra"):
             msg += leader.status_extra()
-        res["bot"].send_message(chat_id, msg)
+        res["bot"].send_card(chat_id, msg)
         return
 
     # Back up the still-unanswered query immediately (prepended with prior history

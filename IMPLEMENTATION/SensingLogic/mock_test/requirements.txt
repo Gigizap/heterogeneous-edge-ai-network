@@ -1,0 +1,3 @@
+# Sensing preset - hardware-free mock skills for testing dispatch on any machine.
+# No camera, no sensor, no model: the skills return canned answers using the
+# Python standard library only, so there is nothing to install for this preset.

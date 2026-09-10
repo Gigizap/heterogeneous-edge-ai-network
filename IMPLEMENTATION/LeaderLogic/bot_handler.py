@@ -7,6 +7,28 @@ import logging
 log = logging.getLogger(__name__)
 
 
+# Persistent command keyboard, docked under the text input. Buttons send their
+# own label as a plain message, so they reach the same command branches a typed
+# command does - no extra code path. `resize_keyboard` lets each client shrink
+# it to fit its own screen: no width or pixel count is assumed anywhere here.
+MAIN_KEYBOARD = {
+    "keyboard": [
+        [{"text": "/capabilities"}, {"text": "/status"}],
+        [{"text": "/loop"}, {"text": "/loop off"}],
+    ],
+    "resize_keyboard": True,
+    "is_persistent":   True,
+}
+
+# Populates Telegram's native "/" menu. Sent once when polling starts.
+_COMMANDS = [
+    {"command": "start",        "description": "Show what this network can do"},
+    {"command": "capabilities", "description": "Tools available now, and where they run"},
+    {"command": "status",       "description": "Current leader, model and peers"},
+    {"command": "loop",         "description": "Keep re-running the last tool"},
+]
+
+
 class TelegramBot:
     """
     Minimal Telegram bot using only `requests`.
@@ -34,6 +56,7 @@ class TelegramBot:
     def start(self):
         """Start the polling loop in a background thread."""
         self._running = True
+        self._register_commands()
         threading.Thread(target=self._poll_loop, daemon=True).start()
         log.info("Telegram long-polling started")
 
@@ -58,6 +81,26 @@ class TelegramBot:
         # Telegram clears typing when a message arrives, so an intermediate
         # message (e.g. "using <tool> on ...") would blank it until the next
         # refresh tick. Re-arm at once if this chat is still working.
+        if chat_id in self._active_typing:
+            self._send_typing(chat_id)
+
+    def send_card(self, chat_id: int, html: str, reply_markup: dict = None):
+        """Send a SYSTEM-authored message rendered as HTML.
+
+        Only for text this repo writes itself (welcome, /status, announcements,
+        loop notices), whose markup is known-safe. Model output must keep going
+        through send_message: parse_mode makes Telegram reject a whole message
+        over one stray character, and answers are free text we do not control.
+        """
+        log.info("card sent to chat %s: %s", chat_id, html)
+        payload = {"chat_id": chat_id, "text": html, "parse_mode": "HTML"}
+        if reply_markup:
+            payload["reply_markup"] = reply_markup
+        try:
+            requests.post(f"{self._base}/sendMessage", json=payload, timeout=10)
+        except Exception as e:
+            log.warning("send_card error: %s", e)
+
         if chat_id in self._active_typing:
             self._send_typing(chat_id)
 
@@ -91,6 +134,15 @@ class TelegramBot:
         cancel = self._active_typing.pop(chat_id, None)
         if cancel:
             cancel.set()
+
+    def _register_commands(self):
+        """Fill Telegram's native "/" menu with the commands this bot answers."""
+        try:
+            requests.post(f"{self._base}/setMyCommands",
+                          json={"commands": _COMMANDS}, timeout=10)
+            log.info("registered %d bot commands", len(_COMMANDS))
+        except Exception as e:
+            log.warning("setMyCommands error: %s", e)
 
     def _send_typing(self, chat_id: int):
         try:

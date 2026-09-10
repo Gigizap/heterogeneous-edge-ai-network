@@ -32,6 +32,7 @@ import threading
 from typing import Any, Dict, List, Optional
 
 from ElectionLogic.identity import get_leader_module
+from LeaderLogic.capabilities import _esc
 from LeaderLogic.leader_network import make_network
 
 logger = logging.getLogger(__name__)
@@ -68,7 +69,8 @@ def boot(cfg: dict, agent_id: str, transport, discovery, bot, profile: dict = No
     MODEL_PARAMS_B = backend.model_params_b
 
     logger.info("ready - %s", backend.model_name)
-    return Leader(net=net, bot=bot, backend=backend)
+    return Leader(net=net, bot=bot, backend=backend,
+                  loop_interval=cfg.get("timeouts", {}).get("loop", 0.0))
 
 
 # ── Leader (shared pipeline for every preset that provides a Backend) ───────
@@ -83,7 +85,7 @@ class Leader:
         5. backend.answer() turns the replies into a reply for the user
     """
 
-    def __init__(self, net, bot, backend):
+    def __init__(self, net, bot, backend, loop_interval):
         self.net     = net
         self.bot     = bot
         self.backend = backend
@@ -91,9 +93,21 @@ class Leader:
         self._histories:    Dict[int, List[dict]] = {}
         self._history_lock = threading.Lock()
 
+        # /loop: re-run the picked tool after answering, and message the user
+        # again whenever the result changes. _loop_stop doubles as the
+        # interruptible sleep and the "a new question arrived" interrupt;
+        # _looping_tool names the tool a running loop is polling (None = idle).
+        self._loop_interval = loop_interval
+        self._loop_enabled  = False
+        self._loop_stop     = threading.Event()
+        self._looping_tool  = None
+
     # ── main.py interface ─────────────────────────────────────────────────────
 
     def handle(self, chat_id: int, text: str) -> None:
+        # A new question interrupts the loop the previous one left running.
+        self._stop_loop(chat_id)
+
         if self.bot:
             self.bot.start_typing_indicator(chat_id)
         try:
@@ -117,6 +131,14 @@ class Leader:
         with self._history_lock:
             self._histories[chat_id] = list(messages)
 
+    def set_loop(self, on: bool) -> None:
+        """/loop toggle. Stays on across turns: every answered question starts a
+        loop on the tool it picked, until /loop off."""
+        self._loop_enabled = on
+        logger.info("loop %s", "enabled" if on else "disabled")
+        if not on:
+            self._stop_loop(None)
+
     # ── pipeline ──────────────────────────────────────────────────────────────
 
     def _run_pipeline(self, chat_id: int, user_text: str) -> str:
@@ -130,14 +152,20 @@ class Leader:
 
         owners = sorted(self.net.owners(fn_name))
         if self.bot and owners:
-            self.bot.send_message(
-                chat_id, f'using "{fn_name}" on those devices: {", ".join(owners)}')
+            self.bot.send_card(
+                chat_id,
+                f'⚡ Running <code>{_esc(fn_name)}</code> on '
+                f'{", ".join(f"<b>{_esc(o)}</b>" for o in owners)}')
 
         command = json.dumps({"name": fn_name, "arguments": args or {}})
         replies = self.net.dispatch(fn_name, args or {})
         if not replies:
             return f"No peer responded to '{fn_name}'"
-        return self.backend.answer(user_text, command, replies)
+        reply = self.backend.answer(user_text, command, replies)
+
+        if self._loop_enabled:
+            self._start_loop(chat_id, user_text, fn_name, args or {}, command, replies)
+        return reply
 
     # ── internal ──────────────────────────────────────────────────────────────
 
@@ -147,6 +175,64 @@ class Leader:
             h.append({"role": "user",      "content": user_text})
             h.append({"role": "assistant", "content": reply})
 
+    # -- /loop ----------------------------------------------------------------
+
+    def _start_loop(self, chat_id, user_text, fn_name, args, command, replies):
+        """Poll the tool this turn picked, in the background, until the user asks
+        something else. The first answer is already on its way out: this only
+        speaks again when the result changes."""
+        self._loop_stop.clear()
+        self._looping_tool = fn_name
+        logger.info("loop started on %s for chat %s", fn_name, chat_id)
+        if self.bot:
+            self.bot.send_card(chat_id, f"🔁 Looping <code>{_esc(fn_name)}</code>")
+        threading.Thread(
+            target=self._loop_tool,
+            args=(chat_id, user_text, fn_name, args, command, replies),
+            daemon=True,
+        ).start()
+
+    def _stop_loop(self, chat_id) -> None:
+        """Stop a running loop and tell the user which tool it was polling.
+        Silent when nothing is looping."""
+        tool = self._looping_tool
+        if tool is None:
+            return
+        self._looping_tool = None
+        self._loop_stop.set()
+        logger.info("loop on %s stopped", tool)
+        if self.bot and chat_id is not None:
+            self.bot.send_card(chat_id, f"⏹ Loop on <code>{_esc(tool)}</code> stopped")
+
+    def _loop_tool(self, chat_id, user_text, fn_name, args, command, replies):
+        """Re-dispatch the tool and answer again only when the result differs.
+
+        Compared as {agent_id: text}, so this covers several devices owning the
+        same tool (one recomputed answer whenever any of them changes).
+        """
+        last = {r["from"]: r["text"] for r in replies}
+        try:
+            # wait() is the sleep AND the interrupt check: an interval of 0.0
+            # returns at once, still honouring a stop set by the next question.
+            while not self._loop_stop.wait(self._loop_interval):
+                replies = self.net.dispatch(fn_name, args)
+                if not replies:
+                    continue
+                current = {r["from"]: r["text"] for r in replies}
+                if current == last:
+                    logger.debug("loop %s: unchanged %s", fn_name, current)
+                    continue
+                logger.info("loop %s: %s -> %s", fn_name, last, current)
+                last  = current
+                reply = self.backend.answer(user_text, command, replies)
+                if self._loop_stop.is_set():   # interrupted while generating
+                    return
+                self._append_history(chat_id, user_text, reply)
+                if self.bot:
+                    self.bot.send_message(chat_id, "UPDATE\n" + reply)
+        except Exception:
+            logger.exception("loop on %s failed - stopping it", fn_name)
+            self._looping_tool = None
 
 # ── shared tool-call parsing helpers (used by preset backends) ──────────────
 

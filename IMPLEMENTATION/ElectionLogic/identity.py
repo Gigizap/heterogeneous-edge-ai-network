@@ -5,6 +5,10 @@ Handles first-run identity setup:
   - Prompts user for an agent name (e.g. "camera-corridor")
   - Scans the network for existing agent IDs to avoid conflicts
   - Asks whether this device has sensing skills and a leader preset
+  - Asks for the Telegram bot token + allowed user IDs, but ONLY when the
+    device is leader-capable (a follower-only device never runs the bot).
+    These land in software_config.json, not in device_profile.json, because
+    that is where main.py reads them from.
   - Writes device_profile.json so it is never asked again
 
 device_profile.json schema:
@@ -26,11 +30,13 @@ device_profile.json schema:
 import json
 import socket
 from pathlib import Path
-from utils import available_cpu_cores
+from utils import (available_cpu_cores,
+                   BOLD, DIM, CYAN, GREEN, YELLOW, RED, RESET)
 
 PROFILE_PATH  = Path(__file__).parent.parent / "device_profile.json"
 SENSING_DIR   = Path(__file__).parent.parent / "SensingLogic"
 LEADER_DIR    = Path(__file__).parent.parent / "LeaderLogic"
+SW_CONFIG_PATH = Path(__file__).parent.parent / "software_config.json"
 
 # A leader preset is any folder under LeaderLogic/ holding a leader.py - the
 # tag IS the folder name, mirroring SensingLogic/<preset>/tool_config.json.
@@ -38,7 +44,54 @@ LEADER_DIR    = Path(__file__).parent.parent / "LeaderLogic"
 _DEFAULT_LEADER_PRESET = "generic"   # safe default: works on any device
 
 
-# ── public API ────────────────────────────────────────────────────────────────
+# -- public API ----------------------------------------------------------------
+
+def _print_banner():
+    """
+    Startup splash for the first-run setup: a house over a camera (the fleet
+    watches a building) next to the HOUSE AGENT wordmark.
+
+    One fixed layout, plain ASCII inside 40 columns, so it renders identically
+    on a dev laptop and on the STM32MP257F-DK's small panel. Only the colour
+    varies: the constants collapse to "" when stdout is not a TTY, so log files
+    stay free of escape codes (see utils).
+    """
+    art = [
+        "    /\\    ",
+        "   /  \   ",
+        "  /____\  ",
+        "  | [] |  ",
+        "  |_||_|  ",
+        "          ",
+        "  ______  ",
+        " |  __  | ",
+        " | (__) | ",
+        " |______| ",
+        "          ",
+    ]
+    text = [
+        "#  # #### #  # #### ####",
+        "#  # #  # #  # #    #   ",
+        "#### #  # #  # #### ### ",
+        "#  # #  # #  #    # #   ",
+        "#  # #### #### #### ####",
+        "                        ",
+        "#### #### #### #  # ####",
+        "#  # #    #    ## #  #  ",
+        "#### # ## ###  # ##  #  ",
+        "#  # #  # #    #  #  #  ",
+        "#  # #### #### #  #  #  ",
+    ]
+    print()
+    for left, right in zip(art, text):
+        print(f"  {CYAN}{left}{RESET}  {BOLD}{right}{RESET}")
+    print()
+    print(f"  {DIM}Heterogeneous edge AI network{RESET}")
+    print(f"  {DIM}First-run setup{RESET}")
+    print()
+    print(f"  {DIM}No profile on this device yet.{RESET}")
+    print(f"  {DIM}A few questions, then it joins the fleet.{RESET}")
+
 
 def load_or_create_profile(profile_path: Path = None) -> dict:
     """
@@ -48,7 +101,7 @@ def load_or_create_profile(profile_path: Path = None) -> dict:
     then writes device_profile.json. On subsequent runs, just reads and
     returns the saved profile.
 
-    `profile_path` — override the default path (used when --port is set so
+    `profile_path` - override the default path (used when --port is set so
                      two agents on the same machine keep separate profiles).
     """
     path = profile_path or PROFILE_PATH
@@ -57,9 +110,7 @@ def load_or_create_profile(profile_path: Path = None) -> dict:
         if profile.get("first_run_done"):
             return profile
 
-    print("\n" + "═" * 52)
-    print("  First-run setup")
-    print("═" * 52)
+    _print_banner()
 
     agent_id        = _prompt_agent_id()
     sensing_preset   = _prompt_sensing_preset()
@@ -68,6 +119,12 @@ def load_or_create_profile(profile_path: Path = None) -> dict:
     cpu_tflops      = _prompt_cpu_tflops()
     ram_bandwidth   = _prompt_ram_bandwidth()
     accelerator     = _prompt_accelerator()
+
+    # Telegram credentials are only meaningful on a device that can be elected
+    # leader - the leader is the only role that runs the bot.
+    if preset != "none":
+        token, allowed_users = _prompt_telegram()
+        _save_telegram_credentials(token, allowed_users)
 
     profile = {
         "agent_id":          agent_id,
@@ -82,7 +139,7 @@ def load_or_create_profile(profile_path: Path = None) -> dict:
     }
 
     path.write_text(json.dumps(profile, indent=2))
-    print(f"\n[identity] Profile saved → {path}")
+    print(f"\n  {GREEN}Profile saved -> {path}{RESET}")
 
     _install_dependencies(preset, sensing_preset)
 
@@ -92,7 +149,7 @@ def load_or_create_profile(profile_path: Path = None) -> dict:
 def resolve_id_conflict(desired_id: str, taken_ids: set[str]) -> str:
     """
     Check desired_id against a set of taken names.
-    If taken, appends -2, -3, … until unique.
+    If taken, appends -2, -3, ... until unique.
 
     Called by _prompt_agent_id() with the set returned from
     ConnectionLogic.discovery.collect_peer_ids().
@@ -104,7 +161,7 @@ def resolve_id_conflict(desired_id: str, taken_ids: set[str]) -> str:
     while f"{desired_id}-{suffix}" in taken_ids:
         suffix += 1
     resolved = f"{desired_id}-{suffix}"
-    print(f"[identity] '{desired_id}' already on network → using '{resolved}'")
+    print(f"  {YELLOW}'{desired_id}' already on network -> using '{resolved}'{RESET}")
     return resolved
 
 
@@ -142,7 +199,7 @@ def discover_leader_presets() -> list[str]:
     return presets
 
 
-# ── prompts ───────────────────────────────────────────────────────────────────
+# -- prompts -------------------------------------------------------------------
 
 def _prompt_agent_id() -> str:
     """
@@ -154,18 +211,19 @@ def _prompt_agent_id() -> str:
     """
     from ConnectionLogic.discovery import collect_peer_ids
 
-    print("\n  Listening for existing agents (6s) …")
+    print(f"\n  {DIM}Listening for existing agents (6s) ...{RESET}")
     taken = collect_peer_ids(window=6.0)
     if taken:
-        print(f"  Found on network: {', '.join(sorted(taken))}")
+        print(f"  {DIM}Found on network: {', '.join(sorted(taken))}{RESET}")
     else:
-        print("  No agents found on network.")
+        print(f"  {DIM}No agents found on network.{RESET}")
 
     hostname_default = socket.gethostname().lower().replace(" ", "-")
 
     while True:
+        print(f"\n{BOLD}Agent name for this device{RESET} {DIM}(e.g. camera-corridor){RESET}")
         raw = input(
-            f"\nAgent name for this device (e.g. camera-corridor) [{hostname_default}]: "
+            f"  {GREEN}>{RESET} Name {DIM}[{hostname_default}]{RESET}: "
         ).strip()
         if not raw:
             raw = hostname_default
@@ -175,12 +233,12 @@ def _prompt_agent_id() -> str:
         ).strip("-")
 
         if not sanitised:
-            print("  Name cannot be empty, try again.")
+            print(f"  {RED}Name cannot be empty, try again.{RESET}")
             continue
 
         agent_id = resolve_id_conflict(sanitised, taken)
-        print(f"  Agent ID will be: {agent_id}")
-        confirm = input("  Confirm? [Y/n]: ").strip().lower()
+        print(f"  {GREEN}Agent ID will be: {agent_id}{RESET}")
+        confirm = input(f"  {GREEN}>{RESET} Confirm? {DIM}[Y/n]{RESET}: ").strip().lower()
         if confirm in ("", "y", "yes"):
             return agent_id
 
@@ -204,7 +262,7 @@ def discover_sensing_presets() -> list[str]:
         try:
             json.loads(config.read_text())
         except (json.JSONDecodeError, OSError):
-            continue  # broken config — don't offer it
+            continue  # broken config - don't offer it
         presets.append(child.name)
     return presets
 
@@ -219,27 +277,27 @@ def _prompt_sensing_preset() -> str | None:
     """
     presets = discover_sensing_presets()
 
-    print("\nSensing-agent preset on this device:")
+    print(f"\n{BOLD}Sensing-agent preset on this device:{RESET}")
     for i, name in enumerate(presets, start=1):
-        print(f"  [{i}] {name}")
+        print(f"  {CYAN}[{i}]{RESET} {name}")
     none_choice = len(presets) + 1
-    print(f"  [{none_choice}] None  (leader-only / no sensing skills)")
+    print(f"  {CYAN}[{none_choice}]{RESET} None  {DIM}(leader-only / no sensing skills){RESET}")
 
     if not presets:
-        print("  (no valid sensing presets found under SensingLogic/ — defaulting to None)")
+        print(f"  {YELLOW}(no valid sensing presets found under SensingLogic/ - defaulting to None){RESET}")
         return None
 
     default = str(none_choice)
     while True:
-        choice = input(f"  Choice [{default}]: ").strip() or default
+        choice = input(f"  {GREEN}>{RESET} Choice {DIM}[{default}]{RESET}: ").strip() or default
         if choice == str(none_choice):
-            print("  No sensing skills will run on this device.")
+            print(f"  {GREEN}No sensing skills will run on this device.{RESET}")
             return None
         if choice.isdigit() and 1 <= int(choice) <= len(presets):
             tag = presets[int(choice) - 1]
-            print(f"  Sensing preset: {tag}")
+            print(f"  {GREEN}Sensing preset: {tag}{RESET}")
             return tag
-        print(f"  Please enter a number between 1 and {none_choice}.")
+        print(f"  {RED}Please enter a number between 1 and {none_choice}.{RESET}")
 
 
 def _prompt_leader_preset() -> str:
@@ -252,30 +310,29 @@ def _prompt_leader_preset() -> str:
     """
     presets = discover_leader_presets()
 
-    print("\nLeader capability of this device:")
+    print(f"\n{BOLD}Leader capability of this device:{RESET}")
     for i, name in enumerate(presets, start=1):
-        tag = "  <- safe default" if name == _DEFAULT_LEADER_PRESET else ""
-        print(f"  [{i}] {name}{tag}")
+        tag = f"{DIM}  <- safe default{RESET}" if name == _DEFAULT_LEADER_PRESET else ""
+        print(f"  {CYAN}[{i}]{RESET} {name}{tag}")
     none_choice = len(presets) + 1
-    print(f"  [{none_choice}] none  (follower only, no leader capability)")
+    print(f"  {CYAN}[{none_choice}]{RESET} none  {DIM}(follower only, no leader capability){RESET}")
 
     if not presets:
-        print("  (no valid leader presets found under LeaderLogic/ — defaulting to none)")
+        print(f"  {YELLOW}(no valid leader presets found under LeaderLogic/ - defaulting to none){RESET}")
         return "none"
 
     default = (str(presets.index(_DEFAULT_LEADER_PRESET) + 1)
                if _DEFAULT_LEADER_PRESET in presets else str(none_choice))
     while True:
-        choice = input(f"  Choice [{default}]: ").strip() or default
+        choice = input(f"  {GREEN}>{RESET} Choice {DIM}[{default}]{RESET}: ").strip() or default
         if choice == str(none_choice):
-            print("  No leader capability on this device.")
+            print(f"  {GREEN}No leader capability on this device.{RESET}")
             return "none"
         if choice.isdigit() and 1 <= int(choice) <= len(presets):
             preset = presets[int(choice) - 1]
-            print(f"  Leader preset: {preset}")
+            print(f"  {GREEN}Leader preset: {preset}{RESET}")
             return preset
-        print(f"  Please enter a number between 1 and {none_choice}.")
-        print(f"  Please enter one of: {valid}.")
+        print(f"  {RED}Please enter a number between 1 and {none_choice}.{RESET}")
 
 
 def _prompt_cpu_tflops() -> float:
@@ -283,10 +340,10 @@ def _prompt_cpu_tflops() -> float:
     Ask the user for this device's peak CPU compute in TFLOPS.
     Used by scoring.py (no benchmark is run). Returns 0.0 if unknown.
     """
-    print("\nPeak CPU compute of this device, in TFLOPS (e.g. 0.5).")
-    print("  Leave blank if unknown (counts as weakest for leadership).")
+    print(f"\n{BOLD}Peak CPU compute of this device, in TFLOPS (e.g. 0.5).{RESET}")
+    print(f"  {DIM}Leave blank if unknown (counts as weakest for leadership).{RESET}")
     while True:
-        raw = input("  CPU TFLOPS [0]: ").strip()
+        raw = input(f"  {GREEN}>{RESET} CPU TFLOPS {DIM}[0]{RESET}: ").strip()
         if not raw:
             return 0.0
         try:
@@ -295,7 +352,7 @@ def _prompt_cpu_tflops() -> float:
                 raise ValueError
             return val
         except ValueError:
-            print("  Enter a non-negative number (e.g. 0.5), or blank.")
+            print(f"  {RED}Enter a non-negative number (e.g. 0.5), or blank.{RESET}")
 
 
 def _prompt_ram_bandwidth() -> float:
@@ -303,10 +360,10 @@ def _prompt_ram_bandwidth() -> float:
     Ask the user for this device's memory bandwidth in GB/s (e.g. 25.6).
     Used by scoring.py. Returns 0.0 if unknown.
     """
-    print("\nMemory (RAM) bandwidth of this device, in GB/s (e.g. 25.6).")
-    print("  Leave blank if unknown (counts as weakest for leadership).")
+    print(f"\n{BOLD}Memory (RAM) bandwidth of this device, in GB/s (e.g. 25.6).{RESET}")
+    print(f"  {DIM}Leave blank if unknown (counts as weakest for leadership).{RESET}")
     while True:
-        raw = input("  RAM bandwidth GB/s [0]: ").strip()
+        raw = input(f"  {GREEN}>{RESET} RAM bandwidth GB/s {DIM}[0]{RESET}: ").strip()
         if not raw:
             return 0.0
         try:
@@ -315,7 +372,7 @@ def _prompt_ram_bandwidth() -> float:
                 raise ValueError
             return val
         except ValueError:
-            print("  Enter a non-negative number (e.g. 25.6), or blank.")
+            print(f"  {RED}Enter a non-negative number (e.g. 25.6), or blank.{RESET}")
 
 
 def _prompt_accelerator() -> str:
@@ -323,17 +380,74 @@ def _prompt_accelerator() -> str:
     Ask if this device has a hardware accelerator.
     Returns one of: "none", "gpu", "hailo", "npu".
     """
-    print("\nDoes this device have a hardware accelerator?")
-    print("  [1] None")
-    print("  [2] GPU  (NVIDIA / AMD)")
-    print("  [3] Hailo NPU")
-    print("  [4] Other NPU  (Coral, OpenVINO, …)")
+    print(f"\n{BOLD}Does this device have a hardware accelerator?{RESET}")
+    print(f"  {CYAN}[1]{RESET} None")
+    print(f"  {CYAN}[2]{RESET} GPU  {DIM}(NVIDIA / AMD){RESET}")
+    print(f"  {CYAN}[3]{RESET} Hailo NPU")
+    print(f"  {CYAN}[4]{RESET} Other NPU  {DIM}(Coral, OpenVINO, ...){RESET}")
     mapping = {"1": "none", "2": "gpu", "3": "hailo", "4": "npu"}
     while True:
-        choice = input("  Choice [1]: ").strip() or "1"
+        choice = input(f"  {GREEN}>{RESET} Choice {DIM}[1]{RESET}: ").strip() or "1"
         if choice in mapping:
             return mapping[choice]
-        print("  Please enter 1, 2, 3, or 4.")
+        print(f"  {RED}Please enter 1, 2, 3, or 4.{RESET}")
+
+
+def _prompt_telegram() -> tuple[str, list[int]]:
+    """
+    Ask for the Telegram bot token and the user IDs allowed to talk to it.
+
+    Only called for a leader-capable device: the elected leader is the only
+    role that starts TelegramBot (see main.py, where these values are read
+    back out of software_config.json).
+
+    Returns (token, [user_id, ...]) - both are required, the prompts repeat
+    until they are given.
+    """
+    print(f"\n{BOLD}Telegram bot for this device (it can be elected leader).{RESET}")
+    print(f"  {DIM}The leader talks to you over Telegram, so it needs a bot token{RESET}")
+    print(f"  {DIM}from @BotFather and the numeric user IDs allowed to use it.{RESET}")
+
+    while True:
+        token = input(f"  {GREEN}>{RESET} Bot token: ").strip()
+        if token:
+            break
+        print(f"  {RED}The token cannot be empty - this device can be elected leader.{RESET}")
+
+    print(f"\n  {BOLD}Allowed Telegram user IDs, comma-separated (e.g. 1234567890, 987654321).{RESET}")
+    print(f"  {DIM}Get yours from @userinfobot. Anyone not listed is ignored by the bot.{RESET}")
+    while True:
+        raw = input(f"  {GREEN}>{RESET} Allowed user IDs: ").strip()
+        parts = [p.strip() for p in raw.split(",") if p.strip()]
+        if not parts:
+            print(f"  {RED}At least one user ID is required, try again.{RESET}")
+            continue
+        try:
+            users = [int(p) for p in parts]
+        except ValueError:
+            print(f"  {RED}User IDs are numbers - enter digits separated by commas.{RESET}")
+            continue
+        print(f"  {GREEN}{len(users)} allowed user(s): {', '.join(str(u) for u in users)}{RESET}")
+        return token, users
+
+
+def _save_telegram_credentials(token: str, allowed_users: list[int]):
+    """
+    Write the token / allowed_users into the telegram section of
+    software_config.json, leaving the rest of that file untouched.
+
+    That file is where main.py reads them from, so it is where they belong -
+    but it is also tracked by git, so restore the placeholders before any
+    commit (see the repository hygiene notes in the README).
+    """
+    config = json.loads(SW_CONFIG_PATH.read_text())
+    config.setdefault("telegram", {})
+    config["telegram"]["token"]         = token
+    config["telegram"]["allowed_users"] = allowed_users
+    SW_CONFIG_PATH.write_text(json.dumps(config, indent=2))
+    print(f"  {GREEN}Telegram credentials saved -> {SW_CONFIG_PATH.name}{RESET}")
+    print(f"  {YELLOW}NOTE: that file is tracked by git.{RESET}")
+    print(f"  {YELLOW}Restore the placeholders before committing.{RESET}")
 
 
 def _install_dependencies(leader_preset: str | None, sensing_preset: str | None):
@@ -362,25 +476,25 @@ def _install_dependencies(leader_preset: str | None, sensing_preset: str | None)
 
     for req_path in files:
         if not req_path.exists():
-            print(f"[setup] {req_path.name} not found — skipping")
+            print(f"  {DIM}{req_path.name} not found - skipping{RESET}")
             continue
         lines = [l.strip() for l in req_path.read_text().splitlines()
                  if l.strip() and not l.strip().startswith("#")]
         if not lines:
-            print(f"[setup] {req_path.name}: no pip packages "
-                  f"(see the file for manual install notes) — skipping")
+            print(f"  {DIM}{req_path.name}: no pip packages "
+                  f"(see the file for manual install notes) - skipping{RESET}")
             continue
-        print(f"\n[setup] installing {req_path.name} …")
+        print(f"\n  {CYAN}installing {req_path.name} ...{RESET}")
         try:
             subprocess.check_call(
                 [sys.executable, "-m", "pip", "install", "-r", str(req_path)]
             )
-            print(f"[setup] {req_path.name} done")
+            print(f"  {GREEN}{req_path.name} done{RESET}")
         except subprocess.CalledProcessError as e:
-            print(f"[setup] install failed for {req_path.name}: {e}")
-            print("[setup] you may need to install some packages manually — see the file for notes")
+            print(f"  {RED}install failed for {req_path.name}: {e}{RESET}")
+            print(f"  {YELLOW}you may need to install some packages manually - see the file for notes{RESET}")
 
-    print("\n[setup] NOTE: some edge runtimes are NOT pip-installable "
+    print(f"\n  {YELLOW}NOTE: some edge runtimes are NOT pip-installable "
           "(e.g. hailo_platform, stai_mpu, tflite_runtime, picamera2, llama-cpp-python on the STM32).\n"
           "        Check the commented lines in the requirements files above for the "
-          "apt / x-linux-ai / Hailo SDK / cross-compile steps.")
+          f"apt / x-linux-ai / Hailo SDK / cross-compile steps.{RESET}")

@@ -122,9 +122,35 @@ The system uses two separate config files per device:
 {
   "agent":    { "tcp_port": 5555 },
   "telegram": { "token": "...", "allowed_users": [...] },
-  "timeouts": { "fetchskills": 1.5, "replies": 3.0 }
+  "timeouts": { "fetchskills": 1.5, "replies": 3.0, "loop": 0.0 }
 }
 ```
+
+The `telegram` section is filled in by first-run setup, but **only on a device that
+declares a leader preset other than `none`** - the elected leader is the only role that
+runs the bot, so a follower-only device is never asked and keeps the placeholders. You
+are prompted for the bot token (from @BotFather) and the comma-separated numeric user
+IDs allowed to talk to it (from @userinfobot); both are required and the prompt repeats
+until they are valid. See `ElectionLogic.identity._prompt_telegram()`.
+
+> **This file is tracked by git.** Once first-run setup has written a real token and
+> real user IDs into it, restore the placeholders before committing or pushing - a
+> token that reaches the remote is compromised and must be rotated.
+
+#### First-run setup screen
+
+The setup prompts are drawn with the ANSI colour constants in `utils.py` (`BOLD`,
+`DIM`, `CYAN`, `GREEN`, `YELLOW`, `RED`). Two deliberate constraints keep one
+identical layout on every target, from a dev laptop to the STM32MP257F-DK panel:
+
+- **ASCII only.** No box-drawing characters, arrows or dashes. A bare-bones
+  console cannot encode them and raises `UnicodeEncodeError` mid-setup.
+- **Max 74 columns**, so nothing wraps on a small 720p screen.
+
+Colour is the only thing that varies: the constants collapse to `""` when stdout
+is not a TTY, so redirected output and log files stay free of escape codes. The
+layout itself never changes. Log lines are unaffected: they are parsed, so they
+never go through these constants.
 
 **`LeaderLogic/<preset>/config.json`** - Pi+Hailo presets only, device-specific inference config (each preset reads only the section(s) it needs):
 ```json
@@ -175,8 +201,58 @@ Available to the leader:
 
 | Command | Description |
 |---|---|
+| `/start` | Welcome card: what the network does, the tools currently reachable (with the devices owning each), this leader's capabilities, and the command keyboard |
+| `/capabilities` | The tools reachable right now, each with the devices that own it |
 | `/status` | Show the currently active inference mode |
 | `/changehost` | Cycle to the next inference mode (Pi+Hailo leader only) |
+| `/loop` | Keep re-running the tool each question picks, and message again when the result changes |
+| `/loop off` | Stop looping |
+
+`/capabilities`, `/status`, `/loop` and `/loop off` are also offered as a persistent keyboard
+under the text input, and registered in Telegram's native `/` menu via
+`setMyCommands` when polling starts. A button just sends its own label as a
+normal message, so it reaches the same branch a typed command does.
+
+### Message formatting
+
+`TelegramBot` has two send paths, and the split matters:
+
+- `send_message()` - **no** `parse_mode`. Everything the model writes goes out
+  through this one, byte for byte.
+- `send_card()` - `parse_mode=HTML`, for system-authored text only (the `/start`
+  welcome, `/status`, leader announcements, the failover notice, loop notices).
+  These strings are written in `LeaderLogic/capabilities.py`, so their markup is
+  known-safe; dynamic values spliced into them (agent ids, model and tool names)
+  go through `capabilities._esc()`.
+
+The reason for the split: a `parse_mode` applies to the whole message, and one
+stray `<` or `*` in free text makes Telegram reject it outright, so the user
+would get nothing at all. Model output is never escaped or restyled.
+
+Cards use one bold-labelled fact per line, never space-padded columns or ASCII
+boxes: Telegram renders in a proportional font whose width varies by device, so
+padded columns only line up on the screen they were tuned for.
+
+### `/loop`
+
+Normally a question is one shot: pick a tool, dispatch it, answer, done. With
+`/loop` on, the leader keeps re-dispatching the tool that the question picked
+and speaks again **only when the result changes** - so "how many people are
+there?" answers "there are 2", stays quiet while it stays 2, and sends an
+`UPDATE` when it becomes 3.
+
+- Entirely leader-side: sensing agents keep serving ordinary one-shot
+  `tools/call` requests and are unaware they are being polled.
+- Results are compared per device (`{agent_id: text}`), so with the same tool on
+  several devices (say a camera in two rooms) any one of them changing produces
+  one recomputed answer covering the whole fleet.
+- Each new question stops the previous loop (`loop for <tool> stopped`) and
+  starts one for the tool it picks. The setting stays on until `/loop off`.
+- `timeouts.loop` is the delay added between iterations, in seconds. `0.0` means
+  none: dispatch (capped by `timeouts.replies`) and the answer generation set
+  the real pace.
+- A loop is live state, not conversation: it is not replicated to backup peers
+  and does not survive a leader failover.
 
 ---
 

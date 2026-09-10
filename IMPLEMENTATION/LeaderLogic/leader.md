@@ -13,6 +13,12 @@ counterpart of `SensingLogic/sensing_agent.py`): it owns the LeaderNetwork
 the two-step pipeline (query -> tool -> devices, tool result -> reply). A
 preset only supplies the two model-specific pieces of that pipeline.
 
+It also owns `/loop` (see the root README): when enabled, `_run_pipeline`
+hands the tool it just dispatched to a background thread that re-dispatches it
+and calls `backend.answer()` again whenever the per-device results change. It
+reuses `net.dispatch()` and the preset's `answer()` unchanged, so a preset
+needs no code for it.
+
 ## `leader.py` contract
 
 ```python

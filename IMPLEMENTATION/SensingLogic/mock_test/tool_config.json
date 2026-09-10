@@ -1,0 +1,45 @@
+{
+  "skills": [
+    {
+      "file": "mock_skills",
+      "function": "detect_people",
+      "command": "people_detection"
+    },
+    {
+      "file": "mock_skills",
+      "function": "measure_co2",
+      "command": "measure_co2"
+    },
+    {
+      "file": "mock_skills",
+      "function": "identify_face",
+      "command": "identify_face"
+    }
+  ],
+  "tool_defs": [
+    {
+      "type": "function",
+      "function": {
+        "name": "people_detection",
+        "description": "detects the people in view and returns how many people are present. Use this when the user asks: 'how many people are there?', 'is the room free?', or 'is anyone in there right now?'.",
+        "parameters": { "type": "object", "properties": {}, "required": [] }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "measure_co2",
+        "description": "reads the CO2 concentration in the room in ppm and returns it with an air-quality verdict. Use this when the user asks: 'what's the CO2 level?', 'how is the air quality?', or 'does the room need airing out?'.",
+        "parameters": { "type": "object", "properties": {}, "required": [] }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "identify_face",
+        "description": "opens the camera and identifies who is in front of it. Use this when the user asks: 'who is there?', 'who is in front of the camera?', or 'tell me who you recognize now'.",
+        "parameters": { "type": "object", "properties": {}, "required": [] }
+      }
+    }
+  ]
+}

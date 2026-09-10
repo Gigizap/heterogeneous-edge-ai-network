@@ -2,14 +2,13 @@
   "agent": {
     "tcp_port": 5555
   },
-
   "telegram": {
     "token": "ADD TELEGRAM BOT TOKEN HERE",
     "allowed_users": [1234567890, "add allowed users here"]
   },
-
   "timeouts": {
     "fetchskills": 1.5,
-    "replies": 3.0
+    "replies": 3.0,
+    "loop": 0.0
   }
 }
