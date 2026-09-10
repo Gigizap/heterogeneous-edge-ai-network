@@ -9,6 +9,7 @@
   "timeouts": {
     "fetchskills": 1.5,
     "replies": 3.0,
-    "loop": 0.0
+    "loop": 0.0,
+    "loop_update_threshold": 2
   }
 }

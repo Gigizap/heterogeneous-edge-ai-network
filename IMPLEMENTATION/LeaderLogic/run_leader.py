@@ -70,7 +70,8 @@ def boot(cfg: dict, agent_id: str, transport, discovery, bot, profile: dict = No
 
     logger.info("ready - %s", backend.model_name)
     return Leader(net=net, bot=bot, backend=backend,
-                  loop_interval=cfg.get("timeouts", {}).get("loop", 0.0))
+                  loop_interval=cfg.get("timeouts", {}).get("loop", 0.0),
+                  loop_threshold=cfg.get("timeouts", {}).get("loop_update_threshold", 2))
 
 
 # ── Leader (shared pipeline for every preset that provides a Backend) ───────
@@ -85,7 +86,7 @@ class Leader:
         5. backend.answer() turns the replies into a reply for the user
     """
 
-    def __init__(self, net, bot, backend, loop_interval):
+    def __init__(self, net, bot, backend, loop_interval, loop_threshold):
         self.net     = net
         self.bot     = bot
         self.backend = backend
@@ -94,13 +95,15 @@ class Leader:
         self._history_lock = threading.Lock()
 
         # /loop: re-run the picked tool after answering, and message the user
-        # again whenever the result changes. _loop_stop doubles as the
-        # interruptible sleep and the "a new question arrived" interrupt;
-        # _looping_tool names the tool a running loop is polling (None = idle).
-        self._loop_interval = loop_interval
-        self._loop_enabled  = False
-        self._loop_stop     = threading.Event()
-        self._looping_tool  = None
+        # again once the result has changed _loop_threshold polls in a row.
+        # _loop_stop doubles as the interruptible sleep and the "a new question
+        # arrived" interrupt; _looping_tool names the tool a running loop is
+        # polling (None = idle).
+        self._loop_interval  = loop_interval
+        self._loop_threshold = loop_threshold
+        self._loop_enabled   = False
+        self._loop_stop      = threading.Event()
+        self._looping_tool   = None
 
     # ── main.py interface ─────────────────────────────────────────────────────
 
@@ -205,12 +208,15 @@ class Leader:
             self.bot.send_card(chat_id, f"⏹ Loop on <code>{_esc(tool)}</code> stopped")
 
     def _loop_tool(self, chat_id, user_text, fn_name, args, command, replies):
-        """Re-dispatch the tool and answer again only when the result differs.
+        """Re-dispatch the tool and answer again once the result has differed
+        loop_update_threshold polls in a row, so a single odd poll (a timeout,
+        a flickering frame) is not reported as a change.
 
         Compared as {agent_id: text}, so this covers several devices owning the
         same tool (one recomputed answer whenever any of them changes).
         """
-        last = {r["from"]: r["text"] for r in replies}
+        last  = {r["from"]: r["text"] for r in replies}
+        count = 0
         try:
             # wait() is the sleep AND the interrupt check: an interval of 0.0
             # returns at once, still honouring a stop set by the next question.
@@ -220,16 +226,17 @@ class Leader:
                     continue
                 current = {r["from"]: r["text"] for r in replies}
                 if current == last:
-                    logger.debug("loop %s: unchanged %s", fn_name, current)
-                    continue
-                logger.info("loop %s: %s -> %s", fn_name, last, current)
-                last  = current
-                reply = self.backend.answer(user_text, command, replies)
-                if self._loop_stop.is_set():   # interrupted while generating
-                    return
-                self._append_history(chat_id, user_text, reply)
-                if self.bot:
-                    self.bot.send_message(chat_id, "UPDATE\n" + reply)
+                    count = 0
+                else:
+                    count += 1
+                    if count >= self._loop_threshold:
+                        logger.info("loop %s: %s -> %s", fn_name, last, current)
+                        count, last = 0, current
+                        reply = self.backend.answer(user_text, command, replies)
+                        if self._loop_stop.is_set():   # interrupted while generating
+                            return
+                        self._append_history(chat_id, user_text, reply)
+                        self.bot.send_message(chat_id, "UPDATE\n" + reply)
         except Exception:
             logger.exception("loop on %s failed - stopping it", fn_name)
             self._looping_tool = None
