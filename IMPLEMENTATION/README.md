@@ -137,7 +137,18 @@ until they are valid. See `ElectionLogic.identity._prompt_telegram()`.
 > real user IDs into it, restore the placeholders before committing or pushing - a
 > token that reaches the remote is compromised and must be rotated.
 
-#### First-run setup screen
+#### First-run setup
+
+`device_profile.json` is gitignored, so a device that has none runs an interactive setup on
+its first `python main.py`, then never asks again. It prompts for the agent-ID, the sensing
+and leader presets, CPU TFLOPS, RAM bandwidth and accelerator, and (leader-capable devices
+only) the Telegram token and allowed user IDs. Have those two ready before you start: the
+token from @BotFather, your numeric ID from @userinfobot. It then writes the profile,
+saves the credentials into `software_config.json`, and pip-installs the requirements for
+the roles you picked.
+
+Copying a working install to another device carries its `device_profile.json` along, so
+delete that file on the copy to get the setup prompts instead of the original's identity.
 
 The setup prompts are drawn with the ANSI colour constants in `utils.py` (`BOLD`,
 `DIM`, `CYAN`, `GREEN`, `YELLOW`, `RED`). Two deliberate constraints keep one
@@ -287,7 +298,7 @@ All messages are JSON. Discovery runs over UDP (port `9999`); everything else is
 
 > **Requirements depend on the role.** There is no single requirements file - what a device needs depends on what it runs:
 > - **Everyone:** `requirements/base.txt` (`psutil`, `requests`).
-> - **Leader:** an LLM backend - `LeaderLogic/<preset>/requirements.txt`, e.g. `LeaderLogic/generic/requirements.txt` (`llama-cpp-python`), `LeaderLogic/stm32mp257fdk/requirements.txt` (llama.cpp **cross-compiled**, see below), or `LeaderLogic/raspberry_cpu|raspberry_hailo|raspberry_cpuhailo/requirements.txt` (Ollama and/or the Hailo SDK, no llama-cpp-python).
+> - **Leader:** an LLM backend - `LeaderLogic/<preset>/requirements.txt`, e.g. `LeaderLogic/generic/requirements.txt` (`llama-cpp-python`), `LeaderLogic/stm32mp257fdk/requirements.txt` (llama.cpp, [prebuilt archive](LeaderLogic/stm32mp257fdk/prebuilt/)), or `LeaderLogic/raspberry_cpu|raspberry_hailo|raspberry_cpuhailo/requirements.txt` (Ollama and/or the Hailo SDK, no llama-cpp-python).
 > - **Sensing:** the model runtime for its preset - `SensingLogic/<preset>/requirements.txt`. A sensing-only device needs **no** LLM backend; a leader-only device needs **no** detection runtime.
 >
 > On first run, `main.py` auto-installs the pip-installable lines for the roles you pick. The hardware runtimes (`hailo_platform`, `stai_mpu`, `tflite_runtime`, `picamera2`, STM32 `llama-cpp-python`) are **not** pip packages - each preset's requirements file documents the real `apt` / `x-linux-ai` / Hailo SDK / cross-compile command in its comments.
@@ -335,61 +346,9 @@ Check that llama.cpp backend gets compiled with the correct arm support.
 
 ### STM32MP257FDK
 
-1. Flash **OpenSTLinux** onto the board following ST's official flashing guide.
+Full bring-up (assembly, flashing OpenSTLinux, X-LINUX-AI, llama.cpp, repo clone) is documented in [`LeaderLogic/stm32mp257fdk/README.md`](LeaderLogic/stm32mp257fdk/README.md).
 
-2. Install the AI expansion package:
-
-   1. **Ensure Internet Connection** - connect the board to the network (via Ethernet or WiFi). Follow the instructions in *"3. Automatic WiFi configuration at start up"* on the [ST wiki](https://wiki.st.com/stm32mpu/wiki/How_to_setup_a_WLAN_connection#Automatic_WiFi_configuration_at_start_up).
-
-   2. **Synchronize Repository** - sync the OpenSTLinux package repository:
-```bash
-apt-get update
-```
-
-   3. **Install Tool Package** - install the core AI management tool:
-```bash
-apt-get install x-linux-ai-tool
-```
-
-   4. **Verify Installation** - check the version (e.g. `6.2.0`):
-```bash
-x-linux-ai -v
-```
-
-   5. Clone the repo in `/home/weston`.
-
-3. Install the STAI MPU Python runtime and image libraries (needed by the sensing skills). Following ST's [How to run inference using the STAI MPU Python API](https://wiki.st.com/stm32mpu/wiki/How_to_run_inference_using_the_STAI_MPU_Python_API):
-
-```bash
-apt-get install python3-numpy python3-opencv
-x-linux-ai -i python3-libstai-mpu        # provides the `stai_mpu` module (NPU preset)
-x-linux-ai -i stai-mpu-tflite            # TFLite plugin (CPU preset)
-```
-
-> These are the deps documented in each STM32 sensing preset's `requirements.txt` - they are installed via `apt` / `x-linux-ai`, **not** pip. If this device is also an STM32 **leader** (FunctionGemma), see *Cross-compiling `llama-cpp-python` for the STM32MP2* below.
-
-4. Attach the camera to the board.
-
-More info on the AI packages: [X-LINUX-AI expansion package](https://wiki.st.com/stm32mpu/wiki/Category:X-LINUX-AI_expansion_package#X-LINUX-AI_package)
-
----
-
-### Installing `llama-cpp-python` on the STM32MP2 (prebuilt, no pip)
-
-Needed if the STM32MP257F-DK acts as a **leader** (runs FunctionGemma via llama.cpp). A prebuilt Cortex-A35 build ships in [`LeaderLogic/stm32mp257fdk/prebuilt/`](LeaderLogic/stm32mp257fdk/prebuilt/) - use it and skip the cross-compile below. pip is unreliable on these images, so the install is a plain extract:
-
-```sh
-tar xzf llama_cpp_python-0.3.23-cortexa35.tar.gz -C /usr/lib/python3.12/site-packages/
-```
-
-Verify (`REPACK = 1` means you got the optimized build):
-
-```sh
-python3 -c "from llama_cpp import llama_cpp; llama_cpp.llama_backend_init(); print(llama_cpp.llama_print_system_info().decode())"
-# CPU : NEON = 1 | ARM_FMA = 1 | LLAMAFILE = 1 | REPACK = 1 |
-```
-
-See [`prebuilt/README.md`](LeaderLogic/stm32mp257fdk/prebuilt/README.md) for requirements and details.
+The prebuilt Cortex-A35 `llama-cpp-python` used there lives in [`LeaderLogic/stm32mp257fdk/prebuilt/`](LeaderLogic/stm32mp257fdk/prebuilt/); the section below covers rebuilding it.
 
 ---
 
