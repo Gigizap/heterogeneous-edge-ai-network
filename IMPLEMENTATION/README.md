@@ -77,6 +77,14 @@ The unique identifier used to distinguish agents in the network. If a device act
 
 ## Presets
 
+### Sensing Presets
+
+A sensing preset is a folder under `SensingLogic/<preset>/` holding a `tool_config.json` and the skill modules it names. The shared entry point, `SensingLogic/sensing_agent.py`, reads that config, imports the skills and answers the leader's `tools/list` and `tools/call` requests.
+
+Each device is assigned a sensing preset in its `device_profile.json`, and presets are discovered automatically (`ElectionLogic.identity.discover_sensing_presets()`), so dropping in a new folder makes it selectable at first-run setup with no code change.
+
+See [`SensingLogic/README.md`](SensingLogic/README.md) for the exact contract and the available presets.
+
 ### Leader Presets
 
 A leader preset is a folder under `LeaderLogic/<preset>/` holding a `leader.py` - the leader-side mirror of a `SensingLogic/<preset>/` folder holding a `tool_config.json`. The shared entry point, `LeaderLogic/run_leader.py`, owns the network wiring and the two-step pipeline (query → tool → devices, tool result → reply); each preset only supplies the two model-specific pieces of it (`dispatch`, `answer`). See [`LeaderLogic/README.md`](LeaderLogic/README.md) for the exact contract.
