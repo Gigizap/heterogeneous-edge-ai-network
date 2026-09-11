@@ -6,7 +6,26 @@ A distributed **agentic system** in which a fleet of heterogeneous embedded devi
 
 ---
 
-## Agents
+## Documentation map
+
+Docs live next to the code they describe.
+
+| | |
+|---|---|
+| [IMPLEMENTATION/README.md](IMPLEMENTATION/README.md) | System overview: LLM pipeline, skills, election, presets, configuration, first-run setup |
+| [ConnectionLogic/README.md](IMPLEMENTATION/ConnectionLogic/README.md) | P2P layer: UDP discovery, TCP transport, connection troubleshooting |
+| [LeaderLogic/leader.md](IMPLEMENTATION/LeaderLogic/leader.md) | Leader internals and inference backends |
+| [LeaderLogic/backup.md](IMPLEMENTATION/LeaderLogic/backup.md) | Conversation backup and leader failover |
+| [LeaderLogic/stm32mp257fdk/README.md](IMPLEMENTATION/LeaderLogic/stm32mp257fdk/README.md) | STM32MP257F-DK bring-up, from the box to a running agent |
+| [BENCHMARK CODE/README.md](BENCHMARK%20CODE/README.md) | Index of the benchmark suites |
+
+Benchmarks run in two places: **accuracy** and **FunctionGemma handlers** need an external CUDA workstation, while **power consumption** and **latency/network** run on the edge boards themselves.
+
+---
+
+# How does it work?
+
+## Definition of agents
 
 The unit of the network is the **agent**, identified by a unique agent-ID and bound to its **own dedicated TCP port**. A TCP connection is therefore established per *agent*, not per device. There are two kinds:
 
@@ -30,7 +49,7 @@ Given a user query through telegram:
 NOTE: Only approach 1 is fully implemented!
 ---
 
-## How it works: runtime flow
+## Runtime flow
 
 The seven flowcharts below trace a device from power-on, through peer discovery, leader election and failover, to answering a user query.
 
@@ -96,29 +115,9 @@ The repository has two top-level parts: the working **implementation** of the ne
 
 ---
 
-## Documentation map
-
-All documentation lives next to the code it describes. Start with the implementation README, then drill into the area you need.
-
-### Implementation
-
-- **[IMPLEMENTATION/README.md](IMPLEMENTATION/README.md)** - system overview: the two-step LLM pipeline, command/skill model, leader inference modes, election and device presets, configuration, and per-board setup (Raspberry Pi 5, STM32MP257FDK).
-- **[IMPLEMENTATION/ConnectionLogic/README.md](IMPLEMENTATION/ConnectionLogic/README.md)** - the P2P networking layer: UDP discovery, TCP transport, mesh/IP-assignment options, and a thorough cross-platform connection-troubleshooting guide (Linux & Windows firewalls).
-
-### Benchmarks
-
-> **Where each benchmark runs.** The **accuracy** and **FunctionGemma-handler** benchmarks are meant to run on an external workstation (a CUDA GPU PC) - *not* on the edge boards. They use the same model files deployed on edge but need a GPU for fast throughput. Only the **power-consumption** benchmark runs on the edge devices themselves.
-
-- **[BENCHMARK CODE/README.md](BENCHMARK%20CODE/README.md)** - index of the three benchmark suites.
-- **[BENCHMARK CODE/ACCURACY/README.md](BENCHMARK%20CODE/ACCURACY/README.md)** - LLM tool-call accuracy (Parts A, B, C): single-tool dispatch, LLM-vs-reranker comparison, and reply summarization. **Runs on an external GPU workstation**, not on the edge devices.
-- **[BENCHMARK CODE/FUNCTIONGEMMA TEST HANDLERS/README.md](BENCHMARK%20CODE/FUNCTIONGEMMA%20TEST%20HANDLERS/README.md)** - accuracy/latency comparison of the grammar-enforcing FunctionGemma handlers. Also runs on the **external GPU workstation**.
-- **[BENCHMARK CODE/POWERCONSUMPTION/README.md](BENCHMARK%20CODE/POWERCONSUMPTION/README.md)** - runs **directly on the two edge boards** (Raspberry Pi 5 + Hailo, STM32MP257F-DK). It measures power draw and inference throughput (FPS, tokens/s) across configurations that run the LLM and detection workloads on the **CPU vs. the on-board NPU / AI accelerator** (Hailo on the Pi, on-chip NPU on the STM32) - each workload solo and the two in parallel - to find the most efficient way to split inference.
-
----
-
 ## Quick start
 
-[`IMPLEMENTATION/`](IMPLEMENTATION/README.md) is the folder you **copy onto every device** in the network. Every node runs the *same* codebase. On each device, install the requirements and run `main.py`; it reads the device profile, scores the hardware, discovers peers, and joins leader election automatically.
+[`IMPLEMENTATION/`](IMPLEMENTATION/README.md) is the folder you **copy onto every device** in the network. Every node runs the *same* codebase. On each device, install the requirements and run `main.py`. Some of them are device-specific and installed by hand (see the per-board setup guides in the documentation map). The first run is interactive: it asks for the agent-ID, the presets, the hardware figures used for scoring, and (on leader-capable devices) the Telegram bot token and allowed user IDs, then writes `device_profile.json` and installs the requirements for the roles you picked. Every run after that is automatic: it reads the profile, scores the hardware, discovers peers, and joins leader election.
 
 ```bash
 # on each device, inside the copied IMPLEMENTATION/ folder
