@@ -20,6 +20,8 @@ The LVDS display is optional. The agent runs headless.
 
 ## 2. Flash the image
 
+Following the ST instructions in [Downloading the image and flashing it on the board](https://wiki.stmicroelectronics.cn/stm32mpu/wiki/STM32MP25_Discovery_kits_-_Starter_Package#Downloading_the_image_and_flashing_it_on_the_board).
+
 ### Download
 
 1. Go to https://www.st.com/en/embedded-software/stm32mp2starter.html
@@ -51,7 +53,7 @@ cd "C:\Program Files\STMicroelectronics\STM32Cube\STM32CubeProgrammer\bin"
 
 It prints `STM32CubeProgrammer v2.23.0` and its help.
 
-The commands below call the `.exe` by full path, so nothing else is required. Alternatively add that `bin` folder to `PATH` and call `STM32_Programmer_CLI` from anywhere.
+Commands written as `.\STM32_Programmer_CLI.exe` below assume you are still in that `bin` folder; the flash command uses the full path instead, because it runs from the image folder. Adding `bin` to `PATH` lets you call `STM32_Programmer_CLI` from anywhere and avoids both.
 
 ### Connect the board for flashing
 

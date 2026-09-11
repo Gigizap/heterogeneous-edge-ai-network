@@ -6,6 +6,19 @@ A distributed **agentic system** in which a fleet of heterogeneous embedded devi
 
 ---
 
+## Table of Contents
+
+- [What's in here](#whats-in-here)
+- [Documentation map](#documentation-map)
+- [How does it work?](#how-does-it-work)
+  - [Definition of agents](#definition-of-agents)
+  - [Runtime flow](#runtime-flow)
+- [Hardware targets](#hardware-targets)
+- [Quick start](#quick-start)
+- [License](#license)
+
+---
+
 ## What's in here
 
 The repository has two top-level parts: the working **implementation** of the network, and the **benchmark code** used to characterize the models and the edge hardware.
@@ -109,9 +122,9 @@ Shape legend:
 |---|---|---|---|
 | Raspberry Pi 5 + Hailo AI HAT+ 2 | Leader / Sensing | Hailo H10 (40 TOPS) | `qwen3:1.7b` |
 | STM32MP257F-DK | Leader / Sensing | On-chip NPU | `functiongemma:270m` |
-| Generic device (Linux or Windows PC) | Leader / Sensing | llama.cpp (CPU or GPU) | `functiongemma:270m`* |
+| Any generic device (Linux or Windows PC) | Leader / Sensing | llama.cpp (CPU or GPU) | `functiongemma:270m`* |
 
-\* new leader and sensing presets can be added as subfolders in `/LeaderLogic` and in `/SensingLogic`
+\* new leader presets, using much more powerful LLMs, and new sensing presets can be added as subfolders in `/LeaderLogic` and in `/SensingLogic`, they will automatically be discovered. See [Leader Presets](IMPLEMENTATION/README.md#leader-presets)
 
 ---
 
@@ -131,7 +144,7 @@ To simulate a second device on the same machine (for testing), run another copy 
 python main.py --port 5002
 ```
 
-Per-device setup (Hailo packages, Ollama models, OpenSTLinux AI packages, Telegram token, etc.) is documented in **[IMPLEMENTATION/README.md](IMPLEMENTATION/README.md)**.
+Per-device setup (Hailo packages, Ollama models, OpenSTLinux AI packages, Telegram token, etc.) is documented in the **[Setup section](IMPLEMENTATION/README.md#setup)** of [IMPLEMENTATION/README.md](IMPLEMENTATION/README.md).
 
 > **Note:** the mesh-networking and CLASSIFIER + LLM architecture sections in the sub-READMEs are described as theoretical / not yet implemented - see those documents for the current status.
 

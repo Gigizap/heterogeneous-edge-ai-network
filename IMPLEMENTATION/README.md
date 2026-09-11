@@ -7,9 +7,12 @@
 ## Table of Contents
 
 - [Introduction](#introduction)
+- [Architecture](#architecture)
+- [Presets](#presets)
+- [Configuration](#configuration)
+- [Skills](#skills)
 - [Communication](#communication)
 - [Setup](#setup)
-- [Benchmarks](#benchmarks)
 
 ---
 
@@ -25,7 +28,7 @@ Every user request goes through a two-step inference pipeline:
 2. **Broadcast** - the command is sent over TCP to all known peers; replies are collected (configurable timeout, default 3 s).
 3. **Answer** - a second LLM call formats the collected results into a human-friendly Telegram reply.
 
-### Architecture
+## Architecture
 
 Of the two approaches described in the [root README](../README.md), only Approach 1 (full-LLM dispatch and answer generation) is implemented.
 
@@ -73,11 +76,18 @@ The unique identifier used to distinguish agents in the network. If a device act
 
 ---
 
+## Presets
+
 ### Leader Presets
 
 A leader preset is a folder under `LeaderLogic/<preset>/` holding a `leader.py` - the leader-side mirror of a `SensingLogic/<preset>/` folder holding a `tool_config.json`. The shared entry point, `LeaderLogic/run_leader.py`, owns the network wiring and the two-step pipeline (query → tool → devices, tool result → reply); each preset only supplies the two model-specific pieces of it (`dispatch`, `answer`). See [`LeaderLogic/leader.md`](LeaderLogic/leader.md) for the exact contract.
 
 Each device is assigned a leader preset in its `device_profile.json` (the menu at first-run setup is built from whatever preset folders exist, so a new one becomes selectable with no code change - see `ElectionLogic.identity.discover_leader_presets()`).
+
+**Characteristics of a leader preset.** The folder needs:
+
+- `leader.py` exposing `load(cfg, profile)`, which returns a backend object with a `dispatch()` and an `answer()` method. Its presence is what makes the folder a preset.
+- `requirements.txt` with the pip-installable dependencies, installed automatically at first-run setup. Dependencies that are not pip packages (board runtimes, cross-compiled wheels) stay commented there with the real install command.
 
 | Preset folder | Dispatch | Answer | Hardware |
 |---|---|---|---|
@@ -92,7 +102,9 @@ Each device is assigned a leader preset in its `device_profile.json` (the menu a
 
 #### Generic leader - score-based model selection
 
-The `generic` preset picks its GGUF model from the device score computed at startup. The score reflects available RAM, CPU, and hardware capabilities.
+The `generic` preset can pick its GGUF model from the device score computed at startup. The score reflects available RAM, CPU, and hardware capabilities.
+
+This is **off by default**: `LLM_detection_with_score = False` in [`LeaderLogic/generic/leader.py`](LeaderLogic/generic/leader.py) makes the preset always load `functiongemma:270m`. Set it to `True` for the selection below.
 
 | Score | Model | Backend |
 |---|---|---|
@@ -109,7 +121,7 @@ Score-based selection is controlled by the `LLM_detection_with_score` flag in `L
 
 ---
 
-### Configuration
+## Configuration
 
 The system uses two separate config files per device:
 
@@ -133,7 +145,7 @@ until they are valid. See `ElectionLogic.identity._prompt_telegram()`.
 > real user IDs into it, restore the placeholders before committing or pushing - a
 > token that reaches the remote is compromised and must be rotated.
 
-#### First-run setup
+### First-run setup
 
 `device_profile.json` is gitignored, so a device that has none runs an interactive setup on
 its first `python main.py`, then never asks again. It prompts for the agent-ID, the sensing
@@ -186,6 +198,8 @@ Model files are kept in two different places depending on which agent uses them:
 - **Sensing models** go **inside the sensing agent's own preset folder**, next to its code - each preset resolves its model relative to itself (`Path(__file__).parent / "<model>"`). For example `SensingLogic/raspberrypi5_yolo_NPU/yolov8n.hef`, `raspberrypi5_yolo_CPU/yolov8n.onnx`, and `stm32mp257_yolo_NPU/yolov8n_320_quant_pt_uf_od_coco-person-st.nb`. Drop a new sensing model in the same folder as the skill that loads it.
 
 ---
+
+## Skills
 
 ### Available Skills
 
@@ -329,107 +343,8 @@ The prebuilt Cortex-A35 `llama-cpp-python` used there lives in [`LeaderLogic/stm
 
 ---
 
-### Cross-compiling `llama-cpp-python` for the STM32MP2 (Cortex-A35)
+### Cross-compiling `llama-cpp-python` for the STM32MP2
 
-Only needed to **rebuild** the package above (new llama.cpp version, different Python, or another CPU). To just install it on a board, use the prebuilt archive instead.
-
-`llama-cpp-python` is left commented in `LeaderLogic/stm32mp257fdk/requirements.txt` because a plain `pip install` builds without NEON or runs out of memory on the board - instead **cross-compile the wheel on an x86_64 host** and install it on the board.
-
-Target: OpenSTLinux `5.0.15-...-scarthgap-mpu-v26.02.18`, Cortex-A35 (AArch64).
-
-#### 1. Get the SDK
-
-Download (needs free myST login + accept SLA0048):
-- Page: https://wiki.st.com/stm32mpu/wiki/STM32MPU_Developer_Package
-- File: `SDK-x86_64-stm32mp2-openstlinux-6.6-yocto-scarthgap-mpu-v26.02.18.tar.gz`
-
-Install guide: https://wiki.st.com/stm32mpu/wiki/Getting_started/STM32MP2_boards/STM32MP257x-DK/Develop_on_Arm_Cortex-A35/Install_the_SDK
-
-#### 2. Install the SDK (host)
-
-```bash
-tar xf SDK-x86_64-stm32mp2-openstlinux-6.6-yocto-scarthgap-mpu-v26.02.18.tar.gz
-cd SDK-x86_64-stm32mp2-*
-./st-image-weston-*-toolchain-5.0.15-*.sh     # accept default install dir /opt/st/...
-```
-
-#### 3. Activate the toolchain (host)
-
-```bash
-source /opt/st/.../environment-setup-cortexa35-ostl-linux
-```
-
-Verify (both must succeed):
-
-```bash
-echo $OECORE_SDK_VERSION   # -> 5.0.15-openstlinux-6.6-yocto-scarthgap-mpu-v26.02.18
-$CC --version              # -> ST cross-gcc
-```
-
-#### 4. Check Python versions match
-
-```bash
-# on the BOARD:
-python3 --version
-```
-
-The host Python that runs `pip wheel` must be the SAME minor version (e.g. 3.12). Wheels are not interchangeable across minor versions.
-
-#### 5. Build the wheel (host)
-
-```bash
-CMAKE_ARGS="-DGGML_NATIVE=OFF \
-  -DGGML_NEON=ON \
-  -DGGML_ARM_FMA=ON \
-  -DGGML_F16C=OFF \
-  -DGGML_AVX=OFF \
-  -DGGML_AVX2=OFF \
-  -DGGML_AVX512=OFF \
-  -DGGML_FMA=OFF \
-  -DGGML_SSE3=OFF \
-  -DGGML_OPENMP=OFF \
-  -DLLAMA_CURL=ON \
-  -DLLAMA_BUILD_TESTS=OFF \
-  -DLLAMA_BUILD_SERVER=OFF \
-  -DCMAKE_C_FLAGS='-mcpu=cortex-a35+crc -O3 -ffast-math -fno-finite-math-only' \
-  -DCMAKE_CXX_FLAGS='-mcpu=cortex-a35+crc -O3 -ffast-math -fno-finite-math-only'" \
-FORCE_CMAKE=1 \
-pip wheel llama-cpp-python --no-deps -w ./dist
-```
-
-Output: `./dist/llama_cpp_python-*.whl`
-
-#### 6. Copy to board
-
-```bash
-scp ./dist/llama_cpp_python-*.whl root@<board-ip>:/tmp/
-```
-
-#### 7. Install (board)
-
-```bash
-# you may need to install pip first
-pip install /tmp/llama_cpp_python-*.whl
-```
-
-#### 8. Run (board)
-
-```python
-from llama_cpp import Llama
-llm = Llama(model_path="model.gguf", n_threads=2)   # 2 = both A35 cores
-```
-
-#### Notes
-
-- `FORCE_CMAKE=1` makes the package build its OWN bundled llama.cpp with these flags. No separate backend needed.
-- `n_threads=2` = the `-t 2` that doubles throughput. Don't go higher (only 2 cores).
-- `-DLLAMA_CURL=ON` needs libcurl in the sysroot (present in the ST SDK). If configure fails on curl, that's why.
-- Building on the host avoids the on-board OOM (the device can't compile this in its RAM).
+Rebuilding the Cortex-A35 wheel is documented in [`LeaderLogic/stm32mp257fdk/prebuilt/README.md`](LeaderLogic/stm32mp257fdk/prebuilt/README.md).
 
 ---
-
-## Benchmarks
-
-### Accuracy & power consumption
-
-Tool-call accuracy and power/throughput benchmarks live in the top-level [`BENCHMARK CODE/`](../BENCHMARK%20CODE/README.md) folder. The accuracy benchmarks run on an external GPU workstation; the power-consumption benchmarks run on the edge boards themselves.
