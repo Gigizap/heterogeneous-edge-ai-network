@@ -8,8 +8,7 @@ A distributed **agentic system** in which a fleet of heterogeneous embedded devi
 
 ## Table of Contents
 
-- [What's in here](#whats-in-here)
-- [Documentation map](#documentation-map)
+- [Repository map](#repository-map)
 - [How does it work?](#how-does-it-work)
   - [Definition of agents](#definition-of-agents)
   - [Runtime flow](#runtime-flow)
@@ -19,27 +18,21 @@ A distributed **agentic system** in which a fleet of heterogeneous embedded devi
 
 ---
 
-## What's in here
+## Repository map
 
-The repository has two top-level parts: the working **implementation** of the network, and the **benchmark code** used to characterize the models and the edge hardware.
+The repository has two top-level parts: the working **implementation** of the network, and the **benchmark code** used to characterize the models and the edge hardware. Docs live next to the code they describe.
 
-| Folder | Contents |
+| Folder / doc | Contents |
 |---|---|
-| [`IMPLEMENTATION/`](IMPLEMENTATION/README.md) | The full agentic P2P system: discovery, leader election, leader/sensing logic, LLM dispatch pipeline |
-| [`BENCHMARK CODE/`](BENCHMARK%20CODE/README.md) | Accuracy, latency, and power-consumption benchmarks for the models and edge boards |
-
-## Documentation map
-
-Docs live next to the code they describe.
-
-| | |
-|---|---|
-| [IMPLEMENTATION/README.md](IMPLEMENTATION/README.md) | System overview: LLM pipeline, skills, election, presets, configuration, first-run setup |
-| [ConnectionLogic/README.md](IMPLEMENTATION/ConnectionLogic/README.md) | P2P layer: UDP discovery, TCP transport, connection troubleshooting |
-| [LeaderLogic/leader.md](IMPLEMENTATION/LeaderLogic/leader.md) | Leader internals and inference backends |
+| [**`IMPLEMENTATION/`**](IMPLEMENTATION/README.md) | **The full agentic P2P system: discovery, leader election, leader/sensing logic, LLM dispatch pipeline** |
+| [README.md](IMPLEMENTATION/README.md) | System overview: LLM pipeline, skills, election, presets, configuration, first-run setup |
+| [ConnectionLogic/README.md](IMPLEMENTATION/ConnectionLogic/README.md) | P2P layer: UDP discovery, TCP transport, wire protocol, troubleshooting |
+| [LeaderLogic/README.md](IMPLEMENTATION/LeaderLogic/README.md) | Leader preset contract and inference backends |
 | [LeaderLogic/backup.md](IMPLEMENTATION/LeaderLogic/backup.md) | Conversation backup and leader failover |
 | [LeaderLogic/stm32mp257fdk/README.md](IMPLEMENTATION/LeaderLogic/stm32mp257fdk/README.md) | STM32MP257F-DK bring-up, from the box to a running agent |
-| [BENCHMARK CODE/README.md](BENCHMARK%20CODE/README.md) | Index of the benchmark suites |
+| [SensingLogic/README.md](IMPLEMENTATION/SensingLogic/README.md) | Sensing preset contract and the available presets |
+| [**`BENCHMARK CODE/`**](BENCHMARK%20CODE/README.md) | **Accuracy, latency and power-consumption benchmarks for the models and edge boards** |
+| [README.md](BENCHMARK%20CODE/README.md) | Index of the benchmark suites |
 
 Benchmarks run in different places: **accuracy** and **FunctionGemma handlers** need an external CUDA workstation, **power consumption** runs on the edge boards, and **latency and network** mixes the two, with the network-scaling tests driving a real board from a laptop that simulates a fleet of up to 100 agents. Each suite's README says where its scripts run.
 

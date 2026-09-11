@@ -24,9 +24,8 @@ A distributed agentic system where a fleet of embedded devices collaborate over 
 
 Every user request goes through a two-step inference pipeline:
 
-1. **Dispatch** - the LLM converts the user's natural-language message into a canonical command, using the available skill list fetched dynamically from the network.
-2. **Broadcast** - the command is sent over TCP to all known peers; replies are collected (configurable timeout, default 3 s).
-3. **Answer** - a second LLM call formats the collected results into a human-friendly Telegram reply.
+1. **Dispatch** - the LLM converts the user's natural-language message into a canonical command, using the available skill list fetched dynamically from the network; the command is then broadcast over TCP to all known peers.
+2. **Answer** - the replies are collected (configurable timeout, default 3 s) and a second LLM call formats them into a human-friendly Telegram reply.
 
 ## Architecture
 
@@ -49,13 +48,13 @@ A message sent to a device to run one of its tools. The operational plane is **J
 | `tools/call` request | Leader → Sensing | `{"jsonrpc":"2.0","id":<id>,"method":"tools/call","params":{"name":<tool>,"arguments":{...}}}` |
 | `tools/call` result | Sensing → Leader | `{"jsonrpc":"2.0","id":<id>,"result":{"content":[{"type":"text","text":<result>}]}}` |
 | `tools/call` error | Sensing → Leader | `{"jsonrpc":"2.0","id":<id>,"error":{"code":<int>,"message":<str>}}` |
-| `notifications/sensing/alert` | Sensing → Leader | `{"jsonrpc":"2.0","method":"notifications/sensing/alert","params":{"tool":<str>,"text":<str>}}` (no `id`) |
+| `notifications/sensing/alert`* | Sensing → Leader | `{"jsonrpc":"2.0","method":"notifications/sensing/alert","params":{"tool":<str>,"text":<str>}}` (no `id`) |
 
 These are the **Operational** plane of the [communication protocol](#communication). Notes:
 - Replies are matched to their request by `id`, so concurrent, late, or stray messages never cross requests. The leader dispatches a picked tool to **all** sensing devices that own it and concatenates their replies.
 - Skill discovery is pull-on-join: the leader calls `tools/list` once when it discovers a device and keeps a live tool to owners registry, so there is no per-request fetch. (The old `fetchskills` text command and the `raw_command` classifier path are gone.)
 - A device that does not answer a `tools/call` within the leader's timeout (default 3s) is recorded as "did not reply".
-- `notifications/sensing/alert` is a JSON-RPC notification (no `id`, no reply) used by a long-running skill to push a later hit; leader-side delivery of the alert to the user is not wired yet.
+- \* `notifications/sensing/alert` is a JSON-RPC notification (no `id`, no reply) used by a long-running skill to push a later hit. **Not wired yet:** the sensing side sends it, but the leader does not handle it, so the alert never reaches the user.
 
 **Tool**
 A function that a sensing device can execute. Each device advertises its tools to the leader via `tools/list` (pulled by the leader when the device joins). Tools are OpenAI-compatible function definitions, so the LLM can decide which tool in the network best serves the user's request.
@@ -80,7 +79,7 @@ The unique identifier used to distinguish agents in the network. If a device act
 
 ### Leader Presets
 
-A leader preset is a folder under `LeaderLogic/<preset>/` holding a `leader.py` - the leader-side mirror of a `SensingLogic/<preset>/` folder holding a `tool_config.json`. The shared entry point, `LeaderLogic/run_leader.py`, owns the network wiring and the two-step pipeline (query → tool → devices, tool result → reply); each preset only supplies the two model-specific pieces of it (`dispatch`, `answer`). See [`LeaderLogic/leader.md`](LeaderLogic/leader.md) for the exact contract.
+A leader preset is a folder under `LeaderLogic/<preset>/` holding a `leader.py` - the leader-side mirror of a `SensingLogic/<preset>/` folder holding a `tool_config.json`. The shared entry point, `LeaderLogic/run_leader.py`, owns the network wiring and the two-step pipeline (query → tool → devices, tool result → reply); each preset only supplies the two model-specific pieces of it (`dispatch`, `answer`). See [`LeaderLogic/README.md`](LeaderLogic/README.md) for the exact contract.
 
 Each device is assigned a leader preset in its `device_profile.json` (the menu at first-run setup is built from whatever preset folders exist, so a new one becomes selectable with no code change - see `ElectionLogic.identity.discover_leader_presets()`).
 
@@ -292,7 +291,7 @@ The P2P networking layer handles peer discovery and message transport with zero 
 > - **Leader:** an LLM backend - `LeaderLogic/<preset>/requirements.txt`, e.g. `LeaderLogic/generic/requirements.txt` (`llama-cpp-python`), `LeaderLogic/stm32mp257fdk/requirements.txt` (llama.cpp, [prebuilt archive](LeaderLogic/stm32mp257fdk/prebuilt/)), or `LeaderLogic/raspberry_cpu|raspberry_hailo|raspberry_cpuhailo/requirements.txt` (Ollama and/or the Hailo SDK, no llama-cpp-python).
 > - **Sensing:** the model runtime for its preset - `SensingLogic/<preset>/requirements.txt`. A sensing-only device needs **no** LLM backend; a leader-only device needs **no** detection runtime.
 >
-> On first run, `main.py` auto-installs the pip-installable lines for the roles you pick. The hardware runtimes (`hailo_platform`, `stai_mpu`, `tflite_runtime`, `picamera2`, STM32 `llama-cpp-python`) are **not** pip packages - each preset's requirements file documents the real `apt` / `x-linux-ai` / Hailo SDK / cross-compile command in its comments.
+> On first run, `main.py` auto-installs the pip-installable lines for the roles you pick. The hardware runtimes (`hailo_platform`, `stai_mpu`, `tflite_runtime`, `picamera2`) are **not** pip packages - each preset's requirements file documents the real `apt` / `x-linux-ai` / Hailo SDK command in its comments. `llama-cpp-python` is on PyPI but builds without NEON, which is why the STM32 uses a cross-compiled build that is installed without pip (further instructions later).
 
 ### Minimal Test Setup
 
@@ -309,29 +308,37 @@ As shown in [`ConnectionLogic/README.md`](ConnectionLogic/README.md) (`image/net
 
 1. Flash the official Raspberry Pi OS from the [Raspberry Pi website](https://www.raspberrypi.com/software/).
 
-2. Connect the Hailo accelerator to the board through the PCIe port.
-
-3. Install Hailo dependencies. The required version (5.3) is **not available via `apt`** - download the `.deb` packages manually from the [Hailo Developer Zone](https://hailo.ai/developer-zone/) and install with `dpkg`:
-
-```bash
-sudo dpkg -i hailort_<version>_arm64.deb
-sudo dpkg -i hailort-pcie-driver_<version>_arm64.deb
-```
-
-4. Install Ollama and pull the CPU models:
+2. Install Ollama and pull the CPU model:
 
 ```bash
 curl -fsSL https://ollama.com/install.sh | sh
 ollama pull qwen3:1.7b
 ```
 
-5. Place the `qwen3:1.7b` `.hef` file at the path set in `LeaderLogic/raspberry_hailo/config.json` and `LeaderLogic/raspberry_cpuhailo/config.json` (`hailo.hef_path`).
+This is enough for the `raspberry_cpu` preset.
 
-6. You can also install llama-cpp-python and use the `generic` preset as the Leader preset instead.
+Alternatively, install llama-cpp-python and use the `generic` preset as the leader preset instead:
+
 ```bash
 pip install llama-cpp-python
 ```
-Check that llama.cpp backend gets compiled with the correct arm support.
+
+Check that the llama.cpp backend gets compiled with the correct ARM support.
+
+#### Optionally: + Raspberry Pi AI HAT+ 2 (Hailo-10 chip)
+
+Needed for the `raspberry_hailo` and `raspberry_cpuhailo` presets, which run answer generation on the NPU.
+
+1. Connect the Hailo accelerator to the board through the PCIe port.
+
+2. Install the Hailo dependencies. The version used here (**HailoRT 5.3.0**) is **not available via `apt`** - download the `.deb` packages manually from the [Hailo Developer Zone](https://hailo.ai/developer-zone/) and install with `dpkg`:
+
+```bash
+sudo dpkg -i hailort_<version>_arm64.deb
+sudo dpkg -i hailort-pcie-driver_<version>_arm64.deb
+```
+
+3. Place the `qwen3:1.7b` `.hef` file at the path set in `LeaderLogic/raspberry_hailo/config.json` and `LeaderLogic/raspberry_cpuhailo/config.json` (`hailo.hef_path`).
 
 ---
 
@@ -339,12 +346,6 @@ Check that llama.cpp backend gets compiled with the correct arm support.
 
 Full bring-up (assembly, flashing OpenSTLinux, X-LINUX-AI, llama.cpp, repo clone) is documented in [`LeaderLogic/stm32mp257fdk/README.md`](LeaderLogic/stm32mp257fdk/README.md).
 
-The prebuilt Cortex-A35 `llama-cpp-python` used there lives in [`LeaderLogic/stm32mp257fdk/prebuilt/`](LeaderLogic/stm32mp257fdk/prebuilt/); the section below covers rebuilding it.
-
----
-
-### Cross-compiling `llama-cpp-python` for the STM32MP2
-
-Rebuilding the Cortex-A35 wheel is documented in [`LeaderLogic/stm32mp257fdk/prebuilt/README.md`](LeaderLogic/stm32mp257fdk/prebuilt/README.md).
+The prebuilt Cortex-A35 `llama-cpp-python` used there lives in [`LeaderLogic/stm32mp257fdk/prebuilt/`](LeaderLogic/stm32mp257fdk/prebuilt/) and is ready to be installed directly. Its readme, [`prebuilt/README.md`](LeaderLogic/stm32mp257fdk/prebuilt/README.md), explains how that ready-to-use build was cross-compiled.
 
 ---
