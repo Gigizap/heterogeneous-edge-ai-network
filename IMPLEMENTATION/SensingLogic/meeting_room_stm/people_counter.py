@@ -25,6 +25,7 @@ INPUT_SIZE   = 320
 CONF_THRES   = 0.25
 IOU_THRES    = 0.45
 CAM_W, CAM_H = 640, 480
+SAMPLE_SECS  = 1.5   # sampling window; the reply is the most frequent per-frame count
 
 # Fixed input quantization for the .nb model (from the board's export):
 # float[0..1] -> int8 via round(x / scale) + zero_point
@@ -80,6 +81,11 @@ def _nms(boxes, scores, iou_thres):
         iou = inter / (areas[i] + areas[order[1:]] - inter + 1e-9)
         order = order[1:][iou <= iou_thres]
     return keep
+
+
+def _mode(counts):
+    """Most frequent count, ties broken toward the lower value."""
+    return max(set(counts), key=lambda c: (counts.count(c), -c))
 
 
 def _postprocess(raw, r, dw, dh):
@@ -152,23 +158,31 @@ atexit.register(_shutdown)
 
 def detect_people_number(**kwargs):
     """
-    Capture one frame, run the YOLOv8n person detector on the STM32 NPU
-    (stai_mpu), and return how many people are in the meeting room.
+    Sample the camera for SAMPLE_SECS, run the YOLOv8n person detector on the
+    STM32 NPU (stai_mpu) on every frame, and return the most frequent count.
+    Voting over frames absorbs the per-frame flicker of the quantized model.
     """
-    log.info("detect_people_number: running single-frame people count")
+    log.info("detect_people_number: sampling people count for %.1fs", SAMPLE_SECS)
     model = _get_model()
     cap = _get_camera()
 
-    ret, frame = cap.read()
-    if not ret or frame is None:
+    counts = []
+    deadline = time.monotonic() + SAMPLE_SECS
+    while time.monotonic() < deadline:
+        ret, frame = cap.read()
+        if not ret or frame is None:
+            continue
+        blob, r, dw, dh = _preprocess(frame)
+        model.set_input(0, blob)
+        model.run()
+        _boxes, confs = _postprocess(model.get_output(0), r, dw, dh)
+        counts.append(len(confs))
+
+    if not counts:
         log.warning("detect_people_number: camera read failed")
         return "detection failed: camera read error"
 
-    blob, r, dw, dh = _preprocess(frame)
-    model.set_input(0, blob)
-    model.run()
-    _boxes, confs = _postprocess(model.get_output(0), r, dw, dh)
-
-    n = len(confs)
+    n = _mode(counts)
+    log.debug("detect_people_number: %d frames, counts=%s -> %d", len(counts), counts, n)
     status = "room occupied" if n > 0 else "room free"
     return f"{status}: {n} people in the meeting room"

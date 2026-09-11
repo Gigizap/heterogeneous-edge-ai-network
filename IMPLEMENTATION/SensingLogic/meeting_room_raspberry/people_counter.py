@@ -28,6 +28,7 @@ IOU_THRES    = 0.45
 NUM_CLASSES  = 80
 PERSON_CLASS = 0  # "person" is index 0 in the COCO class list
 CAM_SIZE     = (1280, 720)
+SAMPLE_SECS  = 1.5   # sampling window; the reply is the most frequent per-frame count
 
 # Lazy singletons so the model/camera are only loaded once across calls
 _SESSION = None
@@ -58,6 +59,11 @@ def _preprocess(frame):
     img = img.astype(np.float32) / 255.0
     img = np.transpose(img, (2, 0, 1))[None]
     return np.ascontiguousarray(img), r, dw, dh
+
+
+def _mode(counts):
+    """Most frequent count, ties broken toward the lower value."""
+    return max(set(counts), key=lambda c: (counts.count(c), -c))
 
 
 def _postprocess_people(output, r, dw, dh):
@@ -113,22 +119,31 @@ def _get_camera():
 
 def detect_people_number(**kwargs):
     """
-    Capture one frame from the Pi camera, run YOLOv8n object detection on the
-    CPU, and return how many people are in the meeting room.
+    Sample the Pi camera for SAMPLE_SECS, run YOLOv8n object detection on the
+    CPU on every frame, and return the most frequent people count. Voting over
+    frames absorbs the per-frame flicker of the detector.
     """
-    log.info("detect_people_number: running single-frame people count")
+    log.info("detect_people_number: sampling people count for %.1fs", SAMPLE_SECS)
     import cv2
 
     session, input_name = _get_session()
     picam2 = _get_camera()
 
-    frame = picam2.capture_array()
-    frame = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
+    counts = []
+    deadline = time.monotonic() + SAMPLE_SECS
+    while time.monotonic() < deadline:
+        frame = picam2.capture_array()
+        frame = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
+        blob, r, dw, dh = _preprocess(frame)
+        outputs = session.run(None, {input_name: blob})
+        _boxes, confs = _postprocess_people(outputs[0], r, dw, dh)
+        counts.append(len(confs))
 
-    blob, r, dw, dh = _preprocess(frame)
-    outputs = session.run(None, {input_name: blob})
-    _boxes, confs = _postprocess_people(outputs[0], r, dw, dh)
+    if not counts:
+        log.warning("detect_people_number: no frames captured")
+        return "detection failed: camera read error"
 
-    n = len(confs)
+    n = _mode(counts)
+    log.debug("detect_people_number: %d frames, counts=%s -> %d", len(counts), counts, n)
     status = "room occupied" if n > 0 else "room free"
     return f"{status}: {n} people in the meeting room"
