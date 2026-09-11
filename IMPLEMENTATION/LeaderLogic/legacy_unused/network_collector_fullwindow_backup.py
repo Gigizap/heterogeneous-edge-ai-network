@@ -28,7 +28,7 @@ def merge_tool_lists(raw_buffers: List[str]) -> List[Dict[str, Any]]:
     Each buffer entry may be prefixed with "sender: " (added by handle_incoming).
     The payload is expected to be a JSON array of OpenAI-style tool objects
     (with "type": "function", "function": {...}) or a single such object.
-    Deduplication is by function name — last definition wins.
+    Deduplication is by function name - last definition wins.
     """
     merged: Dict[str, Dict[str, Any]] = {}
 
@@ -83,8 +83,8 @@ class NetworkCollector:
     Centralised P2P message router and collector.
 
     Manages two independent collection windows:
-      1. Skills collection  — activated by fetch_and_merge_skills()
-      2. Reply collection   — activated by broadcast_and_collect()
+      1. Skills collection  - activated by fetch_and_merge_skills()
+      2. Reply collection   - activated by broadcast_and_collect()
 
     Wire handle_incoming() into the P2P transport's on_message callback.
     """
@@ -116,7 +116,7 @@ class NetworkCollector:
 
         with self._lock:
             if self._collecting_skills:
-                self._skills_buf.append(f"{sender}: {text}")   # KEEP — merge_tool_lists parses "sender: "
+                self._skills_buf.append(f"{sender}: {text}")   # KEEP - merge_tool_lists parses "sender: "
             if self._collecting_reply:
                 self._reply_buf.append(msg)                     # store whole payload, any shape
 

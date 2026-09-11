@@ -45,7 +45,7 @@ def start_and_wait(model: str, host: str = "http://localhost:11434", cmd: list =
                 if any(model in m for m in models):
                     log.info("model '%s' ready", model)
                     return proc
-                log.info("server up, model '%s' not found — pulling…", model)
+                log.info("server up, model '%s' not found - pulling…", model)
                 requests.post(pull_url, json={"model": model, "stream": False}, timeout=300)
                 log.info("model '%s' pulled", model)
                 return proc

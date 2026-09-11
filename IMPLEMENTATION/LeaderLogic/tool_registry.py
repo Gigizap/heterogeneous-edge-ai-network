@@ -20,7 +20,7 @@ list is always current, with no round-trip on the hot path. `fetchskills`
 (now `tools/list`) stays available as a fallback but is no longer on the
 critical path.
 
-Tool defs are accepted in OpenAI function-calling shape — either nested
+Tool defs are accepted in OpenAI function-calling shape - either nested
 ({"type":"function","function":{"name":...}}) or flat ({"name":...}). The
 registry keeps one representative def per tool name for the LLM.
 """

@@ -1,5 +1,5 @@
 """
-Qwen3 chat handler for llama-cpp-python — SIMPLE version, NO grammar.
+Qwen3 chat handler for llama-cpp-python - SIMPLE version, NO grammar.
 
 Same idea as the functiongemma no-grammar handler, but using Qwen3's native
 ChatML + Hermes-style tool-call format instead of Gemma's <start_function_call>
@@ -219,7 +219,7 @@ def _build_prompt(messages, tools, enable_thinking: Optional[bool] = None) -> st
 #     {"name": "fn", "arguments": {"a": 1}}
 #     </tool_call>
 # We extract every such block and json-load it. We're tolerant of:
-#   * a missing closing </tool_call> on the LAST block (hit max_tokens) — we
+#   * a missing closing </tool_call> on the LAST block (hit max_tokens) - we
 #     fall back to brace-matching to recover the JSON object;
 #   * a leaked <think>…</think> preceding the calls (stripped for content).
 # A block whose JSON can't be parsed is skipped rather than mis-emitted.

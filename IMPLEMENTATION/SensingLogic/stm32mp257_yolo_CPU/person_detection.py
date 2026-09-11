@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-person_detection.py  —  STM32MP257F-DK CPU sensing skill
+person_detection.py  -  STM32MP257F-DK CPU sensing skill
 
 YOLOv8n person detector running on the STM32MP257F-DK CPU via TFLite. Adapted
 from the live benchmark script into the single-frame sensing-skill contract
@@ -206,15 +206,15 @@ def await_person(reply, stop_event, poll_interval=0.0, **kwargs):
     The first two positional args are therefore the reply callback and the stop
     threading.Event; any tool arguments arrive as keywords.
 
-    Same singletons (model + camera) and pre/post-processing as detect_people —
+    Same singletons (model + camera) and pre/post-processing as detect_people -
     this just runs them in a loop instead of once.
     """
-    log.info("await_person: monitor started — watching the camera for a person")
+    log.info("await_person: monitor started - watching the camera for a person")
     try:
         interp, inp, out, dtype, scale, zp = _get_interpreter()
         cap = _get_camera()
     except Exception as e:
-        log.error("await_person: could not start — %s", e)
+        log.error("await_person: could not start - %s", e)
         reply(f"stm32 monitor says: could not start (setup failed: {e})")
         return
 
@@ -231,7 +231,7 @@ def await_person(reply, stop_event, poll_interval=0.0, **kwargs):
 
         if len(confs) > 0:
             best = max(float(c) for c in confs)
-            log.info("await_person: person detected (%d person(s), best conf %.2f) — alerting user",
+            log.info("await_person: person detected (%d person(s), best conf %.2f) - alerting user",
                      len(confs), best)
             reply(f"stm32 monitor says: a person just appeared! "
                   f"({len(confs)} person(s), confidence: {best:.2f})")

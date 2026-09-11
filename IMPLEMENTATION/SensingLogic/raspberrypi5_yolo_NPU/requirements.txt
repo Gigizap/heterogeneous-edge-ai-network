@@ -1,7 +1,7 @@
-# Sensing preset — Raspberry Pi 5 + Hailo AI HAT+ 2, YOLOv8n object detection on the Hailo NPU.
+# Sensing preset - Raspberry Pi 5 + Hailo AI HAT+ 2, YOLOv8n object detection on the Hailo NPU.
 # Install on the Raspberry Pi. NONE of the runtime deps are pip packages.
 
-# NOT pip — install via the Hailo SDK / Raspberry Pi OS:
+# NOT pip - install via the Hailo SDK / Raspberry Pi OS:
 #   hailo_platform (HailoRT) : install the Hailo .deb packages from the Hailo Developer Zone
 #                              (see the Raspberry Pi 5 setup in README.md)
 #   picamera2                : sudo apt install python3-picamera2   (pre-installed on Raspberry Pi OS)

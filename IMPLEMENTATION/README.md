@@ -27,11 +27,7 @@ Every user request goes through a two-step inference pipeline:
 
 ### Architecture
 
-We propose 2 architectures, currently only the first one (fully LLM based dispatch and answer generation) is implemented.
-
-![Approach 1: full-LLM dispatch](../figures/approach1.png)
-
-![Approach 2: classifier + LLM dispatch](../figures/approach2.png)
+Of the two approaches described in the [root README](../README.md), only Approach 1 (full-LLM dispatch and answer generation) is implemented.
 
 > The leader can simultaneously act as a sensing device.
 
@@ -120,7 +116,7 @@ The system uses two separate config files per device:
 **`software_config.json`** - static, shared across leader and sensing roles (the agent-ID is **not** here - it lives in `device_profile.json`):
 ```json
 {
-  "agent":    { "tcp_port": 5555 },
+  "agent":    { "tcp_port": 5555, "replication_factor": 2 },
   "telegram": { "token": "...", "allowed_users": [...] },
   "timeouts": { "fetchskills": 1.5, "replies": 3.0, "loop": 0.0 }
 }
@@ -128,7 +124,7 @@ The system uses two separate config files per device:
 
 The `telegram` section is filled in by first-run setup, but **only on a device that
 declares a leader preset other than `none`** - the elected leader is the only role that
-runs the bot, so a follower-only device is never asked and keeps the placeholders. You
+runs the bot, so a follower-only device is never asked and keeps the placeholders. At first startup you
 are prompted for the bot token (from @BotFather) and the comma-separated numeric user
 IDs allowed to talk to it (from @userinfobot); both are required and the prompt repeats
 until they are valid. See `ElectionLogic.identity._prompt_telegram()`.
@@ -272,25 +268,6 @@ there?" answers "there are 2", stays quiet while it stays 2, and sends an
 The P2P networking layer handles peer discovery and message transport with zero manual configuration. Nodes discover each other automatically via UDP broadcast and exchange messages over direct TCP connections - no broker, no central server.
 
 → See [`ConnectionLogic/README.md`](ConnectionLogic/README.md) for full details.
-
-### Protocol summary
-
-All messages are JSON. Discovery runs over UDP (port `9999`); everything else is newline-delimited JSON over each peer's TCP port. Every TCP message carries an auto-stamped `from` (the sender's agent-ID).
-
-| Plane | Message | Shape |
-|---|---|---|
-| Discovery (UDP) | `HELLO` | `{"type":"HELLO", "id":<agent_id>, "port":<tcp_port>}` |
-| Election (TCP) | `HELLO` | `{"type":"HELLO", "from":<id>, "score":<int>, "has_leader_preset":<bool>, "sensing_preset":<str\|null>, "leader_preset":<str\|null>}` |
-| Election (TCP) | `ELECTION` | `{"type":"ELECTION", "from":<id>, "score":<int>}` |
-| Election (TCP) | `LEADER_CLAIM` | `{"type":"LEADER_CLAIM", "from":<id>, "score":<int>}` |
-| Backup (TCP) | `CONV_BACKUP` | `{"type":"CONV_BACKUP", "from":<id>, "chat_id":<str>, "messages":[...], "leader_id":<id>, "ts":<float>}` |
-| Backup (TCP) | `CONV_RESTORE_REQ` | `{"type":"CONV_RESTORE_REQ", "from":<id>, "chat_id":<str\|"*">}` |
-| Backup (TCP) | `CONV_RESTORE_RESP` | `{"type":"CONV_RESTORE_RESP", "from":<id>, "chat_id":<str>, "messages":[...], "ts":<float>}` |
-| Operational (TCP) | `tools/list` / `tools/call` (JSON-RPC) | `{"jsonrpc":"2.0","id":<id>,"method":<m>,"params":{...}}` then `{"jsonrpc":"2.0","id":<id>,"result":{...}}` - see the command table above |
-| Operational (TCP) | async alert (JSON-RPC notification) | `{"jsonrpc":"2.0","method":"notifications/sensing/alert","params":{...}}` (no `id`) |
-| Console (TCP) | console broadcast | `{"text":<prompt input>}` |
-
-> On election the leader also broadcasts a `CAPABILITY_ANNOUNCE` (model, hardware, peer count) used to build the greeting message. Messages with `type` route to election / backup / capability handlers; messages with `method` are JSON-RPC operational requests/notifications; the leftover `{"text": ...}` is the console broadcast.
 
 ---
 

@@ -2,7 +2,7 @@
 ElectionLogic/scoring.py
 
 Computes a deterministic integer score from the device profile.
-No hardware probing or benchmarking — the heavy numbers (CPU TFLOPS and RAM
+No hardware probing or benchmarking - the heavy numbers (CPU TFLOPS and RAM
 bandwidth) are declared by the user during first-run setup in identity.py.
 Only the *currently available* RAM is read live (it is the one thing that
 changes run-to-run and caps the model that actually fits right now).

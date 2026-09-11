@@ -1,13 +1,13 @@
 """
 LeaderLogic/leader_network.py
 
-The leader's network-facing object — the replacement for NetworkCollector.
+The leader's network-facing object - the replacement for NetworkCollector.
 
 It bundles the two pieces the pipeline needs and wires them into the leader's
 transport + discovery:
 
-  * ToolRegistry    — the live {tool_name: {agent_ids}} map.
-  * ToolDispatcher  — sends a picked tool to its owners and gathers replies
+  * ToolRegistry    - the live {tool_name: {agent_ids}} map.
+  * ToolDispatcher  - sends a picked tool to its owners and gathers replies
                       (id-correlated, flat timeout cap).
 
 Skill discovery is pull-on-join, not per-call: when the leader's discovery sees
@@ -59,7 +59,7 @@ class LeaderNetwork:
     # ── pipeline interface (what BaseWorkflow calls) ─────────────────────────
 
     def available_tools(self):
-        """Deduplicated tool defs for the LLM — a local lookup, no network."""
+        """Deduplicated tool defs for the LLM - a local lookup, no network."""
         return self.registry.available_tools()
 
     def dispatch(self, name, arguments):

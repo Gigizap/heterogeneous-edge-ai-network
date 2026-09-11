@@ -1,5 +1,5 @@
 """
-FunctionGemma chat handler for llama-cpp-python — SIMPLE version, NO grammar.
+FunctionGemma chat handler for llama-cpp-python - SIMPLE version, NO grammar.
 
 Same spec-verified prompt format and parsing as functiongemma_handler.py, but
 without GBNF grammar generation/enforcement. The model generates freely; we

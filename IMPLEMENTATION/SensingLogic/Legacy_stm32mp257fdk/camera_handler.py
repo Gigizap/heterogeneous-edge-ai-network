@@ -41,7 +41,7 @@ def open_camera(index: int = 0) -> cv2.VideoCapture:
             print(f"[camera] ready after {i+1} warmup frames (brightness={frame.mean():.1f})", flush=True)
             return cap
 
-    print(f"[camera] WARNING: still dim after {MAX_WARMUP_FRAMES} frames — proceeding anyway", flush=True)
+    print(f"[camera] WARNING: still dim after {MAX_WARMUP_FRAMES} frames - proceeding anyway", flush=True)
     return cap
 
 

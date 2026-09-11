@@ -5,8 +5,8 @@ Conversation history backup
 ────────────────────────────
 The active leader calls `push(chat_id, messages)` after every user message.
 BackupManager serialises the full conversation and replicates it to the
-top-N strongest peers (N = replication_factor), so a leader failure — and
-even a simultaneous leader + backup-peer failure — can be recovered from.
+top-N strongest peers (N = replication_factor), so a leader failure - and
+even a simultaneous leader + backup-peer failure - can be recovered from.
 
 When a new leader is elected it calls `restore(chat_id)` to retrieve the
 last known conversation so it can resume without losing context.
@@ -35,8 +35,8 @@ class BackupManager:
     Parameters
     ----------
     agent_id      : this device's ID (used as sender tag)
-    transport     : P2PTransport — used to send targeted messages
-    get_backup_peers   : callable (n) → list[str]  — returns the N strongest
+    transport     : P2PTransport - used to send targeted messages
+    get_backup_peers   : callable (n) → list[str]  - returns the N strongest
                          other peers (best first) that should hold a backup.
                          Returns fewer than N on a small network.
     replication_factor : how many peers each conversation is replicated to.
@@ -84,8 +84,8 @@ class BackupManager:
 
         peers = self._get_backup_peers(self._replication_factor)
         if not peers:
-            self.log.debug("no backup peers yet — chat %s cached locally only", cid)
-            return  # no backup peers yet — data is at least cached locally
+            self.log.debug("no backup peers yet - chat %s cached locally only", cid)
+            return  # no backup peers yet - data is at least cached locally
 
         payload = {
             "type":      "CONV_BACKUP",
@@ -127,7 +127,7 @@ class BackupManager:
                 return local
 
         # Ask the network
-        self.log.info("restore chat %s: not local — asking network", cid)
+        self.log.info("restore chat %s: not local - asking network", cid)
         evt = threading.Event()
         self._pending_restores[cid] = evt
         self._restore_results.pop(cid, None)
@@ -146,7 +146,7 @@ class BackupManager:
 
     def restore_all(self) -> dict[str, list]:
         """
-        Return every conversation this device is holding — no network request.
+        Return every conversation this device is holding - no network request.
 
         The just-elected leader IS the previous leader's backup peer: a live
         leader pushes CONV_BACKUP to the 2nd-strongest device, which is exactly
@@ -154,7 +154,7 @@ class BackupManager:
         already in our local _store; broadcasting a restore request and sleeping
         for replies was pure boot latency for data we already have. (A
         simultaneous double failure that also takes down the backup peer loses
-        history — an acceptable edge for a no-cloud fleet.)
+        history - an acceptable edge for a no-cloud fleet.)
         """
         with self._lock:
             result = dict(self._store)
@@ -197,7 +197,7 @@ class BackupManager:
                             "messages": messages,
                             "ts":       time.time(),
                         })
-                    self.log.info("restore-all request from %s — sending %d conversation(s)",
+                    self.log.info("restore-all request from %s - sending %d conversation(s)",
                                   sender, len(self._store))
                 elif req_cid in self._store:
                     self._transport.send_sync(sender, {
@@ -207,10 +207,10 @@ class BackupManager:
                         "messages": self._store[req_cid],
                         "ts":       time.time(),
                     })
-                    self.log.info("restore request from %s for chat %s — sending it (%d msg)",
+                    self.log.info("restore request from %s for chat %s - sending it (%d msg)",
                                   sender, req_cid, len(self._store[req_cid]))
                 else:
-                    self.log.info("restore request from %s for chat %s — nothing stored",
+                    self.log.info("restore request from %s for chat %s - nothing stored",
                                   sender, req_cid)
 
         elif mtype == "CONV_RESTORE_RESP":

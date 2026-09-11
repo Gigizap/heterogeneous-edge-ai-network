@@ -168,17 +168,15 @@ discovery = Discovery(
 transport._event_loop = _loop
 
 # ── conversation backup receiver (EVERY device, on the agent transport) ───────
-# Attaching this here — not only on leaders — is what makes backups actually
+# Attaching this here - not only on leaders - is what makes backups actually
 # land: a follower can store the leader's history and hand it back to the next
 # leader. When THIS device is the leader it also uses `backup` to push, to the
 # REPLICATION_FACTOR strongest peers (election.backup_peers()).
 #
-# REPLICATION_FACTOR = how many devices hold a copy of each conversation.
-#   1 → only the 2nd-strongest device (the leader and that device both dying
-#       loses the history); 2 → 2nd and 3rd strongest, so a double failure still
-#       leaves a replica. Capped automatically by how many peers actually exist.
+# replication_factor (software_config.json) = how many devices hold a copy of
+#   each conversation. Capped by how many peers actually exist.
 from LeaderLogic.backup_manager import BackupManager
-REPLICATION_FACTOR = 2
+REPLICATION_FACTOR = cfg["agent"]["replication_factor"]
 backup = BackupManager(
     agent_id           = AGENT_ID,
     transport          = transport,
@@ -286,7 +284,7 @@ def _resume_pending_requests(leader, pending):
     never answered (its backup ended in an unanswered user turn).
 
     `pending` is [(chat_id, user_text), ...]. Each reply is delivered ONLY to its
-    own chat_id (leader.handle sends to that chat — no broadcast). After replying
+    own chat_id (leader.handle sends to that chat - no broadcast). After replying
     we advance that chat's backup so a later failover won't answer it twice.
     Runs sequentially in one thread to avoid hammering the single LLM.
     """
@@ -347,7 +345,7 @@ def _boot_leader(prof: dict):
     if restored:
         for chat_id, history, pending_text in _plan_restore(restored):
             # Restoring PRIOR context needs history support; replaying the single
-            # UNANSWERED message does not — so we gate only the load_history call,
+            # UNANSWERED message does not - so we gate only the load_history call,
             # and always replay the pending turn (just needs leader.handle).
             if hasattr(leader, "load_history"):
                 try:
@@ -422,7 +420,7 @@ def _live_tools(leader):
 
 
 def _on_telegram_message(chat_id: int, text: str):
-    t0 = time.perf_counter()   # query received — timed to the backup below
+    t0 = time.perf_counter()   # query received - timed to the backup below
     with _leader_lock:
         pair = _current_leader
         res  = _leader_resources

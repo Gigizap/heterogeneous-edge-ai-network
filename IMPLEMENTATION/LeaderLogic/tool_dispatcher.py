@@ -8,7 +8,7 @@ The LLM picks ONE tool for a user turn. The dispatcher:
   1. resolves that tool to the set of agents that own it (ToolRegistry);
   2. sends the call to ALL of them at once, as JSON-RPC `tools/call` requests,
      each tagged with its own correlation id;
-  3. gathers replies BY ID — never by a time window — with a flat timeout cap
+  3. gathers replies BY ID - never by a time window - with a flat timeout cap
      (default 3s), finishing as soon as every owner has replied;
   4. returns one {from, text} per owner. An owner that did not answer within the
      cap is recorded as {from, text: "did not reply"}, so the answer LLM always
@@ -74,7 +74,7 @@ class ToolDispatcher:
         """Send `name` to every agent that owns it and block until all reply or
         the timeout cap elapses.
 
-        Returns [{from, text}, ...] — one per owner, with silent owners marked
+        Returns [{from, text}, ...] - one per owner, with silent owners marked
         "did not reply". Returns [] when no agent owns the tool.
         """
         owners = sorted(self._registry.owners(name))

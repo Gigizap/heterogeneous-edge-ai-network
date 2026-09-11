@@ -107,7 +107,7 @@ def announce(
         "ts":              time.time(),
     })
 
-    log.info("announced as leader — model=%s hist=%s", model_name, has_hist)
+    log.info("announced as leader - model=%s hist=%s", model_name, has_hist)
 
 
 def status_text(

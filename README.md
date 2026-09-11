@@ -6,6 +6,15 @@ A distributed **agentic system** in which a fleet of heterogeneous embedded devi
 
 ---
 
+## What's in here
+
+The repository has two top-level parts: the working **implementation** of the network, and the **benchmark code** used to characterize the models and the edge hardware.
+
+| Folder | Contents |
+|---|---|
+| [`IMPLEMENTATION/`](IMPLEMENTATION/README.md) | The full agentic P2P system: discovery, leader election, leader/sensing logic, LLM dispatch pipeline |
+| [`BENCHMARK CODE/`](BENCHMARK%20CODE/README.md) | Accuracy, latency, and power-consumption benchmarks for the models and edge boards |
+
 ## Documentation map
 
 Docs live next to the code they describe.
@@ -19,7 +28,7 @@ Docs live next to the code they describe.
 | [LeaderLogic/stm32mp257fdk/README.md](IMPLEMENTATION/LeaderLogic/stm32mp257fdk/README.md) | STM32MP257F-DK bring-up, from the box to a running agent |
 | [BENCHMARK CODE/README.md](BENCHMARK%20CODE/README.md) | Index of the benchmark suites |
 
-Benchmarks run in two places: **accuracy** and **FunctionGemma handlers** need an external CUDA workstation, while **power consumption** and **latency/network** run on the edge boards themselves.
+Benchmarks run in different places: **accuracy** and **FunctionGemma handlers** need an external CUDA workstation, **power consumption** runs on the edge boards, and **latency and network** mixes the two, with the network-scaling tests driving a real board from a laptop that simulates a fleet of up to 100 agents. Each suite's README says where its scripts run.
 
 ---
 
@@ -34,9 +43,9 @@ The unit of the network is the **agent**, identified by a unique agent-ID and bo
 
 Sensing agents and leader agents can **co-live on the same physical device** - each keeps its own agent-ID and its own port, so they act as two independent agents (two separate TCP endpoints) that happen to share an IP.
 
-Leadership is decided by **on-device election**. The election score is computed **per device** from its hardware (accelerator, RAM, CPU, memory bandwidth); the highest-scoring device runs the leader agent. If that agent goes down, the next-best device is promoted automatically - conversation history included (continuously backed up on the second-strongest device).
+Leadership is decided by **an election process**. The election score is computed **per device** from its hardware (accelerator, RAM, CPU, memory bandwidth); the highest-scoring device runs the leader agent. If that agent goes down, the next-best device is promoted automatically - conversation history included (continuously backed up on the N strongest other devices, N = `replication_factor` in [`software_config.json`](IMPLEMENTATION/software_config.json), 2 by default).
 
-2 approaches shown in the following pictures are proposed they differ with respect to how tool calling is performed.
+2 approaches shown in the following pictures are proposed: they differ with respect to how tool calling is performed.
 Given a user query through telegram:
 1) approach 1 uses an LLM on the leader agent to perform distributed tool calling, then gathers the results and gives the user a natural language reply
 
@@ -94,16 +103,7 @@ Shape legend:
 
 ---
 
-## What's in here
-
-The repository has two top-level parts: the working **implementation** of the network, and the **benchmark code** used to characterize the models and the edge hardware.
-
-| Folder | Contents |
-|---|---|
-| [`IMPLEMENTATION/`](IMPLEMENTATION/README.md) | The full agentic P2P system: discovery, leader election, leader/sensing logic, LLM dispatch pipeline |
-| [`BENCHMARK CODE/`](BENCHMARK%20CODE/README.md) | Accuracy, latency, and power-consumption benchmarks for the models and edge boards |
-
-### Hardware targets
+## Hardware targets
 
 | Device | Role | Accelerator | Model |
 |---|---|---|---|
