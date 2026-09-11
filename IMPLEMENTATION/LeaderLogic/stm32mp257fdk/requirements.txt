@@ -2,10 +2,9 @@
 huggingface-hub
 numpy
 
-# llama-cpp-python is NOT pip-installable here. A prebuilt Cortex-A35 build is
-# in prebuilt/ - install it by extracting, no pip and no compiler needed:
+# llama-cpp-python builds without NEON here, so a cross-compiled Cortex-A35
+# build ships in prebuilt/ - install it by extracting, no pip needed:
 #   tar xzf prebuilt/llama_cpp_python-0.3.23-cortexa35.tar.gz \
 #       -C /usr/lib/python3.12/site-packages/
-# See prebuilt/README.md. To rebuild it, see the section
-# "Cross-compiling llama-cpp-python for the STM32MP2 (Cortex-A35)" in README.md.
+# See prebuilt/README.md for the full install and how to rebuild it.
 # llama-cpp-python

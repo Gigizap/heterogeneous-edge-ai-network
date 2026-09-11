@@ -6,39 +6,7 @@ Cortex-A35. Use it to install on a new board **without pip and without
 compiling anything** (pip is unreliable on these images, which is the point
 of this package).
 
-To rebuild it from source instead, see "Cross-compiling llama-cpp-python for
-the STM32MP2 (Cortex-A35)" in [`IMPLEMENTATION/README.md`](../../../README.md).
-
-## Install (on the board)
-
-```sh
-tar xzf llama_cpp_python-0.3.23-cortexa35.tar.gz -C /usr/lib/python3.12/site-packages/
-```
-
-The archive contains the `llama_cpp/` package (Python bindings + the `.so`
-backends in `llama_cpp/lib/`) and its `dist-info/`, so
-`pip show llama-cpp-python` still reports it correctly.
-
-Then register the library directory with the dynamic linker, or the import
-fails with `libggml.so.0: cannot open shared object file`:
-
-```sh
-echo /usr/lib/python3.12/site-packages/llama_cpp/lib > /etc/ld.so.conf.d/llama_cpp.conf
-ldconfig
-```
-
-`ldconfig` warns `libmtmd.so.0 is not a symbolic link`; that is harmless and
-comes from the upstream wheel.
-
-The bindings also need `diskcache` and `jinja2` at import time:
-
-```sh
-apt-get install python3-diskcache python3-jinja2
-```
-
-Extract with `tar`, not `scp -r`: the flat library names
-(`libllama.so`, `libllama.so.0`) are symlinks to the versioned files, and
-copying them as real files wastes ~7 MB and breaks the versioning layout.
+To install it on a board, follow step 5 of the board setup guide, [`../README.md`](../README.md): it covers the extract, the two Python dependencies and the linker configuration. Building a new archive is described below.
 
 ## Verify
 
@@ -86,3 +54,86 @@ llm = Llama(model_path="model.gguf", n_threads=2)   # 2 = both A35 cores
 
 Measured on the DK with `functiongemma-270m-it-Q4_K_M.gguf`, `n_threads=2`:
 **~4.4-4.5 tok/s**.
+
+## Building it yourself
+
+Only needed to rebuild the archive: a new llama.cpp version, a different Python, or another CPU. A plain `pip install` on the board builds without NEON or runs out of memory, so the wheel is cross-compiled on an x86_64 host.
+
+Target: OpenSTLinux `5.0.15-...-scarthgap-mpu-v26.02.18`, Cortex-A35 (AArch64).
+
+### 1. Get the SDK
+
+Download (needs free myST login + accept SLA0048):
+- Page: https://wiki.st.com/stm32mpu/wiki/STM32MPU_Developer_Package
+- File: `SDK-x86_64-stm32mp2-openstlinux-6.6-yocto-scarthgap-mpu-v26.02.18.tar.gz`
+
+Install guide: https://wiki.st.com/stm32mpu/wiki/Getting_started/STM32MP2_boards/STM32MP257x-DK/Develop_on_Arm_Cortex-A35/Install_the_SDK
+
+### 2. Install the SDK (host)
+
+```bash
+tar xf SDK-x86_64-stm32mp2-openstlinux-6.6-yocto-scarthgap-mpu-v26.02.18.tar.gz
+cd SDK-x86_64-stm32mp2-*
+./st-image-weston-*-toolchain-5.0.15-*.sh     # accept default install dir /opt/st/...
+```
+
+### 3. Activate the toolchain (host)
+
+```bash
+source /opt/st/.../environment-setup-cortexa35-ostl-linux
+```
+
+Verify (both must succeed):
+
+```bash
+echo $OECORE_SDK_VERSION   # -> 5.0.15-openstlinux-6.6-yocto-scarthgap-mpu-v26.02.18
+$CC --version              # -> ST cross-gcc
+```
+
+### 4. Check Python versions match
+
+```bash
+# on the BOARD:
+python3 --version
+```
+
+The host Python that runs `pip wheel` must be the SAME minor version (e.g. 3.12). Wheels are not interchangeable across minor versions.
+
+### 5. Build the wheel (host)
+
+```bash
+CMAKE_ARGS="-DGGML_NATIVE=OFF \
+  -DGGML_NEON=ON \
+  -DGGML_ARM_FMA=ON \
+  -DGGML_F16C=OFF \
+  -DGGML_AVX=OFF \
+  -DGGML_AVX2=OFF \
+  -DGGML_AVX512=OFF \
+  -DGGML_FMA=OFF \
+  -DGGML_SSE3=OFF \
+  -DGGML_OPENMP=OFF \
+  -DLLAMA_CURL=ON \
+  -DLLAMA_BUILD_TESTS=OFF \
+  -DLLAMA_BUILD_SERVER=OFF \
+  -DCMAKE_C_FLAGS='-mcpu=cortex-a35+crc -O3 -ffast-math -fno-finite-math-only' \
+  -DCMAKE_CXX_FLAGS='-mcpu=cortex-a35+crc -O3 -ffast-math -fno-finite-math-only'" \
+FORCE_CMAKE=1 \
+pip wheel llama-cpp-python --no-deps -w ./dist
+```
+
+Output: `./dist/llama_cpp_python-*.whl`
+
+### 6. Copy to the board
+
+```bash
+scp ./dist/llama_cpp_python-*.whl root@<board-ip>:/tmp/
+```
+
+Then install it as in step 5 of [`../README.md`](../README.md).
+
+### Notes
+
+- `FORCE_CMAKE=1` makes the package build its OWN bundled llama.cpp with these flags. No separate backend needed.
+- `n_threads=2` = the `-t 2` that doubles throughput. Don't go higher (only 2 cores).
+- `-DLLAMA_CURL=ON` needs libcurl in the sysroot (present in the ST SDK). If configure fails on curl, that's why.
+- Building on the host avoids the on-board OOM (the device can't compile this in its RAM).

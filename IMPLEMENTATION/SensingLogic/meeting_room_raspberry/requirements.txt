@@ -1,9 +1,9 @@
-# Sensing preset — Raspberry Pi 5, meeting-room people counter (YOLOv8n object detection, CPU/ONNX Runtime, filtered to "person").
+# Sensing preset - Raspberry Pi 5, meeting-room people counter (YOLOv8n object detection, CPU/ONNX Runtime, filtered to "person").
 # Install on the Raspberry Pi.
 
 # pip-installable:
 onnxruntime          # runs yolov8n.onnx on the CPU (pulls a compatible numpy)
 
-# NOT pip — Raspberry Pi OS system packages (don't pip-install over them):
+# NOT pip - Raspberry Pi OS system packages (don't pip-install over them):
 #   opencv    : sudo apt install python3-opencv       (or: pip install opencv-python)
 #   picamera2 : sudo apt install python3-picamera2    (pre-installed on Raspberry Pi OS)

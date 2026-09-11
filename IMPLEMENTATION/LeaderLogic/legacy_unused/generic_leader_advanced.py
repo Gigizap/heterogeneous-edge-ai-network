@@ -1,7 +1,7 @@
 """
 UNUSED AS OF RN
 
-Generic leader — any device without a specific hardware preset.
+Generic leader - any device without a specific hardware preset.
 Uses llama.cpp (via llama-cpp-python) and automatically selects
 (and downloads if missing) the largest GGUF that fits in ~60% of RAM.
 
@@ -26,7 +26,7 @@ from utils import available_ram_gb
 log = logging.getLogger(__name__)
 
 # ── model catalogue ───────────────────────────────────────────────────────────
-# (min_ram_gb, params_b, hf_repo, filename, label) — largest first
+# (min_ram_gb, params_b, hf_repo, filename, label) - largest first
 
 _MODELS = [
     ( 1.5,  1.5, "unsloth/granite-4.0-350m-GGUF",
@@ -90,7 +90,7 @@ def boot(cfg: dict, agent_id: str, transport, discovery, bot, profile=None) -> "
         prev_handler(msg)
     transport.on_message = _handler
 
-    log.info("ready — %s", label)
+    log.info("ready - %s", label)
     return GenericWorkflow(llm=llm, params_b=params_b, collector=collector, bot=bot)
 
 
@@ -251,7 +251,7 @@ def _select_model(ram_gb: float):
         if usable >= entry[0]:
             log.info("RAM=%.1fGB → %s", ram_gb, entry[4])
             return entry
-    log.info("low RAM — using smallest model")
+    log.info("low RAM - using smallest model")
     return _MODELS[-1]
 
 def _download_model(repo: str, filename: str, dest: Path):

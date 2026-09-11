@@ -99,7 +99,7 @@ class Workflow1:
     The network has already executed a command and returned real data.
     Your job: translate that raw result into a short, friendly reply for the user.
     Always reply in the same language the user wrote in.
-    Only if no data are provided say you cannot answer — otherwise the data is right there in the network reply, use it."""
+    Only if no data are provided say you cannot answer - otherwise the data is right there in the network reply, use it."""
 
     def __init__(self, llm: LLM, broadcaster, bot):
         self.llm         = llm
@@ -277,7 +277,7 @@ TOOL_DEFS = [
 TOOL_SYSTEM = """You are a smart-home agent dispatcher.
 Given the user's request, call exactly ONE tool that best matches their intent.
 Extract any names or object targets precisely from the user's message.
-Do not call multiple tools. Do not reply with text — always use a tool call."""
+Do not call multiple tools. Do not reply with text - always use a tool call."""
 
 
 class Workflow2:
@@ -329,7 +329,7 @@ class Workflow2:
         messages.extend(history)
         messages.append({"role": "user", "content": user_text})
 
-        # step 1: LLM decides — tool call or plain text
+        # step 1: LLM decides - tool call or plain text
         debug_payload = {"model": self.llm.model, "messages": messages, "tools": self._openai_tools, "temperature": 0}
         log.debug("workflow2 full payload: %s", json.dumps(debug_payload, indent=2))
 
@@ -424,22 +424,22 @@ class Workflow3:
       - llm_dispatch  (functiongemma)  : tool selection via chat() + tool_calls
       - llm_answer    (qwen2.5:1.5b)   : final human-friendly answer via ask()
 
-    Step 1  — llm_dispatch decides which tool to call.
-    Step 2  — The tool call is converted to a plain-text broadcast command.
-    Step 3  — Wait for a peer network reply.
-    Step 4  — llm_answer generates the final Telegram reply from the raw result.
+    Step 1  - llm_dispatch decides which tool to call.
+    Step 2  - The tool call is converted to a plain-text broadcast command.
+    Step 3  - Wait for a peer network reply.
+    Step 4  - llm_answer generates the final Telegram reply from the raw result.
     """
 
     _ANSWER_PROMPT = """You are a helpful assistant for a smart home agent network.
     The network has already executed a command and returned real data.
     Your job: translate that raw result into a short, friendly reply for the user.
     Always reply in the same language the user wrote in.
-    Only if no data are provided say you cannot answer — otherwise the data is right there in the network reply, use it."""
+    Only if no data are provided say you cannot answer - otherwise the data is right there in the network reply, use it."""
 
     def __init__(self, llm_dispatch: LLM, llm_answer: LLM, broadcaster, bot=None,
                  tool_timeout: float = 30.0):
-        self.llm_dispatch  = llm_dispatch   # functiongemma  — handles tool_calls
-        self.llm_answer    = llm_answer     # qwen2.5:1.5b   — handles final text
+        self.llm_dispatch  = llm_dispatch   # functiongemma  - handles tool_calls
+        self.llm_answer    = llm_answer     # qwen2.5:1.5b   - handles final text
         self.broadcaster   = broadcaster
         self.bot           = bot
         self.tool_timeout  = tool_timeout
@@ -493,7 +493,7 @@ class Workflow3:
 
         # ── No tool selected: llm_answer explains it gracefully ──────────────
         if not tool_calls:
-            log.info("workflow3 no tool call from dispatch — delegating to llm_answer")
+            log.info("workflow3 no tool call from dispatch - delegating to llm_answer")
             answer_prompt = (
                 f"User request: {user_text}\n"
                 "No matching command was found for this request.\n"

@@ -22,14 +22,14 @@ DB_DIR  = BASE / "database"
 MDL_DET = BASE / "models/blazeface/blazeface_128x128_quant.nb"
 MDL_REC = BASE / "models/facenet/facenet512_160x160_quant.nb"
 
-# ── Quantisation params — BlazeFace ───────────────────────────────────────────
+# ── Quantisation params - BlazeFace ───────────────────────────────────────────
 BF_IN_SCALE  = 0.007843;  BF_IN_ZP  = 127
 BF_SC0_SCALE = 0.595617;  BF_SC0_ZP = 252
 BF_SC1_SCALE = 114.7795;  BF_SC1_ZP = 255
 BF_BX0_SCALE = 2.103926;  BF_BX0_ZP = 113
 BF_BX1_SCALE = 58.178192; BF_BX1_ZP = 60
 
-# ── Quantisation params — FaceNet ─────────────────────────────────────────────
+# ── Quantisation params - FaceNet ─────────────────────────────────────────────
 FN_IN_SCALE  = 0.003922; FN_IN_ZP  = 0
 FN_OUT_SCALE = 0.034521; FN_OUT_ZP = 131
 
@@ -101,7 +101,7 @@ def _detect_faces(image_rgb: np.ndarray) -> list:
     mean_brightness = image_rgb.mean()
     print(f"[detect] frame {w}x{h}  brightness={mean_brightness:.1f}", flush=True)
     if mean_brightness < 5.0:
-        print("[detect] WARNING: frame looks black — camera may not be ready", flush=True)
+        print("[detect] WARNING: frame looks black - camera may not be ready", flush=True)
 
     resized = cv2.resize(image_rgb, (128, 128))
     inp = _quant_uint8(resized.astype(np.float32) / 255.0, BF_IN_SCALE, BF_IN_ZP)[np.newaxis]

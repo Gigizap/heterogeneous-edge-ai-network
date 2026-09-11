@@ -19,15 +19,15 @@ log = logging.getLogger(__name__)
 def start(agent_id: str, transport, sensing_preset: str, log_level="INFO"):
     """
     Attach sensing-agent skills to an existing transport.
-    Chains into transport.on_message — typed messages (election, backup, etc.)
+    Chains into transport.on_message - typed messages (election, backup, etc.)
     pass through; JSON-RPC requests (tools/list, tools/call) are handled here
     and answered with a same-id JSON-RPC result/error.
 
-    `log_level` — verbosity for this sensing agent's logger (set from main's
+    `log_level` - verbosity for this sensing agent's logger (set from main's
     --log_level; a level above CRITICAL keeps it silent).
     """
-    # Every log line from this sensing agent — sensing_agent AND the skill modules it
-    # loads — is stamped with the agent-ID, so it is always clear which agent on the
+    # Every log line from this sensing agent - sensing_agent AND the skill modules it
+    # loads - is stamped with the agent-ID, so it is always clear which agent on the
     # terminal is acting. The skills log via logging.getLogger(__name__) under the
     # shared "SensingLogic" parent, so they inherit this one handler/format.
     parent = logging.getLogger("SensingLogic")
@@ -45,16 +45,16 @@ def start(agent_id: str, transport, sensing_preset: str, log_level="INFO"):
     try:
         config = json.loads(config_path.read_text())
     except FileNotFoundError:
-        log.warning("no tool_config.json for preset '%s' (%s) — starting with no sensing skills",
+        log.warning("no tool_config.json for preset '%s' (%s) - starting with no sensing skills",
                     sensing_preset, config_path)
         return
     except (json.JSONDecodeError, OSError) as e:
-        log.warning("invalid tool_config.json for '%s': %r — starting with no sensing skills",
+        log.warning("invalid tool_config.json for '%s': %r - starting with no sensing skills",
                     sensing_preset, e)
         return
 
     if not isinstance(config, dict):
-        log.warning("tool_config.json for '%s' is not a JSON object — starting with no sensing skills",
+        log.warning("tool_config.json for '%s' is not a JSON object - starting with no sensing skills",
                     sensing_preset)
         return
 
@@ -143,7 +143,7 @@ def start(agent_id: str, transport, sensing_preset: str, log_level="INFO"):
                 respond({"error": {"code": -32602, "message": f"invalid params for '{name}': {e}"}})
                 return
             target = f"'{list(arguments.values())}'" if arguments else "a person"
-            ok(f"watching for {target} — I'll message you when I spot it")
+            ok(f"watching for {target} - I'll message you when I spot it")
         else:
             try:
                 ok(skill["fn"](**arguments))

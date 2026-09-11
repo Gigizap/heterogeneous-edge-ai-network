@@ -31,9 +31,9 @@ def _derive_broadcast_addr() -> str:
 
 
 BROADCAST_ADDR = _derive_broadcast_addr()
-ANNOUNCE_INTERVAL = 2   # seconds — how often we re-announce presence
+ANNOUNCE_INTERVAL = 2   # seconds - how often we re-announce presence
 PEER_TIMEOUT      = 15  # seconds of silence before a peer is considered gone
-WATCHDOG_INTERVAL = 2   # seconds — how often we check for dead peers
+WATCHDOG_INTERVAL = 2   # seconds - how often we check for dead peers
 
 class Discovery:
     def __init__(self, agent_id: str, tcp_port: int, on_peer_found, on_peer_lost, meter=None):
@@ -163,12 +163,12 @@ def collect_peer_ids(window: float = 6.0) -> set[str]:
     Used by identity._prompt_agent_id() during first-run setup to
     detect name conflicts before any transport or event loop exists.
  
-    The window defaults to 6 seconds — one full ANNOUNCE_INTERVAL
-    cycle (5s) plus a buffer — to guarantee we catch at least one
+    The window defaults to 6 seconds - one full ANNOUNCE_INTERVAL
+    cycle (5s) plus a buffer - to guarantee we catch at least one
     HELLO from every running agent.
  
     Returns:
-        set[str] — agent IDs currently on the network, e.g.
+        set[str] - agent IDs currently on the network, e.g.
                    {"laptop-huawei", "camera-corridor"}
     """
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)

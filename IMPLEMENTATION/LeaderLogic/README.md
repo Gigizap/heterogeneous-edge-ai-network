@@ -2,8 +2,7 @@
 
 Every leader preset is a folder under `LeaderLogic/<preset>/` holding a
 `leader.py` (+ `config.json` / `requirements.txt` as needed) - mirroring how a
-sensing preset is a folder under `SensingLogic/<preset>/` holding a
-`tool_config.json`. Presets are discovered automatically at first-run setup
+sensing preset is a folder under `SensingLogic/<preset>/`. Presets are discovered automatically at first-run setup
 (`ElectionLogic.identity.discover_leader_presets()`) - dropping in a new
 folder makes it selectable with no code change elsewhere.
 

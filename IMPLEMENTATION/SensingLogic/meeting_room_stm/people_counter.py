@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-people_counter.py  —  STM32MP257F-DK NPU meeting-room people counter
+people_counter.py  -  STM32MP257F-DK NPU meeting-room people counter
 
 The underlying model (yolov8n_320_quant_pt_uf_od_coco-person-st.nb) is a
 person-only detector, same as stm32mp257_yolo_NPU, running on the NPU via the

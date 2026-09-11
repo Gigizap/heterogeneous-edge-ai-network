@@ -141,7 +141,7 @@ def stream_objects(
       - detections  list[dict]   same schema as detect_objects_now()
       - frame_bgr   np.ndarray   the raw BGR frame that was inferred on
 
-    Usage — fire and forget in a background thread
+    Usage - fire and forget in a background thread
     -----------------------------------------------
     stop = threading.Event()
 
@@ -154,31 +154,31 @@ def stream_objects(
     ...
     stop.set()   # stop gracefully from anywhere
 
-    Usage — blocking (e.g. in __main__)
+    Usage - blocking (e.g. in __main__)
     ------------------------------------
     stream_objects(on_frame)          # runs until Ctrl-C
     """
     _load_model(model_path)
 
     cap = open_camera()
-    print("[stream] camera open — starting continuous inference", flush=True)
+    print("[stream] camera open - starting continuous inference", flush=True)
     try:
         while True:
             if stop_event is not None and stop_event.is_set():
-                print("[stream] stop event received — exiting", flush=True)
+                print("[stream] stop event received - exiting", flush=True)
                 break
 
             try:
                 frame = grab_best_frame(cap)
             except RuntimeError as e:
-                print(f"[stream] frame grab failed: {e} — retrying", flush=True)
+                print(f"[stream] frame grab failed: {e} - retrying", flush=True)
                 continue
 
             detections = _run_inference(frame)
             callback(detections, frame)
 
     except KeyboardInterrupt:
-        print("[stream] KeyboardInterrupt — exiting", flush=True)
+        print("[stream] KeyboardInterrupt - exiting", flush=True)
     finally:
         release_camera(cap)
         print("[stream] camera released", flush=True)
@@ -225,4 +225,4 @@ if __name__ == "__main__":
     time.sleep(5)
     stop.set()
     t.join(timeout=3)
-    print(f"  done — processed {frame_count[0]} frames")
+    print(f"  done - processed {frame_count[0]} frames")

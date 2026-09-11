@@ -11,19 +11,19 @@ under one total order shared by everyone:
                                     or (A.score == B.score and A.id < B.id)
 
 Because the order is total and every node computes it from the same set of
-HELLO/ELECTION/LEADER_CLAIM facts, all nodes converge on the *same* winner —
+HELLO/ELECTION/LEADER_CLAIM facts, all nodes converge on the *same* winner -
 ties no longer cause a split-brain, and there is no separate "lex fallback".
 
 Messages (all carry "type" and "from"):
 
   HELLO         {type, from, score, has_leader_preset, sensing_preset, leader_preset}
   ELECTION      {type, from, score}
-  LEADER_CLAIM  {type, from, score}   — "I am the leader" (carries the claimant's score)
+  LEADER_CLAIM  {type, from, score}   - "I am the leader" (carries the claimant's score)
 
 How it stays single-leader
 ──────────────────────────
   • Startup: announce repeatedly while discovery fills the peer table, then run
-    one election window and `_resolve()` — claim if we are the best, else follow.
+    one election window and `_resolve()` - claim if we are the best, else follow.
   • Any LEADER_CLAIM is reconciled by `_resolve()`: a *better* claimant is
     accepted (we demote if we were leader); an *inferior* claim received while
     we are leader makes us re-assert (re-broadcast our claim).  Two crossed
@@ -37,7 +37,7 @@ How it stays single-leader
     independently elected leaders then reconcile through `_resolve()` instead of
     coexisting.
   • When a peer goes silent, `notify_peer_lost()` drops it from the table and,
-    if it was the leader, re-resolves — so the next-best device takes over.
+    if it was the leader, re-resolves - so the next-best device takes over.
 """
 
 import asyncio
@@ -58,9 +58,9 @@ class ElectionManager:
     score              : this agent's numeric rank score
     profile            : full device_profile dict
     transport          : P2PTransport (already started)
-    on_became_leader   : callable(profile)    — called when this agent wins
-    on_became_follower : callable(leader_id)  — called when another agent wins
-    on_demoted         : callable()           — optional; called when this agent
+    on_became_leader   : callable(profile)    - called when this agent wins
+    on_became_follower : callable(leader_id)  - called when another agent wins
+    on_demoted         : callable()           - optional; called when this agent
                           stops being leader (hand off / out-ranked) so main.py
                           can tear the leader process down.
     """
@@ -174,15 +174,15 @@ class ElectionManager:
             if was_leader:
                 self._leader_id = None
         if was_leader:
-            self.log.info("leader %s lost — re-electing", peer_id)
+            self.log.info("leader %s lost - re-electing", peer_id)
             await self._run_election()
 
     def backup_peers(self, n: int = 1) -> list[str]:
         """
-        The N strongest *other* peers, best first — the devices that should
+        The N strongest *other* peers, best first - the devices that should
         hold conversation backups so a failover (or even a simultaneous
         leader + backup failure) can still recover history. Returns fewer than
-        N on a smaller network. Best-effort snapshot — safe to call from the
+        N on a smaller network. Best-effort snapshot - safe to call from the
         leader thread.
         """
         try:
@@ -224,7 +224,7 @@ class ElectionManager:
         """Broadcast candidacy, collect bids for one window, then resolve."""
         async with self._lock:
             if self._i_am_leader:
-                return  # already leading — nothing to contest
+                return  # already leading - nothing to contest
         await self._broadcast({"type": "ELECTION", "from": self.agent_id, "score": self.score})
         await self._broadcast_hello()  # make sure peers have our score
         self.log.info("election window %ss …", ELECTION_WINDOW)
@@ -237,7 +237,7 @@ class ElectionManager:
           - if we are the best and not yet leader → claim;
           - if we are leader but someone better exists → demote and follow;
           - otherwise follow the best (it will claim on its own).
-        `reassert` re-broadcasts our claim when we are (still) the best leader —
+        `reassert` re-broadcasts our claim when we are (still) the best leader -
         used to inform a newcomer or rebuff an inferior claim.
         """
         async with self._lock:
@@ -322,7 +322,7 @@ class ElectionManager:
                        sender, msg.get("score"), known)
         # As leader, re-announce our claim so a newcomer learns there is already
         # a leader. If the newcomer is genuinely stronger it will still claim,
-        # and we step down when that LEADER_CLAIM arrives (handled below) — so we
+        # and we step down when that LEADER_CLAIM arrives (handled below) - so we
         # never tear the leader down on a mere HELLO.
         if leader:
             await self._broadcast_claim()

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-yolo_object_detection.py  —  Hailo-NPU sensing skill
+yolo_object_detection.py  -  Hailo-NPU sensing skill
 
 Mirror of the CPU preset's detect_object skill (raspberrypi5_yolo_CPU), but the
 inference runs on the Raspberry Pi 5 + Hailo-10H (AI HAT+ 2) NPU instead of the
@@ -81,7 +81,7 @@ def _get_hailo():
         infer_model.input().set_format_type(FormatType.UINT8)
         infer_model.output().set_format_type(FormatType.FLOAT32)
 
-        cm = infer_model.configure()        # context manager — keep it open
+        cm = infer_model.configure()        # context manager - keep it open
         configured = cm.__enter__()
         bindings = configured.create_bindings()
 

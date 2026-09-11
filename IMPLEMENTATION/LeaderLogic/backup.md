@@ -13,9 +13,9 @@ Code:
 
 ## Design in one line
 
-Every device runs a backup **receiver**; the **leader** replicates each
-conversation to the **`REPLICATION_FACTOR` strongest other peers**. On
-failover the new leader restores from whichever replica survived.
+The **leader** replicates each conversation to the **`replication_factor` strongest other leader-capable peers**. On failover the new leader restores from whichever replica survived.
+
+(Technically every device runs a backup **receiver**, but only leader-capable devices announce a score, so only they are chosen as possible backup devices, thus only leader-capable devices can ever be sent the backup.)
 
 ## Who holds a backup
 
@@ -25,7 +25,7 @@ The leader picks its backup targets from `election.backup_peers(n)`
 (`score`, ties broken by lower ID). It returns fewer than `n` when the network
 is smaller.
 
-`REPLICATION_FACTOR` is set in [main.py](../main.py) (currently **2**):
+`replication_factor` is set in [software_config.json](../software_config.json) (currently **2**):
 
 | Factor | Devices that hold a copy        | Survives leader death | Survives leader + 1 backup |
 |:------:|---------------------------------|:---------------------:|:--------------------------:|
@@ -79,7 +79,7 @@ takes ~15 s.
 
 ---
 
-## Failure analysis (with `REPLICATION_FACTOR = 2`)
+## Failure analysis (with `replication_factor = 2`)
 
 **Single failure - leader dies.** New leader = strongest survivor = the
 2nd-strongest = a device that was already a backup target. The history is
@@ -93,7 +93,7 @@ which was the *second* backup target, so it also holds a replica → history
 entirely, because only the single 2nd-strongest device ever held a copy.)
 
 **Triple failure - leader + both backups die.** History is lost. Raise
-`REPLICATION_FACTOR` to tolerate more simultaneous losses, at the cost of more
+`replication_factor` to tolerate more simultaneous losses, at the cost of more
 per-message network traffic.
 
 ## Known characteristics / further work

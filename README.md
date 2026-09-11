@@ -6,7 +6,41 @@ A distributed **agentic system** in which a fleet of heterogeneous embedded devi
 
 ---
 
-## Agents
+## Table of Contents
+
+- [Repository map](#repository-map)
+- [How does it work?](#how-does-it-work)
+  - [Definition of agents](#definition-of-agents)
+  - [Runtime flow](#runtime-flow)
+- [Hardware targets](#hardware-targets)
+- [Quick start](#quick-start)
+- [License](#license)
+
+---
+
+## Repository map
+
+The repository has two top-level parts: the working **implementation** of the network, and the **benchmark code** used to characterize the models and the edge hardware. Docs live next to the code they describe.
+
+| Folder / doc | Contents |
+|---|---|
+| [**`IMPLEMENTATION/`**](IMPLEMENTATION/README.md) | **The full agentic P2P system: discovery, leader election, leader/sensing logic, LLM dispatch pipeline** |
+| [README.md](IMPLEMENTATION/README.md) | System overview: LLM pipeline, skills, election, presets, configuration, first-run setup |
+| [ConnectionLogic/README.md](IMPLEMENTATION/ConnectionLogic/README.md) | P2P layer: UDP discovery, TCP transport, wire protocol, troubleshooting |
+| [LeaderLogic/README.md](IMPLEMENTATION/LeaderLogic/README.md) | Leader preset contract and inference backends |
+| [LeaderLogic/backup.md](IMPLEMENTATION/LeaderLogic/backup.md) | Conversation backup and leader failover |
+| [LeaderLogic/stm32mp257fdk/README.md](IMPLEMENTATION/LeaderLogic/stm32mp257fdk/README.md) | STM32MP257F-DK bring-up, from the box to a running agent |
+| [SensingLogic/README.md](IMPLEMENTATION/SensingLogic/README.md) | Sensing preset contract and the available presets |
+| [**`BENCHMARK CODE/`**](BENCHMARK%20CODE/README.md) | **Accuracy, latency and power-consumption benchmarks for the models and edge boards** |
+| [README.md](BENCHMARK%20CODE/README.md) | Index of the benchmark suites |
+
+Benchmarks run in different places: **accuracy** and **FunctionGemma handlers** need an external CUDA workstation, **power consumption** runs on the edge boards, and **latency and network** mixes the two, with the network-scaling tests driving a real board from a laptop that simulates a fleet of up to 100 agents. Each suite's README says where its scripts run.
+
+---
+
+# How does it work?
+
+## Definition of agents
 
 The unit of the network is the **agent**, identified by a unique agent-ID and bound to its **own dedicated TCP port**. A TCP connection is therefore established per *agent*, not per device. There are two kinds:
 
@@ -15,9 +49,9 @@ The unit of the network is the **agent**, identified by a unique agent-ID and bo
 
 Sensing agents and leader agents can **co-live on the same physical device** - each keeps its own agent-ID and its own port, so they act as two independent agents (two separate TCP endpoints) that happen to share an IP.
 
-Leadership is decided by **on-device election**. The election score is computed **per device** from its hardware (accelerator, RAM, CPU, memory bandwidth); the highest-scoring device runs the leader agent. If that agent goes down, the next-best device is promoted automatically - conversation history included (continuously backed up on the second-strongest device).
+Leadership is decided by **an election process**. The election score is computed **per device** from its hardware (accelerator, RAM, CPU, memory bandwidth); the highest-scoring device runs the leader agent. If that agent goes down, the next-best device is promoted automatically - conversation history included (continuously backed up on the N strongest other devices, N = `replication_factor` in [`software_config.json`](IMPLEMENTATION/software_config.json), 2 by default).
 
-2 approaches shown in the following pictures are proposed they differ with respect to how tool calling is performed.
+2 approaches shown in the following pictures are proposed: they differ with respect to how tool calling is performed.
 Given a user query through telegram:
 1) approach 1 uses an LLM on the leader agent to perform distributed tool calling, then gathers the results and gives the user a natural language reply
 
@@ -30,7 +64,7 @@ Given a user query through telegram:
 NOTE: Only approach 1 is fully implemented!
 ---
 
-## How it works: runtime flow
+## Runtime flow
 
 The seven flowcharts below trace a device from power-on, through peer discovery, leader election and failover, to answering a user query.
 
@@ -75,50 +109,21 @@ Shape legend:
 
 ---
 
-## What's in here
-
-The repository has two top-level parts: the working **implementation** of the network, and the **benchmark code** used to characterize the models and the edge hardware.
-
-| Folder | Contents |
-|---|---|
-| [`IMPLEMENTATION/`](IMPLEMENTATION/README.md) | The full agentic P2P system: discovery, leader election, leader/sensing logic, LLM dispatch pipeline |
-| [`BENCHMARK CODE/`](BENCHMARK%20CODE/README.md) | Accuracy, latency, and power-consumption benchmarks for the models and edge boards |
-
-### Hardware targets
+## Hardware targets
 
 | Device | Role | Accelerator | Model |
 |---|---|---|---|
 | Raspberry Pi 5 + Hailo AI HAT+ 2 | Leader / Sensing | Hailo H10 (40 TOPS) | `qwen3:1.7b` |
 | STM32MP257F-DK | Leader / Sensing | On-chip NPU | `functiongemma:270m` |
-| Generic device (Linux or Windows PC) | Leader / Sensing | llama.cpp (CPU or GPU) | `functiongemma:270m`* |
+| Any generic device (Linux or Windows PC) | Leader / Sensing | llama.cpp (CPU or GPU) | `functiongemma:270m`* |
 
-\* new leader and sensing presets can be added as subfolders in `/LeaderLogic` and in `/SensingLogic`
-
----
-
-## Documentation map
-
-All documentation lives next to the code it describes. Start with the implementation README, then drill into the area you need.
-
-### Implementation
-
-- **[IMPLEMENTATION/README.md](IMPLEMENTATION/README.md)** - system overview: the two-step LLM pipeline, command/skill model, leader inference modes, election and device presets, configuration, and per-board setup (Raspberry Pi 5, STM32MP257FDK).
-- **[IMPLEMENTATION/ConnectionLogic/README.md](IMPLEMENTATION/ConnectionLogic/README.md)** - the P2P networking layer: UDP discovery, TCP transport, mesh/IP-assignment options, and a thorough cross-platform connection-troubleshooting guide (Linux & Windows firewalls).
-
-### Benchmarks
-
-> **Where each benchmark runs.** The **accuracy** and **FunctionGemma-handler** benchmarks are meant to run on an external workstation (a CUDA GPU PC) - *not* on the edge boards. They use the same model files deployed on edge but need a GPU for fast throughput. Only the **power-consumption** benchmark runs on the edge devices themselves.
-
-- **[BENCHMARK CODE/README.md](BENCHMARK%20CODE/README.md)** - index of the three benchmark suites.
-- **[BENCHMARK CODE/ACCURACY/README.md](BENCHMARK%20CODE/ACCURACY/README.md)** - LLM tool-call accuracy (Parts A, B, C): single-tool dispatch, LLM-vs-reranker comparison, and reply summarization. **Runs on an external GPU workstation**, not on the edge devices.
-- **[BENCHMARK CODE/FUNCTIONGEMMA TEST HANDLERS/README.md](BENCHMARK%20CODE/FUNCTIONGEMMA%20TEST%20HANDLERS/README.md)** - accuracy/latency comparison of the grammar-enforcing FunctionGemma handlers. Also runs on the **external GPU workstation**.
-- **[BENCHMARK CODE/POWERCONSUMPTION/README.md](BENCHMARK%20CODE/POWERCONSUMPTION/README.md)** - runs **directly on the two edge boards** (Raspberry Pi 5 + Hailo, STM32MP257F-DK). It measures power draw and inference throughput (FPS, tokens/s) across configurations that run the LLM and detection workloads on the **CPU vs. the on-board NPU / AI accelerator** (Hailo on the Pi, on-chip NPU on the STM32) - each workload solo and the two in parallel - to find the most efficient way to split inference.
+\* new leader presets, using much more powerful LLMs, and new sensing presets can be added as subfolders in `/LeaderLogic` and in `/SensingLogic`, they will automatically be discovered. See [Leader Presets](IMPLEMENTATION/README.md#leader-presets)
 
 ---
 
 ## Quick start
 
-[`IMPLEMENTATION/`](IMPLEMENTATION/README.md) is the folder you **copy onto every device** in the network. Every node runs the *same* codebase. On each device, install the requirements and run `main.py`; it reads the device profile, scores the hardware, discovers peers, and joins leader election automatically.
+[`IMPLEMENTATION/`](IMPLEMENTATION/README.md) is the folder you **copy onto every device** in the network. Every node runs the *same* codebase. On each device, install the requirements and run `main.py`. Some of them are device-specific and installed by hand (see the per-board setup guides in the documentation map). The first run is interactive: it asks for the agent-ID, the presets, the hardware figures used for scoring, and (on leader-capable devices) the Telegram bot token and allowed user IDs, then writes `device_profile.json` and installs the requirements for the roles you picked. Every run after that is automatic: it reads the profile, scores the hardware, discovers peers, and joins leader election.
 
 ```bash
 # on each device, inside the copied IMPLEMENTATION/ folder
@@ -132,7 +137,7 @@ To simulate a second device on the same machine (for testing), run another copy 
 python main.py --port 5002
 ```
 
-Per-device setup (Hailo packages, Ollama models, OpenSTLinux AI packages, Telegram token, etc.) is documented in **[IMPLEMENTATION/README.md](IMPLEMENTATION/README.md)**.
+Per-device setup (Hailo packages, Ollama models, OpenSTLinux AI packages, Telegram token, etc.) is documented in the **[Setup section](IMPLEMENTATION/README.md#setup)** of [IMPLEMENTATION/README.md](IMPLEMENTATION/README.md).
 
 > **Note:** the mesh-networking and CLASSIFIER + LLM architecture sections in the sub-READMEs are described as theoretical / not yet implemented - see those documents for the current status.
 
