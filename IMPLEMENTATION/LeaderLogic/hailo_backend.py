@@ -12,11 +12,10 @@ logger = logging.getLogger(__name__)
 
 
 class HailoLLM:
-    def __init__(self, hef_path: str, temperature: float = 0.1, seed: int = 42,
+    def __init__(self, hef_path: str, temperature: float = 0.3,
                  max_tokens: int = 512):
         self._hef_path    = str(hef_path)
         self._temperature = temperature
-        self._seed        = seed
         self._max_tokens  = max_tokens
         self.vdevice = None
         self.llm     = None
@@ -53,7 +52,7 @@ class HailoLLM:
         parts = []
         with self.llm.generate(
             prompt=messages, tools=tools,
-            temperature=self._temperature, seed=self._seed,
+            temperature=self._temperature,
             max_generated_tokens=self._max_tokens,
         ) as gen:
             for token in gen:
