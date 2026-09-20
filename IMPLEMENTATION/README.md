@@ -135,6 +135,7 @@ The system uses two separate config files per device:
 **`software_config.json`** - static, shared across leader and sensing roles (the agent-ID is **not** here - it lives in `device_profile.json`):
 ```json
 {
+  "version":  "1.0.0",
   "agent":    { "tcp_port": 5555, "replication_factor": 2 },
   "telegram": { "token": "...", "allowed_users": [...] },
   "timeouts": { "fetchskills": 1.5, "replies": 3.0, "loop": 0.0 }
