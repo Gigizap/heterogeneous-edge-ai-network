@@ -14,13 +14,13 @@ Follow [Assembling the board](https://wiki.stmicroelectronics.cn/stm32mpu/wiki/S
 
 You need the board, its microSD card, a USB-C cable, and a USB-C power supply rated **5V-3A**. A weaker supply makes the LEDs next to the power port turn red or orange, and the board will not run properly.
 
-**Connect the camera** (MB1854 board, from the B-CAMS-IMX package) as shown in that article: it plugs into CN8 on the board via the flat cable. The sensing presets need it.
+**Connect the camera** (MB1854 board, from the B-CAMS-IMX package) as shown in that article: it plugs into the board's camera connector with the flat cable. The sensing presets need it.
 
 The LVDS display is optional. The agent runs headless.
 
 ## 2. Flash the image
 
-Following the ST instructions in [Downloading the image and flashing it on the board](https://wiki.stmicroelectronics.cn/stm32mpu/wiki/STM32MP25_Discovery_kits_-_Starter_Package#Downloading_the_image_and_flashing_it_on_the_board).
+The steps below follow the ST instructions in [Downloading the image and flashing it on the board](https://wiki.stmicroelectronics.cn/stm32mpu/wiki/STM32MP25_Discovery_kits_-_Starter_Package#Downloading_the_image_and_flashing_it_on_the_board).
 
 ### Download
 
@@ -90,11 +90,11 @@ Set **BOOT0 back to ON** (up), leaving BOOT1, BOOT2 and BOOT3 OFF. This is boot 
 
 Sources: [Starter Package images](https://wiki.st.com/stm32mpu/wiki/STM32MP2_Starter_Package_-_images#Archives), [Discovery kit Starter Package](https://wiki.stmicroelectronics.cn/stm32mpu/wiki/STM32MP25_Discovery_kits_-_Starter_Package).
 
-## 3. AI runtime (X-LINUX-AI)
-
-Only needed if the board runs a **sensing** preset (camera, object/person detection). Skip it for a leader-only board.
+## 3. WiFi setup and AI runtime (X-LINUX-AI)
 
 The board needs an internet connection first: Ethernet, or WiFi by following section 3, *Automatic WiFi configuration at start up*, of [How to setup a WLAN connection](https://wiki.st.com/stm32mpu/wiki/How_to_setup_a_WLAN_connection#Automatic_WiFi_configuration_at_start_up). Be careful to use the correct lowercase and uppercase letters!
+
+The following commands are needed only if the board runs a **sensing** preset (camera, object/person detection). Skip them for a leader-only board.
 
 ```sh
 apt-get update
@@ -121,7 +121,7 @@ References: [X-LINUX-AI expansion package](https://wiki.st.com/stm32mpu/wiki/Cat
 On the host PC:
 
 ```sh
-git clone <repository URL>
+git clone https://github.com/Gigizap/heterogeneous-edge-ai-network
 ```
 
 First get the board's IP address. On the board:

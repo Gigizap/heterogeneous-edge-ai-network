@@ -1,0 +1,50 @@
+STWIN.box - PRESSURE SENSOR (ILPS22QS) - KNOWN PROBLEM, DROPPED FROM THE DEMO
+
+SUMMARY
+The on-board pressure sensor ILPS22QS works for about 2 seconds after power-on,
+then stops answering on the I2C bus until the board is fully powered off.
+Temperature (STTS22H) and magnetometer (IIS2MDC) on the same I2C2 wires keep working.
+Pressure was removed from the firmware. Do not rely on it without fixing this first.
+
+1. SETUP THAT WAS USED
+1.1 Driver: ST ilps22qs_reg.c/.h from https://github.com/STMicroelectronics/ilps22qs-pid
+1.2 Setup copied from ST's example ilps22qs_read_data_polling.c
+    (https://github.com/STMicroelectronics/STMems_Standard_C_drivers, ilps22qs_STdC/examples):
+    WHO_AM_I check (0xB4), software reset, ah_qvar_disable, DRV_RDY (BDU + auto-increment),
+    bus mode FILTER_AUTO + SEL_BY_HW, 4 Hz, 16-sample average, LPF ODR/4, 1260 hPa full scale.
+1.3 Bus: I2C2, address 0x5C (ILPS22QS_I2C_ADD = 0xB9), same as ST's STWIN.box_env_sensors.c.
+1.4 Power: BSP_Enable_DCDC2 (main.c) and BSP_Enable_LDO, as in ST's firmware.
+1.5 Read once per second from the main thread.
+
+2. WHAT HAPPENS
+2.1 After a full power-off (USB unplugged 10 s): I2C scan finds 0x5C, setup OK,
+    first 1-2 readings correct (1003.7 hPa).
+2.2 About 2-3 s after setup (always at the 2nd-3rd reading) it stops answering:
+    I2C read error -8 (BSP_ERROR_BUS_FAILURE), no ACK at 0x5C, re-setup fails.
+2.3 Earlier runs (without full power-off in between) also showed:
+    - readings of 0.0 hPa from successful reads = sensor had reset itself (lost its setup);
+    - the chip answering at 0x5D instead of 0x5C (datasheet: fixed address 0x5C).
+2.4 Stays dead until the board is fully powered off. RESET / reflashing does not help
+    (the sensors stay powered).
+
+3. ALREADY RULED OUT
+3.1 Web server / microSD thread of the Nx_WebServer example: removed, no change.
+3.2 Wrong address: 0x5C matches the datasheet and ST's code.
+3.3 Supply enable pins (PE15 LDO, PI5 DCDC2): nothing switches them off after startup.
+3.4 Bus speed: timing 0x2040184B at 160 MHz = about 450 kHz, same as ST's firmware;
+    the other two sensors on the same bus never fail.
+
+4. IDEAS FOR LATER (not tried)
+4.1 Datasheet (DS13431) Table 1: pin 6 CS selects the interface (1 = I2C, 0 = SPI, I2C off).
+    CS has an internal pull-up (IF_CTRL bit CS_PU_DIS = 0). If the board wires CS to an MCU
+    pin that goes low, the chip leaves I2C mode. Check the STWIN.box schematic for this pin.
+4.2 Datasheet: AH1/QVAR1 and AH2/QVAR2 must go to GND if Qvar is not used.
+    Check what they are wired to on the STWIN.box.
+4.3 Skip ilps22qs_ah_qvar_disable() and/or use bus_mode.filter = ILPS22QS_FILTER_ALWAYS_ON.
+4.4 Try one-shot mode (ODR = ONE_SHOT) instead of continuous 4 Hz.
+4.5 Hardware test: flash ST's factory firmware (FP-SNS-STBOX1) and watch pressure
+    in the ST BLE Sensor app. If it also fails there, the chip or board is faulty.
+
+5. HUMIDITY (for reference)
+The package lists an HTS221 humidity sensor, but the I2C scan finds nothing at its address
+(0x5F) and ST's own board code / Zephyr docs do not list it. This board has no humidity sensor.

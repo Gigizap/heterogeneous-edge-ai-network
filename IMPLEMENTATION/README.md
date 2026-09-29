@@ -149,10 +149,6 @@ are prompted for the bot token (from @BotFather) and the comma-separated numeric
 IDs allowed to talk to it (from @userinfobot); both are required and the prompt repeats
 until they are valid. See `ElectionLogic.identity._prompt_telegram()`.
 
-> **This file is tracked by git.** Once first-run setup has written a real token and
-> real user IDs into it, restore the placeholders before committing or pushing - a
-> token that reaches the remote is compromised and must be rotated.
-
 ### First-run setup
 
 `device_profile.json` is gitignored, so a device that has none runs an interactive setup on
@@ -202,7 +198,7 @@ never go through these constants.
 
 Model files are kept in two different places depending on which agent uses them:
 
-- **Leader LLM models** go in the top-level **`IMPLEMENTATION/models/`** folder. The `generic` / `stm32mp257fdk` presets look there for their GGUF (e.g. `Qwen3-1.7B-Q4_K_M.gguf`, `functiongemma-270m-it-Q4_K_M.gguf`) and download it from Hugging Face into that folder if it is missing. For the `raspberry_hailo` / `raspberry_cpuhailo` presets, the native `.hef` is found via the `hailo.hef_path` entry in `LeaderLogic/<preset>/config.json` (e.g. `models/qwen3-1.7b.hef`).
+- **Leader LLM models** go in the top-level **`IMPLEMENTATION/models/`** folder. The `generic` / `stm32mp257fdk` presets look there for their GGUF (e.g. `Qwen3-1.7B-Q4_K_M.gguf`, `functiongemma-270m-it-Q4_K_M.gguf`) and download it from Hugging Face into that folder if it is missing. For the `raspberry_hailo` / `raspberry_cpuhailo` presets, the native `.hef` is found via the `hailo.hef_path` entry in `LeaderLogic/<preset>/config.json` (e.g. `models/qwen3-1.7b.hef`, [download](https://hailo.ai/products/hailo-software/model-explorer/generative-ai/qwen3-1-7b-instruct/)).
 - **Sensing models** go **inside the sensing agent's own preset folder**, next to its code - each preset resolves its model relative to itself (`Path(__file__).parent / "<model>"`). For example `SensingLogic/raspberrypi5_yolo_NPU/yolov8n.hef`, `raspberrypi5_yolo_CPU/yolov8n.onnx`, and `stm32mp257_yolo_NPU/yolov8n_320_quant_pt_uf_od_coco-person-st.nb`. Drop a new sensing model in the same folder as the skill that loads it.
 
 ---
@@ -295,14 +291,19 @@ The P2P networking layer handles peer discovery and message transport with zero 
 
 ## Setup
 
-> **Requirements depend on the role.** There is no single requirements file - what a device needs depends on what it runs:
+> **Requirements depend on the role.** There is no single complete requirements file - what a device needs depends on what it runs:
 > - **Everyone:** `requirements/base.txt` (`psutil`, `requests`).
-> - **Leader:** an LLM backend - `LeaderLogic/<preset>/requirements.txt`, e.g. `LeaderLogic/generic/requirements.txt` (`llama-cpp-python`), `LeaderLogic/stm32mp257fdk/requirements.txt` (llama.cpp, [prebuilt archive](LeaderLogic/stm32mp257fdk/prebuilt/)), or `LeaderLogic/raspberry_cpu|raspberry_hailo|raspberry_cpuhailo/requirements.txt` (Ollama and/or the Hailo SDK, no llama-cpp-python).
+> - **Leader:** the LLM backend of its preset, listed in `LeaderLogic/<preset>/requirements.txt`. The backends that are not pip-installable must be installed manually:
+>   - `stm32mp257fdk`: `llama-cpp-python`, pre-compiled build in the repository ([`LeaderLogic/stm32mp257fdk/prebuilt/`](LeaderLogic/stm32mp257fdk/prebuilt/)). See [STM32MP257FDK](#stm32mp257fdk).
+>   - `raspberry_cpu`: Ollama with `qwen3:1.7b`. See [Raspberry Pi 5](#raspberry-pi-5).
+>   - `raspberry_hailo`: HailoRT and its Python bindings (`hailo_platform`), plus the `qwen3:1.7b` `.hef`. See [Raspberry Pi 5](#raspberry-pi-5).
+>   - `raspberry_cpuhailo`: Ollama with `functiongemma`, HailoRT and its Python bindings (`hailo_platform`), plus the `qwen3:1.7b` `.hef`. See [Raspberry Pi 5](#raspberry-pi-5).
+>   - `generic`: `llama-cpp-python`.
 > - **Sensing:** the model runtime for its preset - `SensingLogic/<preset>/requirements.txt`. A sensing-only device needs **no** LLM backend; a leader-only device needs **no** detection runtime.
 >
 > On first run, `main.py` auto-installs the pip-installable lines for the roles you pick. The hardware runtimes (`hailo_platform`, `stai_mpu`, `tflite_runtime`, `picamera2`) are **not** pip packages - each preset's requirements file documents the real `apt` / `x-linux-ai` / Hailo SDK command in its comments. `llama-cpp-python` is on PyPI but builds without NEON, which is why the STM32 uses a cross-compiled build that is installed without pip (further instructions later).
 
-### Minimal Test Setup
+### Example test setup
 
 As shown in [`ConnectionLogic/README.md`](ConnectionLogic/README.md) (`image/network_minimal.png`):
 
@@ -324,7 +325,11 @@ curl -fsSL https://ollama.com/install.sh | sh
 ollama pull qwen3:1.7b
 ```
 
-This is enough for the `raspberry_cpu` preset.
+This is enough for the `raspberry_cpu` preset. The `raspberry_cpuhailo` preset runs dispatch on Ollama with `functiongemma` instead:
+
+```bash
+ollama pull functiongemma
+```
 
 Alternatively, install llama-cpp-python and use the `generic` preset as the leader preset instead:
 
@@ -334,9 +339,11 @@ pip install llama-cpp-python
 
 Check that the llama.cpp backend gets compiled with the correct ARM support.
 
-#### Optionally: + Raspberry Pi AI HAT+ 2 (Hailo-10 chip)
+#### Optionally add "Raspberry Pi AI HAT+ 2" (Hailo-10 chip)
 
 Needed for the `raspberry_hailo` and `raspberry_cpuhailo` presets, which run answer generation on the NPU.
+
+> **This part of the documentation is partial** and will be completed on 30 September 2026.
 
 1. Connect the Hailo accelerator to the board through the PCIe port.
 
@@ -347,7 +354,17 @@ sudo dpkg -i hailort_<version>_arm64.deb
 sudo dpkg -i hailort-pcie-driver_<version>_arm64.deb
 ```
 
-3. Place the `qwen3:1.7b` `.hef` file at the path set in `LeaderLogic/raspberry_hailo/config.json` and `LeaderLogic/raspberry_cpuhailo/config.json` (`hailo.hef_path`).
+3. Download the compiled `qwen3:1.7b` `.hef` from the [Hailo Model Explorer](https://hailo.ai/products/hailo-software/model-explorer/generative-ai/qwen3-1-7b-instruct/) and place it at the path set in `LeaderLogic/raspberry_hailo/config.json` and `LeaderLogic/raspberry_cpuhailo/config.json` (`hailo.hef_path`).
+
+#### Get the code
+
+After the setup above, clone the repository and copy the `IMPLEMENTATION/` folder onto the Pi, then run `main.py` from inside it:
+
+```bash
+git clone https://github.com/Gigizap/heterogeneous-edge-ai-network
+# copy IMPLEMENTATION/ onto the Pi, then inside it:
+python main.py
+```
 
 ---
 
