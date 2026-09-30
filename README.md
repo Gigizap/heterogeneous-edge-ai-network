@@ -27,7 +27,7 @@ The repository has two top-level parts: the working **implementation** of the ne
 | [**`IMPLEMENTATION/`**](IMPLEMENTATION/README.md) | **The full agentic P2P system: discovery, leader election, leader/sensing logic, LLM dispatch pipeline** |
 | [README.md](IMPLEMENTATION/README.md) | System overview: LLM pipeline, skills, election, presets, configuration, first-run setup |
 | [ConnectionLogic/README.md](IMPLEMENTATION/ConnectionLogic/README.md) | P2P layer: UDP discovery, TCP transport, wire protocol, troubleshooting |
-| [LeaderLogic/README.md](IMPLEMENTATION/LeaderLogic/README.md) | Leader preset contract and inference backends |
+| [LeaderLogic/README.md](IMPLEMENTATION/LeaderLogic/README.md) | Leader presets and inference backends |
 | [LeaderLogic/backup.md](IMPLEMENTATION/LeaderLogic/backup.md) | Conversation backup and leader failover |
 | [LeaderLogic/stm32mp257fdk/README.md](IMPLEMENTATION/LeaderLogic/stm32mp257fdk/README.md) | STM32MP257F-DK bring-up, from the box to a running agent |
 | [SensingLogic/README.md](IMPLEMENTATION/SensingLogic/README.md) | Sensing preset contract and the available presets |
@@ -118,8 +118,11 @@ Shape legend:
 | Raspberry Pi 5 + Hailo AI HAT+ 2 | Leader / Sensing | Hailo H10 (40 TOPS) | `qwen3:1.7b` |
 | STM32MP257F-DK | Leader / Sensing | On-chip NPU | `functiongemma:270m` |
 | Any generic device (Linux or Windows PC) | Leader / Sensing | llama.cpp (CPU or GPU) | `functiongemma:270m`* |
+| STWIN.box (STEVAL-STWBXCS1, STM32U585 microcontroller) | Sensing | none | none (temperature and magnetic field sensors) |
 
 \* new leader presets, using much more powerful LLMs, and new sensing presets can be added as subfolders in `/LeaderLogic` and in `/SensingLogic`, they will automatically be discovered. See [Leader Presets](IMPLEMENTATION/README.md#leader-presets)
+
+The STWIN.box is an exception to the usual setup process: it does not run Python and `IMPLEMENTATION/`, but a C firmware implementing the same protocol. Its setup is in [`SENSING-AGENT-STEVAL-STWBXCS1-NEW/`](SENSING-AGENT-STEVAL-STWBXCS1-NEW/README.md).
 
 ---
 
@@ -156,4 +159,4 @@ CC BY-NC-SA 4.0 does not apply to the following third-party files, which keep th
 | `IMPLEMENTATION/LeaderLogic/stm32mp257fdk/prebuilt/llama_cpp_python-0.3.23-cortexa35.tar.gz` | Build of llama-cpp-python and llama.cpp | MIT |
 | YOLOv8n model files (`*.onnx`, `*.hef`, `*.nb`, `*.tflite`) in `IMPLEMENTATION/SensingLogic/` and `BENCHMARK CODE/POWERCONSUMPTION/` | Exports of Ultralytics YOLOv8n | AGPL-3.0 |
 
-The rest of the STWIN.box firmware (ST's STWINBX1_WIFI package and sensor drivers) is not part of this repository: it is downloaded during setup and keeps its own licenses.
+The rest of the STWIN.box firmware (ST's STWINBX1_WIFI package and sensor drivers) is not part of this repository: it is downloaded during setup.

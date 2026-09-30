@@ -343,7 +343,7 @@ Check that the llama.cpp backend gets compiled with the correct ARM support.
 
 Needed for the `raspberry_hailo` and `raspberry_cpuhailo` presets, which run answer generation on the NPU.
 
-> **This part of the documentation is partial** and will be completed on 30 September 2026.
+> **This part of the documentation is partial** and will be completed as soon as possible, in the first days of October 2026.
 
 1. Connect the Hailo accelerator to the board through the PCIe port.
 

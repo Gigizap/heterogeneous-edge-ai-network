@@ -224,8 +224,6 @@ The project keeps the name of the ST example it is built on, `Nx_WebServer`. Cod
 
 ## Credits
 
-Each file keeps its original license header (see also `LICENSE.md` in `STWINBX1_WIFI`).
-
 **[stm32-hotspot/STWINBX1_WIFI](https://github.com/stm32-hotspot/STWINBX1_WIFI)** (ST), commit `024b03b` (downloaded in step 2.2): the base of the firmware: the `Nx_WebServer` example project, HAL, BSP, ThreadX, NetX Duo, the EMW3080 driver and the Wi-Fi module firmware updater. Files changed for the sensing agent (in `modified_files/`):
 - `<APP>/NetXDuo/App/app_netxduo.c`: ST's network and thread setup, with the application added (UDP log, sensors, sensing agent).
 - `<APP>/NetXDuo/App/app_netxduo.h`: ST's file, adapted to the application.
@@ -250,4 +248,4 @@ Each file keeps its original license header (see also `LICENSE.md` in `STWINBX1_
 
 - `README.md`, `SETUP_STWINBOX.md`, `log_receiver.py` and `STWINbox_pressure_sensor_issue.txt`: CC BY-NC-SA 4.0, like the rest of this repository.
 - `modified_files/`: files of STMicroelectronics modified for the sensing agent. They stay under ST's license (SLA0044, text in `STWINBX1_WIFI/Projects/LICENSE.md`); the modifications are Copyright (c) 2026 Gigizap, as noted in each file's header. They are not covered by CC BY-NC-SA 4.0.
-- The files downloaded in step 2 are not part of this repository and keep their own licenses (listed in `STWINBX1_WIFI/LICENSE.md` and in each driver repository).
+- The files downloaded in step 2 are not part of this repository.
