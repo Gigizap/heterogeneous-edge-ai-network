@@ -27,10 +27,12 @@ The repository has two top-level parts: the working **implementation** of the ne
 | [**`IMPLEMENTATION/`**](IMPLEMENTATION/README.md) | **The full agentic P2P system: discovery, leader election, leader/sensing logic, LLM dispatch pipeline** |
 | [README.md](IMPLEMENTATION/README.md) | System overview: LLM pipeline, skills, election, presets, configuration, first-run setup |
 | [ConnectionLogic/README.md](IMPLEMENTATION/ConnectionLogic/README.md) | P2P layer: UDP discovery, TCP transport, wire protocol, troubleshooting |
-| [LeaderLogic/README.md](IMPLEMENTATION/LeaderLogic/README.md) | Leader preset contract and inference backends |
+| [LeaderLogic/README.md](IMPLEMENTATION/LeaderLogic/README.md) | Leader presets and inference backends |
 | [LeaderLogic/backup.md](IMPLEMENTATION/LeaderLogic/backup.md) | Conversation backup and leader failover |
 | [LeaderLogic/stm32mp257fdk/README.md](IMPLEMENTATION/LeaderLogic/stm32mp257fdk/README.md) | STM32MP257F-DK bring-up, from the box to a running agent |
 | [SensingLogic/README.md](IMPLEMENTATION/SensingLogic/README.md) | Sensing preset contract and the available presets |
+| [**`SENSING-AGENT-STEVAL-STWBXCS1-NEW/`**](SENSING-AGENT-STEVAL-STWBXCS1-NEW/README.md) | **C implementation of a sensing agent for the STEVAL-STWBXCS1 (STWIN.box core system board)** |
+| [SETUP_STWINBOX.md](SENSING-AGENT-STEVAL-STWBXCS1-NEW/SETUP_STWINBOX.md) | STWIN.box setup: install, build, flash and use |
 | [**`BENCHMARK CODE/`**](BENCHMARK%20CODE/README.md) | **Accuracy, latency and power-consumption benchmarks for the models and edge boards** |
 | [README.md](BENCHMARK%20CODE/README.md) | Index of the benchmark suites |
 
@@ -111,23 +113,25 @@ Shape legend:
 
 ## Hardware targets
 
-| Device | Role | Accelerator | Model |
-|---|---|---|---|
-| Raspberry Pi 5 + Hailo AI HAT+ 2 | Leader / Sensing | Hailo H10 (40 TOPS) | `qwen3:1.7b` |
-| STM32MP257F-DK | Leader / Sensing | On-chip NPU | `functiongemma:270m` |
-| Any generic device (Linux or Windows PC) | Leader / Sensing | llama.cpp (CPU or GPU) | `functiongemma:270m`* |
+| Device | Role | Accelerator | Leader models* | Sensing models* |
+|---|---|---|---|---|
+| Raspberry Pi 5 + Hailo AI HAT+ 2 | Leader / Sensing | Hailo H10 (40 TOPS) | `qwen3:1.7b` (Hailo NPU or CPU), `functiongemma:270m` (CPU) | YOLOv8n (Hailo NPU `.hef` or CPU `.onnx`) |
+| STM32MP257F-DK | Leader / Sensing | On-chip NPU | `functiongemma:270m` (CPU) | YOLOv8n (NPU `.nb` or CPU `.tflite`) |
+| Any generic device (Linux or Windows PC) | Leader / Sensing | none (llama.cpp on CPU) | `functiongemma:270m`; optionally `qwen3:1.7b`, chosen by device score ([details](IMPLEMENTATION/README.md#generic-leader---score-based-model-selection)) | none out of the box* |
+| STWIN.box (STEVAL-STWBXCS1, STM32U585 microcontroller) | Sensing | none | none | none (reads the temperature and magnetic field sensors) |
 
-\* new leader presets, using much more powerful LLMs, and new sensing presets can be added as subfolders in `/LeaderLogic` and in `/SensingLogic`, they will automatically be discovered. See [Leader Presets](IMPLEMENTATION/README.md#leader-presets)
+\* New models can be added. A new leader model goes in a new leader preset, a subfolder of `IMPLEMENTATION/LeaderLogic/`; a new sensing model goes in a new sensing preset, a subfolder of `IMPLEMENTATION/SensingLogic/`, next to the skill that loads it. New presets are discovered automatically. See [Leader Presets](IMPLEMENTATION/README.md#leader-presets) and [SensingLogic/README.md](IMPLEMENTATION/SensingLogic/README.md). On a generic device, the YOLOv8n CPU preset (`raspberrypi5_yolo_CPU`) should work for inference, since it runs the model with `onnxruntime` (available on Linux and Windows); its frame capture uses `picamera2`, which works only on a Raspberry Pi, so on other devices the capture function has to be replaced.
+
+The STWIN.box is an exception to the usual setup process: it does not run Python and `IMPLEMENTATION/`, but a C firmware implementing the same protocol. Its setup is in [`SENSING-AGENT-STEVAL-STWBXCS1-NEW/`](SENSING-AGENT-STEVAL-STWBXCS1-NEW/README.md).
 
 ---
 
 ## Quick start
 
-[`IMPLEMENTATION/`](IMPLEMENTATION/README.md) is the folder you **copy onto every device** in the network. Every node runs the *same* codebase. On each device, install the requirements and run `main.py`. Some of them are device-specific and installed by hand (see the per-board setup guides in the documentation map). The first run is interactive: it asks for the agent-ID, the presets, the hardware figures used for scoring, and (on leader-capable devices) the Telegram bot token and allowed user IDs, then writes `device_profile.json` and installs the requirements for the roles you picked. Every run after that is automatic: it reads the profile, scores the hardware, discovers peers, and joins leader election.
+[`IMPLEMENTATION/`](IMPLEMENTATION/README.md) is the folder you **copy onto every device** in the network. Every node runs the *same* codebase. On each device, run `main.py`. The first run is interactive: it asks for the agent-ID, the presets, the hardware figures used for scoring, and (on leader-capable devices) the Telegram bot token and allowed user IDs, then writes `device_profile.json` and pip-installs the `requirements.txt` files for the roles you picked. Dependencies that are not pip-installable (device-specific runtimes such as the Hailo SDK, OpenSTLinux AI packages, `picamera2`) may have to be installed manually, see the **[Setup section](IMPLEMENTATION/README.md#setup)**. Every run after that is automatic: it reads the profile, scores the hardware, discovers peers, and joins leader election.
 
 ```bash
 # on each device, inside the copied IMPLEMENTATION/ folder
-pip install -r requirements/base.txt   # plus generic.txt or hailo.txt per device
 python main.py
 ```
 
@@ -146,3 +150,13 @@ Per-device setup (Hailo packages, Ollama models, OpenSTLinux AI packages, Telegr
 ## License
 
 This project is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License (CC BY-NC-SA 4.0). See [LICENSE](LICENSE) for details, or read the full text at <https://creativecommons.org/licenses/by-nc-sa/4.0/>.
+
+CC BY-NC-SA 4.0 does not apply to the following third-party files, which keep their own licenses:
+
+| Files | Origin | License |
+|---|---|---|
+| `SENSING-AGENT-STEVAL-STWBXCS1-NEW/modified_files/` | STMicroelectronics files, modified (modifications Copyright (c) 2026 Gigizap) | SLA0044, see [the folder's License section](SENSING-AGENT-STEVAL-STWBXCS1-NEW/README.md#license) |
+| `IMPLEMENTATION/LeaderLogic/stm32mp257fdk/prebuilt/llama_cpp_python-0.3.23-cortexa35.tar.gz` | Build of llama-cpp-python and llama.cpp | MIT |
+| YOLOv8n model files (`*.onnx`, `*.hef`, `*.nb`, `*.tflite`) in `IMPLEMENTATION/SensingLogic/` and `BENCHMARK CODE/POWERCONSUMPTION/` | Exports of Ultralytics YOLOv8n | AGPL-3.0 |
+
+The rest of the STWIN.box firmware (ST's STWINBX1_WIFI package and sensor drivers) is not part of this repository: it is downloaded during setup.
