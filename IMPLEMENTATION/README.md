@@ -138,9 +138,18 @@ The system uses two separate config files per device:
   "version":  "1.0.0",
   "agent":    { "tcp_port": 5555, "replication_factor": 2 },
   "telegram": { "token": "...", "allowed_users": [...] },
-  "timeouts": { "fetchskills": 1.5, "replies": 3.0, "loop": 0.0 }
+  "timeouts": { "fetchskills": 1.5, "replies": 3.0, "loop": 0.0, "loop_update_threshold": 2 }
 }
 ```
+
+The `timeouts` values can be customized:
+
+| Key | Default | Meaning |
+|---|---|---|
+| `replies` | `3.0` | Maximum time, in seconds, the leader waits for the sensing agents to reply to a tool call. The call is sent to every agent that owns the tool at once; the leader stops waiting as soon as all of them have replied, and an agent that has not replied within this time is recorded as `did not reply`. |
+| `loop` | `0.0` | Delay, in seconds, added between iterations of [`/loop`](#loop). |
+| `loop_update_threshold` | `2` | Number of consecutive [`/loop`](#loop) polls whose result must differ before the leader sends an update. |
+| `fetchskills` | `1.5` | Not used by the current code (only by `LeaderLogic/legacy_unused/`). |
 
 The `telegram` section is filled in by first-run setup, but **only on a device that
 declares a leader preset other than `none`** - the elected leader is the only role that

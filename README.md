@@ -113,14 +113,14 @@ Shape legend:
 
 ## Hardware targets
 
-| Device | Role | Accelerator | Model |
-|---|---|---|---|
-| Raspberry Pi 5 + Hailo AI HAT+ 2 | Leader / Sensing | Hailo H10 (40 TOPS) | `qwen3:1.7b` |
-| STM32MP257F-DK | Leader / Sensing | On-chip NPU | `functiongemma:270m` |
-| Any generic device (Linux or Windows PC) | Leader / Sensing | llama.cpp (CPU or GPU) | `functiongemma:270m`* |
-| STWIN.box (STEVAL-STWBXCS1, STM32U585 microcontroller) | Sensing | none | none (temperature and magnetic field sensors) |
+| Device | Role | Accelerator | Leader models* | Sensing models* |
+|---|---|---|---|---|
+| Raspberry Pi 5 + Hailo AI HAT+ 2 | Leader / Sensing | Hailo H10 (40 TOPS) | `qwen3:1.7b` (Hailo NPU or CPU), `functiongemma:270m` (CPU) | YOLOv8n (Hailo NPU `.hef` or CPU `.onnx`) |
+| STM32MP257F-DK | Leader / Sensing | On-chip NPU | `functiongemma:270m` (CPU) | YOLOv8n (NPU `.nb` or CPU `.tflite`) |
+| Any generic device (Linux or Windows PC) | Leader / Sensing | none (llama.cpp on CPU) | `functiongemma:270m`; optionally `qwen3:1.7b`, chosen by device score ([details](IMPLEMENTATION/README.md#generic-leader---score-based-model-selection)) | none out of the box* |
+| STWIN.box (STEVAL-STWBXCS1, STM32U585 microcontroller) | Sensing | none | none | none (reads the temperature and magnetic field sensors) |
 
-\* new leader presets, using much more powerful LLMs, and new sensing presets can be added as subfolders in `/LeaderLogic` and in `/SensingLogic`, they will automatically be discovered. See [Leader Presets](IMPLEMENTATION/README.md#leader-presets)
+\* New models can be added. A new leader model goes in a new leader preset, a subfolder of `IMPLEMENTATION/LeaderLogic/`; a new sensing model goes in a new sensing preset, a subfolder of `IMPLEMENTATION/SensingLogic/`, next to the skill that loads it. New presets are discovered automatically. See [Leader Presets](IMPLEMENTATION/README.md#leader-presets) and [SensingLogic/README.md](IMPLEMENTATION/SensingLogic/README.md). On a generic device, the YOLOv8n CPU preset (`raspberrypi5_yolo_CPU`) should work for inference, since it runs the model with `onnxruntime` (available on Linux and Windows); its frame capture uses `picamera2`, which works only on a Raspberry Pi, so on other devices the capture function has to be replaced.
 
 The STWIN.box is an exception to the usual setup process: it does not run Python and `IMPLEMENTATION/`, but a C firmware implementing the same protocol. Its setup is in [`SENSING-AGENT-STEVAL-STWBXCS1-NEW/`](SENSING-AGENT-STEVAL-STWBXCS1-NEW/README.md).
 
